@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_content clear ">
+    <div class="H105_leftBody">
+        <div class="H105_menu">
+            <ul class="I106_navList clear">
+                <li>
+                    <div class="I106_navItem  I106_navItemCurrent ">
+                        <span class="I106_navIcon I106_navIcon1"></span>
+                        <span>侦监</span>
+                        <span class="I106_arrow I106_arrowCurrent"></span>
+                    </div>
+
+                    <ul class="I106_subNavList" style="display: block;">
+                        <li lay-href="../Bbbsajsa/bbbsajsalist?ajlx_bbbs=101" data-content="报捕案件收案" class="I106_subNavItemCurrent" auth:check="bbajsaManage" >
+                            <span class="I106_subNavItem">报捕案件收案</span>
+                        </li>
+                        <li lay-href="../Bbbsajfa/bbbsajfalist?ajlx_bbbs=101" data-content="报捕案件分案" auth:check="bbajfaManage" >
+                            <span class="I106_subNavItem">案件分案</span>
+                        </li>
+                    </ul>
+
+                </li>
+                <li>
+                    <div class="I106_navItem  I106_navItemCurrent ">
+                        <span class="I106_navIcon I106_navIcon1"></span>
+                        <span>公诉</span>
+                        <span class="I106_arrow I106_arrowCurrent"></span>
+                    </div>
+                </li>
+
+                <li   auth:check="sysManage">
+                    <div class="I106_navItem">
+                        <span class="I106_navIcon I106_navIcon2"></span>
+                        <span>系统管理</span>
+                        <span class="I106_arrow"></span>
+                    </div>
+                    <ul class="I106_subNavList">
+                        <li lay-href="/ajgl-jcy/scanType/scanTypeList" data-content="目录类型" auth:check="scanTypeManage">
+                            <span class="I106_subNavItem">目录类型</span>
+                        </li>
+                        <li lay-href="/ajgl-jcy/jcyGroup/jcyGroupList" data-content="小组管理" auth:check="jcyGroupManage">
+                            <span class="I106_subNavItem">小组管理</span>
+                        </li>
+                        <li lay-href="/ajgl-jcy/jcyCbr/jcyCbrList" data-content="承办人管理" auth:check="jcyCbrManage">
+                            <span class="I106_subNavItem">承办人管理</span>
+                        </li>
+                        <li lay-href="/ajgl-jcy/jcyAydm/jcyAydmList" data-content="案由管理" auth:check="jcyAydmManage">
+                            <span class="I106_subNavItem">案由管理</span>
+                        </li>
+                        <li lay-href="/ajgl-jcy/jcyXgsz/jcyXgszList" data-content="相关设置" auth:check="jcyXgszManage">
+                            <span class="I106_subNavItem">相关设置</span>
+                        </li>
+                        <li lay-href="/ajgl-jcy/departments/departmentsList" data-content="科室管理" auth:check="departmentsManage">
+                            <span class="I106_subNavItem">科室管理</span>
+                        </li>
+                        <li  lay-href="/ajgl-jcy/user/list" data-content="用户管理" auth:check="userManage">
+                            <span class="I106_subNavItem">用户管理</span>
+                        </li>
+                        <li  lay-href="/ajgl-jcy/resource/list" data-content="资源管理" auth:check="resourceManage">
+                            <span class="I106_subNavItem">资源管理</span>
+                        </li>
+                        <li  lay-href="/ajgl-jcy/role/list" data-content="角色管理" auth:check="roleManage">
+                            <span class="I106_subNavItem">角色管理</span>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <iframe class="H105_iframeright" id="frm" frameborder="0" src="../Bbbsajsa/bbbsajsalist?ajlx_bbbs=101" sandbox="allow-forms
+                                                                            allow-modals
+                                                                            allow-orientation-lock
+                                                                            allow-pointer-lock
+                                                                            allow-popups
+                                                                            allow-popups-to-escape-sandbox
+                                                                            allow-same-origin
+                                                                            allow-scripts
+                                                                            allow-top-navigation"></iframe>
+
+
+</div>
+</body>
+
+</html>
+

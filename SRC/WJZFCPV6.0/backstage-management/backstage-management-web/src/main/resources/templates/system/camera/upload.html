@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="@{/css/all.css}">
+    <link rel="stylesheet" th:href="@{/js/ztree/zTreeStyle/zTreeStyle.css}">
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+    <script th:src="@{/js/ztree/js/jquery.ztree.all.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/verification.js}"></script>
+    <script th:src="@{/web/system/camera/all.js}"></script>
+</head>
+<body>
+<form action="" class="layui-form" id="">
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <span>直属节点:</span>
+                <span>朝阳派出所</span>
+            </div>
+            <div class="T106_tableOuter">
+                <div>
+                    <div>
+                        <input type="file" name="file" id="file" onchange="uploadFile()">
+                    </div>
+                    <div>
+                        <span>仅支持xls、xlsx文件</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="addCameraSubmit()">确定</div>
+            <div class="A106_button A106_button2">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+
+</html>
+

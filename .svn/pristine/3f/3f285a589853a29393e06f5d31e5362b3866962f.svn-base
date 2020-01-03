@@ -1,0 +1,54 @@
+package com.netmarch.jzznyj.system.service;
+
+import com.netmarch.jzznyj.system.bean.Ajdzjzwj;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public interface AjdzjzwjService {
+
+    List<Map<String, Object>> getCountByFlag(String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectWjByParentid(String ajbs, String parentid,String mlType);
+
+    void updateOldsort(String mlid, int oldsort);
+
+    List<Ajdzjzwj> selectWjByMlid(String mlid);
+
+    List<Ajdzjzwj> selectWjByMlids(List<String> mlIdList);
+
+    List<Ajdzjzwj> selectWjByOrderby(int orderby,String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectUndealtWj(String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectWjByAjbs(String ajbs,String mlType);
+
+    int updateMlidById(String ajbs, String mlid, String wjid,String mlType);
+
+    Ajdzjzwj selectWjById(String wjid);
+
+    List<Ajdzjzwj> showOrgImg(String treeId, String parentid, String ajbs,String mlType);
+
+    int updateWjmlidById(String mlid, String wjid);
+
+    int updateFilenameById(String wjid, String path);
+
+    int deleteById(String wjid, String wjpath);
+
+    List<Ajdzjzwj> selectWjByIds(List<String> ids);
+
+    int insert2(String id, String mlid, String path, String picname, int picsort, Date uploadTime);
+
+    int selectAllCount(String mlType);
+
+    Ajdzjzwj getFengmian(String ajbs,String mlType);
+
+    int getScountByMlid(String mlid);
+
+    int updateOcrsort(String id, int ocrsort);
+
+    List<Ajdzjzwj> selectWjNoA(String mlid);
+}

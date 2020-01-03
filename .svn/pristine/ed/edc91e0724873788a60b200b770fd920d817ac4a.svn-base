@@ -1,0 +1,50 @@
+package util.excel.annotation.entity;
+
+
+public class TableParams {
+
+	/*标题*/
+	private String title;
+	
+	/*标题高度*/
+	private Integer titleHeight; 
+	
+	/*sheet名字*/
+	private String sheetName;
+
+	
+	public TableParams(String title, Integer titleHeight, String sheetName) {
+		this.title = title;
+		this.titleHeight = titleHeight;
+		this.sheetName = sheetName;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getTitleHeight() {
+		return titleHeight;
+	}
+
+	public void setTitleHeight(Integer titleHeight) {
+		this.titleHeight = titleHeight;
+	}
+
+	public String getSheetName() {
+		return sheetName;
+	}
+
+	public void setSheetName(String sheetName) {
+		this.sheetName = sheetName;
+	}
+	
+	
+	
+	
+	
+}

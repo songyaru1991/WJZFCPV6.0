@@ -1,0 +1,23 @@
+package util;
+
+import lombok.Data;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @program: datacollect
+ * @description: 响应报文
+ * @author: dinggan
+ * @create: 2018-12-19 10:49
+ **/
+@Data
+public class ResponseData {
+
+    private Boolean success;
+
+    private String message;
+
+    private Result result;
+
+}

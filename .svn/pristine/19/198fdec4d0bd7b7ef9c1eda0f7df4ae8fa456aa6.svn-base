@@ -1,0 +1,37 @@
+package com.netmarch.lssqyj.system.service.impl;
+
+import com.netmarch.lssqyj.system.bean.Ajword;
+import com.netmarch.lssqyj.system.mapper.AjwordMapper;
+import com.netmarch.lssqyj.system.service.AjwordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+public class AjwordServiceImpl implements AjwordService {
+
+    @Autowired
+    private AjwordMapper ajwordMapper;
+
+    @Override
+    public int exportWord(String ajbs, String wordcontent) {
+        Ajword ajword = ajwordMapper.selectByAjbs(ajbs);
+        if(null != ajword){
+            return ajwordMapper.updateByAjbs(ajbs,wordcontent);
+        }else{
+            String id = UUID.randomUUID().toString();
+            return ajwordMapper.insert(id,ajbs,wordcontent);
+        }
+    }
+
+    @Override
+    public Ajword selectByAjbs(String ajbs) {
+        return ajwordMapper.selectByAjbs(ajbs);
+    }
+
+    @Override
+    public Ajword getOrg() {
+        return ajwordMapper.getOrg();
+    }
+}

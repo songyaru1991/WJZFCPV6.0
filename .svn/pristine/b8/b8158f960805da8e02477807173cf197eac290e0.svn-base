@@ -1,0 +1,48 @@
+package com.netmarch.jzznyj.system.bean;
+
+import lombok.Data;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * @program: figurecloud
+ * @description: user_role对象
+ * @author: zxj
+ **/
+@Data
+@Table(name = "sys_login_user_role")
+public class LoginUserRole {
+
+    @Id
+    @GeneratedValue(generator = "JDBC")
+    private Integer id;
+    private Integer sysLoginUserId;
+    private Integer sysRoleId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getSysLoginUserId() {
+        return sysLoginUserId;
+    }
+
+    public void setSysLoginUserId(Integer sysLoginUserId) {
+        this.sysLoginUserId = sysLoginUserId;
+    }
+
+    public Integer getSysRoleId() {
+        return sysRoleId;
+    }
+
+    public void setSysRoleId(Integer sysRoleId) {
+        this.sysRoleId = sysRoleId;
+    }
+}
+

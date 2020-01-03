@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Aj_ajlbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Aj_ajlb">
+    <id column="BH" jdbcType="VARCHAR" property="bh" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BH, MC
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from aj_ajlb
+    where BH = #{bh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from aj_ajlb
+    where BH = #{bh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Aj_ajlb">
+    insert into aj_ajlb (BH, MC)
+    values (#{bh,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Aj_ajlb">
+    insert into aj_ajlb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        BH,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        #{bh,jdbcType=VARCHAR},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Aj_ajlb">
+    update aj_ajlb
+    <set>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Aj_ajlb">
+    update aj_ajlb
+    set MC = #{mc,jdbcType=VARCHAR}
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+  <select id="geAjlbListPage" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from aj_ajlb
+    where 1=1
+    <if test="searchContent != '' and searchContent != null">
+      and  mc like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+</mapper>

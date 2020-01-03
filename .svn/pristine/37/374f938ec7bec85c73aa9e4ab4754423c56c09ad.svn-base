@@ -1,0 +1,90 @@
+package com.netmarch.figurecloud.management.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.figurecloud.management.system.bean.PagesStatic;
+import com.netmarch.figurecloud.management.system.bean.SysResource;
+import com.netmarch.figurecloud.management.system.bean.ZtreeObj;
+import com.netmarch.figurecloud.management.system.mapper.SysResourcesMapper;
+import com.netmarch.figurecloud.management.system.service.SysResourcesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+public class SysResourcesServiceImpl implements SysResourcesService {
+
+    @Autowired
+    private SysResourcesMapper sysResourcesMapper;
+
+    @Override
+    public Page<SysResource> getResourcesList(String keyword, SysResource resource) {
+        PageHelper.startPage(resource.getPageNo() == null ? 1 : resource.getPageNo(), PagesStatic.PAGES_SIZE);
+        Map<String, Object> map = new HashMap<>();
+        map.put("keyword", keyword);
+        map.put("parentId", resource.getParentId() == null ? 1 : resource.getParentId());
+        return sysResourcesMapper.getResourcesList(map);
+    }
+
+    @Override
+    public List<ZtreeObj> getTree() {
+        return sysResourcesMapper.getTree();
+    }
+
+    @Override
+    public SysResource getResourceById(String pId) {
+        return sysResourcesMapper.getResourceById(Integer.parseInt(pId));
+    }
+
+    @Override
+    public int save(SysResource resource) {
+        return sysResourcesMapper.save(resource);
+    }
+
+    @Override
+    public int editResource(SysResource resource) {
+        return sysResourcesMapper.editResource(resource);
+    }
+
+    @Override
+    public int delBatch(String ids) {
+        String[] arr = ids.split(",");
+        List<Integer> list = new ArrayList<>();
+        for (String str : arr) {
+            list.add(Integer.parseInt(str));
+        }
+        int i = sysResourcesMapper.deleteResourceRole(list);
+        if(i < 0)
+            return i;
+        i = sysResourcesMapper.delBath(list);
+        return i;
+    }
+
+    @Override
+    public List<String> getResourceCodesByIds(List<Integer> roleIds) {
+        List<String> list = sysResourcesMapper.getResourceCodesByIds(roleIds);
+        Set<String> set = new HashSet<>();
+        for (String str : list) {
+            set.add(str);
+        }
+        List<String> res = new ArrayList<>(set);
+        return res;
+    }
+
+    @Override
+    public List<SysResource> getResourcesListByRoleIds(List<Integer> roleIds) {
+        return sysResourcesMapper.getResourcesListByRoleIds(roleIds);
+    }
+
+    @Override
+    public int checkRepeatByName(SysResource resource) {
+        return sysResourcesMapper.checkRepeatByName(resource);
+    }
+
+    @Override
+    public int checkRepeatByCode(SysResource resource) {
+        return sysResourcesMapper.checkRepeatByCode(resource);
+    }
+
+}

@@ -1,0 +1,101 @@
+package com.netmarch.lssqyj.system.bean;
+
+public class StaticObj {
+    //##############################用户session的key静态变量#######################################
+    /**用户SESSION-KEY*/
+    public static String SESSION_KEY = "USERSSESSION";
+    //##############################返回状态静态变量#######################################
+    /**成功*/
+    public static String R_STATUS_SUCCESS ="SUCCESS";
+    /**
+     * redis-OK
+     */
+    public final static String OK = "OK";
+
+    /**
+     * JWT-account:
+     */
+    public final static String  USERID= "UserId";
+    public final static String ACCOUNT = "LoginName";
+
+    /**
+     * redis-key-前缀-users:cache:
+     */
+    public final static String PREFIX_CACHE = "users:cache:";
+
+    /**
+     * redis-key-前缀-users:cache:
+     */
+    public final static String PREFIX_CACHE_USERID = "users:cache:user_id";
+
+    /**
+     * redis-key-前缀-users:access_token:
+     */
+    public final static String PREFIX_ACCESS_TOKEN = "users:access_token:";
+
+    /**
+     * redis-key-前缀-users:refresh_token:
+     */
+    public final static String PREFIX_REFRESH_TOKEN = "users:refresh_token:";
+
+    /**系统模块功能SESSION-KEY*/
+    public static String SESSION_MODULE = "SYSMODULE";
+    /**失败*/
+    public static String R_STATUS_ERROR ="ERROR";
+    //##############################提示信息静态变量#######################################
+    public static final String R_STATUS_SUCCESS_MSG ="登陆成功！";
+    public static final String R_LOGIN_USERNAME_MSG ="登陆失败，该帐号不存在！";
+    public static final String R_LOGIN_PASSWORD_MSG ="登陆失败，帐号或密码错误！";
+    public static final String R_LOGIN_FAIL_MSG ="登陆失败，未知错误，请联系管理员！";
+    public static final String R_LOGIN_DISABLE_MSG ="登陆账户已禁用！";
+    public static final String R_SQL_ERROR ="失败数据库操作异常，异常信息如下：";
+    public static final String INTER_ALERT_SESSION_NULL = "用户登录超时，请重新登录！";
+    public static final String R_LOGINOUT_SUCCESS_MSG ="登出成功！";
+    public static final String R_LOGINOUT_FAIL_MSG ="登出失败！";
+    public static final String UPDATE_MSG_SUCCESS = "操作成功！";
+    public static final String UPDATE_MSG_ERROR = "操作失败！";
+    public static final String FORM_ADD_AZBLX_SERVERGZ = "新增目录！";
+    public static final String DELETE_MSG_USING = "正在使用中，无法删除！";
+    public static final String REPEAT_MSG_NAME = "名称重复！";
+    public static final String REPEAT_MSG_CODE = "编码重复！";
+    public static final String REPEAT_MSG_POLICENUM = "警号重复！";
+
+
+    public static final String VIDEO_PLATFORM = "video_platform";
+    public static final String DEVICE_TYPE = "device_type";
+    public static final String SIGNAL_TYPE = "signal_type";
+    public static final String DIRECTION = "direction";
+    public static final String PIXEL = "pixel";
+    public static final String SNAP_TYPE = "snap_type";
+    public static final String PUSH_TYPE = "push_type";
+    public static final String VICTORY_TYPE = "victory_type";
+    public static final String POLICE= "police";
+    public static String ALARM_TYPE = "alarm_type";
+
+    //##############################个人中心评论静态变量#######################################
+    public static final int COMMON_ZG = 0;//战果
+    public static final int COMMON_AL = 1;//案例
+    public static final int COMMON_SP = 2;//视频
+    public static final int COMMON_FK = 3;//反馈
+
+    public static final String INTEGRAL_VICTORY_ADD = "战果录入";//战果录入
+    public static final String INTEGRAL_CASE_SHARE = "案例分享";//案例分享
+    public static final String INTEGRAL_VIDEO_STUDY = "视频学习";//视频学习
+    public static final String INTEGRAL_FEEDBACK = "问题反馈";//问题反馈
+    public static final String INTEGRAL_OTHER = "其他积分";//其他积分
+
+    public static final int CASE_FILE_TYPE = 0;
+    public static final int VIDEO_FILE_TYPE = 1;
+    public static final int PIC_FILE_TYPE = 2;
+
+    public static final String UPLOAD_FILE_PATH = "/upload";
+    public static final String VISIT_FILE_PATH = "/resource";
+
+    public static final int BASE_GALLERY_TYPE = 1;
+    public static final int MONITOR_GALLERY_TYPE = 2;
+
+    public static final String ALL_STUDY_TYPE = "all";
+    public static final String HAS_STUDY_TYPE = "hasStudy";
+    public static final String NEVER_STUDY_TYPE = "neverStudy";
+
+}

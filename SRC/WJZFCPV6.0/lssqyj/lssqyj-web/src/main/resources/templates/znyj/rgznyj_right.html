@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>人工智能阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/FileSaver.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.wordexport.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+    <style type="text/css">
+        .imgToggle {
+            cursor: pointer;
+        }
+        .unselected{
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
+        .toWordBtn{
+            position: absolute;
+            right: 40px;
+            top: 16px;
+            padding: 4px 10px;
+            background-color: #4bace2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            height: 36px;
+            width: 120px;
+            font-size: 15px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<!-- 配置文件 -->
+<script type="text/javascript" th:src="${application.basePath}+'/static/js/ueditor/ueditor.config.js'"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" th:src="${application.basePath}+'/static/js/ueditor/ueditor.all.js'"></script>
+<!-- 设置语言 -->
+<script type="text/javascript" th:src="${application.basePath}+'/static/js/ueditor/lang/zh-cn/zh-cn.js'"></script>
+<!-- 实例化编辑器 -->
+<!--<script type="text/javascript">-->
+<!--    var ue = UE.getEditor('container');-->
+<!--    ue.ready(function() {-->
+<!--        ue.setHeight(500);-->
+<!--        ue.setContent("<p><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 请输入。。。</strong></p><p><strong><br/></strong></p><p><strong><br/></strong></p><p><em><span style=\"text-decoration: underline;\"><strong>你好</strong></span></em></p>");-->
+<!--        //设置编辑器的内容-->
+<!--        // ue.setContent('hello');-->
+<!--        // //获取html内容，返回: <p>hello</p>-->
+<!--        // var html = ue.getContent();-->
+<!--        // //获取纯文本内容，返回: hello-->
+<!--        // var txt = ue.getContentTxt();-->
+<!--    });-->
+<!--</script>-->
+<div class="A105R_pictureCoat">
+    <div class="A205_btn clear">
+        <div class="A205_listBtn">
+            <p id="orgImg" class="imgToggle A205_btnEmphasis unselected">原图</p>
+            <p id="ocrImg" class="imgToggle unselected">OCR识别</p>
+        </div>
+
+        <button class="toWordBtn" onclick="toWord()">生成审查报告</button>
+    </div>
+    <!-- 原图 -->
+    <div id="orgImgContent" isShow="1" style="display: block;">
+        <div class="A205_content">
+            <img th:src="${application.fdfsPath}+ ${null==ajdzjzwj?'':ajdzjzwj.filename} " alt="" style="height:400px;">
+        </div>
+    </div>
+    <!-- 已识别 -->
+    <div id="ocrImgContent" isShow="0" style="display: none;">
+    </div>
+    <div id="outword" style="display: none"></div>
+    <div id="ueditorContent" style="position: absolute;top: 12%;right: 2%;width: 50%;">
+        <textarea id="container" name="content" style="" type="text/plain">请输入。。。</textarea>
+    </div>
+</div>
+<!--&lt;!&ndash; 加载编辑器的容器 &ndash;&gt;-->
+<!--<script id="container" style="width: 60%;float:right;" name="content" type="text/plain">-->
+<!--        这里写你的初始化内容-->
+<!--</script>-->
+<script>
+    var ajbs = $('<span/>').html('[[${ajbs}]]').text(); // 案件标识
+    var ajmc = $('<span/>').html('[[${ajmc}]]').text(); // 案件名称
+    var type = $('<span/>').html('[[${type}]]').text(); // 类型
+    var wordcontent = $('<span/>').html('[[${wordcontent}]]').text(); // 案件名称
+
+    <!-- 实例化编辑器 -->
+    var ue = UE.getEditor('container');
+    ue.ready(function() {
+        ue.setHeight(430);
+        if(wordcontent.length>0){
+            ue.setContent(wordcontent);
+        }
+        $(".edui-editor-messageholder.edui-default").css({ "visibility": "hidden" });
+        //设置编辑器的内容
+        // ue.setContent('hello');
+        // //获取html内容，返回: <p>hello</p>
+        // var html = ue.getContent();
+        // var txt = ue.getContentTxt();
+        UE.getEditor('container').addListener('focus',function(editor){
+            var txt = ue.getContentTxt();
+            //相关操作
+            if("请输入。。。" == $.trim(txt)){
+                ue.setContent('');
+            }
+        });
+        // //获取纯文本内容，返回: hello
+        // var txt = ue.getContentTxt();
+    });
+
+    $(function(){
+        $('#orgImg').click(function(){
+            if('0' == $('#orgImgContent').attr('isShow')) {
+                $('#orgImgContent').css('display', 'block');
+                $('#orgImgContent').attr('isShow', '1');
+                $('#ocrImgContent').css('display', 'none');
+                $('#ocrImgContent').attr('isShow', '0');
+            }
+        });
+        $('#ocrImg').click(function(){
+            if('0' == $('#ocrImgContent').attr('isShow')) {
+                $('#ocrImgContent').css('display', 'block');
+                $('#ocrImgContent').attr('isShow', '1');
+                $('#orgImgContent').css('display', 'none');
+                $('#orgImgContent').attr('isShow', '0');
+            }
+        });
+    })
+
+    function toWord(){
+        ue.setContent('报告生成中，请稍等。。。');
+        $.post("/lssqyj/znjz/toWord",{ajbs:ajbs},function (data) {
+            if(data){
+                setTimeout(function () {
+                    ue.setContent(data);
+                }, 1000);
+            }else{
+                alert('生成失败！');
+            }
+        })
+    }
+
+    function exportWord(e){
+        console.log('分开后我会笑着说：' + e);
+        $.post("/lssqyj/znjz/exportWord",{ajbs:ajbs,wordcontent:e}, function(data) {
+            if(data){
+                console.log('保存成功！');
+            }
+        })
+    }
+</script>
+</body>
+</html>

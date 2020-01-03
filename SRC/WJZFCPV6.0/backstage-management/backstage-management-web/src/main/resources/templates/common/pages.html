@@ -1,0 +1,72 @@
+<div th:fragment="pages" xmlns:th="http://schemas.xmlsoap.org/wsdl/">
+    <div class="L106_paging">
+        <span>&nbsp;<span th:text="${list.endRow >list.total ? list.total : list.endRow }"></span>/<span th:text="${list.total}"></span>条&nbsp;</span>
+        <a href="javascript:pages_start();">首页</a>
+        <span class="I106_arrowBtn I106_prev" onclick="pages_down()"></span>
+        <span><span th:text="${list.pageNum == 0 ? 1 : list.pageNum}"></span>/<span th:text="${list.pages}"></span></span>
+        <span class="I106_arrowBtn I106_next" th:onclick="'pages_up('+${list.pages}+')'"></span>
+        <a th:href="'javascript:pages_end('+${list.pages}+');'">尾页</a>
+        <span>转到第</span>
+        <input type="text" th:value="${#numbers.formatInteger(list.pageNum == 0 ? 1 : list.pageNum,0)}" th:onchange="'pages_change(this.value,'+${list.pages}+')'">
+        <span>页</span>
+    </div>
+    <input type="hidden" id="pageSize" th:value="${list.pageSize}"/>
+    <input type="hidden" id="pageNum" th:value="${list.pageNum == 0 ? 1 : list.pageNum}"/>
+    <input type="hidden" id="total" th:value="${list.total}"/>
+    <input type="hidden" id="pageNo" name="pageNo" th:value="${list.pageNum == 0 ? 1 : list.pageNum}"/>
+    <script>
+        function pages_start(){
+            if($("#pageNo").val() == 1){
+                layer.msg('已经是首页');
+                return;
+            }
+            $("#pageNo").val(1);
+            $("#form").submit();
+        }
+        function pages_end(pages){
+            if($("#pageNo").val() == (pages)){
+                layer.msg('已经是尾页');
+                return;
+            }
+            $("#pageNo").val(pages);
+            $("#form").submit();
+        }
+        function pages_up(pages){
+            var p = $("#pageNo").val()*1;
+            if((p+1) > (pages)){
+                layer.msg('已经是尾页');
+                return;
+            }
+            $("#pageNo").val(p+1);
+            $("#form").submit();
+        }
+        function pages_down(){
+            if(($("#pageNo").val()) == 1){
+                layer.msg('已经是首页');
+                return;
+            }
+            $("#pageNo").val($("#pageNo").val()-1);
+            $("#form").submit();
+        }
+        function pages_change(pageNo,pages){
+            if (!isNaN(pageNo) && pageNo % 1 === 0) {
+                if(pageNo < 1){
+                    layer.msg('不能小于1');
+                    return;
+                }
+
+                if(pageNo > pages){
+                    layer.msg('不能大于总页数');
+                    return;
+                }
+
+                $("#pageNo").val(pageNo);
+                $("#form").submit();
+
+            } else {
+                layer.msg('请输入整数');
+                return;
+            }
+        }
+    </script>
+</div>

@@ -1,0 +1,129 @@
+package com.netmarch.jzzngd.system.bean;
+
+import lombok.Data;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
+
+/**
+ * @program: figurecloud
+ * @description: sys_role对象
+ * @author: zxj
+ **/
+@Data
+@Table(name = "sys_resource")
+public class SysResource  extends PagesStatic implements Serializable {
+    @Id
+    @GeneratedValue(generator = "JDBC")
+    private Integer id;
+    private String code;
+    private String name;
+    private String url;//资源链接,页面组件为空
+    private Integer type;//1菜单  2子菜单/功能菜单   3功能/按钮
+    private String cssSelector;
+    private Integer status;//资源状态,1启用 0停用
+    private Integer sortIndex;
+    private Integer parentId;
+    private String pName;
+    private String imgUrl1;
+    private String imgUrl2;
+
+
+    public String getImgUrl1() {
+        return imgUrl1;
+    }
+
+    public void setImgUrl1(String imgUrl1) {
+        this.imgUrl1 = imgUrl1;
+    }
+
+    public String getImgUrl2() {
+        return imgUrl2;
+    }
+
+    public void setImgUrl2(String imgUrl2) {
+        this.imgUrl2 = imgUrl2;
+    }
+
+    public String getpName() {
+        return pName;
+    }
+
+    public void setpName(String pName) {
+        this.pName = pName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getCssSelector() {
+        return cssSelector;
+    }
+
+    public void setCssSelector(String cssSelector) {
+        this.cssSelector = cssSelector;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(Integer sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+}

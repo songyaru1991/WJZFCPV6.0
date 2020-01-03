@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: backstage
+  profiles:
+    active: prod
+  cloud:
+    consul:
+      host: http://172.16.1.144
+      port: 8501
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        hostname: ${spring.cloud.client.ip-address}
+        port: ${server.port}
+        healthCheckPath: /actuator/health
+      config:
+        enabled: true
+        format: YAML
+        profileSeparator: '::'
+        data-key: data
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      maxRequestSize: 500Mb
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+log:
+  level: info
+  path: /logs
+server:
+  port: 8081
+pagehelper:
+  reasonable: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+netmarch:
+  zuul-path: figure
+  application-path: backstage

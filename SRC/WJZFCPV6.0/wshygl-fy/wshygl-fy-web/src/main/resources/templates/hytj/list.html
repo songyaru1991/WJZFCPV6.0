@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+   <title>法院--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>法院换押管理：换押信息统计</p>
+            </div>
+
+            <div class="H105_searchCoat fr clear">
+                <div class="H305_send fl">
+                    <p>起始日期:</p>
+                </div>
+                <div class="H305_searchCoat fl">
+                    <input  name="qsrq"
+                            type="text"
+                            id="qsrq"
+                            class="layui-input H305_search  "
+                            autocomplete="off" th:value="${qsrq}">
+                </div>
+
+                <div class="H305_send fl">
+                    <p>结束日期:</p>
+                </div>
+                <div class="H305_searchCoat fl" style="margin-right: 0.5em;">
+                    <input  name="jsrq"
+                            type="text"
+                            id="jsrq"
+                            class="layui-input H305_search  "
+                            autocomplete="off"  th:value="${jsrq}">
+                </div>
+
+               <!-- <input type="text" id="searchContent" name="searchContent" class="H105_search fl" th:value="${ksshyQuery.searchContent}">-->
+                <div class="H105_searchBtn fl " onclick="localRefresh()"  auth:check="toFyHytj">统计</div>
+            </div>
+        </div>
+        <div id="table_refresh" th:fragment="table_refresh">
+            <div class="H105_sysList H105_sysList1 ">
+
+            <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'1',width:70}">序号</th>
+                    <th lay-data="{field:'2'}">移送部门</th>
+                    <th lay-data="{field:'3'}">接收部门</th>
+                    <th lay-data="{field:'4'}">数量</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean,beanStat : ${list}">
+                    <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}" >
+                        序号
+                    </td>
+                    <td th:text="${bean.CZBM}">移送部门</td>
+                    <td th:text="${bean.HYBM}">接收部门</td>
+                    <td th:text="${bean.TJNUM}">数量</td>
+
+                </tr>
+                </tbody>
+            </table>
+            <!--分页引用-->
+            <div class="H105_pageCoat clear">
+                <div class="H105_first clear fl">
+                    本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                </div>
+                <div th:replace="common/pages::pages"></div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        function localRefresh() {
+            // 装载局部刷新返回的页面
+            var qsrq = $(" #qsrq").val();
+            var jsrq = $(" #jsrq").val();
+            var pageNo = $(" #pageNo").val();
+            var param = {"qsrq": qsrq,"jsrq": jsrq ,"pageNo": pageNo};
+            $("#table_refresh").load("../Hytj/tableList", param, function () {
+                layui.use('table', function () {
+                    layui.table.init('demo', {
+                        limit: 12
+                    });
+                });
+            });
+        }
+        var contextPath = getContextPath();
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#qsrq',
+                trigger: 'click',
+                //value: new Date()
+            });
+            laydate.render({
+                elem: '#jsrq',
+                trigger: 'click',
+               // value: new Date()
+            });
+        });
+
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 12
+            });
+
+            table = layui.table;
+        })
+
+
+    </script>
+</div>
+</body>
+</html>

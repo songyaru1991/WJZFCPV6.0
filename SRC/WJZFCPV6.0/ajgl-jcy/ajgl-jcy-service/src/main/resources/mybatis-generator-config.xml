@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--todo-->
+    <classPathEntry location = "E:\WorkSoft\Maven\LocalWarehouse\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+    <context id="test" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+        <commentGenerator>
+          <!--  suppressDate是去掉生成日期那行注释
+            suppressAllComments是去掉所有的注解-->
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true" />
+            <property name="addRemarkComments" value="true" />
+            <property name="mapUnderscoreToCamelCase" value="true" />
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <!--todo-->
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://172.16.1.119:3306/zfpt6_cpjcy?serverTimezone=GMT%2B8" userId="root" password="netmarch">
+            <property name="remarksReporting" value="true"></property>
+        </jdbcConnection>
+        <javaTypeResolver>
+            <!-- This property is used to specify whether MyBatis Generator should
+                force the use of java.math.BigDecimal for DECIMAL and NUMERIC fields, -->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="com.netmarch.ajgl.system.bean" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+                   <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成Mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.netmarch.ajgl.system.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成哪些表 -->
+      <!-- <table tableName="Aj_ajlb" domainObjectName="Aj_ajlb"  enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+
+    </context>
+</generatorConfiguration>

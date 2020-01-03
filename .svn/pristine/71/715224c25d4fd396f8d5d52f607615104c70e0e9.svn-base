@@ -1,0 +1,83 @@
+package com.netmarch.figurecloud.management.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.figurecloud.management.system.bean.Dict;
+import com.netmarch.figurecloud.management.system.bean.PagesStatic;
+import com.netmarch.figurecloud.management.system.service.DictService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.netmarch.figurecloud.management.system.mapper.DictMapper;
+
+import java.util.List;
+
+/**
+ * @program: figurecloud
+ * @description: dict service
+ * @author: dinggan
+ * @create: 2019-02-14 11:20
+ **/
+@Service
+public class DictServiceImpl implements DictService {
+
+    @Autowired
+    private DictMapper dictMapper;
+
+    private static final String TYPE_PARENT_CODE = "-1";
+
+    @Override
+    public Page<Dict> queryByCondition(String keyWord,String parentCode,Integer pageNo) {
+        PageHelper.startPage(pageNo, PagesStatic.PAGES_SIZE);
+        return dictMapper.queryByCondition(keyWord,parentCode);
+    }
+
+    @Override
+    public int insertDict(Dict dict) {
+        return dictMapper.insertSelective(dict);
+    }
+
+    @Override
+    public int updateDict(Dict dict) {
+        return dictMapper.updateByPrimaryKeySelective(dict);
+    }
+
+
+    @Override
+    public List<Dict> findDictsByParentCode(String parentCode) {
+
+        return dictMapper.findDictsByParentCode(parentCode);
+    }
+
+
+    @Override
+    public List<Dict> listDictByParentCodeList(List<String> list) {
+        return dictMapper.listDictByParentCodeList(list);
+    }
+
+    @Override
+    public Dict findDictById(Integer id) {
+
+        return dictMapper.findDictById(id);
+    }
+
+    @Override
+    public List<Dict> findDictTypeAll() {
+        return dictMapper.findDictsByParentCode(TYPE_PARENT_CODE);
+    }
+
+    @Override
+    public Dict queryDictByCode(String code) {
+        return dictMapper.queryDictByCode(code);
+    }
+
+    @Override
+    public int deleteByIds(Integer[] ids) {
+        return dictMapper.deleteByIds(ids);
+    }
+
+    @Override
+    public List<Dict> findAll(){
+        return dictMapper.findAll();
+    }
+
+}

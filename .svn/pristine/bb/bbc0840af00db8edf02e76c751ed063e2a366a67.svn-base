@@ -1,0 +1,13 @@
+package com.netmarch.fdfs.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.fdfs.system.bean.Ajjbxx;
+
+import java.util.Map;
+
+public interface AjjbxxMapper {
+    //    Page<Map<String, Object>> getAllCase();
+    Page<Ajjbxx> getAllCase(String searchField,String searchName);
+
+    Page<Ajjbxx> getCaseByAjbs(String ajbs);
+}

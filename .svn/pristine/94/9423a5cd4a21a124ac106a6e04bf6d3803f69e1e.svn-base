@@ -1,0 +1,29 @@
+package com.netmarch.jzznyj.system.bean;
+
+import lombok.Data;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
+
+@Data
+@Table(name = "sys_organization")
+public class SysOrganization {
+    @Id
+    @GeneratedValue(generator = "JDBC")
+    private Integer id;
+    private Integer linkManId;
+    private String name;
+    private Integer rank;
+    private Integer regionCode;
+    private String address;
+    private String telephone;
+    private String email;
+    private Integer isDelete;
+    private Date createTime;
+    private Date updateTime;
+    private Integer parentId;
+    private String description;
+
+}

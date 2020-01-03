@@ -1,0 +1,54 @@
+<!--
+ * Author: wsp
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html id="html" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/individualism/feedback/add.js'"></script>
+</head>
+<body>
+<div>
+    <form class="layui-form" method="post" th:object="${feedback}">
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <td class="T106_itemName T106_must">标题</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="title" id="title"/>
+                        </td>
+                        <td class="T106_itemName"></td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">反馈内容</td>
+                        <td class="T106_itemValue">
+                            <textarea class="layui-textarea" name="content" maxlength="20"></textarea>
+                        </td>
+                        <td class="T106_itemName"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="customer.add()">确定</div>
+            <div class="A106_button A106_button2" onclick="customer.cancel()">取消</div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

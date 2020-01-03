@@ -1,0 +1,18 @@
+package com.netmarch.gaj.system.service;
+
+import com.netmarch.gaj.system.bean.ADwdmBak;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/30 14:00
+ */
+@Service
+public interface ADwdmBakService {
+    List<ADwdmBak> getAll();
+}

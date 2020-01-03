@@ -1,0 +1,44 @@
+package com.netmarch.jzzngd.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletContext;
+
+/**
+ * @Author:xieqiang
+ * @Date:2019/2/25
+ */
+@Component
+@EnableConfigurationProperties(PathProperties.class)
+public class ApplicationConfig implements ApplicationListener<ApplicationEvent> {
+
+    @Autowired
+    private PathProperties pathProperties;
+
+    @Autowired
+    private ServletContext servletContext;
+
+    @Autowired
+    private FdfsConfig fdfsConfig;
+
+    private String basePath = null;
+
+    private String fdfsPath = null;
+
+    @Override
+    public void onApplicationEvent(ApplicationEvent applicationEvent) {
+        if (basePath != null) {
+            return;
+        }
+        String zuulPath = pathProperties.getZuulPath();
+        String applicationPath = pathProperties.getApplicationPath();
+        this.basePath = "/" + applicationPath;  //uums
+        servletContext.setAttribute("basePath", basePath);
+        this.fdfsPath= "http://" + fdfsConfig.getResHost() + ":" + fdfsConfig.getStoragePort() + "/";
+        servletContext.setAttribute("fdfsPath", fdfsPath);
+    }
+}

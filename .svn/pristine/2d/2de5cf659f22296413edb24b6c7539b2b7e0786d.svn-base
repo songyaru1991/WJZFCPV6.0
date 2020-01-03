@@ -1,0 +1,202 @@
+package com.netmarch.lssqyj.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.lssqyj.system.bean.LoginUser;
+import com.netmarch.lssqyj.system.bean.Query;
+import com.netmarch.lssqyj.system.bean.PagesStatic;
+import com.netmarch.lssqyj.system.bean.SysRole;
+import com.netmarch.lssqyj.system.mapper.LoginUserMapper;
+import com.netmarch.lssqyj.system.service.LoginUserService;
+import org.apache.poi.hssf.usermodel.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @program: figurecloud
+ * @description: loginUser Service 实现类
+ * @author: songyaru
+ * @create: 2019-04-27
+ **/
+@Service
+public class LoginUserServiceImpl implements LoginUserService {
+    @Autowired
+    private LoginUserMapper loginUserMapper;
+
+    @Override
+    public Page<LoginUser> getUserList(LoginUser user, Query usersQuery) {
+
+        PageHelper.startPage(user.getPageNo() == null ? 1 : user.getPageNo(), PagesStatic.PAGES_SIZE);
+        return loginUserMapper.getUserList(user.getYhlb(),user.getAreaCode(),user.getArea(),usersQuery.getSearchCondition(),usersQuery.getSearchContent());
+
+    }
+
+    @Override
+    public String exportUsers(HttpServletResponse response, List<LoginUser> usersList) {
+        ServletOutputStream out=null;
+        try {
+            // 声明一个工作薄
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            //创建一个Excel表单,参数为sheet的名字
+            HSSFSheet sheet = workbook.createSheet("案件基本信息");
+            //创建表头
+            setTitle(workbook, sheet);
+            // List<Map<String, Object>> ajjbqksList = budgetAdjustService.getOainform(oaId);
+            //新增数据行，并且设置单元格数据
+            String fileName = "用户基本信息_" + new Date().getTime() + ".xls";
+            //清空response
+            response.reset();
+            //设置response的Header
+            response.addHeader("Content-Disposition", "attachment;filename=\""+ new String(fileName.toString().getBytes("utf-8"),"ISO8859_1") + "\"");
+            //out = new BufferedOutputStream(response.getOutputStream());
+            out=response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            if(usersList != null && !usersList.isEmpty()) {
+                for (int i = 0; i < usersList.size(); i++) {
+
+                    HSSFRow hssfRow = sheet.createRow(i + 1);
+                    LoginUser user = usersList.get(i);
+
+                    HSSFCell cell0 = hssfRow.createCell(0);
+                    cell0.setCellValue(i + 1);
+
+                    String loginname = "";
+                    HSSFCell cell1 = hssfRow.createCell(1);
+                    if (!StringUtils.isEmpty(user.getLoginname())) {
+                        loginname = user.getLoginname();
+                    }
+                    cell1.setCellValue(loginname);
+
+                    String username = "";
+                    HSSFCell cell2 = hssfRow.createCell(2);
+                    if (!StringUtils.isEmpty(user.getUsername())) {
+                        username = user.getUsername();
+                    }
+                    cell2.setCellValue(username);
+
+                    String zhiwei = "";
+                    HSSFCell cell3 = hssfRow.createCell(3);
+                    if (!StringUtils.isEmpty(user.getZhiwei())) {
+                        zhiwei = user.getZhiwei();
+                    }
+                    if("0".equals(zhiwei)){
+                        cell3.setCellValue("一般用户");
+                    }else if("1".equals(zhiwei)){
+                        cell3.setCellValue("部门负责人");
+                    }
+                    else if("2".equals(zhiwei)){
+                        cell3.setCellValue("检察长");
+                    }
+
+                    String mobilephone = "";
+                    HSSFCell cell4 = hssfRow.createCell(4);
+                    if (!StringUtils.isEmpty(user.getMobilephone())) {
+                        mobilephone = user.getMobilephone();
+                    }
+                    cell4.setCellValue(mobilephone);
+
+                    String ssks = "";
+                    HSSFCell cell5 = hssfRow.createCell(5);
+                    if (!StringUtils.isEmpty(user.getSsks())) {
+                        ssks = user.getSsks();
+                    }
+                    cell5.setCellValue(ssks);
+
+                    String grantroles = "";
+                    HSSFCell cell6 = hssfRow.createCell(6);
+                    if (!StringUtils.isEmpty(user.getGrantroles())) {
+                        grantroles = user.getGrantroles();
+                    }
+                    cell6.setCellValue(grantroles);
+
+
+                    String userstate = "";
+                    HSSFCell cell7 = hssfRow.createCell(7);
+                    if (!StringUtils.isEmpty(user.getUserstate())) {
+                        userstate = user.getUserstate().toString();
+                    }
+                    if("0".equals(userstate)){
+                        cell7.setCellValue("停用");
+                    }else if("1".equals(userstate)){
+                        cell7.setCellValue("启用");
+                    }
+
+                }
+            }
+            // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+            //将excel写入到输出流中
+            workbook.write(out);
+            out.flush();
+            out.close();
+            return null;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (out != null) {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        return null;
+    }
+
+    // 创建表头
+    private void setTitle(HSSFWorkbook workbook, HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow(0);
+        // 设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
+        sheet.setColumnWidth(8, 60 * 256);
+        // 设置为居中加粗
+        HSSFCellStyle style = workbook.createCellStyle();
+        HSSFFont font = workbook.createFont();
+        font.setBold(true);
+        style.setFont(font);
+        //导出的Excel头部
+        String[] headers = { "序号", "登录名", "用户姓名", "职位", "电话号码", "所属科室", "用户角色", "账号状态"};
+        // 设置表格默认列宽度为20个字节
+        sheet.setDefaultColumnWidth((short) 20);
+        for (short i = 0; i < headers.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            cell.setCellValue(text);
+            cell.setCellStyle(style);
+        }
+    }
+
+    @Override
+    public List<SysRole> getRoleIdByUserId(String user_Id){
+        return loginUserMapper.getRoleIdByUserId(user_Id);
+    }
+
+    @Override
+    public int getUserTypeByUserId(String user_Id){
+        return loginUserMapper.getUserTypeByUserId(user_Id);
+    }
+
+
+    @Override
+    public String getUserRoleIdsByUserId(String user_Id) {
+        List<Integer> list = loginUserMapper.getUserRoleIdsByUserId(user_Id);
+        String str = "";
+        if(list.size()>0){
+            str = org.apache.commons.lang3.StringUtils.join(list.toArray(), ",");
+        }
+        return str;
+    }
+
+}

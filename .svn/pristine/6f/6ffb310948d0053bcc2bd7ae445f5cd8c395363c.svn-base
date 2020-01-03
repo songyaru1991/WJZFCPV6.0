@@ -1,0 +1,55 @@
+package com.netmarch.lssqyj.system.bean;
+
+/**
+ * @Author: songyaru
+ * @Date: 2019/6/12 10:03
+ * @Version 1.0
+ */
+public class ResultBean {
+    private LoginUser loginUser;
+    private Departments departments;
+    private String  searchCondition;
+    private String  searchContent;
+    private String  pageNo;
+
+    public LoginUser getLoginUser() {
+        return loginUser;
+    }
+
+    public void setLoginUser(LoginUser loginUser) {
+        this.loginUser = loginUser;
+    }
+
+    public Departments getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(Departments departments) {
+        this.departments = departments;
+    }
+
+    public String getSearchCondition() {
+        return searchCondition;
+    }
+
+    public void setSearchCondition(String searchCondition) {
+        this.searchCondition = searchCondition;
+    }
+
+    public String getSearchContent() {
+        return searchContent;
+    }
+
+    public void setSearchContent(String searchContent) {
+        this.searchContent = searchContent;
+    }
+
+    public String getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(String pageNo) {
+        this.pageNo = pageNo;
+    }
+
+}

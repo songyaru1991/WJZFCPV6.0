@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Microsoft YaHei',SimHei;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+ol, ul, dl, dt, li {
+    list-style: none;
+}
+
+img {
+    border: none;
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+input:focus, textarea:focus {
+    background-color: none;
+    outline: none !important;
+}
+
+.All_main{
+    opacity: 1;
+    animation:showpage 1s;
+}
+
+@keyframes showpage
+{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+.clear:after{
+    content:"";
+    display: block;
+    width: 100%;
+    height: 0;
+    clear:both;
+}
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+a{
+    text-decoration: none;
+
+}
+.letter_2{
+    letter-spacing:2em; /*如果需要y个字两端对齐，则为(x-y)/(y-1),这里是（4-2）/(2-1)=2em */
+    margin-right:-2em; /*同上*/
+}
+.letter_3{
+    letter-spacing:0.5em; /*如果需要y个字两端对齐，则为(x-y)/(y-1),这里是（4-3）/(3-1)=0.5em */
+    margin-right:-0.5em; /*同上*/
+}
+/*只对谷歌浏览器有效*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0);
+}
+
+/*滚动条整体部分，其中的属性有width,height,background,border（就和一个块级元素一样）等。*/
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/*滚动条两端的按钮。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。*/
+::-webkit-scrollbar-track {
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0);
+    display: none;
+}
+
+/*外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果*/
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0);
+    display: none;
+}
+
+/*内层轨道，滚动条中间部分*/
+::-webkit-scrollbar-thumb {
+    background-color: #e8ebee;
+    border-radius: 6px;
+}
+
+/*滚动条里面可以拖动的那部分*/
+::-webkit-scrollbar-corner {
+    display: none;
+}
+
+/*边角*/
+::-webkit-resizer {
+}
+.fl{
+    float: left;
+    display: block;
+}
+.fr{
+    float: right;
+    display: block;
+}
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+a{
+    text-decoration: none;
+
+}

@@ -1,0 +1,24 @@
+package com.netmarch.jzznyj.system.service.impl;
+
+import com.netmarch.jzznyj.system.mapper.SysDictMapper;
+import com.netmarch.jzznyj.system.service.SysDictService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class SysDictServiceImpl implements SysDictService {
+    @Autowired
+    private SysDictMapper sysDictMapper;
+
+    @Override
+    public List<String> selectDzjzmlByDict() {
+        return sysDictMapper.selectDzjzmlByDict();
+    }
+
+    @Override
+    public List<String> selectHywjByDict() {
+        return sysDictMapper.selectHywjByDict();
+    }
+}

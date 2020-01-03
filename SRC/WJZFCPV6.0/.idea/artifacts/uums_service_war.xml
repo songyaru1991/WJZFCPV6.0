@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="uums-service:war">
+    <output-path>$PROJECT_DIR$/uums/uums-service/target</output-path>
+    <root id="archive" name="uums.war">
+      <element id="artifact" artifact-name="uums-service:war exploded" />
+    </root>
+  </artifact>
+</component>

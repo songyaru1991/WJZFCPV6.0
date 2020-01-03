@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.ZwpictureMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wssacw.system.bean.Zwpicture">
+    <id column="JLBH" jdbcType="VARCHAR" property="jlbh" />
+    <result column="ZWJLBH" jdbcType="VARCHAR" property="zwjlbh" />
+    <result column="PICNAME" jdbcType="VARCHAR" property="picname" />
+    <result column="OLDPICNAME" jdbcType="VARCHAR" property="oldpicname" />
+    <result column="UPLOADTIME" jdbcType="TIMESTAMP" property="uploadtime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="MSG_ID" jdbcType="INTEGER" property="msgId" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="MSG_STATUS" jdbcType="VARCHAR" property="msgStatus" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+    <result column="MSG_STATUS_GA" jdbcType="VARCHAR" property="msgStatusGa" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="MSG_STATUS_FY" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="MSG_STATUS_ZFW" jdbcType="VARCHAR" property="msgStatusZfw" />
+    <result column="MSG_STATUS_SFJ" jdbcType="VARCHAR" property="msgStatusSfj" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    <result column="PICCONTENT" jdbcType="LONGVARBINARY" property="piccontent" />
+    <result column="SMALLPICCONTENT" jdbcType="LONGVARBINARY" property="smallpiccontent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    JLBH, ZWJLBH, PICNAME, OLDPICNAME, UPLOADTIME, REMARK, MSG_ID, MSG_OP, MSG_STATUS, 
+    MSG_DATE
+  </sql>
+  <sql id="Blob_Column_List">
+    PICCONTENT, SMALLPICCONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zwpicture
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from zwpicture
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    insert into zwpicture (JLBH, ZWJLBH, PICNAME, 
+      OLDPICNAME, UPLOADTIME, REMARK, 
+      MSG_ID, MSG_OP, MSG_STATUS, 
+      MSG_DATE, PICCONTENT, SMALLPICCONTENT
+      )
+    values (#{jlbh,jdbcType=VARCHAR}, #{zwjlbh,jdbcType=VARCHAR}, #{picname,jdbcType=VARCHAR}, 
+      #{oldpicname,jdbcType=VARCHAR}, #{uploadtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{msgId,jdbcType=INTEGER}, #{msgOp,jdbcType=INTEGER}, #{msgStatus,jdbcType=VARCHAR}, 
+      #{msgDate,jdbcType=TIMESTAMP}, #{piccontent,jdbcType=LONGVARBINARY}, #{smallpiccontent,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    insert into zwpicture
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        JLBH,
+      </if>
+      <if test="zwjlbh != null">
+        ZWJLBH,
+      </if>
+      <if test="picname != null">
+        PICNAME,
+      </if>
+      <if test="oldpicname != null">
+        OLDPICNAME,
+      </if>
+      <if test="uploadtime != null">
+        UPLOADTIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="msgId != null">
+        MSG_ID,
+      </if>
+      <if test="msgOp != null">
+        MSG_OP,
+      </if>
+      <if test="msgStatus != null">
+        MSG_STATUS,
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE,
+      </if>
+      <if test="piccontent != null">
+        PICCONTENT,
+      </if>
+      <if test="smallpiccontent != null">
+        SMALLPICCONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        #{jlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="zwjlbh != null">
+        #{zwjlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="picname != null">
+        #{picname,jdbcType=VARCHAR},
+      </if>
+      <if test="oldpicname != null">
+        #{oldpicname,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
+        #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatus != null">
+        #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="piccontent != null">
+        #{piccontent,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="smallpiccontent != null">
+        #{smallpiccontent,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    update zwpicture
+    <set>
+      <if test="zwjlbh != null">
+        ZWJLBH = #{zwjlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="picname != null">
+        PICNAME = #{picname,jdbcType=VARCHAR},
+      </if>
+      <if test="oldpicname != null">
+        OLDPICNAME = #{oldpicname,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        UPLOADTIME = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
+        MSG_ID = #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgOp != null">
+        MSG_OP = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatus != null">
+        MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="piccontent != null">
+        PICCONTENT = #{piccontent,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="smallpiccontent != null">
+        SMALLPICCONTENT = #{smallpiccontent,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    update zwpicture
+    set ZWJLBH = #{zwjlbh,jdbcType=VARCHAR},
+      PICNAME = #{picname,jdbcType=VARCHAR},
+      OLDPICNAME = #{oldpicname,jdbcType=VARCHAR},
+      UPLOADTIME = #{uploadtime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      MSG_ID = #{msgId,jdbcType=INTEGER},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      PICCONTENT = #{piccontent,jdbcType=LONGVARBINARY},
+      SMALLPICCONTENT = #{smallpiccontent,jdbcType=LONGVARBINARY}
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wssacw.system.bean.Zwpicture">
+    update zwpicture
+    set ZWJLBH = #{zwjlbh,jdbcType=VARCHAR},
+      PICNAME = #{picname,jdbcType=VARCHAR},
+      OLDPICNAME = #{oldpicname,jdbcType=VARCHAR},
+      UPLOADTIME = #{uploadtime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      MSG_ID = #{msgId,jdbcType=INTEGER},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP}
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+
+  <insert id="saveUploadZwpicture" parameterType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    insert into zwpicture (JLBH, ZWJLBH, PICNAME,
+      OLDPICNAME, UPLOADTIME, REMARK,
+      MSG_ID, MSG_OP, MSG_STATUS, MSG_STATUS_GA, MSG_STATUS_JCY,
+      MSG_STATUS_FY, MSG_STATUS_ZFW, MSG_STATUS_SFJ,
+      MSG_DATE, PICCONTENT, SMALLPICCONTENT
+      )
+    values (#{jlbh,jdbcType=VARCHAR}, #{zwjlbh,jdbcType=VARCHAR}, #{picname,jdbcType=VARCHAR},
+      #{oldpicname,jdbcType=VARCHAR}, sysdate(), #{remark,jdbcType=VARCHAR},
+      #{msgId,jdbcType=INTEGER}, #{msgOp,jdbcType=INTEGER}, #{msgStatus,jdbcType=VARCHAR}, #{msgStatusGa,jdbcType=VARCHAR}, #{msgStatusJcy,jdbcType=VARCHAR},
+      #{msgStatusFy,jdbcType=VARCHAR}, #{msgStatusZfw,jdbcType=VARCHAR}, #{msgStatusSfj,jdbcType=VARCHAR},
+      #{msgDate,jdbcType=TIMESTAMP}, #{piccontent,jdbcType=LONGVARBINARY}, #{smallpiccontent,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+
+  <select id="getZwpictureList" parameterType="java.lang.String" resultType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    select jlbh, zwjlbh, picname, oldpicname,piccontent,smallpiccontent, uploadtime, remark
+    from zwpicture
+    where ZWJLBH = #{jlbh,jdbcType=VARCHAR} ORDER BY  uploadtime DESC
+  </select>
+
+  <select id="getZwpicturByJlbh" parameterType="java.lang.String" resultType="com.netmarch.wssacw.system.bean.ZwpictureWithBLOBs">
+    select jlbh, zwjlbh, picname, oldpicname,piccontent,smallpiccontent, uploadtime, remark
+    from zwpicture
+    where jlbh = #{jlbh,jdbcType=VARCHAR} ORDER BY  uploadtime DESC
+  </select>
+
+  <update id="delZwpicture" parameterType="java.lang.String">
+    update zwpicture  set  MSG_OP = 3,
+      MSG_STATUS_GA = 'NEW',
+      MSG_STATUS_JCY = 'NEW'
+    where zwjlbh = #{zwjlbh,jdbcType=VARCHAR}
+  </update>
+
+
+  <update id="delZwpictureByPicName" parameterType="java.lang.String">
+    update zwpicture  set  MSG_OP = 3,
+      MSG_STATUS_GA = 'NEW',
+      MSG_STATUS_JCY = 'NEW'
+    where PICNAME = #{picname,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getPicCountByjlbh" parameterType="String" resultType="java.lang.Integer">
+    select
+    count(*)
+    from zwpicture  where zwjlbh = #{zwjlbh,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateZwpictureJcyStatus" parameterType="java.lang.String">
+   update zwpicture  set
+       MSG_STATUS_JCY = 'NEW'
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateZwpictureGajStatus" parameterType="java.lang.String">
+   update zwpicture  set
+       MSG_STATUS_GA = 'NEW'
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

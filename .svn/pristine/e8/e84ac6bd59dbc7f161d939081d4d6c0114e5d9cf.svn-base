@@ -1,0 +1,23 @@
+package com.netmarch.wshy.system.service;
+
+import com.netmarch.wshy.system.bean.Hyxxb;
+import com.netmarch.wshy.system.bean.Yclogs;
+
+import java.util.List;
+
+;
+
+public interface HyxxbService {
+
+    List<Hyxxb> getHyxxByRybh(String rybh);
+
+    int InsertHyxx(Hyxxb hyxxb);
+
+    Hyxxb getHyxxByJlbh(String jlbh);
+
+    int updateYcHyxx(Hyxxb hyxxb);
+
+    int updatePjHyxx(Hyxxb hyxxb);
+
+    int insertYclogs(Yclogs yclogs);
+}

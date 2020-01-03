@@ -1,0 +1,21 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.Gj_ajjbqk;
+
+public interface Gj_ajjbqkMapper {
+    int deleteByPrimaryKey(String AJBS);
+
+    int insert(Gj_ajjbqk record);
+
+    int insertSelective(Gj_ajjbqk record);
+
+    Gj_ajjbqk selectByPrimaryKey(String AJBS);
+
+    int updateByPrimaryKeySelective(Gj_ajjbqk record);
+
+    int updateByPrimaryKey(Gj_ajjbqk record);
+
+    Gj_ajjbqk getAjjbqkByXyrbh(String xyrbh);
+
+    Gj_ajjbqk getAjjbqkListByAjbh(String ajbh);
+}

@@ -1,0 +1,124 @@
+package com.netmarch.wsgl.system.service.impl;
+
+import com.netmarch.wsgl.common.utils.Redis.HashJedisUtil;
+import com.netmarch.wsgl.common.utils.Redis.SetJedisUtil;
+import com.netmarch.wsgl.system.bean.*;
+import com.netmarch.wsgl.system.mapper.Aj_flws_fyMapper;
+import com.netmarch.wsgl.system.mapper.Aj_flws_gaMapper;
+import com.netmarch.wsgl.system.mapper.Aj_flws_jcyMapper;
+import com.netmarch.wsgl.system.mapper.Gj_xyrqkMapper;
+import com.netmarch.wsgl.system.service.WsglService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class WsglServiceImpl implements WsglService {
+
+    @Autowired
+    private Aj_flws_gaMapper ajFlwsGaMapper;
+
+    @Autowired
+    private Aj_flws_jcyMapper ajFlwsJcyMapper;
+
+    @Autowired
+    private Aj_flws_fyMapper ajFlwsFyMapper;
+
+    @Autowired
+    private Gj_xyrqkMapper gjXyrqkMapper;
+
+    @Override
+    public int saveWsysToGa(String jlbhs){
+        String[] arr = jlbhs.split(",");
+        List<String> list = new ArrayList<>();
+        for (String id : arr) {
+            String key = StaticObj.PREFIX_CACHE + id;
+            HashJedisUtil.deleteKey(key);
+            SetJedisUtil.srem(StaticObj.PREFIX_CACHE_USERID,id);
+            list.add(id);
+        }
+        return ajFlwsJcyMapper.saveWsysToGa(list);
+    }
+
+    @Override
+    public int saveWsysToFy(String jlbhs){
+        String[] arr = jlbhs.split(",");
+        List<String> list = new ArrayList<>();
+        for (String id : arr) {
+            String key = StaticObj.PREFIX_CACHE + id;
+            HashJedisUtil.deleteKey(key);
+            SetJedisUtil.srem(StaticObj.PREFIX_CACHE_USERID,id);
+            list.add(id);
+        }
+        return ajFlwsJcyMapper.saveWsysToFy(list);
+    }
+
+    @Override
+    public int updateGajWsToFy(List<String> jlbhlist){
+        return ajFlwsGaMapper.updateGajWsToFy(jlbhlist);
+    }
+
+    @Override
+    public List<Aj_flws_ga> getGajjhWsListByAjbs(String ajbs,String areaCode) {
+        return ajFlwsGaMapper.getGajjhWsListByAjbs(ajbs,areaCode);
+    }
+
+
+    @Override
+    public List<Aj_flws_jcy> getJcywsListByAjbs(String ajbs,String areaCode) {
+        return ajFlwsJcyMapper.getJcywsListByAjbs(ajbs,areaCode);
+    }
+
+    @Override
+    public List<Aj_flws_fy> getFyjhWsListByAjbs(String ajbs,String areaCode) {
+        return ajFlwsFyMapper.getFyjhWsListByAjbs(ajbs,areaCode);
+    }
+
+    @Override
+    public Aj_flws_jcy getJcyWsByJlbh(String jlbh){
+        return ajFlwsJcyMapper.getJcyWsByJlbh(jlbh);
+    }
+
+    @Override
+    public Aj_flws_ga getGajWsByJlbh(String jlbh){
+        return ajFlwsGaMapper.selectByPrimaryKey(jlbh);
+    }
+
+    @Override
+    public Aj_flws_fy getFyWsByJlbh(String jlbh){
+        return ajFlwsFyMapper.selectByPrimaryKey(jlbh);
+    }
+
+    @Override
+    public int selectJcyWsCountById(String jlbh){
+        return ajFlwsJcyMapper.selectJcyWsCountById(jlbh);
+    }
+
+    @Override
+    public int updateJcyWsByJlbh(Aj_flws_jcy ajFlwsJcy){
+        return ajFlwsJcyMapper.updateByPrimaryKeySelective(ajFlwsJcy);
+    }
+
+    @Override
+    public int checkRepeatWswh(Aj_flws_jcy ajFlwsJcy) {
+        return ajFlwsJcyMapper.checkRepeatWswh(ajFlwsJcy);
+    }
+
+    @Override
+    public int insertJcyWs(Aj_flws_jcy ajFlwsJcy){
+        return ajFlwsJcyMapper.insert(ajFlwsJcy);
+    }
+
+    @Override
+    public List<Gj_xyrqk> getXyrListByAjbs(String ajbs){
+        return gjXyrqkMapper.getXyrListByAjbs(ajbs);
+    }
+
+    @Override
+    public int delws(String jlbh){
+        return ajFlwsJcyMapper.delws(jlbh);
+    }
+
+}

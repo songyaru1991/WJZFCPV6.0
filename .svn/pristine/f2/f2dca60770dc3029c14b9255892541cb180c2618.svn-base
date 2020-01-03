@@ -1,0 +1,16 @@
+package com.netmarch.figurecloud.management.system.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * @program: figurecloud
+ * @description: dict client
+ * @author: dinggan
+ * @create: 2019-02-15 13:41
+ **/
+@FeignClient("backstage")
+@RequestMapping("dict")
+public interface DictClient {
+
+}

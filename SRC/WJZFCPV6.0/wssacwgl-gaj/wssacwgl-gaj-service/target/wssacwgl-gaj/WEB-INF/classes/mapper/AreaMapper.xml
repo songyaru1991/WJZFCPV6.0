@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.AreaMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wssacw.system.bean.Area">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="GAJ_AREA_NAME" jdbcType="VARCHAR" property="gajAreaName" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="JCY_AREA_NAME" jdbcType="VARCHAR" property="jcyAreaName" />
+    <result column="FY_AREA_NAME" jdbcType="VARCHAR" property="fyAreaName" />
+    <result column="SFJ_AREA_NAME" jdbcType="VARCHAR" property="sfjAreaName" />
+    <result column="ZFW_AREA_NAME" jdbcType="VARCHAR" property="zfwAreaName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, GAJ_AREA_NAME, AREA_CODE, JCY_AREA_NAME, FY_AREA_NAME, SFJ_AREA_NAME, ZFW_AREA_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from area
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from area
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wssacw.system.bean.Area">
+    insert into area (ID, GAJ_AREA_NAME, AREA_CODE, 
+      JCY_AREA_NAME, FY_AREA_NAME, SFJ_AREA_NAME, 
+      ZFW_AREA_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{gajAreaName,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{jcyAreaName,jdbcType=VARCHAR}, #{fyAreaName,jdbcType=VARCHAR}, #{sfjAreaName,jdbcType=VARCHAR}, 
+      #{zfwAreaName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wssacw.system.bean.Area">
+    insert into area
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="gajAreaName != null">
+        GAJ_AREA_NAME,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+      <if test="jcyAreaName != null">
+        JCY_AREA_NAME,
+      </if>
+      <if test="fyAreaName != null">
+        FY_AREA_NAME,
+      </if>
+      <if test="sfjAreaName != null">
+        SFJ_AREA_NAME,
+      </if>
+      <if test="zfwAreaName != null">
+        ZFW_AREA_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gajAreaName != null">
+        #{gajAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jcyAreaName != null">
+        #{jcyAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="fyAreaName != null">
+        #{fyAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="sfjAreaName != null">
+        #{sfjAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="zfwAreaName != null">
+        #{zfwAreaName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wssacw.system.bean.Area">
+    update area
+    <set>
+      <if test="gajAreaName != null">
+        GAJ_AREA_NAME = #{gajAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jcyAreaName != null">
+        JCY_AREA_NAME = #{jcyAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="fyAreaName != null">
+        FY_AREA_NAME = #{fyAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="sfjAreaName != null">
+        SFJ_AREA_NAME = #{sfjAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="zfwAreaName != null">
+        ZFW_AREA_NAME = #{zfwAreaName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wssacw.system.bean.Area">
+    update area
+    set GAJ_AREA_NAME = #{gajAreaName,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      JCY_AREA_NAME = #{jcyAreaName,jdbcType=VARCHAR},
+      FY_AREA_NAME = #{fyAreaName,jdbcType=VARCHAR},
+      SFJ_AREA_NAME = #{sfjAreaName,jdbcType=VARCHAR},
+      ZFW_AREA_NAME = #{zfwAreaName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getAreaByAreaCode"  parameterType="String" resultType="com.netmarch.wssacw.system.bean.Area">
+   Select   iD,  area_Code areaCode,  gAJ_Area_Name gajAreaName,  jCY_Area_Name jcyAreaName,  fY_Area_Name fyAreaName,
+   sFJ_Area_Name sfjAreaName,  zFW_Area_Name zfwAreaName
+   from AREA  where area_Code=#{areaCode,jdbcType=VARCHAR} order by ID Desc
+  </select>
+
+  <select id="getArea" resultType="com.netmarch.wssacw.system.bean.Area">
+   Select   iD,  area_Code areaCode,  gAJ_Area_Name gajAreaName,  jCY_Area_Name jcyAreaName,  fY_Area_Name fyAreaName,
+   sFJ_Area_Name sfjAreaName,  zFW_Area_Name zfwAreaName
+   from AREA
+  </select>
+
+</mapper>

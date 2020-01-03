@@ -1,0 +1,133 @@
+<!--
+ * Author: wsp 
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/util.js'"></script>
+    <script th:src="${application.basePath}+'/static/web/individualism/notice/notice.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+
+
+</head>
+<body>
+<form id="form" th:action="${application.basePath}+'/log/list'"  class="layui-form">
+    <div class="I106_page">
+        <!--头部页面-->
+        <div th:replace="common/top::top"></div>
+        <!--内容s-->
+        <div class="I106_content">
+            <div class="I106_container clear">
+                <div class="I106_contentTop clear">
+
+                    <div class="I106_title">
+                        <span>操作日志</span>
+                        <img th:src="${application.basePath}+'/static/images/arrowDown2.png'" alt="">
+                    </div>
+                    <div class="I106_searchOuter">
+                        <div class="I106_search clear">
+
+                            <input type="text" class="layui-input date-item" id="startTime" placeholder="开始时间"  th:value="${logQuery.startTime}"  name ="startTime"  lay-key="23">
+                            <input type="text" class="layui-input date-item" id="endTime" placeholder="结束时间"  th:value="${logQuery.endTime}"   name ="endTime" lay-key="24">
+
+
+                            <input class="layui-input" name="gjz" type="text" placeholder="关键字" th:value="${logQuery.gjz}">
+                            <input class="layui-input" type="text" name="keyword" placeholder="用户名/ip/操作类型"  th:value="${logQuery.keyword}">
+                        </div>
+                        <div class="I106_searchRight">
+                            <div class="I106_searchButton" onclick="customer.submit()">搜索</div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="I106_contentRight">
+                        <div class="I106_tabelOuter">
+                            <table class="layui-table I106_table"  lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                                <thead>
+                                <tr>
+                                   <!-- <th lay-data="{field: 'id',style:'display:none;'"></th>-->
+                                    <th lay-data="{field:'count',width: 80}">序号</th>
+                                    <th lay-data="{field:'yhm',width: 150}">用户名</th>
+                                    <th lay-data="{field:'dlip',width: 150}">ip地址</th>
+                                    <th lay-data="{field:'czlx',width: 150}">操作类型</th>
+                                    <th lay-data="{field:'cznr',width: 250}">模块内容</th>
+                                    <th lay-data="{field:'gjz',width: 220}">关键字</th>
+                                    <th lay-data="{field:'czsj',width: 220}">操作时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                 <tr  th:each="logs,logsStat : ${list.result}" >
+                                   <td th:text="${logsStat.count+(list.pageNum-1)*list.pageSize}">
+                                         序号</td>
+                                    <td th:text="${logs.yhm}">用户名</td>
+                                    <td th:text="${logs.dlip}">ip地址</td>
+                                    <td th:text="${logs.czlx}">操作类型</td>
+                                     <td th:text="${logs.cznr}">操作内容</td>
+                                    <td th:text="${logs.gjz}">关键字</td>
+                                    <td th:text="${#dates.format(logs.czsj, 'yyyy-MM-dd HH:mm:ss')}">操作时间</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--分页引用-->
+                        <div th:replace="common/pages::pages"></div>
+                </div>
+            </div>
+        </div>
+        <!--底部页面-->
+        <div th:replace="common/bottom::bottom"></div>
+    </div>
+</form>
+
+<script th:inline="javascript">
+    layui.use(['form', 'table', 'laydate'], function () {
+        layui.table.init('demo', {
+            limit: 15
+        });
+
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+        //同时绑定多个
+        lay('.date-item').each(function(){
+            laydate.render({
+                elem: this
+                ,type: 'datetime'
+                ,trigger: 'click'
+            });
+        });
+        form.render();
+    });
+
+    var customer = {
+        index: null,
+        returnURL: function (url) {
+            return /*[[@{*/url/*}]]*/;
+        },
+        targer_url: function (url) {
+            location.href = customer.returnURL(url);
+        },
+
+        submit: function () {
+            $("#form").submit();
+        }
+    };
+</script>
+</body>
+</html>

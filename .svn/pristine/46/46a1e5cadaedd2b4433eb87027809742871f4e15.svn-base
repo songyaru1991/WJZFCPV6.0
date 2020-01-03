@@ -1,0 +1,5 @@
+package com.netmarch.figurecloud.auth.exposure.model;
+
+public enum LoginMode {
+    Web,Screen,Andriod,Apple
+}

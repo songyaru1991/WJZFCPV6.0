@@ -1,0 +1,7 @@
+package com.netmarch.fdfs.system.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public interface AjdzjzwjService {
+}

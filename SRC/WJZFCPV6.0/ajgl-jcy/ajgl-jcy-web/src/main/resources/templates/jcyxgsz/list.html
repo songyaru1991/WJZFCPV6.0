@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+ <div class="H105_iframeright"  auth:check="jcyXgszManage">
+     <div class="H105_wripper">
+         <div class="H105_subtitle clear">
+             <div class="H105_local fl">
+                 <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                      class="H105_caseImg fl">
+                 <p>系统管理：相关设置</p>
+             </div>
+
+         </div>
+         <div id="table_refresh" th:fragment="table_refresh">
+             <div class="H105_sysList H105_sysList1">
+                 <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                     <thead>
+                     <tr>
+                         <th lay-data="{field:'1',width:70}">序号</th>
+                         <td lay-data="{field:'2'}">相关设置名称</td>
+                         <td lay-data="{field:'3', width:230}">操作</td>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr th:each="bean,beanStat : ${list}">
+                         <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}">
+                             序号
+                         </td>
+                         <div th:switch="${bean.name}">
+                             <td th:case="fa">案件分案是否允许查看案件详细信息</td>
+                             <td th:case="cn">是否提示嫌疑人未成年</td>
+                             <td th:case="sa">案件收案是否允许查看影印资料</td>
+                             <td th:case="qs">起诉红绿灯期限（办案期限，红灯表示已经超期，绿灯表示未过期限的）</td>
+                             <td th:case="pb">批捕红绿灯期限（办案期限，红灯表示已经超期，绿灯表示未过期限的）</td>
+                         </div>
+                         <td>
+
+                             <a class="site-demo-active1 cursor" data-name="查看"  th:data-url="'../jcyXgsz/toView?id=' + ${bean.id}" data-type="tabAdd" auth:check="jcyXgszToView">
+                                 <span>查看</span>
+                             </a>
+                             <a  class="site-demo-active1 cursor" data-name="编辑"  th:data-url="'../jcyXgsz/toEdit?id=' + ${bean.id}" data-type="tabAdd"  auth:check="jcyXgszToEdit">
+                                 <span>编辑</span>
+                             </a>
+                         </td>
+                     </tr>
+                     </tbody>
+                 </table>
+                 <!--分页引用-->
+                 <div class="H105_pageCoat clear">
+                     <div class="H105_first clear fl">
+                         本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}"/>-<span
+                             th:text="${list.endRow >list.total ? list.total : list.endRow }"/> 总记录数：<span
+                             th:text="${list.total}"></span>
+                     </div>
+                     <div th:replace="common/pages::pages"></div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <script th:inline="javascript">
+         var contextPath = getContextPath();
+         var layIndex;
+         var table = null, layer = null;
+         layui.use('table', function () {
+             layui.table.init('demo', {
+                 limit: 12
+             });
+             layer = layui.layer;
+             table = layui.table;
+         })
+
+         function localRefresh() {
+             // 装载局部刷新返回的页面
+             var pageNo = $(" #pageNo").val();
+             var param = {"pageNo": pageNo};
+             $("#table_refresh").load("../jcyXgsz/tableList", param, function () {
+                 layui.use('table', function () {
+                     layui.table.init('demo', {
+                         limit: 12
+                     });
+                 });
+             });
+         }
+
+     </script>
+ </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!--
+ * Author: wsp 
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+   <title>公安局--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/web/system/dict/edit.js'"></script>
+
+</head>
+<body>
+<form th:action="${application.basePath}+'/dict'" class="layui-form" id="form">
+    <input type="hidden" name="id" th:value="${bean.id}">
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>基本信息</legend>
+                </fieldset>
+            </div>
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <td class="T106_itemName T106_must">字典名称</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="name" name="name" placeholder="请输入"  type="text" th:value="${bean.name}" maxlength="20">
+                        </td>
+
+                        <td class="T106_itemName T106_must">字典编码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="code" name="code" placeholder="请输入"  type="text" th:value="${bean.code}" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">备注</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="comments" name="comments" placeholder="请输入"  type="text" th:value="${bean.comments}" maxlength="100">
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="updateType()">确定</div>
+            <div class="A106_button A106_button2" onclick="parent.window.closeLayer()">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

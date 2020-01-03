@@ -1,0 +1,60 @@
+package com.netmarch.lssqyj.system.bean;
+
+public class JsonResult {
+
+    private int code;
+    private String message;
+    private String nextUrl;
+    private Object data;
+
+    public JsonResult(){} //无参构造
+
+    public JsonResult(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public JsonResult(int code, String message,Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    public JsonResult(int code, String message, String nextUrl) {
+        this.code = code;
+        this.message = message;
+        this.nextUrl = nextUrl;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getNextUrl() {
+        return nextUrl;
+    }
+
+    public void setNextUrl(String nextUrl) {
+        this.nextUrl = nextUrl;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+}

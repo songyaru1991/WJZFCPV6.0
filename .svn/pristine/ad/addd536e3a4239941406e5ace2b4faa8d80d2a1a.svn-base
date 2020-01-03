@@ -1,0 +1,25 @@
+package com.netmarch.lssqyj.system.bean;
+
+public enum JzztEnum {
+    OCRSBZ("OCR识别中"), BMZ("编目中"), SBWC("识别完成"), BMWC("编目完成"), DSC("待上传"), DBM("待编目") {
+        @Override
+        public boolean isRest() {
+            return true;
+        }
+    };
+
+    private String value;
+
+    private JzztEnum(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public boolean isRest() {
+        return false;
+    }
+
+}

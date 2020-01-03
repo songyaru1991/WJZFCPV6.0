@@ -1,0 +1,12 @@
+package com.netmarch.figurecloud.auth.core.security.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ConfigurationProperties(prefix = "netmarch.security.web-filter")
+@Data
+public class WebFilterConfig {
+    String skipUrls;
+}

@@ -1,0 +1,54 @@
+package com.netmarch.sso.common.controller;
+
+import com.netmarch.sso.loginsystem.bean.ZtreeNode;
+import com.netmarch.sso.loginsystem.enums.IndividulType;
+import com.netmarch.sso.loginsystem.service.LogService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @ClassName FrontBaseController
+ * @Description TODO
+ * @Author ZGD
+ * @Date 2019/2/1416:53
+ * @Version 1.0
+ **/
+public class FrontBaseController extends BaseController {
+
+    @Autowired
+    public LogService logService;
+
+    protected  void log(String yhm,String czlx,String cznr,String gjz,boolean isException){
+
+        logService.save(yhm,getIp(),czlx,cznr,gjz,isException);
+
+    }
+
+    public List<ZtreeNode> showTypeTree() {
+        List<ZtreeNode> listTree = new ArrayList<ZtreeNode>();
+
+        ZtreeNode ztree = new ZtreeNode();
+        ztree.setId("1");
+        ztree.setPid("0");
+        ztree.setName("全部" );
+        ztree.setParent(true);
+        List<ZtreeNode> list = new ArrayList<ZtreeNode>();
+        int i = 1;
+        for(IndividulType type: IndividulType.values()){
+            ZtreeNode ztreeUnRead = new ZtreeNode();
+            ztreeUnRead.setId("1" + (i++));
+            ztreeUnRead.setName(type.getDescription());
+            ztreeUnRead.setPid("1");
+            ztreeUnRead.setValue(type.getValue().toString());
+            list.add(ztreeUnRead);
+        }
+        ztree.setChildren(list);
+        listTree.add(ztree);
+
+        return listTree;
+    }
+
+
+}

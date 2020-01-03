@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: zuul
+  cloud:
+    consul:
+      host: 172.16.1.144
+      port: 8501
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        hostname: ${spring.cloud.client.ip-address}
+        port: ${server.port}
+        healthCheckPath: /actuator/health
+      config:
+        enabled: true
+        format: YAML
+        profileSeparator: '::'
+        data-key: data
+      ribbon:
+        enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 5555
+zuul:
+  ignored-services: 'consul'
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 10000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+auth-server:
+  ribbon:
+    listOfServers: http://localhost:8888

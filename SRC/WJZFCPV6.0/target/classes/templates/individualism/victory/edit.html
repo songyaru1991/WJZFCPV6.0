@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/individualism/victory/all.js'"></script>
+</head>
+<body>
+<form  class="layui-form" id="editVictoryForm" >
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent" style="margin-top: 20px;">
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table" >
+                    <tr>
+                        <td class="T106_itemName T106_must">标题</td>
+                        <td class="T106_itemValue">
+                            <input type="hidden" name="id" th:value="${victory.id}">
+                            <input class="layui-input" id="title" name="title" placeholder="请输入"  th:value="${victory.title}" type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName T106_must">战果类型</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" id="type" name="type" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${victory_type}"
+                                        th:text="${dict.name}" th:value="${dict.code}" th:selected="${dict.code==victory.type}" >
+                                </option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName T106_must">战果时间</td>
+                        <td>
+                            <input class="layui-input" id="victoryDate" name="victoryDate" th:value="${#dates.format(victory.victoryDate, 'yyyy-MM-dd HH:mm:ss')}"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">战果人数</td>
+                        <td>
+                            <input class="layui-input" id="victoryPerson" name="victoryPerson" th:value="${victory.victoryPerson}" placeholder="请输入" type="text" value="" maxlength="20">
+                        </td>
+
+                        <td class="T106_itemName T106_must">破案人数</td>
+                        <td>
+                            <input class="layui-input" id="solveCasePerson" name="solveCasePerson" th:value="${victory.solveCasePerson}" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">备注</td>
+                        <td colspan="5" class="T106_itemValue">
+                            <input class="layui-input" name="remarks" id="remarks" placeholder="请输入" type="text" value="" maxlength="20" th:value="${victory.remarks}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="editVictorySubmit()">确定</div>
+            <div class="A106_button A106_button2" onclick="abandon()">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+
+</html>
+

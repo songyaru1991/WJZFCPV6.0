@@ -1,0 +1,31 @@
+package com.netmarch.figurecloud.auth.core.security.endpoint;
+
+import com.netmarch.figurecloud.auth.core.security.authenticate.JwtAuthenticationToken;
+import com.netmarch.figurecloud.auth.core.security.exceptions.GeneralAuthenticationException;
+import com.netmarch.figurecloud.auth.core.service.SysLoginUserService;
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+/** 
+* @Description: ProfileEndpoint 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 14:28
+*/ 
+@RestController
+public class ProfileEndpoint {
+    @Autowired
+    SysLoginUserService sysLoginUserService;
+    @RequestMapping(value="/user-context", method= RequestMethod.GET)
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    public @ResponseBody
+    SysLoginUser get(JwtAuthenticationToken token) {
+        String userName = token.getPrincipal().getUsername();
+        SysLoginUser sysLoginUser = sysLoginUserService.queryHasRoles(userName).orElseThrow(
+                ()-> new GeneralAuthenticationException("未获取到用户信息")
+        );
+        sysLoginUser.setPassword(null);
+        return sysLoginUser;
+    }
+
+}

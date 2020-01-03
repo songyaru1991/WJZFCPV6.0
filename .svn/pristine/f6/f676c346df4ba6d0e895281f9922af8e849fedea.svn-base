@@ -1,0 +1,16 @@
+package com.netmarch.figurecloud.auth.core.security.authenticate.jwt.verifier;
+
+import org.springframework.stereotype.Component;
+
+/** 
+* @Description: BloomFilterTokenVerifier 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 14:09
+*/ 
+@Component
+public class BloomFilterTokenVerifier implements TokenVerifier {
+    @Override
+    public boolean verify(String jti) {
+        return true;
+    }
+}

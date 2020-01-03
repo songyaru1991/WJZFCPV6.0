@@ -1,0 +1,169 @@
+package com.netmarch.jzznyj.system.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.netmarch.jzznyj.system.bean.*;
+import com.netmarch.jzznyj.system.service.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+
+/**
+ * @ClassName: ZnyjController
+ * @Desc: 智能阅卷
+ * @Author: gdy
+ * @Date: 2019/7/8
+ */
+@Controller
+@Slf4j
+@RequestMapping("/znyj")
+public class ZnyjController {
+
+    @Autowired
+    private LssqmService lssqmService;
+
+    @Autowired
+    private SqmydzjzglbService sqmydzjzglbService;
+
+    @Autowired
+    private AjdzjzmlService ajdzjzmlService;
+
+    @Autowired
+    private AjdzjzwjService ajdzjzwjService;
+
+    /**
+     * @Desc: 律师阅卷登录
+     * @Date: 2019/7/8
+     */
+    @RequestMapping("/lsyjLogin")
+    public String lsyj_login() {
+        return "/znyj/authorize_login";
+    }
+
+    /**
+     * @Desc: 验证律师阅卷登录
+     * @Date: 2019/7/8
+     */
+    @PostMapping("/verifyLsyjLogin")
+    @ResponseBody
+    public Object verifyLsyjLogin(@RequestParam("sqm") String sqm){
+        return lssqmService.getInfoBySqm(sqm);
+    }
+
+    /**
+     * @Desc: 律师阅卷
+     * @Date: 2019/7/8
+     */
+    @RequestMapping("/lsyj")
+    public String lsyj(HttpServletRequest request,Model model) {
+        String sqm = request.getParameter("sqm");
+        String type = request.getParameter("type");
+        model.addAttribute("sqm", sqm);
+        model.addAttribute("type", type);
+        return "/znyj/lsyj";
+    }
+
+    /**
+     * @Desc: 律师阅卷左侧iframe
+     * @Date: 2019/7/8
+     */
+    @RequestMapping("/lsyj_left")
+    public String lsyj_left(HttpServletRequest request,Model model){
+        String sqm = request.getParameter("sqm");
+        String type = request.getParameter("type");
+        Lssqm lssqm = lssqmService.getInfoBySqm(sqm);
+        List<Sqmydzjzglb> list = sqmydzjzglbService.getListBySqmid(lssqm.getId());
+        String wjids = "";
+        if(null != list && list.size() > 0){
+            for(Sqmydzjzglb s : list){
+                wjids += s.getAjdzjzwjid();
+            }
+        }
+        model.addAttribute("treeList", getZtree("aj",lssqm.getAjbs(),wjids));
+        model.addAttribute("sqm", sqm);
+        model.addAttribute("type", type);
+        return "/znyj/lsyj_left";
+    }
+
+    /**
+     * @Desc: 律师阅卷右侧iframe
+     * @Date: 2019/7/8
+     */
+    @RequestMapping("/lsyj_right")
+    public String lsyj_right(){
+        return "/znyj/lsyj_right";
+    }
+
+    /**
+     * @Desc: 人工稚嫩阅卷
+     * @Date: 2019/7/8
+     */
+    @RequestMapping("/navigationBarZnyj")
+    public String navigationBarZnyj(HttpServletRequest request, Model model){
+        String listType = request.getParameter("listType");
+        model.addAttribute("listType", listType);
+        return "/system/navigationBarZnyj";
+    }
+
+    /**
+     * @Desc: 智能阅卷zTree数据
+     * @Date: 2019/7/8
+     */
+    private Object getZtree(String type,String ajbs,String wjids){
+        int selectedNum = 0;  // 律师授权07/04
+        int selectedNum1 = 0;  // 律师授权07/04
+        List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent(ajbs,"-1",type);
+        List<Map<String,Object>> lssqList = new ArrayList<>();  // 律师授权07/01
+        if(mlList.size() > 0) {
+            for (int i = 0; i < mlList.size(); i++) {
+                Map<String,Object> lssqMap = new HashMap<>();  // 律师授权07/01
+                    List<Map<String,Object>> lssqList2 = new ArrayList<>();  // 律师授权07/01
+                    List<Ajdzjzml> znml = ajdzjzmlService.selectDzjzmlByParent(ajbs,mlList.get(i).getOrderby().toString(),type);
+                    if(null != znml && znml.size() > 0){
+                        for (int z=0;z<znml.size();z++) {
+                            Map<String, Object> lssqMap2 = new HashMap<>();  // 律师授权07/01
+                            lssqMap2.put("name",znml.get(z).getTypename());  // 律师授权07/01
+                            List<Map<String,Object>> lssqList3 = new ArrayList<>();  // 律师授权07/01
+                            List<Ajdzjzwj> lssqWjs = ajdzjzwjService.selectWjByOrderby(znml.get(z).getOrderby(),ajbs,type);  // 律师授权07/01
+                            if(null != lssqWjs){  // 律师授权07/01
+                                for(Ajdzjzwj lssqwj : lssqWjs){  // 律师授权07/01
+                                    Map<String, Object> lssqMap3 = new HashMap<>();  // 律师授权07/01
+                                    lssqMap3.put("name",String.format("%03d", lssqwj.getOldsort()));  // 律师授权07/01
+                                    lssqMap3.put("wjid",lssqwj.getId());  // 律师授权07/01
+                                    if(wjids.indexOf(lssqwj.getId())!=-1){  // 律师授权07/04
+                                        lssqMap3.put("checked",true);  // 律师授权07/04
+                                        selectedNum += 1;  // 律师授权07/04
+                                        selectedNum1 += 1;  // 律师授权07/04
+                                    }  // 律师授权07/04
+                                    lssqList3.add(lssqMap3);  // 律师授权07/01
+                                }  // 律师授权07/01
+                            }  // 律师授权07/01
+                            lssqMap2.put("children",lssqList3);  // 律师授权07/01
+                            if(selectedNum1 > 0){  // 律师授权07/04
+                                lssqMap2.put("checked",true);  // 律师授权07/04
+                                lssqMap2.put("open",true);  // 律师授权07/04
+                            }  // 律师授权07/04
+                            lssqList2.add(lssqMap2);  // 律师授权07/01
+                            selectedNum1 = 0;  // 律师授权07/04
+                        }
+                    lssqMap.put("children",lssqList2);  // 律师授权07/01
+                }
+                lssqMap.put("name",mlList.get(i).getTypename());  // 律师授权07/01
+                log.info("************************************************" + mlList.get(i).getTypename());
+                if(selectedNum > 0){  // 律师授权07/04
+                    lssqMap.put("checked",true);  // 律师授权07/04
+                    lssqMap.put("open",true);  // 律师授权07/04
+                }  // 律师授权07/04
+                lssqList.add(lssqMap);  // 律师授权07/01
+            }
+        }
+            return JSONArray.toJSONString(lssqList);  // 律师授权07/01
+    }
+}

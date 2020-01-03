@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wsgl-sfj-service:war">
+    <output-path>$PROJECT_DIR$/wsgl-sfj/wsgl-sfj-service/target</output-path>
+    <root id="archive" name="wsgl-sfj.war">
+      <element id="artifact" artifact-name="wsgl-sfj-service:war exploded" />
+    </root>
+  </artifact>
+</component>

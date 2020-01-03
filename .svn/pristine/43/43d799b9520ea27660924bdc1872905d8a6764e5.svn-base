@@ -1,0 +1,58 @@
+package com.netmarch.fdfs.system.bean;
+
+public class Ajdzjzznml {
+    private Integer item;
+    private String file;
+    private String author;
+    private String title;
+    private Integer pageTo;
+    private Integer pageFrom;
+
+    public Integer getItem() {
+        return item;
+    }
+
+    public void setItem(Integer item) {
+        this.item = item;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getPageTo() {
+        return pageTo;
+    }
+
+    public void setPageTo(Integer pageTo) {
+        this.pageTo = pageTo;
+    }
+
+    public Integer getPageFrom() {
+        return pageFrom;
+    }
+
+    public void setPageFrom(Integer pageFrom) {
+        this.pageFrom = pageFrom;
+    }
+}

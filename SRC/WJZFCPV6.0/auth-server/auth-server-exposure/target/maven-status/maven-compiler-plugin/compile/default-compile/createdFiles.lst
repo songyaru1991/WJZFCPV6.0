@@ -1,0 +1,6 @@
+com\netmarch\figurecloud\auth\exposure\model\SysRole.class
+com\netmarch\figurecloud\auth\exposure\model\UserContext.class
+com\netmarch\figurecloud\auth\exposure\model\LoginRequest.class
+com\netmarch\figurecloud\auth\exposure\model\SysLoginUser.class
+com\netmarch\figurecloud\auth\exposure\feign\AuthClient.class
+com\netmarch\figurecloud\auth\exposure\model\LoginMode.class

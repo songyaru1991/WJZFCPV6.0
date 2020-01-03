@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.sso.loginsystem.mapper.LoginUserMapper">
+
+    <select id="getUserList" parameterType="String"
+            resultType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        select u.user_id,u.loginName,u.userName,d.mc yhlb,u.area,u.userState
+        from users u LEFT JOIN dict_ga d on u.yhlb=d.code
+        where 1=1
+        <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+            <if test='searchCondition == "searchLoginName"'>
+                and u.loginname like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchUserName"'>
+                and u.username like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchYhlb"'>
+                and u.yhlb like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+
+        </if>
+    </select>
+
+    <select id="getUserById" parameterType="String"
+            resultType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        select a.user_Id,a.loginname,a.password,a.username,a.jh,a.AREA_CODE areaCode,a.area,a.yhlb,a.grantroles,a.zhiwei,a.mobilephone,
+        a.yhdw, a.ssks,a.sfxszjclaj,a.fingertemplate,a.userstate,a.addtime,a.adduser,a.IP_LIMIT ipLimit,a.usertype
+        from users a
+        where a.user_id = #{user_Id}
+    </select>
+    
+    <insert id="addLoginUser"
+            parameterType="com.netmarch.sso.loginsystem.bean.LoginUser">
+       insert into users (user_Id,loginname,password,username,jh,AREA_CODE,area,yhlb,grantroles,zhiwei,mobilephone,
+                yhdw,ssks,sfxszjclaj,fingertemplate,userstate,addtime,adduser,IP_LIMIT,usertype)
+        values
+        (#{user_Id},#{loginname},#{password},#{username},#{jh},#{areaCode},#{area},#{yhlb},#{grantroles},#{zhiwei},#{mobilephone},
+        #{yhdw},#{ssks},#{sfxszjclaj},#{fingertemplate},#{userstate},sysdate(),#{adduser},#{ipLimit},#{usertype})
+    </insert>
+
+    <update id="updateLoginUser" parameterType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        update users
+        <set>
+            <if test="loginname != null">
+                LOGINNAME = #{loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="jh != null">
+                JH = #{jh,jdbcType=VARCHAR},
+            </if>
+            <if test="userstate != null">
+                USERSTATE = #{userstate,jdbcType=INTEGER},
+            </if>
+            <if test="addtime != null">
+                ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="adduser != null">
+                ADDUSER = #{adduser,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
+                AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                AREA = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="ipLimit != null">
+                IP_LIMIT = #{ipLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="usertype != null">
+                USERTYPE = #{usertype,jdbcType=INTEGER},
+            </if>
+            <if test="grantroles != null">
+                GRANTROLES = #{grantroles,jdbcType=VARCHAR},
+            </if>
+            <if test="fingertemplate != null">
+                FINGERTEMPLATE = #{fingertemplate,jdbcType=VARCHAR},
+            </if>
+            <if test="zhiwei != null">
+                ZHIWEI = #{zhiwei,jdbcType=CHAR},
+            </if>
+            <if test="mobilephone != null">
+                MOBILEPHONE = #{mobilephone,jdbcType=VARCHAR},
+            </if>
+            <if test="yhdw != null">
+                YHDW = #{yhdw,jdbcType=VARCHAR},
+            </if>
+            <if test="ssks != null">
+                SSKS = #{ssks,jdbcType=VARCHAR},
+            </if>
+            <if test="sfxszjclaj != null">
+                SFXSZJCLAJ = #{sfxszjclaj,jdbcType=CHAR},
+            </if>
+            <if test="yhlb != null">
+                YHLB = #{yhlb,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{user_Id}
+    </update>
+
+    <update id="editLoginUser"
+            parameterType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        update users set loginName = #{loginname}, userName = #{username},area_Code=#{areaCode},
+        area=#{area},yhlb=#{yhlb},userstate = #{userstate},addtime = sysdate(), adduser = #{adduser}
+        where user_id = #{user_Id}
+    </update>
+
+    <delete id="delBatch" parameterType="List">
+        delete from users where user_id in
+        <foreach collection="list" item="user_Id" open="(" separator="," close=")">
+            #{user_Id}
+        </foreach>
+    </delete>
+
+    <select id="checkRepeatLoginName"
+            parameterType="com.netmarch.sso.loginsystem.bean.LoginUser"
+            resultType="int">
+        select count(1) from users where loginName = #{loginname}
+        <if test="user_Id !=null">
+            and user_Id &lt;&gt; #{user_Id}
+        </if>
+        <if test="yhlb !=null">
+            and yhlb = #{yhlb}
+        </if>
+    </select>
+
+    <select id="checkLoginByLoginName" parameterType="com.netmarch.sso.loginsystem.bean.LoginUser" resultType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        select  USER_ID user_Id, LOGINNAME loginname, PASSWORD password, USERNAME username, JH jh, USERSTATE userstate, ADDTIME addtime, ADDUSER adduser, AREA_CODE areaCode,
+    AREA area, IP_LIMIT ipLimit, FINGERTEMPLATE fingertemplate, ZHIWEI zhiwei, MOBILEPHONE mobilephone, SSKS ssks,
+    SFXSZJCLAJ sfxszjclaj, YHLB yhlb,usertype from users where LoginName = #{loginname}
+    </select>
+
+    <select id="checkLoginByUserId" parameterType="com.netmarch.sso.loginsystem.bean.LoginUser" resultType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        select  USER_ID user_Id, LOGINNAME loginname, PASSWORD password, USERNAME username, JH jh, USERSTATE userstate, ADDTIME addtime, ADDUSER adduser, AREA_CODE areaCode,
+    AREA area, IP_LIMIT ipLimit, FINGERTEMPLATE fingertemplate, ZHIWEI zhiwei, MOBILEPHONE mobilephone, SSKS ssks,
+    SFXSZJCLAJ sfxszjclaj, YHLB yhlb,usertype from users where USER_ID = #{user_Id}
+    </select>
+
+    <select id="getUsers" parameterType="String"
+            resultType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        select a.user_Id,a.loginname,a.password,a.username,a.jh,a.AREA_CODE
+        areaCode,a.area,a.yhlb,a.grantroles,a.zhiwei,a.mobilephone,
+        a.yhdw, b.name ssks,a.sfxszjclaj,a.fingertemplate,a.userstate,a.addtime,a.adduser,a.IP_LIMIT ipLimit,a.usertype
+        from users a left join departments b on a.SSKS=b.ID
+        where 1=1
+        <if test="yhlb != '' and yhlb != null">
+            and a.yhlb=#{yhlb,jdbcType=VARCHAR}
+        </if>
+
+        <if test="areaCode != '' and areaCode != null">
+            and a.AREA_CODE=#{areaCode,jdbcType=VARCHAR}
+        </if>
+
+        <if test="area != '' and area != null">
+            and a.area=#{area,jdbcType=VARCHAR}
+        </if>
+
+        <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+            <if test='searchCondition == "searchLoginName"'>
+                and a.loginname like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchUserName"'>
+                and a.username like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchSsks"'>
+                and a.SSKS like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+        </if>
+
+    </select>
+
+    <select id="getUserTypeByUserId" parameterType="String" resultType="Integer">
+        select usertype from users where user_id = #{user_Id}
+    </select>
+
+    <select id="getLoginUserByLoginName" parameterType="String"
+            resultType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        select a.user_Id,a.loginname,a.password,a.username,a.jh,a.AREA_CODE areaCode,a.area,a.yhlb,a.grantroles,a.zhiwei,a.mobilephone,
+        a.yhdw, a.ssks,a.sfxszjclaj,a.fingertemplate,a.userstate,a.addtime,a.adduser,a.IP_LIMIT ipLimit,a.usertype
+        from users a
+        where a.loginname = #{loginname}
+    </select>
+
+</mapper>

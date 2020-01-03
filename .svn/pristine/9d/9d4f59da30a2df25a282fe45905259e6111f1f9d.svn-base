@@ -1,0 +1,88 @@
+package com.netmarch.figurecloud.management.system.bean;
+
+import java.util.List;
+
+/**
+ * @ClassName ZtreeNode
+ * @Description ztree bean
+ * @Author wangdk
+ * @Date 2019/2/2716:05
+ * @Version 1.0
+ **/
+public class ZtreeNode {
+
+    private String id;
+    private String pid;
+    private String name;
+    private String value;
+    private boolean open;
+    private boolean isParent;
+    private List<ZtreeNode> children;
+
+    public List<ZtreeNode> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ZtreeNode> children) {
+        this.children = children;
+    }
+
+    public boolean isParent() {
+        return isParent;
+    }
+
+    public void setParent(boolean parent) {
+        isParent = parent;
+    }
+
+    @Override
+    public String toString() {
+        return "ZtreeNode{" +
+                "id='" + id + '\'' +
+                ", pid='" + pid + '\'' +
+                ", name='" + name + '\'' +
+                ", open=" + open +
+                ", isParent=" + isParent +
+                '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+}

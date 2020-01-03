@@ -1,0 +1,27 @@
+package com.netmarch.fdfs.system.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * Feign示例：
+ *  @FeignClient("backstage") ：现在后台管理系统只有一个服务，后续拆分将内容变更对应模块应用名，注意检查Application启动文件是否有配对Feign扫描
+ *  @RequestMapping("base_gallery")：与Controller一致，否则会调用失败
+ * @Author:xieqiang
+ * @Date:2019/2/15
+ */
+@FeignClient("fdfs")
+@Component
+@RequestMapping("base_gallery")
+public interface BaseGalleryClient {
+    /**
+     * 测试用例
+     * @param msg
+     * @return
+     */
+    @GetMapping("test")
+    String test(@RequestParam String msg);
+}

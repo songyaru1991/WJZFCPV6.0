@@ -1,0 +1,98 @@
+package com.netmarch.wsgl.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.netmarch.wsgl.common.controller.FrontBaseController;
+import com.netmarch.wsgl.common.utils.UsersUtil;
+import com.netmarch.wsgl.system.bean.Gj_ajjbqk;
+import com.netmarch.wsgl.system.bean.Query;
+import com.netmarch.wsgl.system.client.AjjbqkClient;
+import com.netmarch.wsgl.system.service.AjjbqkService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@Controller
+@RequestMapping("/Ajjbqk/*")
+@Slf4j
+public class AjjbqkController extends FrontBaseController implements AjjbqkClient {
+
+    @Autowired
+    HttpServletRequest request;
+
+    @Autowired
+    HttpServletResponse response;
+
+    @Autowired
+    private AjjbqkService ajjbqkService;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Autowired
+    UsersUtil usersUtil;
+
+    /**
+     * 加载左边导航栏
+     */
+    @RequestMapping("/navigationBarWsglList")
+    public String navigationBar(Model model, Query ajjbqkQuery){
+        String area=request.getParameter("area");
+        String areaCode=request.getParameter("area_code");
+        model.addAttribute("area", area);
+        model.addAttribute("areaCode", areaCode);
+
+        String pageNo= request.getParameter("pageNo");
+        if(pageNo==null) {
+            pageNo = "";
+        }
+        if(ajjbqkQuery.getSearchContent()==null) {
+            ajjbqkQuery.setSearchContent("");
+        }
+        if(ajjbqkQuery.getSearchCondition()==null) {
+            ajjbqkQuery.setSearchCondition("");
+        }
+        model.addAttribute("ajjbqkQuery", ajjbqkQuery);
+        model.addAttribute("pageNo", pageNo);
+
+        return "system/navigationBarWsglList";
+    }
+
+    /**
+     *  /ajjbqklist：案件基本信息列表 ，/tableList:table表刷新
+     */
+    @RequestMapping(value = { "/ajjbqklist", "/tableList"})
+    public String ajjbqklist(Gj_ajjbqk gj_ajjbqk,Query ajjbqkQuery, Model model){
+        String user_Id="",requestURI="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            Page<Gj_ajjbqk> gj_ajjbqks = ajjbqkService.getAjjbqkListPage(gj_ajjbqk,ajjbqkQuery);
+            model.addAttribute("list", gj_ajjbqks);
+            model.addAttribute("ajjbqkQuery", ajjbqkQuery);
+            if(ajjbqkQuery.getSearchContent()==null || ajjbqkQuery.getSearchContent().equals("")){
+                log(user_Id,"案件基本信息列表","获取所有的基本案件信息","文书管理(检察院文书管理)",false);
+            }
+            else{
+                log(user_Id,"案件基本信息查询列表","获取案件基本信息查询列表,搜索条件为:" + JSON.toJSONString(ajjbqkQuery),"文书管理(检察院文书管理)",false);
+            }
+
+            requestURI=request.getRequestURI();
+        } catch (Exception e) {
+            log(user_Id,"案件基本信息列表",e.toString(),"文书管理(检察院文书管理)",true);
+            e.printStackTrace();
+        }
+        if(requestURI.equals("/wsgl-jcy/Ajjbqk/tableList")){
+            return "wsgl/ajjbqklist::table_refresh";
+        }
+        return "wsgl/ajjbqklist";
+    }
+
+}

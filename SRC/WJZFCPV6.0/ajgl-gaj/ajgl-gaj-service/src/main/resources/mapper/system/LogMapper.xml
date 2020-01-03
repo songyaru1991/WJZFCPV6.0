@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.gaj.system.mapper.LogMapper">
+    <select id="listLog" parameterType="com.netmarch.gaj.system.model.LogQuery" resultType="com.netmarch.gaj.system.bean.Log">
+        SELECT F_YHM yhm,F_DLIP dlip,F_CZLX czlx,F_CZNR cznr,F_GJZ gjz,F_CZSJ czsj FROM logs WHERE  1=1
+        <if test="startTime != null and  startTime!='' ">
+            <![CDATA[ and DATE_FORMAT(F_CZSJ, '%Y-%m-%d %H:%i:%s') >= #{startTime} ]]>
+        </if>
+        <if test="endTime != null and   endTime!=''">
+            <![CDATA[  and DATE_FORMAT(F_CZSJ, '%Y-%m-%d %H:%i:%s') <= #{endTime} ]]>
+        </if>
+
+        <if test="gjz != null and gjz != ''">
+            AND F_GJZ =#{gjz}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            and (F_DLIP=#{keyword}  or F_YHM=#{keyword}  or F_CZLX=#{keyword} )
+        </if>
+        order by F_CZSJ desc
+    </select>
+
+    <select id="listLogException" parameterType="com.netmarch.gaj.system.model.LogQuery" resultType="com.netmarch.gaj.system.bean.Log">
+        SELECT F_YHM yhm,F_DLIP dlip,F_CZLX czlx,F_CZNR cznr,F_GJZ gjz,F_CZSJ czsj FROM logserror WHERE  1=1
+        <if test="startTime != null and  startTime!='' ">
+            <![CDATA[ and DATE_FORMAT(F_CZSJ, '%Y-%m-%d %H:%i:%s') >= #{startTime} ]]>
+        </if>
+        <if test="endTime != null and   endTime!=''">
+            <![CDATA[  and DATE_FORMAT(F_CZSJ, '%Y-%m-%d %H:%i:%s') <= #{endTime} ]]>
+        </if>
+
+        <if test="gjz != null and gjz != ''">
+            AND F_GJZ =#{gjz}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            and (F_DLIP=#{keyword}  or F_YHM=#{keyword}  or F_CZLX=#{keyword} )
+        </if>
+        order by F_CZSJ desc
+    </select>
+
+    <insert id="saveLog" parameterType="com.netmarch.gaj.system.bean.Log" >
+       insert into logs(F_YHM,F_DLIP,F_CZLX,F_CZNR,F_GJZ,F_CZSJ) values (#{yhm},#{dlip},#{czlx},#{cznr},#{gjz},#{czsj})
+    </insert>
+
+    <insert id="saveLogException" parameterType="com.netmarch.gaj.system.bean.Log" >
+       insert into logserror(F_YHM,F_DLIP,F_CZLX,F_CZNR,F_GJZ,F_CZSJ) values (#{yhm},#{dlip},#{czlx},#{cznr},#{gjz},#{czsj})
+    </insert>
+</mapper>

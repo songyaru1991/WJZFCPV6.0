@@ -1,0 +1,18 @@
+package com.netmarch.figurecloud.auth.core.security.exceptions;
+
+import org.springframework.security.core.AuthenticationException;
+
+/**
+* @Description: InvalidJwtToken 无效token
+* @Author: fengxiang
+* @Date: 2019/2/15 14:06
+*/ 
+public class InvalidJwtToken extends AuthenticationException {
+    private static final long serialVersionUID = -294671188037098603L;
+    public InvalidJwtToken(String msg){
+        super(msg);
+    }
+    public InvalidJwtToken(String msg,Throwable throwable){
+        super(msg,throwable);
+    }
+}

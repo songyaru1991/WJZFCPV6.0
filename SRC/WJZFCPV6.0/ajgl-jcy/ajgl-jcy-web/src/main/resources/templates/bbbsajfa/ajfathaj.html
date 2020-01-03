@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style_10.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+    <div class="E105_wripper">
+        <div class="E105_case1 layui-form">
+            <div class="E105_subtitle clear">
+                <div class="E105_biaoti fl" th:switch="${ajlx_bbbs}">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p th:case="101">报捕案件办理</p>
+                    <p th:case="113">报诉案件办理</p>
+                </div>
+
+                <div class="E105_checkCoat fr">
+
+                    <div class="E105_check fl cursor"
+                         data-name="查看"
+                         th:data-url="'../Bbbsajfa/toBbbsfaView?ajbs=' + ${ajbs} +'&ajlx_bbbs='+${ajlx_bbbs}+'&ajlist='+${ajlist}"
+                         data-type="tabAdd" auth:check="BbbsfaView">
+                        <img th:src="${application.basePath}+'/static/images/H105_checkIco1.png'" alt="" class="E105_checkIco">
+                        <p>查看</p>
+                    </div>
+                    <div class="E105_check fl cursor" th:if="${ajlist == 'wfaj'}" data-name="编辑"
+                         th:data-url="'../Bbbsajfa/toBbbsfaEdit?ajbs=' + ${ajjbqk.ajbs}+'&ajlx_bbbs='+${ajlx_bbbs}+'&ajlist='+${ajlist}"
+                         data-type="tabAdd" auth:check="BbbsajfaEdit">
+                        <img th:src="${application.basePath}+'/static/images/H105_checkIco2.png'" alt="" class="E105_checkIco2">
+                        <p>编辑</p>
+                    </div>
+
+                    <div  th:if="${ajlist == 'wfaj'}"
+                          class="E105_check fl cursor E105_checkClick" data-name="退回案件"
+                          th:data-url="'../Bbbsajfa/toAjfaThaj?ajbs=' + ${ajbs}+'&ajlx_bbbs='+${ajlx_bbbs}+'&ajlist='+${ajlist}"
+                          data-type="tabAdd" auth:check="BbbsajfaTh">
+                        <img class="E105_checkIco2" th:src="${application.basePath}+'/static/images/H105_checkIco10.png'" alt="">
+                        <p>退回案件 </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="E105_tableCoat3">
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>退回案件</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor3">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>退回原因:</p>
+                                </div>
+                                <div class="T110_input fl">
+                                    <input type="text" class="layui-input" lay-verify="required" lay-verType="tips" th:name="ajthyy">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="text" name="ajbs" th:value="${ajbs}" style="display: none">
+                </div>
+            </div>
+
+            <div class="S105_btnCoat1 ">
+                <div class="T110_saveBtnCoat clear">
+                    <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">保存
+                    </button>
+                    <button class="layui-btn fl site-demo-active2" data-type="tabDelete" >取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script th:inline="javascript">
+
+
+    var contextPath = getContextPath();
+
+    layui.use(['form','layer'], function(){
+        var $ = layui.jquery, layer = layui.layer, form = layui.form; //独立版的layer无需执行这一句
+
+        form.on('submit(formDemo)', function (saveform) {   //saveform是form表单中所选中所有数据 saveform.field 为表单中的值
+            $.ajax({
+                url: contextPath + "/Bbbsajfa/ajfaThaj",
+                type: "post",
+                data: saveform.field,
+                dataType: "json",
+                success: function (result) {
+                    if(result.code == 200){
+                        layer.alert(result.message,function () {
+                            layer.close(layer.index);
+                            //刷新列表页面的table
+
+                            //调用列表页面的刷新
+                            window.parent.$("#id_H105_conIframe").contents().find("#frm")[0].contentWindow.localRefresh();
+
+                            //关闭当前页面
+                            window.parent.parent.$('.layui_H105_title .layui-this').attr('lay-id');
+                            $(this).data('url',window.parent.parent.$('.layui_H105_title .layui-this').attr('lay-id'));
+                            $(this).data('type',"tabDelete");
+                            window.parent.parent.active1($(this));
+
+                        });
+                    }else{
+                        layer.alert(result.message);
+                        return;
+                    }
+                }
+
+            })
+        });
+
+    });
+
+
+    function layerclose() {
+        layer.close(layIndex);
+    }
+
+</script>
+
+</html>

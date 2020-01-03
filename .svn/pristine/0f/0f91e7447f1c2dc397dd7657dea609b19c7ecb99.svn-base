@@ -1,0 +1,16 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.AjAjlb;
+
+import java.util.List;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/30 12:55
+ */
+public interface AjAjlbMapper {
+    List<AjAjlb> getAllLb();
+}

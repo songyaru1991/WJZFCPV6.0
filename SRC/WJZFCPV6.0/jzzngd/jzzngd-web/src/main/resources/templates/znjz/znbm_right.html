@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>卷宗智能归档系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+
+    <style type="text/css">
+        .imgToggle {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="A105R_pictureCoat">
+    <div class="A205_btn clear">
+        <div class="A205_listBtn fr">
+            <p id="thumbnailBtn" class="imgToggle A205_btnEmphasis">缩略图</p>
+            <p id="imgBtn" class="imgToggle">图片</p>
+        </div>
+    </div>
+
+    <!-- 缩略图 -->
+    <div id="thumbnailContent" class="item_container" isShow="1" style="display: block;">
+        <div class="item_content A305_content clear" id="imageChange">
+        </div>
+    </div>
+
+    <!-- 图片 -->
+    <div id="imgContent" isShow="0"  style="display: none;">
+
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#thumbnailBtn').click(function(){
+            if('0' == $('#thumbnailContent').attr('isShow')) {
+                $('#thumbnailContent').css('display', 'block');
+                $('#thumbnailContent').attr('isShow', '1')
+                $('#imgContent').css('display', 'none');
+                $('#imgContent').attr('isShow', '0')
+            }
+        })
+        $('#imgBtn').click(function(){
+            if('0' == $('#imgContent').attr('isShow')) {
+                $('#imgContent').css('display', 'block');
+                $('#imgContent').attr('isShow', '1')
+                $('#thumbnailContent').css('display', 'none');
+                $('#thumbnailContent').attr('isShow', '0')
+            }
+        })
+    })
+
+    function showPic(v){
+        var wjid = '.' + $(v).attr('wjid');
+        $('.A205_content').css('display','none');
+        $('.A205_imgCoat').css('display','none');
+        $(wjid).css('display','block');
+        $('#imgBtn').click();
+    }
+
+    function previousImg1(v) {
+        var obj=$(v).parent();
+        var str = obj.prev().css('display');
+        if(str&&'none'==str){
+            obj.css('display','none');
+            obj.next().css('display','none');
+            obj.prev().css('display','block');
+            obj.prev().prev().css('display','block');
+        }else{
+            alert('已经是第一张了!');
+        }
+    }
+
+    function nextImg1(v) {
+        var obj=$(v).parent();
+        var str = obj.next().next().css('display');
+        if(str&&'none'==str){
+            obj.css('display','none');
+            obj.next().css('display','none');
+            obj.next().next().css('display','block');
+            obj.next().next().next().css('display','block');
+        }else{
+            alert('已经是最后一张了!');
+        }
+    }
+
+    function previousImg(v) {
+        var obj=$(v).parent().parent();
+        var str = obj.prev().prev().css('display');
+        if(str&&'none'==str){
+            obj.css('display','none');
+            obj.prev().css('display','none');
+            obj.prev().prev().css('display','block');
+            obj.prev().prev().prev().css('display','block');
+        }else{
+            alert('已经是第一张了!');
+        }
+    }
+
+    function nextImg(v) {
+        var obj=$(v).parent().parent();
+        var str = obj.next().css('display');
+        if(str&&'none'==str){
+            obj.css('display','none');
+            obj.prev().css('display','none');
+            obj.next().css('display','block');
+            obj.next().next().css('display','block');
+        }else{
+            alert('已经是最后一张了!');
+        }
+    }
+
+    function rotateThumbnail(v) { // 旋转缩略图
+        var obj=$(v).parent().parent().parent().prev();
+        var deg=eval('get'+obj.css('transform'));//构造getmatrix函数,返回上次旋转度数
+        var step=$(v).attr('deg');//每次旋转多少度
+        step = Number(step);//字符串转int
+        var wjid=$(v).attr('wjid');
+        obj.css({'transform':'rotate('+(deg+step)%360+'deg)'});
+        rotate(wjid,step);
+    }
+
+    function rotateImg(v) { // 旋转图片
+        var obj=$(v).parent().parent().prev().find('.A105_presentation');
+        var deg=eval('get'+obj.css('transform'));//构造getmatrix函数,返回上次旋转度数
+        var step=$(v).attr('deg');//每次旋转多少度
+        step = Number(step);//字符串转int
+        var wjid=$(v).attr('wjid');
+        obj.css({'transform':'rotate('+(deg+step)%360+'deg)'});
+        rotate(wjid,step);
+    }
+
+    function deleteFile2(v) {
+        var wjid = $(v).attr('wjid');
+        var wjpath = $(v).attr('wjpath');
+        $.post("/jzzngd/znjz/deleteFile",{wjid:wjid,wjpath:wjpath}, function(data) {
+            console.log('删除成功！');
+            parent.$('.A105_catalogue_jq').contents().find('#flushBtn1').click();
+            parent.$('.A105_catalogue_jq').contents().find('#flushBtn2').click();
+        })
+        var str = $(v).prev().attr('deg');
+        if(str){ // 图片上的删除按钮
+            var obj = $(v).parent().parent();
+            var next = obj.next().css('display');
+            var prev = obj.prev().prev().css('display');
+            if(next){ //删除后显示后面的图片
+                obj.next().css('display','block');
+                obj.next().next().css('display','block');
+            }else{
+                if(prev){ //后面没有的情况显示前面的图片
+                    obj.prev().prev().css('display','block');
+                    obj.prev().prev().prev().css('display','block');
+                }
+            }
+            obj.prev().remove();
+            obj.remove();
+            $('#'+wjid).remove();
+        }else{ // 缩略图
+            var obj = $('#'+wjid);
+            var next = obj.next().attr('gdy');
+            var prev = obj.prev().attr('gdy');
+            if(next){ //删除后显示后面的图片
+                var str = obj.next().attr('id');
+                $('.'+str).css('display','block')
+            }else{
+                if(prev){ //后面没有的情况显示前面的图片
+                    var str = obj.prev().attr('id');
+                    $('.'+str).css('display','block')
+                }
+            }
+            $('#'+wjid).remove();
+            $('.'+wjid).remove();
+        }
+        var ml = parent.$('.A105_catalogue_jq').contents().find('.'+wjid);
+        var next = ml.next();
+        var prev = ml.prev();
+        if(next.attr('wjid')){// 如果后面还有图片，显示后面图片
+            next.addClass('A105L_itemChoose');
+
+        }else{
+            if(prev.attr('wjid')){// 后面没有往前看
+                prev.addClass('A105L_itemChoose');
+            }
+        }
+        parent.$('.A105_catalogue_jq').contents().find('.'+wjid).remove();
+    }
+
+    function replaceFile2(v) {
+        var wjid = $(v).attr('wjid');
+        var uploadMessage = {"wjid":wjid,"treeId":"","ajbs":"",herf:'upload'};
+        parent.parent.postMessage(uploadMessage,'*');
+    }
+    /*
+    * 解析matrix矩阵，0°-360°，返回旋转角度
+    * 当a=b||-a=b,0<=deg<=180
+    * 当-a+b=180,180<=deg<=270
+    * 当a+b=180,270<=deg<=360
+    *
+    * 当0<=deg<=180,deg=d;
+    * 当180<deg<=270,deg=180+c;
+    * 当270<deg<=360,deg=360-(c||d);
+    * */
+    function getmatrix(a,b,c,d,e,f){
+        var aa=Math.round(180*Math.asin(a)/ Math.PI);
+        var bb=Math.round(180*Math.acos(b)/ Math.PI);
+        var cc=Math.round(180*Math.asin(c)/ Math.PI);
+        var dd=Math.round(180*Math.acos(d)/ Math.PI);
+        var deg=0;
+        if(aa==bb||-aa==bb){
+            deg=dd;
+        }else if(-aa+bb==180){
+            deg=180+cc;
+        }else if(aa+bb==180){
+            deg=360-cc||360-dd;
+        }
+        return deg>=360?0:deg;
+        //return (aa+','+bb+','+cc+','+dd);
+    }
+
+    function rotate(wjid,step) {
+        $.post("/jzzngd/znjz/rotateImg",{wjid:wjid, angel:step}, function(data) {
+            if(1==data||'1'==data){
+                console.log('旋转成功!');
+            }else{
+                console.log('旋转失败!');
+            }
+        })
+    }
+</script>
+</body>
+</html>

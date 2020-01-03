@@ -1,0 +1,75 @@
+package com.netmarch.figurecloud.auth.core.security.authenticate.login;
+
+import com.netmarch.figurecloud.auth.exposure.model.LoginMode;
+import com.netmarch.figurecloud.auth.core.service.SysLoginUserService;
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import com.netmarch.figurecloud.auth.exposure.model.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author vladimir.stankovic
+ * <p>
+ * Aug 3, 2016
+ */
+@Component
+public class LoginAuthenticationProvider implements AuthenticationProvider {
+    private final BCryptPasswordEncoder encoder;
+    private final SysLoginUserService sysLoginUserService;
+
+    @Autowired
+    public LoginAuthenticationProvider(final SysLoginUserService accountService, final BCryptPasswordEncoder encoder, SysLoginUserService sysLoginUserService) {
+        this.sysLoginUserService = sysLoginUserService;
+        this.encoder = encoder;
+    }
+
+    /**
+     * 用户名和密码认证
+     *
+     * @param authentication
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        Assert.notNull(authentication, "未提供认证凭证");
+        String accountName = (String) authentication.getPrincipal();
+        String password = (String) authentication.getCredentials();
+        LoginMode mode = (LoginMode) authentication.getDetails();
+        SysLoginUser sysLoginUser = sysLoginUserService.queryHasRoles(accountName)
+                .orElseThrow(() -> new UsernameNotFoundException("不存在用户名:" + accountName));;
+        if (!encoder.matches(password, sysLoginUser.getPassword())) {
+            throw new BadCredentialsException("认证失败，用户名或密码不正确.");
+        }
+
+        if (sysLoginUser.getSysRoles() == null) {
+            throw new InsufficientAuthenticationException("用户不属于任何角色组");
+        }
+        List<GrantedAuthority> authorities = sysLoginUser.getSysRoles().stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+                .collect(Collectors.toList());
+        /**
+         * 生成用户上下文
+         */
+        UserContext userContext = UserContext.create(sysLoginUser.getLoginName(),mode,sysLoginUser.getOrganizationId(),authorities);
+        return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+}

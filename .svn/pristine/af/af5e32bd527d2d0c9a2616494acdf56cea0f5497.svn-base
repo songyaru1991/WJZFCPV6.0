@@ -1,0 +1,7 @@
+package com.netmarch.jzznyj.system.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient("jzznyj")
+public interface LoginUserClient {
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+ <div class="H105_iframeright" auth:check="bbajsaManage">
+     <div class="H105_wripper">
+         <div class="H105_subtitle clear">
+             <div class="H105_local fl" th:switch="${ajlx_bbbs}">
+                 <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                      class="H105_caseImg fl">
+                 <p th:case="101">侦监：报捕案件收案</p>
+                 <p th:case="113">公诉：报诉案件收案</p>
+             </div>
+
+             <div class="H105_searchCoat layui-form fr clear">
+                 <div class="layui-form-item S205_down">
+                     <div class="layui-input-block">
+                         <select name="searchCondition" id="searchCondition"  lay-filter="aihao">
+                             <option value="">请选择</option>
+                             <option value="searchAjmc" >案件名称</option>
+                             <option value="searchXyrxm">嫌疑人姓名</option>
+                         </select>
+                     </div>
+                 </div>
+                 <input type="text" id="searchContent" name="searchContent" class="S205_search fl" maxlength="25">
+                 <div class="S205_searchBtn fl " onclick="localRefresh()">搜索</div>
+             </div>
+         </div>
+         <div id="table_refresh" th:fragment="table_refresh">
+             <div class="H105_sysList H105_sysList1">
+                 <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                     <thead>
+                     <tr>
+                         <td lay-data="{field:'1'}">嫌疑人姓名</td>
+                         <td lay-data="{field:'2'}">案件名称</td>
+                         <td lay-data="{field:'3'}">案件状态</td>
+                         <td lay-data="{field:'4'}">移送时间</td>
+                         <td lay-data="{field:'5', width:230}">操作</td>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr th:each="bean,beanStat : ${list}">
+                         <td th:text="${bean.xyrxms}">嫌疑人姓名</td>
+                         <td th:text="${bean.ajmc}">案件名称</td>
+                         <td th:text="${bean.ajzt}">案件状态</td>
+                         <td th:text="${#dates.format(bean.yssj, 'yyyy-MM-dd HH:mm:ss')}">移送时间</td>
+                         <td>
+                           <!--  <a th:href="${'javascript:toBbajScaj('''+bean.ajbs+''')'}" auth:check="BbajScaj">
+                                 <span>生成案件</span>
+                             </a>-->
+                             <a class="site-demo-active1 cursor" data-name="生成案件"  th:data-url="'../Bbbsajsa/toBbbsajScaj?ajbs=' + ${bean.ajbs} +'&ajlx_bbbs='+${ajlx_bbbs}" data-type="tabAdd" auth:check="BbbsajScaj">
+
+                                 <span>生成案件</span>
+                             </a>
+                             <a  class="site-demo-active1 cursor" data-name="退回案件"  th:data-url="'../Bbbsajsa/toAjsaThaj?ajbs=' + ${bean.ajbs} +'&ajlx_bbbs='+${ajlx_bbbs}" data-type="tabAdd"  auth:check="BbbsajThaj">
+                                 <span>退回案件</span>
+                             </a>
+                             <a th:href="${'javascript:toDelete('''+bean.ajbs+''')'}" th:if="${jcyXgszState == 1}" auth:check="BbbsajDzjz">
+                                 <span>电子卷宗</span>
+                             </a>
+                         </td>
+                     </tr>
+                     </tbody>
+                 </table>
+                 <!--分页引用-->
+                 <div class="H105_pageCoat clear">
+                     <div class="H105_first clear fl">
+                         本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}"/>-<span
+                             th:text="${list.endRow >list.total ? list.total : list.endRow }"/> 总记录数：<span
+                             th:text="${list.total}"></span>
+                     </div>
+                     <div th:replace="common/pages::pages"></div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <script th:inline="javascript">
+         var contextPath = getContextPath();
+         var layIndex;
+         var table = null, layer = null;
+         layui.use('table', function () {
+             layui.table.init('demo', {
+                 limit: 12
+             });
+             layer = layui.layer;
+             table = layui.table;
+         })
+
+         function localRefresh() {
+             console.log('localRefresh');
+             // 装载局部刷新返回的页面
+             var searchCondition = $('#searchCondition option:selected').val();
+             var searchContent = $(" #searchContent").val();
+             var pageNo = $(" #pageNo").val();
+             var param = {"searchContent": searchContent, "searchCondition": searchCondition, "pageNo": pageNo,"ajlx_bbbs":"101"};
+             $("#table_refresh").load("../Bbbsajsa/tableList", param, function () {
+                 layui.use('table', function () {
+                     layui.table.init('demo', {
+                         limit: 12
+                     });
+                 });
+             });
+         }
+
+     </script>
+ </div>
+</body>
+</html>

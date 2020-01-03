@@ -1,0 +1,22 @@
+package com.netmarch.lssqyj.system.controller;
+
+import com.netmarch.lssqyj.common.controller.FrontBaseController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/16 15:35
+ */
+@Controller
+@Slf4j
+public class IndexController extends FrontBaseController {
+    @RequestMapping("/")
+    public String lsyj_login() {
+        return "/znyj/authorize_login";
+    }
+}

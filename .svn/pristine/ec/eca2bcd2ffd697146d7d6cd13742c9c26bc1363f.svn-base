@@ -1,0 +1,42 @@
+package com.netmarch.gaj.system.controller;
+
+import com.netmarch.gaj.common.utils.WordUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+/**
+ * @ClassName: ScanController
+ * @Author: gdy
+ * @Date: 2019/5/7
+ */
+@Controller
+@Slf4j
+@RequestMapping("/scan")
+public class ScanController {
+    @RequestMapping("/index")
+    public String goIndex(){
+        log.info("进入主页面");
+        return "/damingsoft/scanTest";
+    }
+
+    /**
+     * @Desc: 上传文件
+     * @Date: 2019/7/8
+     */
+    @PostMapping("/testUploadScan")
+    @ResponseBody
+    public Object testUploadScan(@RequestPart(value = "RemoteFile", required = false) MultipartFile photoFile, HttpServletRequest request){
+        return 0;
+    }
+
+    @RequestMapping("/testWordToHtml")
+    public void testWordToHtml() throws IOException {
+        WordUtil.docxToHtml("http:\\//172.16.1.195:8080\\autoinvest\\tasks/107\\testpeiwensheng\\shenchabaogao.docx");
+    }
+}

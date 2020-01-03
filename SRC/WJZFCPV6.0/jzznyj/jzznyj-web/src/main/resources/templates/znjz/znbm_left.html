@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>卷宗智能阅卷系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath} + '/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/ztree/css/zTreeStyle/zTreeStyle.css'">
+    <script th:src="${application.basePath}+'/static/js/ztree/jquery.ztree.all.js'"></script>
+</head>
+<body class="clear" style=" ">
+<div class="A105L_body A105L_body_h fl">
+    <div class="A105L_title">
+        <img src="../static/images/A105_title.png" alt="" class="A105L_titleBg">
+        <div class="A105L_titleWord">人工智能卷宗编目</div>
+    </div>
+    <div class="A105_uploadCoat clear">
+        <div class="A105_upload fl clear">
+            <img src="../static/images/A105_uploadIco1.png" alt="" class=" ">
+            <p onclick="scanUpload()">扫描</p>
+        </div>
+        <div class="A105_upload fl clear">
+            <img src="../static/images/A105_uploadIco2.png" alt="" class=" ">
+            <p onclick="upload()">上传</p>
+        </div>
+        <div class="A105_upload fl clear">
+            <img src="../static/images/A105_uploadIco3.png" alt="" class=" ">
+            <p id="flushBtn1" onclick="flushLeft()">刷新</p>
+        </div>
+        <div class="A105_upload fl clear">
+            <img src="../static/images/A105_uploadIco4.png" alt="" class=" ">
+            <p class="RC_remove">删除</p>
+        </div>
+        <div class="A105_upload fl clear">
+            <img src="../static/images/A105_uploadIco5.png" alt="" class=" ">
+            <p onclick="thumbnail()">缩略图</p>
+        </div>
+    </div>
+    <div class="A405_martCoat">
+        <div class="A105_mart">
+            <div>
+                <div>
+                    <div class="A105_IDirectory">
+                        原始目录 <span id="ocrProgress">(初始化，请稍等...)</span><button onclick="addFirstMl(this)" class="addBtn">新增</button>
+                        <div class="A105_arrowDown A105_arrowUp"></div>
+                    </div>
+                    <div class="A105_directory A105_ztree">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                    <!--<div style="text-align:center;" class="A105_IDirectory2">
+                        <img src="../static/images/A105_add.png" alt="" class="A105_addBtn">
+                    </div>-->
+                </div>
+                <div>
+                    <div class="A105_IDirectory2">
+                        <div class="A105_upload2 fl clear">
+                            <img src="../static/images/A105_uploadIco6.png" alt="" class=" ">
+                            <p onclick="exportMl()">导出</p>
+                        </div>
+                        <!--<div class="A105_upload2 fl clear">
+                            <img src="../static/images/A105_uploadIco7.png" alt="" class=" ">
+                            <p onclick="">下载</p>
+                        </div>-->
+                        <div class="A105_upload2 fl clear">
+                            <img src="../static/images/A105_uploadIco3.png" alt="" class=" ">
+                            <p id="flushBtn2" onclick="flushLeft2()">刷新</p>
+                        </div>
+                        <div class="A105_upload2 fl clear">
+                            <img src="../static/images/A105_uploadIco4.png" alt="" class=" ">
+                            <p class="ZN_remove">删除</p>
+                        </div>
+                        <div class="A105_upload2 fl clear">
+                            <img src="../static/images/A105_uploadIco5.png" alt="" class=" ">
+                            <p onclick="thumbnail()">缩略图</p>
+                        </div>
+                    </div>
+                    <div class="A105_IDirectory2">
+                        智能目录<button onclick="addFirstMl2(this)" class="addBtn">新增</button><span id="znml"></span>
+                        <div class="A105_arrowDown  A105_arrowUp"></div>
+                    </div>
+                    <div class="A105_directory2 A105_ztree">
+                        <ul id="treeDemo2" class="ztree"></ul>
+                    </div>
+                </div>
+                <div class="A105_directory" style="display: none"></div>
+            </div>
+        </div>
+    </div>
+    <img src="../static/images/A105_Intelligence2.png" alt="" style="pointer-events: none;" onclick="intelligence()" class="A105_Intelligence">
+    <img src="../static/images/A105_cataloging.png" alt="" style="display:none" id="intelligencing" class="A105_addBtn1">
+    <!--右键弹窗-->
+    <div class="A105_rightMenu">
+        <p class="RC_remove">删除</p>
+        <p id="RC_rename">重命名</p>
+        <p class="ZN_remove" style="display: none;">删除</p>
+        <p id="ZN_rename" style="display: none;">重命名</p>
+        <!--<p>缩略图</p>
+        <p class="A105_tianjia">添加目录</p>-->
+    </div>
+    <!--添加弹窗-->
+    <div class="A105_popupCoat" style="display: none;/*left: 50%;*/">
+        <div class="A105P_title">
+            添加一级目录
+            <img src="../static/images/A105P_close.png" alt="" class="A105P_close">
+        </div>
+        <div class="A105P_popup">
+            <div th:each="dict:${dictList}">
+                <div class="A105P_zhenju" th:text="${dict}"></div>
+            </div>
+            <div class="A105P_zhenju">自定义</div>
+            <div th:each="dict:${dictList}">
+                <div class="A105P_zhenju1" th:text="${dict}"></div>
+            </div>
+            <div class="A105P_zhenju1">自定义</div>
+        </div>
+    </div>
+</div>
+<!--智能编目-->
+<div class="A105L_detailCoat  " id="mlcontent" style="display: none;">
+    <div class="A105L_mulu">
+        目录详情<div style="float: right;padding-right: 10px;cursor: pointer;" onclick="hideMlxq()">×</div>
+    </div>
+    <div class="A105L_neirong" mlid="-1">
+    </div>
+</div>
+<script>
+
+    // zTree
+    var zTreeObj; // 原始
+    var zTreeObj2; // 智能
+
+    var newCount;
+    var RC_treeNode;
+    var ajbs = $('<span/>').html('[[${ajbs}]]').text(); // 案件标识
+    var ajmc = $('<span/>').html('[[${ajmc}]]').text(); // 案件名称
+    var type = $('<span/>').html('[[${type}]]').text(); // 类型
+    var treeList = $('<span/>').html('[[${treeList}]]').text(); // 原始
+    var treeList2 = $('<span/>').html('[[${treeList2}]]').text(); // 智能
+
+    $(function (){
+        zTreeObj = $.fn.zTree.init($('#treeDemo'), setting, zNodes); // 初始化原始目录ztree
+        // MoveTest.updateType(); // 更新原始ztree
+        MoveTest.bindDom(); // 原始拖动dom
+        zTreeObj2 = $.fn.zTree.init($('#treeDemo2'), setting2, zNodes2); // 初始化智能目录ztree
+        // MoveTest2.updateType(); // 更新智能ztree
+        MoveTest2.bindDom(); // 智能拖动dom
+        $('.A105P_zhenju').bind('click', {isParent: true}, add); // 给原始ztree绑定新增
+        $('.A105P_zhenju1').bind('click', add1); // 给智能ztree绑定新增
+        $(".RC_remove").bind("click", remove); // 给原始ztree绑定删除
+        $(".ZN_remove").bind("click", remove2); // 给智能ztree绑定删除
+        $("#RC_rename").bind("click", edit);  // 给原始ztree绑定编辑
+        $("#ZN_rename").bind("click", edit1);  // 给原始ztree绑定编辑
+        if(ajbs=='217391bc-ffec-4437-9f71-f9c526e435a6'||ajbs=='083c3a80-55b5-4cee-9e6a-a813c0aeeae7'||ajbs=='eac19255-7c7d-43a1-b71f-d12d3ff918be'||ajbs=='be3f3b0e-79f6-4f64-9420-833e43665156'){
+            $('#ocrProgress').html('');
+            $('.A105_Intelligence').css('pointer-events','auto');
+            $('.A105_Intelligence').attr('src', '../static/images/A105_Intelligence.png');
+        }else{
+            setInterval("ocrProgress()",5000); // 定时任务，5秒执行一次
+        }
+    });
+
+
+    console.log("000001:" + treeList);
+    console.log("000002:" + treeList2);
+    var zNodes = JSON.parse(treeList); // 原始
+    var zNodes2 = JSON.parse(treeList2); // 智能
+    if(treeList2&&treeList2.length>2){
+        $('#znml').html('');
+        // $('.A105_addBtn').css('display','none');
+        $('.A105_Intelligence').css('display','none'); // 0617
+        $(".A105_Intelligence").off("click");
+    }else{
+        $.post("/jzznyj/znjz/updateOcrsort",{ajbs:ajbs,type:type});
+    }
+    for(var p in JSON.parse(treeList)){
+        if(-1==JSON.parse(treeList)[p].pId || '-1'==JSON.parse(treeList)[p].pId){
+            newCount = JSON.parse(treeList)[p].id;
+        }
+    }
+
+    // 原始目录dom拖拽
+    var MoveTest = {
+        errorMsg: "放错了...请选择正确的类别！",
+        curTarget: null,
+        curTmpTarget: null,
+        noSel: function() {
+            try {
+                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+            } catch(e){}
+        },
+        dragTree2Dom: function(treeId, treeNodes) {
+            return !treeNodes[0].isParent;
+        },
+        prevTree: function(treeId, treeNodes, targetNode) {
+            return !targetNode.isParent && targetNode.parentTId == treeNodes[0].parentTId;
+        },
+        nextTree: function(treeId, treeNodes, targetNode) {
+            return !targetNode.isParent && targetNode.parentTId == treeNodes[0].parentTId;
+        },
+        innerTree: function(treeId, treeNodes, targetNode) {
+            return targetNode!=null && targetNode.isParent && targetNode.tId == treeNodes[0].parentTId;
+        },
+        /*dragMove: function (e, treeId, treeNodes) {
+        },*/
+        dropTree2Dom: function (e, treeId, treeNodes, targetNode, moveType) {
+            console.log('左—>右拖拽');
+            // console.log(treeNodes[0].wjid + 'heheheh:' + $('.A105L_neirong').attr('mlid'));
+            $.post("/jzznyj/znjz/orgToZnml",{mlid:$('.A105L_neirong').attr('mlid'),wjid:treeNodes[0].wjid,type:type}, function(data) {
+                if(data){
+                    if (moveType == null && 'mlcontent' == e.target.id){
+                        $('<div onclick="showRightImg(this)" class="A105L_item cursor" wjpath="'+treeNodes[0].wjpath+'" wjid="'+treeNodes[0].wjid+'">'+ treeNodes[0].name +
+                            '<img src="../static/images/list_replace1.png" onclick="replaceFile(this)" wjid="'+treeNodes[0].wjid+'" alt="" class="A105L_replace A105L_replace1  " title="旋转">' +
+                            '<img src="../static/images/list_replace2.png" onclick="deleteFile(this)" wjid="'+treeNodes[0].wjid+'" alt="" class="A105L_replace A105L_replace2 " title="删除">' +
+                            '<img src="../static/images/list_replace3.png" wjid="'+treeNodes[0].wjid+'" alt="" class="A105L_replace A105L_replace3 " title="替换上传"></div>').appendTo('.A105L_neirong');
+                        $('<div id="'+ treeNodes[0].wjid +'" class="A305_gaozhi">' +
+                            '<img style="cursor: pointer;" onclick="showPic(this)" wjid = "'+treeNodes[0].wjid+'" src="[[${application.fdfsPath}]]'+ treeNodes[0].wjpath +'" alt="" class="A305_listPic"> ' +
+                            '<div class="A305_ribbon">' +
+                            '<img src="../static/images/A105_gaozhiBg.png" alt="" class="A105_gaozhiBg ">' +
+                            '<div class="A305_btnCoat clear">' +
+                            '<div class="A305_picBtn">' +
+                            '<img onclick="replaceFile(this)" title="替换上传" wjid = "'+treeNodes[0].id+'" src="../static/images/A305_btn1.png" alt="" class=" ">' +
+                            '</div>' +
+                            '<div class="A305_picBtn">' +
+                            '<img onclick="rotateThumbnail(this)" deg="90" title="顺时针旋转90°" wjid = "'+treeNodes[0].id+'" src="../static/images/A305_btn2.png" alt="" class=" ">' +
+                            '</div>' +
+                            '<div class="A305_picBtn">' +
+                            '<img onclick="rotateThumbnail(this)" deg="-5" title="逆时针旋转5°" wjid = "'+treeNodes[0].id+'" src="../static/images/A305_btn3.png" alt="" class=" ">' +
+                            '</div>' +
+                            '<div class="A305_picBtn">' +
+                            '<img onclick="rotateThumbnail(this)" deg="5" title="顺时针旋转5°" wjid = "'+treeNodes[0].id+'" src="../static/images/A305_btn4.png" alt="" class=" ">' +
+                            '</div>' +
+                            '<div class="A305_picBtn">' +
+                            '<img onclick="deleteFile(this)" title="删除" wjid = "'+treeNodes[0].id+'" src="../static/images/A305_btn5.png" alt="" class=" ">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="A305_name">' +
+                            '<p>' + treeNodes[0].name + '</p>' +
+                            '</div>' +
+                            '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('.A305_content'));
+                    }
+                    flushLeft2();
+                }
+            })
+        },
+        /*dom2Tree: function (e, treeId, treeNode) {
+            var target = MoveTest.curTarget, tmpTarget = MoveTest.curTmpTarget;
+            if (!target) return;
+            MoveTest.updateType();
+            MoveTest.curTarget = null;
+            MoveTest.curTmpTarget = null;
+        },*/
+        updateType: function () {
+            console.log('名称后显示数量，刷新ztree');
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+                nodes = zTree.getNodes();
+            for (var i=0, l=nodes.length; i<l; i++) {
+                var num = nodes[i].children ? nodes[i].children.length : 0;
+                nodes[i].name = nodes[i].name.replace(/ \(.*\)/gi, "") + " (" + num + ")";
+                zTree.updateNode(nodes[i]);
+            }
+            // zTree.expandNode(nodes[0]);
+        },
+        bindDom: function () {
+            $(".A105L_neirong").bind("mousedown", MoveTest.bindMouseDown);
+        },
+        bindMouseDown: function (e) {
+            console.log('随鼠标移动效果');
+            var target = e.target;
+            if (target!=null && target.className.indexOf("A105L_item") >= 0) {
+                var doc = $(document), target = $(target),
+                    docScrollTop = doc.scrollTop(),
+                    docScrollLeft = doc.scrollLeft();
+                curDom = $("<span class='flywith' style='position:absolute;font-size:12px;'>" + target.text() + "</span>");
+                curDom.appendTo("body");
+
+                curDom.css({
+                    "top": (e.clientY + docScrollTop + 3) + "px",
+                    "left": (e.clientX + docScrollLeft + 3) + "px"
+                });
+                MoveTest.curTarget = target;
+                MoveTest.curTmpTarget = curDom;
+
+                doc.bind("mousemove", MoveTest.bindMouseMove);
+                doc.bind("mouseup", MoveTest.bindMouseUp);
+                // doc.bind("selectstart", MoveTest.docSelect);
+            }
+            if(e.preventDefault) {
+                e.preventDefault();
+            }
+        },
+        bindMouseMove: function (e) {
+            console.log('拖拽中');
+            MoveTest.noSel();
+            var doc = $(document),
+                docScrollTop = doc.scrollTop(),
+                docScrollLeft = doc.scrollLeft(),
+                tmpTarget = MoveTest.curTmpTarget;
+            if (tmpTarget) {
+                tmpTarget.css({
+                    "top": (e.clientY + docScrollTop + 3) + "px",
+                    "left": (e.clientX + docScrollLeft + 3) + "px"
+                });
+            }
+            return false;
+        },
+        bindMouseUp: function (e) {
+            console.log('拖拽结束');
+            var doc = $(document);
+            doc.unbind("mousemove", MoveTest.bindMouseMove);
+            doc.unbind("mouseup", MoveTest.bindMouseUp);
+            // doc.unbind("selectstart", MoveTest.docSelect);
+            $('.flywith').remove();
+        }
+    };
+    // 智能目录dom拖拽
+    var MoveTest2 = {
+        errorMsg: "放错了...请选择正确的类别！",
+        curTarget: null,
+        curTmpTarget: null,
+        noSel: function() {
+            try {
+                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+            } catch(e){}
+        },
+        dragTree2Dom: function(treeId, treeNodes) {
+            return !treeNodes[0].isParent;
+        },
+        prevTree: function(treeId, treeNodes, targetNode) {
+            return !targetNode.isParent && targetNode.parentTId == treeNodes[0].parentTId;
+        },
+        nextTree: function(treeId, treeNodes, targetNode) {
+            return !targetNode.isParent && targetNode.parentTId == treeNodes[0].parentTId;
+        },
+        innerTree: function(treeId, treeNodes, targetNode) {
+            return targetNode!=null && targetNode.isParent && targetNode.tId == treeNodes[0].parentTId;
+        },
+        dragMove: function (e, treeId, treeNodes) {
+
+        },
+        dropTree2Dom: function (e, treeId, treeNodes, targetNode, moveType) {
+
+        },
+        dom2Tree: function (e, treeId, treeNode) {
+            var target = MoveTest2.curTarget, tmpTarget = MoveTest2.curTmpTarget;
+            if (!target) return;
+            if (treeNode != null && !treeNode.isParent){
+                if (tmpTarget) tmpTarget.remove();
+                var wjid = target.attr("wjid");
+                parent.$('.A105_pictureIframe_jq').contents().find('#' + wjid).remove();
+                parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').remove();
+                $(target).remove();
+                $.post("/jzznyj/znjz/addToZnml",{ajbs:ajbs,type:type,orderby : treeNode.id,wjid : target.attr("wjid")}, function(data) {
+                    if(data){
+                        flushLeft2();
+                    }
+                })
+                console.log('右—>左拖拽');
+            }
+            // MoveTest2.updateType();
+            MoveTest2.curTarget = null;
+            MoveTest2.curTmpTarget = null;
+        },
+        updateType: function () {
+            console.log('刷新智能目录');
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo2"),
+                nodes = zTree.getNodes();
+            for (var i=0, l=nodes.length; i<l; i++) {
+                // var num = nodes[i].children ? nodes[i].children.length : 0;
+                // nodes[i].name = nodes[i].name.replace(/ \(.*\)/gi, ""); //  + " (" + num + ")";
+                zTree.updateNode(nodes[i]);
+            }
+            // zTree.expandNode(nodes[0]);
+        },
+        bindDom: function () {
+            $(".A105L_neirong").bind("mousedown", MoveTest2.bindMouseDown);
+        },
+        bindMouseDown: function (e) {
+            console.log('随鼠标移动效果');
+            var target = e.target;
+            if (target!=null && target.className.indexOf("A105L_item") >= 0) {
+                var doc = $(document), target = $(target),
+                    docScrollTop = doc.scrollTop(),
+                    docScrollLeft = doc.scrollLeft();
+                curDom = $("<span class='flywith' style='position:absolute;font-size:12px;'>" + target.text() + "</span>");
+                curDom.appendTo("body");
+                curDom.css({
+                    "top": (e.clientY + docScrollTop + 3) + "px",
+                    "left": (e.clientX + docScrollLeft + 3) + "px"
+                });
+                MoveTest2.curTarget = target;
+                MoveTest2.curTmpTarget = curDom;
+                doc.bind("mousemove", MoveTest2.bindMouseMove);
+                doc.bind("mouseup", MoveTest2.bindMouseUp);
+            }
+            if(e.preventDefault) {
+                e.preventDefault();
+            }
+        },
+        bindMouseMove: function (e) {
+            console.log('拖拽中');
+            MoveTest2.noSel();
+            var doc = $(document),
+                docScrollTop = doc.scrollTop(),
+                docScrollLeft = doc.scrollLeft(),
+                tmpTarget = MoveTest2.curTmpTarget;
+            if (tmpTarget) {
+                tmpTarget.css({
+                    "top": (e.clientY + docScrollTop + 3) + "px",
+                    "left": (e.clientX + docScrollLeft + 3) + "px"
+                });
+            }
+            return false;
+        },
+        bindMouseUp: function (e) {
+            console.log('拖拽结束');
+            var doc = $(document);
+            doc.unbind("mousemove", MoveTest2.bindMouseMove);
+            doc.unbind("mouseup", MoveTest2.bindMouseUp);
+            // doc.unbind("selectstart", MoveTest2.docSelect);
+            $('.flywith').remove();
+            MoveTest2.curTarget = null;
+            MoveTest2.curTmpTarget = null;
+        }
+    };
+
+    //原始目录ztree设置
+    var setting = { // 原始
+        view: {
+            // 设置是否允许同时选中多个节点。
+            selectedMulti: false
+        },
+        edit: {
+            // 设置 zTree 是否处于编辑状态
+            enable: true,
+            // 设置是否显示删除按钮。
+            showRemoveBtn: false,
+            // 设置是否显示重命名按钮。
+            showRenameBtn: false,
+            // dom拖拽
+            drag: {
+                prev: MoveTest.prevTree,
+                next: MoveTest.nextTree,
+                inner: MoveTest.innerTree
+            }
+        },
+        data: {
+            keep: {
+                // rue / false 分别表示 锁定 / 不锁定 父节点属性
+                parent: true,
+                // true / false 分别表示 锁定 / 不锁定 叶子节点属性
+                leaf: true
+            },
+            simpleData: {
+                // 简单数据模式 (Array)
+                enable: true
+            }
+        },
+        callback: {
+            // 用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作
+            // beforeDrag: beforeDrag,
+            // 用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作
+            beforeRemove: beforeRemove,
+            // 用于捕获节点编辑名称结束（Input 失去焦点 或 按下 Enter 键）之后，更新节点名称数据之前的事件回调函数，并且根据返回值确定是否允许更改名称的操作
+            beforeRename: beforeRename,
+            // 改名
+            onRename: onRename,
+            // 用于捕获删除节点之后的事件回调函数。
+            // onRemove: onRemove,
+            // 用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作
+            // beforeDrop: beforeDrop,
+            // 用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数
+            onRightClick: onRightClick1,
+            // ztree点击触发
+            onClick: zTreeOnClick1,
+            // dom拖拽
+            beforeDrag: MoveTest.dragTree2Dom,
+            onDrop: MoveTest.dropTree2Dom
+            // onDragMove: MoveTest.dragMove,
+            // onMouseUp: MoveTest.dom2Tree
+        }
+    };
+    //智能目录ztree设置
+    var setting2 = { // 智能
+        view: {
+            selectedMulti: false,
+            fontCss: setFontCss
+        },
+        edit: {
+            enable: true,
+            showRemoveBtn: false,
+            showRenameBtn: false,
+            // dom拖拽
+            drag: {
+                prev: MoveTest2.prevTree,
+                next: MoveTest2.nextTree,
+                inner: MoveTest2.innerTree
+            }
+        },
+        data: {
+            keep: {
+                parent: true,
+                leaf: true
+            },
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            beforeRename: beforeRename,
+            beforeRemove: beforeRemove2,
+            onRename: onRename2,
+            onRightClick: onRightClick2,
+            onClick: zTreeOnClick2,
+            // dom拖拽
+            beforeDrag: MoveTest2.dragTree2Dom,
+            onDrop: MoveTest2.dropTree2Dom,
+            onDragMove: MoveTest2.dragMove,
+            onMouseUp: MoveTest2.dom2Tree
+        }
+    };
+
+    function ocrProgress() { // OCR识别进度
+        $.post("/jzznyj/znjz/ocrProgress",{ajbs:ajbs,type:type}, function(data) {
+            data = data.toString();
+            if ('1' == data || '0' == data) {
+                if(treeList2&&treeList2.length>2){
+                    // do nothing
+                }else{
+                    $('.A105_Intelligence').css('pointer-events','auto');
+                }
+                $('#ocrProgress').html(''); //(处理完成)
+                $('.A105_Intelligence').attr('src', '../static/images/A105_Intelligence.png');
+                $.post("/jzznyj/znjz/updateOcrsort",{ajbs:ajbs,type:type});
+            } else {
+                $.post("/jzznyj/znjz/flushLeft",{ajbs : ajbs,type:type}, function(data) {
+                    var newtree =JSON.parse(data).length;
+                    var oldtree = JSON.parse(treeList).length;
+                    if(newtree !== oldtree){
+                        flushLeft();
+                    }
+                })
+                if('00' == data){
+                    $('#ocrProgress').html('(OCR准备...)');
+                }else{
+                    $('#ocrProgress').html('(处理中...' + data + '%)');
+                }
+                $('.A105_Intelligence').attr('src', '../static/images/A105_Intelligence2.png');
+            }
+        })
+    }
+
+    function intelligence() { // 智能编目
+        if(zNodes2.length==0){
+            if('none' == $('.A105_Intelligence').css('pointer-events')){
+                console.log('do nothing');
+            }else{
+                // $('.A105_addBtn').css('display','none');
+                $('.A105_Intelligence').css('display','none');
+                $(".A105_Intelligence").off("click");
+                $('#intelligencing').css('display','');
+                $.post("/jzznyj/znjz/intelligentCatalog",{ajbs:ajbs,ajmc:ajmc,type:type}, function(data) {
+                    if(data){
+                        // alert('编目成功！');
+                        $(".A105_Intelligence").off("click");
+                        $('#intelligencing').css('display','none');
+                        zNodes2 =JSON.parse(data);
+                        $.fn.zTree.init($('#treeDemo2'),setting2,zNodes2);
+                        MoveTest2.updateType();
+                    }else{
+                        alert('编目失败！');
+                        $('#intelligencing').css('display','none');
+                        $('.A105_Intelligence').css('display','block');
+                        hideMlxq();
+                    }
+                });
+            }
+        }
+    }
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        // 点我触发
+        laydate.render({
+            elem: '#Q105P_refereeing1',
+            eventElem: '.Q105_calendar1',
+            trigger: 'click'
+        });
+    });
+
+    // 新增原始目录的一级目录
+    function addFirstMl(e) {
+        $('.A105P_zhenju1').css('display','none');
+        $('.A105P_zhenju').css('display','block');
+        $('.A105_popupCoat').toggle();
+        e = window.event || e;
+        if (e.stopPropagation) {
+            e.stopPropagation(); //阻止事件 冒泡传播
+        } else {
+            e.cancelBubble = true; //ie兼容
+        }
+    }
+
+    //新增智能目录的一级目录
+    function addFirstMl2() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo2")
+        nodes = zTree.getSelectedNodes();
+        if (!nodes[0]) {
+            alert("请先选择一个节点！");
+            return;
+        }
+        if(!nodes[0].isParent){
+            alert("请选择一级目录！");
+            return;
+        }
+        $('.A105P_zhenju').css('display','none');
+        $('.A105P_zhenju1').css('display','block');
+        $('.A105_popupCoat').toggle();
+        e = window.event || e;
+        if (e.stopPropagation) {
+            e.stopPropagation(); //阻止事件 冒泡传播
+        } else {
+            e.cancelBubble = true; //ie兼容
+        }
+    }
+
+    // 右键菜单
+    function onRightClick1 (e, treeId, treeNode) {
+        if (!treeNode) return;
+        RC_treeNode = treeNode
+        //取消默认的浏览器自带右键 很重要！！
+        e.preventDefault();
+        if(RC_treeNode.pId){// 非一级目录不给编辑
+            // do nothing
+        }else{
+            //获取我们自定义的右键菜单
+            var menu = document.querySelector('.A105_rightMenu');
+            //根据事件对象中鼠标点击的位置，进行定位
+            menu.style.left = e.clientX + 'px';
+            menu.style.top = e.clientY + 'px';
+            //改变自定义菜单的宽，让它显示出来
+            menu.style.display = 'block';
+            $('.ZN_remove').css('display','none');
+            $('#ZN_rename').css('display','none');
+            $('.RC_remove').css('display','block');
+            $('#RC_rename').css('display','block');
+        }
+    }
+
+    function setFontCss(treeId, treeNode) { // 修改未识别颜色
+        return treeNode.id==10001? { color: "orange"} : {};
+    }
+
+    function onRename2() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo2")
+        nodes = zTree.getSelectedNodes();
+        var orderby = nodes[0].id;
+        // 新增（修改）目录，目前新增只是一级菜单
+        $.post("/jzznyj/znjz/updateZtree",{mlid:nodes[0].mlid,ajbs:ajbs,type:type,orderby:orderby,parentid:nodes[0].pId,name:nodes[0].name}, function(data) {
+            flushLeft2();
+        })
+    }
+
+    function onRightClick2(e, treeId, treeNode) {
+        if (!treeNode) return;
+        //取消默认的浏览器自带右键 很重要！！
+        e.preventDefault();
+        //获取我们自定义的右键菜单
+        var menu = document.querySelector('.A105_rightMenu');
+        //根据事件对象中鼠标点击的位置，进行定位
+        menu.style.left = e.clientX + 'px';
+        menu.style.top = e.clientY + 'px';
+        //改变自定义菜单的宽，让它显示出来
+        menu.style.display = 'block';
+        $('.RC_remove').css('display','none');
+        $('#RC_rename').css('display','none');
+        $('.ZN_remove').css('display','block');
+        $('#ZN_rename').css('display','block');
+
+    }
+
+    //  编辑结束调用
+    function onRename () {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo")
+        nodes = zTree.getSelectedNodes();
+        var orderby = nodes[0].id;
+        if (isNaN(parseInt(orderby))) {
+            orderby = 1;
+        }
+        console.log(orderby + "----" + nodes[0].pId)
+        // 新增（修改）目录，目前新增只是一级菜单
+        $.post("/jzznyj/znjz/updateZtree",{mlid:nodes[0].mlid,ajbs:ajbs,type:type,orderby:orderby,parentid:nodes[0].pId,name:nodes[0].name}, function(data) {
+            flushLeft();
+        })
+    }
+
+    // 删除前调用
+    function beforeRemove(treeId, treeNode) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        nodes = zTree.getSelectedNodes();
+        var del = confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+        if(del){
+            $.post("/jzznyj/znjz/deleteZtree",{mlid:nodes[0].mlid,wjid:nodes[0].wjid,type:type}, function(data) {
+
+                parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').empty();
+                parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').html();
+                parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').empty();
+                parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').html();
+                flushLeft();
+            })
+        }
+        return del;
+    }
+
+    function exportMl() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo2");
+        nodes = zTree.getSelectedNodes();
+        if (!nodes[0]) { // RC_treeNode
+            alert("请先选择一个节点");
+            return;
+        }
+        var mlid = nodes[0].mlid;
+        if(!mlid){
+            mlid = '';
+        }
+        var pId = nodes[0].pId;
+        if('undefined'==pId){
+            pId = '';
+        }
+        $.post("/jzznyj/znjz/exportMl",{mlid:mlid,ajbs:ajbs,type:type,pId:pId}, function(data) {
+            alert(data);
+        })
+    }
+    // 右键点击删除
+    function remove(e) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        nodes = zTree.getSelectedNodes();
+        if (!nodes[0]) { // RC_treeNode
+            alert("请先选择一个节点");
+            return;
+        }
+        // 删除及删除前触发回调
+        zTree.removeNode(nodes[0],true);
+        // 后台数据删除
+        // console.log('++++++++++++++++++++++mlid:[' + nodes[0].mlid + '],wjid:[' + nodes[0].wjid + ']');
+        // $.post("/jzznyj/znjz/deleteZtree",{mlid:nodes[0].mlid,wjid:nodes[0].wjid}, function(data) {
+        //
+        //     parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').empty();
+        //     parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').html();
+        //     parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').empty();
+        //     parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').html();
+        //     flushLeft();
+        // })
+    }
+
+    // 删除前调用
+    function beforeRemove2(treeId, treeNode) {
+        return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+    }
+
+
+    // 右键点击删除
+    function remove2(e) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo2");
+        nodes = zTree.getSelectedNodes();
+        if (!nodes[0]) {
+            alert("请先选择一个节点");
+            return;
+        }
+        // 删除及删除前触发回调
+        zTree.removeNode(nodes[0],true);
+        // 后台数据删除
+        console.log('++++++++++++++++++++++mlid:[' + nodes[0].mlid + '],wjid:[' + nodes[0].wjid + ']');
+        $.post("/jzznyj/znjz/deleteZtree",{mlid:nodes[0].mlid,wjid:nodes[0].wjid,type:type}, function(data) {
+
+            parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').empty();
+            parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').html();
+            parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').empty();
+            parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').html();
+            flushLeft2();
+        })
+    }
+    function beforeRename(treeId, treeNode, newName, isCancel) {
+        newName = newName.replace(/\s+/g,"");
+        if (newName.length<1) {
+            alert("节点名称不能为空！");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    // 右键点击改名
+    function edit() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo")
+        nodes = zTree.getSelectedNodes();
+        var s = nodes[0].name.indexOf(' (');
+        var nodeName = nodes[0].name = nodes[0].name.substring(0,s);
+        // nodeName = nodeName.replace(/\s+/g,"");
+        // if (nodeName.length<1) {
+        //     alert("节点名称不能为空！");
+        //     return;
+        // }
+        if (!RC_treeNode) {
+            alert("请先选择一个节点");
+            return;
+        }
+        // zTree.editName(RC_treeNode,true);
+        zTree.editName(nodes[0],true);
+    };
+
+    // 右键点击改名
+    function edit1() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo2")
+        nodes = zTree.getSelectedNodes();
+        var s = nodes[0].name.indexOf(' (');
+        nodes[0].name = nodes[0].name.substring(0,s);
+        if (!nodes[0]) {
+            alert("请先选择一个节点");
+            return;
+        }
+        // zTree.editName(RC_treeNode,true);
+        zTree.editName(nodes[0],true);
+    };
+
+    // 增加父节点
+    function add (e) {
+        console.log(e.toElement.innerHTML);
+        var zTree = $.fn.zTree.getZTreeObj('treeDemo'),
+            isParent = e.data.isParent,
+            // 获取 zTree 当前被选中的节点数据集合
+            nodes = zTree.getSelectedNodes(),
+            treeNode = nodes[0],
+            treeNode = zTree.addNodes(null, {
+                id: (1 + newCount),
+                pId: '0',
+                isParent: isParent,
+                name: e.target.innerHTML
+            });
+        if (treeNode) {
+            zTree.editName(treeNode[0]);
+            newCount = 1 + newCount;
+        } else {
+            alert('叶子节点被锁定，无法增加子节点');
+        }
+    };
+
+    // 增加父节点
+    function add1 (e) {
+        console.log(e.toElement.innerHTML);
+        var zTree = $.fn.zTree.getZTreeObj('treeDemo2'),
+            // 获取 zTree 当前被选中的节点数据集合
+            nodes = zTree.getSelectedNodes(),
+            treeNode = nodes[0],
+            treeNode = zTree.addNodes(nodes[0], {
+                id: 10000,
+                pId: nodes[0].id,
+                isParent: true,
+                name: e.target.innerHTML
+            });
+        if (treeNode) {
+            zTree.editName(treeNode[0]);
+        } else {
+            alert('叶子节点被锁定，无法增加子节点');
+        }
+    };
+
+    //扫描上传
+    function scanUpload() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        nodes = zTree.getSelectedNodes();
+        if (!nodes[0]) { // RC_treeNode
+            alert("请先选择一个节点");
+            return;
+        }else{
+            var uploadTreeId = nodes[0].id;
+            if (isNaN(parseInt(nodes[0].id))) {
+                uploadTreeId = zTree.getNodes().length;
+            }
+        }
+        var uploadMessage = {"wjid":"","treeId":uploadTreeId,"ajbs":ajbs,herf:'scan'};
+        parent.parent.postMessage(uploadMessage,'*');
+    }
+
+    //图片上传
+    function upload() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        nodes = zTree.getSelectedNodes();
+        if (!nodes[0]) { // RC_treeNode
+            alert("请先选择一个节点");
+            return;
+        }else{
+            var uploadTreeId = nodes[0].id;
+            if (isNaN(parseInt(nodes[0].id))) {
+                uploadTreeId = zTree.getNodes().length;
+            }
+        }
+        // console.log('cccccccccccccccccccc:' + uploadTreeId);
+        var uploadMessage = {"wjid":"","treeId":uploadTreeId,"ajbs":ajbs,herf:'upload'};
+        parent.postMessage(uploadMessage,'*');
+
+        // $('#showDialog',top.document).attr('treeId',uploadTreeId);
+        // $('#showDialog',top.document).attr('ajbs',ajbs);
+    }
+    //刷新原始目录
+    function flushLeft() {
+        $.post("/jzznyj/znjz/flushLeft",{ajbs : ajbs,type:type}, function(data) {
+            zNodes =JSON.parse(data);
+            $.fn.zTree.init($('#treeDemo'), setting,zNodes);
+            MoveTest.updateType();
+        });
+    }
+    //刷新智能目录
+    function flushLeft2() {
+        $.post("/jzznyj/znjz/flushLeft2",{ajbs : ajbs,type:type}, function(data) {
+            zNodes2 =JSON.parse(data);
+            $.fn.zTree.init($('#treeDemo2'), setting2,zNodes2);
+            MoveTest2.updateType();
+        });
+    }
+
+    function thumbnail() {
+        parent.$('.A105_pictureIframe_jq').contents().find('#thumbnailBtn').click();
+    }
+
+    //原始目录点击事件
+    function zTreeOnClick1() {
+        parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').empty();
+        parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').html();
+        parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').empty();
+        parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').html();
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        nodes = zTree.getSelectedNodes();
+        // zTree.expandNode(nodes[0]);
+        var treeId = nodes[0].id;
+        var parentid = nodes[0].pId;
+        if(parentid){
+            treeId = parentid;
+        }
+        // console.log('ajbs:['+ajbs+"],treeId:["+treeId+"],parentid:[" +parentid+"]")
+        $.post("/jzznyj/znjz/showOrgImg",{ajbs:ajbs,type:type, treeId : treeId, parentid : ''}, function(data) {
+            if(data&&data.length>2) {
+                var wjList = JSON.parse(data);
+                // 加载右侧缩略图
+                $.each(wjList, function (i, obj) {
+                    var oldsort = '000' + obj.oldsort;
+                    oldsort = oldsort.substring(oldsort.length - 3, oldsort.length);
+                    // var ul = $('<ul></ul>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('.A305_content'));
+                    $('<div id="' + obj.id + '" gdy="1" class="item A305_gaozhi ' + obj.id + '">' +
+                        '<img style="cursor: pointer;" onclick="showPic(this)" wjid = "' + obj.id + '" src="[[${application.fdfsPath}]]' + obj.filename + '" alt="" class="A305_listPic"> ' +
+                        '<div class="A305_ribbon">' +
+                        '<img src="../static/images/A105_gaozhiBg.png" alt="" class="A105_gaozhiBg ">' +
+                        '<div class="A305_btnCoat clear">' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="replaceFile(this)" title="替换上传" wjid = "'+obj.id+'" src="../static/images/A305_btn1.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="rotateThumbnail(this)" deg="90" title="顺时针旋转90°" wjid = "'+obj.id+'" src="../static/images/A305_btn2.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="rotateThumbnail(this)" deg="-5" title="逆时针旋转5°" wjid = "'+obj.id+'" src="../static/images/A305_btn3.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="rotateThumbnail(this)" deg="5" title="顺时针旋转5°" wjid = "'+obj.id+'" src="../static/images/A305_btn4.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="deleteFile2(this)" title="删除" wjid = "'+obj.id+'" wjpath="'+obj.filename+'" src="../static/images/A305_btn5.png" alt="" class=" ">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="A305_name">' +
+                        '<p>' + oldsort + '</p>' +
+                        '</div>' +
+                        '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('.A305_content'));
+
+                    // 加载右侧图片
+                    $('<div style="display:none;" class="A205_content ' + wjList[i].id + '" wjid="' + wjList[i].id + '">' +
+                        '<img src="../static/images/A105_next1.png" alt="" onclick="previousImg1(this)" class="A205_lastImg1">' +
+                        '<img src="../static/images/A105_next2.png" alt="" onclick="nextImg1(this)" class="A205_lastImg2">' +
+                        '<img src="[[${application.fdfsPath}]]' + wjList[i].filename + '" alt="" class="A105_presentation">' +
+                        '</div>' +
+                        '<div style="display:none;" class="A205_imgCoat '+wjList[i].id+'" wjid="'+wjList[i].id+'">' +
+                        '<div class="A205_img clear">' +
+                        '<img onclick="replaceFile(this)" title="替换上传" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture1.png" alt="">' +
+                        '<img onclick="rotateImg(this)" deg="90" title="顺时针旋转90°" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture2.png" alt="">' +
+                        '<img onclick="previousImg(this)" title="往前" src="../static/images/A105P_newPicture3.png" alt="" alt="" class="A205_nextPage">' +
+                        '<img onclick="nextImg(this)" title="往后" src="../static/images/A105P_newPicture4.png" alt="" alt="" class="A205_nextPage">' +
+                        '<img onclick="rotateImg(this)" deg="-5" title="逆时针旋转5°" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture5.png" alt="">' +
+                        '<img onclick="rotateImg(this)" deg="5" title="顺时针旋转5°" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture6.png" alt="">' +
+                        '<img onclick="deleteFile2(this)" title="删除" wjid = "'+wjList[i].id+'" wjpath="'+wjList[i].filename+'" src="../static/images/A105P_newPicture7.png" alt="">' +
+                        '</div>' +
+                        '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('#imgContent'));
+                });
+                if(parentid){
+                    console.log('5555555555555:' + parentid);
+                    parent.$('.A105_pictureIframe_jq').contents().find('#thumbnailContent').children('.A305_content').children('.A305_gaozhi').css('display','none');
+                    parent.$('.A105_pictureIframe_jq').contents().find('#thumbnailContent').children('.A305_content').children('.'+nodes[0].wjid).css('display','block');
+                    parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').children('.'+nodes[0].wjid).css('display','block');
+                }else{
+                    parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').children('.A205_content:nth-child(1)').css('display','block');
+                    parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').children('.A205_imgCoat:nth-child(2)').css('display','block');
+                }
+            }
+        })
+    }
+    //智能目录点击事件
+    function zTreeOnClick2() {
+        $('.A105L_neirong').empty();
+        $('.A105L_neirong').html();
+        parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').empty();
+        parent.$('.A105_pictureIframe_jq').contents().find('.A305_content').html();
+        parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').empty();
+        parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').html();
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo2");
+        nodes = zTree.getSelectedNodes();
+        zTree.expandNode(nodes[0]);
+        // console.log('20190611:' + nodes[0].id);
+        $('.A105L_neirong').attr('mlid',nodes[0].mlid);
+        $.post("/jzznyj/znjz/getImgList",{ajbs:ajbs,type:type, treeId : nodes[0].id}, function(data) {
+            if(data&&data.length>2){
+                var wjList =JSON.parse(data);
+                // 加载目录详情列表
+                $.each(wjList, function(i, obj) {
+                    var oldsort = '000' + obj.oldsort;
+                    oldsort = oldsort.substring(oldsort.length-3,oldsort.length)
+                    $('<div onclick="showRightImg(this)" class="'+obj.id+' A105L_item cursor" wjid="'+obj.id+'" wjpath="'+obj.filename+'">'+ oldsort +
+                        '<img src="../static/images/list_replace1.png" onclick="mlxqRotate(this)" wjid="'+obj.id+'" alt="" class="A105L_replace A105L_replace1  " title="顺时针旋转90°">' +
+                        '<img src="../static/images/list_replace2.png" onclick="deleteFile(this)" wjid="'+obj.id+'" wjpath="'+obj.filename+'" alt="" class="A105L_replace A105L_replace2 " title="删除">' +
+                        '<img src="../static/images/list_replace3.png" onclick="replaceFile(this)" wjid="'+obj.id+'" alt="" class="A105L_replace A105L_replace3 " title="替换上传"></div>').appendTo('.A105L_neirong');
+                });
+                $(".A105L_neirong div:first-child").addClass('A105L_itemChoose');
+
+                if('none'==$('.A105L_detailCoat').css('display')){
+                    $('.A105_Intelligence').click();
+                    toggle_list()
+                    // $('.A105L_detailCoat').css('display','block')
+                }
+
+                // 加载右侧缩略图
+                $.each(wjList, function(i, obj) {
+                    var oldsort = '000' + obj.oldsort;
+                    oldsort = oldsort.substring(oldsort.length-3,oldsort.length)
+                    $('<div id="'+ obj.id +'" gdy="1" class="A305_gaozhi">' +
+                        '<img style="cursor: pointer;" onclick="showPic(this)" wjid = "'+obj.id+'"  src="[[${application.fdfsPath}]]'+ obj.filename +'" alt="" class="A305_listPic"> ' +
+                        '<div class="A305_ribbon">' +
+                        '<img src="../static/images/A105_gaozhiBg.png" alt="" class="A105_gaozhiBg ">' +
+                        '<div class="A305_btnCoat clear">' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="replaceFile2(this)" title="替换上传" wjid = "'+obj.id+'" onclick="replaceFile(this)" wjid = "'+obj.id+'" src="../static/images/A305_btn1.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="rotateThumbnail(this)" deg="90" title="顺时针旋转90°" wjid = "'+obj.id+'" src="../static/images/A305_btn2.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="rotateThumbnail(this)" deg="-5" title="逆时针旋转5°" wjid = "'+obj.id+'" src="../static/images/A305_btn3.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="rotateThumbnail(this)" deg="5" title="顺时针旋转5°" wjid = "'+obj.id+'" src="../static/images/A305_btn4.png" alt="" class=" ">' +
+                        '</div>' +
+                        '<div class="A305_picBtn">' +
+                        '<img onclick="deleteFile2(this)" title="删除" wjid = "'+obj.id+'" wjpath="'+obj.filename+'" src="../static/images/A305_btn5.png" alt="" class=" ">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="A305_name">' +
+                        '<p>' + oldsort + '</p>' +
+                        '</div>' +
+                        '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('.A305_content'));
+
+                    // 加载右侧图片
+                    $('<div style="display:none;" class="A205_content '+wjList[i].id+'" wjid="'+wjList[i].id+'">' +
+                        '<img src="../static/images/A105_next1.png" alt="" onclick="previousImg1(this)" class="A205_lastImg1">' +
+                        '<img src="../static/images/A105_next2.png" alt="" onclick="nextImg1(this)" class="A205_lastImg2">' +
+                        '<img src="[[${application.fdfsPath}]]'+ wjList[i].filename +'" alt="" class="A105_presentation">' +
+                        '</div>' +
+                        '<div style="display:none;" class="A205_imgCoat '+wjList[i].id+'" wjid="'+wjList[i].id+'">' +
+                        '<div class="A205_img clear">' +
+                        '<img onclick="replaceFile2(this)" title="替换上传" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture1.png" alt="">' +
+                        '<img onclick="rotateImg(this)" deg="90" title="顺时针旋转90°" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture2.png" alt="">' +
+                        '<img onclick="previousImg(this)" title="往前" src="../static/images/A105P_newPicture3.png" alt="" class="A205_nextPage">' +
+                        '<img onclick="nextImg(this)" title="往后" src="../static/images/A105P_newPicture4.png" alt="" class="A205_nextPage">' +
+                        '<img onclick="rotateImg(this)" deg="-5" title="逆时针旋转5°" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture5.png" alt="">' +
+                        '<img onclick="rotateImg(this)" deg="5" title="顺时针旋转5°" wjid = "'+wjList[i].id+'" src="../static/images/A105P_newPicture6.png" alt="">' +
+                        '<img onclick="deleteFile2(this)" title="删除" wjid = "'+wjList[i].id+'" wjpath="'+wjList[i].filename+'" src="../static/images/A105P_newPicture7.png" alt="">' +
+                        '</div>' +
+                        '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('#imgContent'));
+                    parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').children('.A205_content:nth-child(1)').css('display','block');
+                    parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').children('.A205_imgCoat:nth-child(2)').css('display','block');
+                });
+            }else{
+                // $('.A105L_detailCoat').css('display','none')
+            }
+        });
+    }
+
+    // 点击关闭目录详情
+    function hideMlxq() {
+        $('.A105_body', parent.document).toggleClass('A105_bodyWider');
+        $('.A105_catalogue', parent.document).toggleClass('A105_catalogueWider');
+        $('.A105L_detailCoat').toggle();
+    }
+
+    // 缩略图点击
+    function showRightImg(v) {
+        var wjid = '.' + $(v).attr('wjid');
+        parent.$('.A105_pictureIframe_jq').contents().find('.A205_content').css('display','none');
+        parent.$('.A105_pictureIframe_jq').contents().find('.A205_imgCoat').css('display','none');
+        parent.$('.A105_pictureIframe_jq').contents().find(wjid).css('display','block');
+        $('#imgBtn').click();
+    }
+
+    //目录详情图片旋转
+    function mlxqRotate(v) {
+        var wjid = $(v).attr('wjid');
+        if('imgToggle' == parent.$('.A105_pictureIframe_jq').contents().find('#thumbnailBtn').attr('class')){
+            // 模拟点击图片旋转90度按钮
+            parent.$('.A105_pictureIframe_jq').contents().find('#imgContent').children('.'+wjid+':nth-child(2)').children().children('img:nth-child(2)').click();
+        }else{
+            // 模拟点击缩略图旋转90度按钮
+            parent.$('.A105_pictureIframe_jq').contents().find('#'+wjid).children('.A305_ribbon').children('.A305_btnCoat').children('.A305_picBtn:nth-child(2)').children('img').click();
+        }
+    }
+
+    // 目录详情替换上传
+    function replaceFile(v) {
+        var wjid = $(v).attr('wjid');
+        var uploadMessage = {"wjid":wjid,"treeId":"","ajbs":ajbs,herf:'upload'};
+        parent.parent.postMessage(uploadMessage,'*');
+    }
+
+    // 目录详情删除文件
+    function deleteFile(v){
+        var wjid = $(v).attr('wjid');
+        var wjpath = $(v).attr('wjpath');
+        var next = $(v).parent().next();
+        var prev = $(v).parent().prev();
+        if(next.attr('wjid')){// 如果后面还有图片，显示后面图片
+            next.addClass('A105L_itemChoose');
+            parent.$('.A105_pictureIframe_jq').contents().find('.'+next.attr('wjid')).css('display','block');
+
+        }else{
+            if(prev.attr('wjid')){// 后面没有往前看
+                prev.addClass('A105L_itemChoose');
+                parent.$('.A105_pictureIframe_jq').contents().find('.'+prev.attr('wjid')).css('display','block');
+            }
+        }
+        parent.$('.A105_pictureIframe_jq').contents().find('.'+wjid).remove();
+        $(v).parent().remove();
+        var str = '#'+$(v).attr('wjid');
+        parent.$('.A105_pictureIframe_jq').contents().find(str).remove();
+        $.post("/jzznyj/znjz/deleteFile",{wjid:wjid,type:type,wjpath:wjpath}, function(data) {
+            console.log('删除成功！');
+            flushLeft();
+            flushLeft2();
+        })
+        v = window.event || v;
+        if (v.stopPropagation) {
+            v.stopPropagation(); //阻止事件 冒泡传播
+        } else {
+            v.cancelBubble = true; //ie兼容
+        }
+    }
+
+    function topClick(e) {
+        e = window.event || e;
+        if (e.stopPropagation) {
+            e.stopPropagation(); //阻止事件 冒泡传播
+        } else {
+            e.cancelBubble = true; //ie兼容
+        }
+    }
+    function toggle_list() {
+        $('.A105_body', parent.document).addClass('A105_bodyWider');
+        $('.A105_catalogue', parent.document).addClass('A105_catalogueWider');
+        $('.A105L_detailCoat').show();
+    }
+
+</script>
+</body>
+</html>

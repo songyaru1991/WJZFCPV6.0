@@ -1,0 +1,31 @@
+package com.netmarch.lssqyj.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.lssqyj.system.bean.Log;
+import com.netmarch.lssqyj.system.model.LogQuery;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+
+@Mapper
+public interface LogMapper  {
+
+    /**
+     * 条件查询日志列表
+     * @param logQuery
+     *
+     * @return Page<Log>
+     */
+    Page<Log> listLog(LogQuery logQuery);
+    Page<Log> listLogException(LogQuery logQuery);
+    /**
+     * 保存日志内容
+     * @param
+     *
+     */
+    void saveLog(@Param("yhm") String yhm, @Param("dlip") String dlip, @Param("czlx") String czlx, @Param("cznr") String cznr, @Param("gjz") String gjz, @Param("czsj") Date czsj);
+    void saveLogException(@Param("yhm") String yhm, @Param("dlip") String dlip, @Param("czlx") String czlx, @Param("cznr") String cznr, @Param("gjz") String gjz, @Param("czsj") Date czsj);
+
+
+}

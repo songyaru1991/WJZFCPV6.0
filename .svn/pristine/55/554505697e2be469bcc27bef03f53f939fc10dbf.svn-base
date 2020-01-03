@@ -1,0 +1,63 @@
+package com.netmarch.figurecloud.auth.core.security.authenticate.jwt;
+
+
+import com.netmarch.figurecloud.auth.core.security.authenticate.JwtAuthenticationToken;
+import com.netmarch.figurecloud.auth.exposure.model.LoginMode;
+import com.netmarch.figurecloud.auth.core.security.config.JwtSettings;
+import com.netmarch.figurecloud.auth.exposure.model.UserContext;
+import com.netmarch.figurecloud.auth.core.security.model.token.RawAccessJwtToken;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
+import java.util.List;
+import java.util.stream.Collectors;
+/** 
+* @Description: JwtAuthenticationProvider jwt凭证提供者
+* @Author: fengxiang
+* @Date: 2019/2/15 10:09
+*/ 
+@Component
+public class JwtAuthenticationProvider implements AuthenticationProvider {
+    private final JwtSettings jwtSettings;
+    
+    @Autowired
+    public JwtAuthenticationProvider(JwtSettings jwtSettings) {
+        this.jwtSettings = jwtSettings;
+    }
+
+    /**
+     * 封装认证凭证信息（包括组织信息和角色）
+     * @param authentication
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
+
+        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
+        Claims body = jwsClaims.getBody();
+        String subject = body.getSubject();
+        Integer orgId =  body.get("oid")!=null?Integer.valueOf(body.get("oid").toString()):null;
+        LoginMode mode = body.get("mode")!=null?LoginMode.valueOf(body.get("mode").toString()):null;
+        List<String> scopes = body.get("scopes", List.class);
+        //获取角色数组
+        List<GrantedAuthority> authorities =
+             scopes!=null?scopes.stream()
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList()):null;
+        UserContext context = UserContext.create(subject,mode,orgId,authorities);
+        return new JwtAuthenticationToken(context, context.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+}

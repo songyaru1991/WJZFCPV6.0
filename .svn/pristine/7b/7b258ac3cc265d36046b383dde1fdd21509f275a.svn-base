@@ -1,0 +1,7 @@
+package com.netmarch.fdfs.system.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient("fdfs")
+public interface LoginUserClient {
+}

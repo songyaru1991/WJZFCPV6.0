@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>公安局--文书管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright"  auth:check="wsManage">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>文书管理：案件列表</p>
+            </div>
+
+            <div class="H105_searchCoat fr clear">
+                <select id="searchCondition" name="searchCondition" class="H105_select fl">
+                    <option value="searchAjmc" th:selected="${ajjbqkQuery.searchCondition=='searchAjmc'}">案件名称</option>
+                    <option value="searchAjbh" th:selected="${ajjbqkQuery.searchCondition=='searchAjbh'}">案件编号</option>
+                </select>
+                <input type="text" id="searchContent" name="searchContent" class="H105_search fl"  th:value="${ajjbqkQuery.searchContent}">
+                <!--th:value="${ajjbqkQuery.searchContent}"-->
+                <div class="H105_searchBtn fl " onclick="localRefresh()">搜索</div>
+            </div>
+        </div>
+        <div id="table_refresh" th:fragment="table_refresh">
+            <div class="H105_sysList H105_sysList1">
+            <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                <thead>
+                <tr>
+                    <td lay-data="{field:'1',width:70}">序号</td>
+                    <td lay-data="{field:'2'}">案件编号</td>
+                    <td lay-data="{field:'3'}">案件名称</td>
+                    <td lay-data="{field:'4'}">立案时间</td>
+                    <td lay-data="{field:'5'}">主办单位</td>
+                    <td lay-data="{field:'6'}">案件状态</td>
+                    <th lay-data="{field:'7', width:190}">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean,beanStat : ${list}">
+                    <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}" >
+                        序号
+                    </td>
+                    <td th:text="${bean.ajbh}">案件编号</td>
+                    <td th:text="${bean.ajmc}">案件名称</td>
+                    <td th:text="${bean.lasj}">立案时间</td>
+                    <td th:text="${bean.zbdwmc}">主办单位</td>
+                    <td th:text="${bean.ajzt}">案件状态</td>
+                    <td>
+                        <a th:href="${'javascript:toWsgl('''+bean.ajbs+''')'}"  auth:check="toGajAjjbqkWsgl">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/H105_checkIco1.png'"
+                                 alt="">
+                            <span>文书管理</span>
+                        </a>
+                        <a th:href="${'javascript:toWsys('''+bean.ajbs+''')'}"  auth:check="toGajAjjbqkWsys">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/H105_checkIco1.png'"
+                                 alt="">
+                            <span>移送</span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--分页引用-->
+            <div class="H105_pageCoat clear">
+                <div class="H105_first clear fl">
+                    本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                </div>
+                <div th:replace="common/pages::pages"></div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        function localRefresh() {
+            // 装载局部刷新返回的页面
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var param = {"searchContent": searchContent, "searchCondition": searchCondition, "pageNo": pageNo};
+            $("#table_refresh").load("../Ajjbqk/tableList", param, function () {
+                layui.use('table', function () {
+                    layui.table.init('demo', {
+                        limit: 12
+                    });
+                });
+            });
+        }
+
+        var contextPath = getContextPath();
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 12
+            });
+
+            table = layui.table;
+        })
+
+
+        function layerclose() {
+            layer.close(layIndex);
+        }
+
+        function toWsgl(ajbs) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '文书信息';
+            var layHref ='/wsgl-gaj/Wsgl/toGajAjjbqkWsgl?ajbs=' + ajbs+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+            hyViewClickEvent(layContent,layHref);
+        }
+
+        function toWsys(ajbs) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '文书移送';
+            var layHref ='/wsgl-gaj/Wsgl/toGajAjjbqkWsys?ajbs=' + ajbs+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+            hyViewClickEvent(layContent,layHref);
+        }
+
+    </script>
+</div>
+</body>
+</html>

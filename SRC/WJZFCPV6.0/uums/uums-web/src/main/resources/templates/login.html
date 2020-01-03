@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>单点登录管理系统</title>
+    <link rel="stylesheet" href="static/css/all.css">
+    <link rel="stylesheet" href="static/js/layui/css/layui.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/jquery.cookie.min.js"></script>
+    <script src="static/js/layui/layui.js"></script>
+    <script src="static/js/main.js"></script>
+    <script id="utilScript" src="static/js/util.js" th:bashURL="${application.basePath}"></script>
+</head>
+<body>
+<form action="" class="layui-form I206_form"  >
+    <div class="L106_page">
+        <img src="static/images/L105_bg.png" alt="" class="L105_pageImg">
+        <div class="L106_title1">
+            <img src="static/images/L105_title.png" alt="" id="titleimgs">
+        </div>
+        <div class="L106_logo1">
+            <img src="static/images/L105_logo.png" alt="">
+        </div>
+        <div class="L106_login">
+            <div class="L106_loginTitle"><p th:text="${application.userBmName}"></p></div>
+            <div class="L106_loginInput">
+                <input type="hidden" id="yhlb" name="yhlb"/>
+                <input class="layui-input" id="loginname" required lay-verify="required"  name="loginname" type="text" placeholder="用户名">
+            </div>
+            <div class="L106_loginInput">
+                <input class="layui-input" id="password" required lay-verify="required"  name="password" type="password" placeholder="密码">
+            </div>
+           <!-- <div class="L106_loginInput">
+                <input class="layui-input" id="verificationCode" required lay-verify="required"  name="password" type="password" placeholder="验证码">
+                <div class="L105_verification">
+                    <img src="./images/L105_verification.png" alt="">
+                </div>-->
+            <!--</div>-->
+            <input type="hidden" value="Web" name="mode"/>
+            <div class="L106_remember">
+                <input id="record_password"  lay-filter="record_password"  type="checkbox" lay-skin="primary">
+                <span>记住密码</span>
+            </div>
+
+            <div id="login_btn" class="L106_loginBtn" lay-submit lay-filter="login" ><p>登 录</p></div>
+        </div>
+        <div style="position: absolute;bottom: 0;left: 39%;"><span>江苏网进科技股份有限公司 技术支持 0512-57364001</span></div>
+
+    </div>
+</form>
+</body>
+<script type="text/javascript">
+    var userBmName='[[${application.userBmName}]]';
+    $('title').text('单点登录系统([[${application.userBmName}]])');
+   // userBmName="智能归档";
+   if(userBmName=="智能归档"){
+       $("#titleimgs").attr("src","static/images/zngd.png");
+   }else if(userBmName=="智能阅卷"){
+       $("#titleimgs").attr("src","static/images/znyj.png");
+   }
+    var yhlb=getUrlParam("yhlb");
+    $('#yhlb').val(yhlb);
+
+    layui.use(['form','layer','jquery'], function () {
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+        var isNeedLogin = true;
+        var recordPwdCookieName = "record_password";
+        form.on('submit(login)', function (data) {
+            if (!!isLoginBtnLocked) {
+                return;
+            }
+
+            lockLoginBtn();
+            var isNeedLoginTmp = isNeedLogin || !$.cookie(recordPwdCookieName);
+            //密码账号登录
+            if (!!isNeedLoginTmp) {
+                $.ajax({
+                    url: 'userLogin',
+                    data: JSON.stringify(data.field),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',//返回类型
+                    type: 'post',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (data) {
+                        if (data.status == 200) {
+                            if (!!$("#record_password").prop("checked")) {
+                                recordPwd(data);
+                            } else {
+                                clearRecordPwd();
+                            }
+                            var areaData = JSON.parse(data.data);    //转换为json对象;
+                            var area_code = areaData.area_code;
+                            var jwt = $.cookie("sid");
+                            var callbackURL = getUrlParam('callbackURL');
+                            if (callbackURL != null && callbackURL != "") {
+                                if (callbackURL.indexOf('/uums/user') != -1) {
+                                    var i = callbackURL.lastIndexOf("user");
+                                    var url = callbackURL.substr(0, i);
+                                    window.location.href = url + 'user/list' + '?jwt=' + jwt;
+                                } else if (callbackURL.indexOf('/uums/area') != -1) {
+                                    var i = callbackURL.lastIndexOf("area");
+                                    var url = callbackURL.substr(0, i);
+                                    window.location.href = url + 'area/list' + '?jwt=' + jwt;
+                                } else {
+                                    window.location.href = callbackURL + '?jwt=' + jwt;
+                                }
+                            } else {
+                                window.location.href = "index";
+                            }
+                        } else {
+                            alert("登录失败，原因是：" + data.msg);
+                            $("#loginname").select();
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                        layer.alert(data.msg);
+                    },
+                    complete: function () {
+                        unlockLoginBtn();
+                    }
+                });
+            }
+        }
+        return false;
+    });
+        $("#username").bind("input propertychange", function() {
+            isNeedLogin = true;
+        });
+        $("#password").bind("input propertychange", function() {
+            isNeedLogin = true;
+        });
+        $("#password").focus(function() {
+            $("#password").val("");
+        });
+        function clearRecordPwd() {
+            $("#username").val("");
+            $("#password").val("");
+            $.cookie("recordPwdCookieName","",{ path: getUrlRelativePath(), expires: -1 });
+        }
+        var isLoginBtnLocked = false;
+        function unlockLoginBtn() {
+            setTimeout(function () {
+                $("#login_btn").html("登 录");
+                isLoginBtnLocked = false;
+            },100);
+        }
+        function lockLoginBtn() {
+            $("#login_btn").html("正在登录...");
+            isLoginBtnLocked = true;
+            setTimeout(function () {
+                unlockLoginBtn();
+            },10000);
+        }
+
+
+        function getUrlRelativePath()
+        {
+            var url = document.location.toString();
+            var arrUrl = url.split("//");
+
+            var start = arrUrl[1].indexOf("/");
+            var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
+
+            if(relUrl.indexOf("?") != -1){
+                relUrl = relUrl.split("?")[0];
+            }
+            return relUrl;
+        }
+        function recordPwd(obj) {
+            var recordPwdObject = {};
+          //  recordPwdObject.refreshToken = obj.refreshToken;
+            recordPwdObject.username =  $("#username").val();
+            recordPwdObject.pwdLength =  $("#password").val().length;
+            //不往服务器发送，保存7天
+            $.cookie("recordPwdCookieName",JSON.stringify(recordPwdObject),{ path: getUrlRelativePath(), expires: 7 });
+        }
+        //页面初始化
+        function initPage() {
+            //如果是在ifream中子页面，刷新最外层页面
+            console.log('ccc')
+            if (window.top != window.self ){
+                var callbackURL = GetQueryString("callbackURL");
+                var userBmName = GetQueryString("userBmName");
+                //var yhlb = getUrlParam('yhlb');
+              //  window.top.location.href= "login?userBmName=" + userBmName +"&yhlb="+yhlb +"&callbackURL="+callbackURL;
+                window.top.location.href= "login?userBmName=" + userBmName +"&callbackURL="+callbackURL;
+            }
+          //判断是否记住了密码
+          var recordPwdObject = $.cookie(recordPwdCookieName);
+          if (!!recordPwdObject){
+              recordPwdObject = JSON.parse(recordPwdObject);
+              $("#record_password").prop("checked", true);
+              var pwdTmp = Math.pow(10,recordPwdObject.pwdLength-1);
+              $("#username").val(recordPwdObject.username);
+              $("#password").val(pwdTmp.toString());
+              //此时不需要登录
+              isNeedLogin = false;
+          }
+          form.render();
+        }
+        initPage();
+        //checkbox事件绑定
+        form.on('checkbox(record_password)', function (data) {
+            $("#record_password").prop("checked", !!this.checked);
+        });
+
+    });
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+</script>
+</html>

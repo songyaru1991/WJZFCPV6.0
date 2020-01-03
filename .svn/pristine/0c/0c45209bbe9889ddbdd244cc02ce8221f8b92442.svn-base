@@ -1,0 +1,16 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.AjClcsJgzxb;
+
+import java.util.List;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/23 14:05
+ */
+public interface AjClcsJgzxbMapper {
+    List<AjClcsJgzxb> getListByAjbh(String ajbh);
+}

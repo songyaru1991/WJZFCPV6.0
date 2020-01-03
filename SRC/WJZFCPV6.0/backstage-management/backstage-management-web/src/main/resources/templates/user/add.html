@@ -1,0 +1,146 @@
+<!--
+ * Author: wsp
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/select2.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/web/system/access/access.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>-->
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" method="get" th:action="@{/user/add}" >
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>基本信息</legend>
+                </fieldset>
+            </div>
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <td class="T106_itemName T106_must">登录名</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" type="text" name="loginName" id="loginName" >
+                        </td>
+                        <td class="T106_itemName T106_must">密码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" type="text" name="password" id="password" >
+                        </td>
+                        <td class="T106_itemName T106_must">姓名</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="name" id="name" type="text" >
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">警号</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="policeNum" id="policeNum" type="text">
+                        </td>
+                        <td class="T106_itemName T106_must">归属</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="organizationId" id="organizationId">
+                                <option value="0">请选择</option>
+                                <option th:each="org:${orgList}" th:value="${org.id}" th:text="${org.name}"></option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName T106_must">角色</td>
+                        <td class="">
+                            <select class="js-example-basic-multiple" name="roleId" id="roleId" multiple="multiple" lay-ignore="true">
+                                <option value="0">请选择</option>
+                                <option th:each="role:${roleList}" th:value="${role.id}" th:text="${role.name}"></option>
+                            </select>
+                        </td>
+                        <input type="hidden" name="roleIds" id="roleIds"/>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="submit();">确定</div>
+            <div class="A106_button A106_button2" onclick="javascript:window.parent.layerclose();">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script>
+    $("#roleId").select2({
+        width: 200 + "px", placeholder: "可以多选",allowClear: true
+    })
+    $('#roleId').change(function(){
+        var o=document.getElementById('roleId').getElementsByTagName('option');
+        var all="";
+        for(var i=0;i<o.length;i++){
+            if(o[i].selected){
+                all+=o[i].value+",";
+            }
+        }
+        all = all.substr(0, all.length - 1);//去掉末尾的逗号
+        $("#roleIds").val(all);//赋值给隐藏的文本框
+    })
+
+
+    var contextPath = getContextPath();
+    function submit() {
+        var data = {loginName:"input NotNull", password:"input NotNull",
+            name:"input NotNull",policeNum:"input NotNull", organizationId:"select NotNull"};
+        var flag = V_CHECK(data);
+        if(!flag){
+            return;
+        }
+        if($("#roleIds").val() == ''){
+            var o = layer.tips('下拉选不可为空！', $("#roleId").parent(), {
+                tipsMore: true,
+                tips: [3, '#03abff'],
+                time: 0
+            });
+            $("#roleId").parent().click(function () {
+                layer.close(o);
+            })
+            return;
+        }
+        $.ajax({
+            url:contextPath+"/user/add",
+            type:"post",
+            data:$("#form").serialize(),
+            dataType:"json",
+            success:function(result){
+                if(result.code == 200){
+                    layer.alert(result.message,function () {
+                        window.parent.location.href = contextPath+result.nextUrl;
+                    });
+                }else{
+                    layer.alert(result.message);
+                    return;
+                }
+            }
+        })
+    }
+
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+    })
+</script>

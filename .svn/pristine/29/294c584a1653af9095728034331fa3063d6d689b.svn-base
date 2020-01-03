@@ -1,0 +1,20 @@
+package com.netmarch.sso.loginsystem.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.sso.loginsystem.bean.Area;
+
+import java.util.List;
+
+public interface AreaMapper {
+    Page<Area> getAreaList(String keyword);
+
+    List<Area> getArea();
+
+    Area getAreaById(String id);
+
+    int editArea(Area area);
+
+    int addArea(Area area);
+
+    int delBatch(List<String> list);
+}

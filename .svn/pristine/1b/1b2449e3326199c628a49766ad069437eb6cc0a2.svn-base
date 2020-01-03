@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/all.css">
+    <link rel="stylesheet" href="../../static/css/style05.css">
+    <script src="../../static/js/jquery.min.js"></script>
+    <script src="../../static/js/main_All.js"></script>
+    <script src="../../static/js/main_05.js"></script>
+    <script src="../../static/js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../../static/js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../../static/js/jquery.backgroundSize.js"></script>
+
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img src="../images/H105_edit.png" alt="" class="E105_editIco">
+                <p>王宝田，柳姚天案件编辑</p>
+            </div>
+
+            <div class="E105_checkCoat fr    ">
+                <div class="E105_check fl cursor E105_checkClick">
+                    <img src="../images/H105_checkIco1.png" alt="" class="E105_checkIco">
+                    <p>查看</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco2.png" alt="" class="E105_checkIco2">
+                    <p>编辑</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco3.png" alt="" class="E105_checkIco2">
+                    <p>社会调查 </p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco4.png" alt="" class="E105_checkIco2">
+                    <p>文书管理</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco5.png" alt="" class="E105_checkIco2">
+                    <p>资料补充</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco6.png" alt="" class="E105_checkIco2">
+                    <p>涉案财物</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco7.png" alt="" class="E105_checkIco3">
+                    <p>案件追踪</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco8.png" alt="" class="E105_checkIco3">
+                    <p>会见申请</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_x1.png" alt="" class="E105_checkIco">
+                    <p>关闭标签</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="C105_chakan clear">
+
+            <div class="C105_filled fl">
+                <div class="E105_baseInfo">
+                    <div class="C105_info  ">
+                        <img src="../images/E105_biaoqian.png" alt="" class="C105_tipIco">
+                        <p>案件基本信息</p>
+                    </div>
+
+                </div>
+            <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table">
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件编号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>GGFDDB154967979797+4+4+4</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>案件名称</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>李思盗窃案</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件类型</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>报诉</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>移送时间</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>2018-10-28  13:25:02</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件类别</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>盗窃案</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>移送单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>南明区公安局</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>是否是重要案件</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>否  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>是否认罪轻案案件</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>嫌疑人是否有未成年人</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>否  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>被害人是否有未成年人</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>嫌疑人是否有台湾人</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>否  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>被害人是否有台湾人</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>主案由</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p>盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃案盗窃
+                                        盗窃案盗窃案盗窃案盗窃案  </p>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>公安文书文号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>454679710  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>上报卷宗页数</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>18</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>侦查机关</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>侦查机关  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>接收单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>区公安局</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>承办人</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>管理员  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>办案单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>区公安局</p>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="E105_baseInfo">
+                    <div class="C105_info  ">
+                        <img src="../images/E105_biaoqian.png" alt="" class="C105_tipIco">
+                        <p>嫌疑人一基本信息</p>
+                    </div>
+
+                </div>
+                <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table"  >
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件编号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>GGFDDB154967979797+4+4+4</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>案件名称</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>李思盗窃案</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>嫌疑人姓名</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>李思</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>嫌疑人性别</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>男</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>从事职业</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>无</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>强制措施种类</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>逮捕</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>嫌疑人年龄</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>23  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>身份证号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>640181198110233524</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>文化程度</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>盗窃  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>嫌疑人编号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>GAXYR-20170831092632</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>当前住址</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p>无  </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>户籍地</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p>无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    政治面貌                            </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p>群众 </p>
+                                </td>
+
+                            </tr>
+
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="C105_notFill fr">
+
+                <div class="C105_info  ">
+                    <img src="../images/E105_biaoqian.png" alt="" class="C105_tipIco">
+                    <p>未填写部分</p>
+                </div>
+<!--框-->
+                <div class="C105_caseCoat">
+                        <div class="C105_base">
+
+                            <div class="C105_baseInfo">
+                                <div class="C105_subtitle clear">
+                                   <p> 案件基本信息</p>
+                                    <div class="C105_arrowDown  "></div>
+                                </div>
+                                <ul class="C105_transfer" >
+                                    <li>移送时间</li>
+                                    <li>移送单位</li>
+                                    <li>是否认罪轻案案件</li>
+                                    <li>被害人是否有未成年人</li>
+                                    <li>被害人是否有台湾人</li>
+                                </ul>
+                            </div>
+                            <div class="C105_baseInfo">
+                                <div class="C105_subtitle clear">
+                                    <p> 嫌疑人基本信息</p>
+                                    <div class="C105_arrowDown  "></div>
+
+                                </div>
+                                <ul class="C105_transfer" >
+                                    <li>从事职业</li>
+                                    <li>政治面貌</li>
+
+                                </ul>
+                            </div>
+                            <div class="C105_baseInfo">
+                                <div class="C105_subtitle clear">
+                                    <p> 嫌疑人基本信息</p>
+                                    <div class="C105_arrowDown  "></div>
+
+                                </div>
+                                <ul class="C105_transfer" >
+                                    <li>从事职业</li>
+                                    <li>政治面貌</li>
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+<script>
+  layui.use('laydate', function () {
+    var laydate = layui.laydate;
+// 点我触发
+    laydate.render({
+      elem: '#Q105P_refereeing1',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+  });
+</script>
+</html>

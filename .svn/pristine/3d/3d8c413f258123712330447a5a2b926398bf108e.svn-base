@@ -1,0 +1,60 @@
+package com.netmarch.gaj.config;
+
+import com.netmarch.gaj.system.Interceptor.LoginInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.HttpPutFormContentFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * @Author:songyaru
+ * @Date:2019/4/27
+ */
+
+@Configuration
+//@EnableWebMvc
+@Component
+public class WebMvcConfiguration  implements WebMvcConfigurer {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry){
+
+    }
+
+    /**
+     * 添加静态资源文件，外部可以直接访问地址
+     * @param registry
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
+        registry.addResourceHandler("resource/**").addResourceLocations("file:/upload/");
+    }
+
+
+//    @Autowired
+//    private LoginInterceptor loginInterceptor;
+
+     // 注册拦截器，我们自己写好的拦截器需要通过这里添加注册才能生效
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor()).
+                addPathPatterns("/**").
+                excludePathPatterns("/loginVerify","/logout","/static/**");
+    }
+
+    @Bean
+    public HttpPutFormContentFilter httpPutFormContentFilter() {
+        return new HttpPutFormContentFilter();
+    }
+
+    @Bean
+    public LoginInterceptor loginInterceptor(){
+        return new LoginInterceptor();
+    }
+}

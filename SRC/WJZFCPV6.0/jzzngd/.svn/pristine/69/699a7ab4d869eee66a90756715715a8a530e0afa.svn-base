@@ -1,0 +1,114 @@
+package com.netmarch.jzzngd.system.service.impl;
+
+import com.netmarch.jzzngd.common.utils.common.FdfsUtil;
+import com.netmarch.jzzngd.system.bean.Ajdzjzwj;
+import com.netmarch.jzzngd.system.mapper.AjdzjzwjMapper;
+import com.netmarch.jzzngd.system.mapper.AjdzjzmlMapper;
+import com.netmarch.jzzngd.system.service.AjdzjzwjService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class AjdzjzwjServiceImpl implements AjdzjzwjService {
+
+    @Autowired
+    private AjdzjzmlMapper ajdzjzmlMapper;
+
+    @Autowired
+    private AjdzjzwjMapper ajdzjzwjMapper;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @Override
+    public List<Map<String, Object>> getCountByFlag(String ajbs) {
+        return ajdzjzwjMapper.getCountByFlag(ajbs);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByParentid(String ajbs,String parentid) {
+        return ajdzjzwjMapper.selectWjByParentid(ajbs,parentid);
+    }
+
+    @Override
+    public void updateOldsort(String wjid, int oldsort){
+        ajdzjzwjMapper.updateOldsort(wjid,oldsort);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByMlid(String mlid) {
+        return ajdzjzwjMapper.selectWjByMlid(mlid);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByMlids(List<String> mlIdList) {
+        return ajdzjzwjMapper.selectWjByMlids(mlIdList);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByOrderby(int orderby,String ajbs) {
+        if(10001 == orderby){
+            return ajdzjzwjMapper.selectUndealtWj(ajbs);
+        }
+        return ajdzjzwjMapper.selectWjByOrderby(orderby,ajbs);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectUndealtWj(String ajbs) {
+        return ajdzjzwjMapper.selectUndealtWj(ajbs);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByAjbs(String ajbs){
+        return ajdzjzwjMapper.selectWjByAjbs(ajbs);
+    }
+
+    @Override
+    public int updateMlidById(String ajbs, String mlid, String wjid){
+        Object maxnewsort = ajdzjzwjMapper.selectMaxNewsortByMlid(ajbs,mlid);
+        maxnewsort = null == maxnewsort ? 0 : maxnewsort;
+        int newsort = Integer.parseInt(maxnewsort.toString()) + 1;
+        return ajdzjzwjMapper.updateMlidAndNewsort(mlid,newsort,wjid);
+    }
+
+    @Override
+    public Ajdzjzwj selectWjById(String wjid){
+        return ajdzjzwjMapper.selectWjById(wjid);
+    }
+
+    @Override
+    public List<Ajdzjzwj> showOrgImg(String treeId, String parentid, String ajbs) {
+        if(parentid.length() > 0){
+            int orderby = Integer.parseInt(parentid);
+            String oldsort = treeId.substring(parentid.length(),treeId.length());
+            return ajdzjzwjMapper.selectWjByAjbsAndOldsort(Integer.parseInt(oldsort),ajbs);
+        }else{
+            List<String> mlids = ajdzjzmlMapper.selectAllMlIdListByOrderby(ajbs,Integer.parseInt(treeId));
+            return ajdzjzwjMapper.selectWjByMlids(mlids);
+        }
+    }
+
+    @Override
+    public int updateWjmlidById(String mlid, String wjid) {
+        return ajdzjzwjMapper.updateWjmlidById(mlid,wjid);
+    }
+
+    @Override
+    public int updateFilenameById(String wjid, String path) {
+        return ajdzjzwjMapper.updateFilenameById(wjid,path);
+    }
+
+    @Override
+    public int deleteById(String wjid,String wjpath){
+        fileUtil.deleteFile(wjpath);
+        return ajdzjzwjMapper.deleteFileById(wjid);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByIds(List<String> ids) {
+        return ajdzjzwjMapper.selectWjByIds(ids);
+    }
+}

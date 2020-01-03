@@ -1,0 +1,78 @@
+package com.netmarch.gaj.system.bean;
+
+import java.io.Serializable;
+
+public class Dict_ga implements Serializable {
+    private String CODE;
+
+    private String MC;
+
+    private Integer DICT_SM_ID;
+
+    private static final long serialVersionUID = 1L;
+
+    public String getCODE() {
+        return CODE;
+    }
+
+    public void setCODE(String CODE) {
+        this.CODE = CODE == null ? null : CODE.trim();
+    }
+
+    public String getMC() {
+        return MC;
+    }
+
+    public void setMC(String MC) {
+        this.MC = MC == null ? null : MC.trim();
+    }
+
+    public Integer getDICT_SM_ID() {
+        return DICT_SM_ID;
+    }
+
+    public void setDICT_SM_ID(Integer DICT_SM_ID) {
+        this.DICT_SM_ID = DICT_SM_ID;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Dict_ga other = (Dict_ga) that;
+        return (this.getCODE() == null ? other.getCODE() == null : this.getCODE().equals(other.getCODE()))
+            && (this.getMC() == null ? other.getMC() == null : this.getMC().equals(other.getMC()))
+            && (this.getDICT_SM_ID() == null ? other.getDICT_SM_ID() == null : this.getDICT_SM_ID().equals(other.getDICT_SM_ID()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getCODE() == null) ? 0 : getCODE().hashCode());
+        result = prime * result + ((getMC() == null) ? 0 : getMC().hashCode());
+        result = prime * result + ((getDICT_SM_ID() == null) ? 0 : getDICT_SM_ID().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", CODE=").append(CODE);
+        sb.append(", MC=").append(MC);
+        sb.append(", DICT_SM_ID=").append(DICT_SM_ID);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

@@ -1,0 +1,33 @@
+package com.netmarch.fdfs.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+/**
+ * @Author:xieqiang
+ * @Date:2019/2/25
+ */
+@ConfigurationProperties
+public class PathProperties {
+    @Value("${netmarch.zuul-path}")
+    private String zuulPath;
+
+    @Value("${spring.application.name}")
+    private String applicationPath;
+
+    public String getZuulPath() {
+        return zuulPath;
+    }
+
+    public void setZuulPath(String zuulPath) {
+        this.zuulPath = zuulPath;
+    }
+
+    public String getApplicationPath() {
+        return applicationPath;
+    }
+
+    public void setApplicationPath(String applicationPath) {
+        this.applicationPath = applicationPath;
+    }
+}

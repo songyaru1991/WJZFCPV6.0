@@ -1,0 +1,4 @@
+package com.netmarch.jzzngd.system.mapper;
+
+public interface GjajjbqkMapper {
+}

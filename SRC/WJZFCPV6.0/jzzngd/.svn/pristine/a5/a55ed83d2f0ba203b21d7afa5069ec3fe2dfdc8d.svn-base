@@ -1,0 +1,168 @@
+package com.netmarch.jzzngd.system.service.impl;
+
+import com.netmarch.jzzngd.common.utils.common.FdfsUtil;
+import com.netmarch.jzzngd.system.bean.Ajdzjzml;
+import com.netmarch.jzzngd.system.bean.Ajdzjzwj;
+import com.netmarch.jzzngd.system.mapper.AjdzjzmlMapper;
+import com.netmarch.jzzngd.system.mapper.AjdzjzwjMapper;
+import com.netmarch.jzzngd.system.service.AjdzjzmlService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@Slf4j
+public class AjdzjzmlServiceImpl implements AjdzjzmlService {
+
+    @Autowired
+    private AjdzjzmlMapper ajdzjzmlMapper;
+
+    @Autowired
+    private AjdzjzwjMapper ajdzjzwjMapper;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @Override
+    public int updateZtree(String mlid,String ajbs,int orderby,String filename,String parentid) { // u
+        if("".equals(mlid)){ // 一级目录
+            int maxOrderby = 0;
+            int addOrderby = 1;
+            List<Ajdzjzml> ajdzjzmls = ajdzjzmlMapper.selectDzjzmlByParent(ajbs, parentid);
+            if (null != ajdzjzmls && ajdzjzmls.size() > 0) {
+                for (Ajdzjzml ajdzjzml : ajdzjzmls) {
+                    maxOrderby = ajdzjzml.getOrderby() > maxOrderby ? ajdzjzml.getOrderby() : maxOrderby;
+                }
+                addOrderby = maxOrderby + 1;
+            }
+            return ajdzjzmlMapper.addParentMl(ajbs, UUID.randomUUID().toString(), filename, addOrderby, parentid, new Date());
+        }else{
+            return ajdzjzmlMapper.updateNameByMlid(mlid,filename);
+        }
+    }
+
+    @Override
+    public List<Ajdzjzml> selectDzjzmlByParent(String ajbs,String parentId) {
+        return ajdzjzmlMapper.selectDzjzmlByParent(ajbs,parentId);
+    }
+
+    @Override
+    public int deleteZtree(String ajbs,String orderby,String parentid) { // u
+        if(parentid.length()>0){
+            int oldsort =Integer.parseInt(orderby.substring(1,orderby.length()));
+            int pid = Integer.parseInt(parentid);
+            String wjid = ajdzjzwjMapper.selectWjid(ajbs,oldsort,pid);
+            return ajdzjzwjMapper.deleteFileById(wjid);
+        }else{
+            Ajdzjzml ajdzjzml = ajdzjzmlMapper.selectMlByOrder(ajbs,Integer.parseInt(orderby));
+            String id = ajdzjzml.getId();
+            List<Ajdzjzwj> wjList = ajdzjzwjMapper.selectWjByMlid(id);
+            for(Ajdzjzwj a : wjList){
+                fileUtil.deleteFile(a.getFilename()); // 删除fdfs文件
+            }
+            ajdzjzwjMapper.deleteFileByMlid(id); // 删除目录下的文件
+            return ajdzjzmlMapper.deleteFileById(id); // 删除目录
+        }
+    }
+
+    @Override
+    public int insertWj(String ajbs, String path, String filename, String parentid){
+        String id = UUID.randomUUID().toString();
+        int orderby = Integer.parseInt(parentid);
+        Ajdzjzml ajdzjzml = ajdzjzmlMapper.selectMlByOrder(ajbs,orderby);
+        return ajdzjzwjMapper.addWj(id,ajdzjzml.getId(),path,filename,new Date());
+    }
+
+    @Override
+    public int deleteFileByMlid(String wjid,String filePath){
+        fileUtil.deleteFile(filePath);
+        return ajdzjzwjMapper.deleteFileById(wjid);
+    }
+
+    @Override
+    public List<String> selectAllParentids(String ajbs){
+        return ajdzjzmlMapper.selectAllParentids(ajbs);
+    }
+
+    @Override
+    public int addZnMl(String ajbs, String typename, int orderby, int pageFrom, int pageTo){
+        String id = UUID.randomUUID().toString();
+        String parentid = orderby+"";
+        Ajdzjzml ml = ajdzjzmlMapper.selectMlByName(ajbs,typename);
+        int maxNewsort = 0;
+        int neworderby = 0;
+        if(null != ml){
+            maxNewsort = ajdzjzwjMapper.selectMaxNewsort(ajbs,typename);
+        }else{
+            List<Ajdzjzml> ajdzjzmls = ajdzjzmlMapper.selectDzjzmlByParent(ajbs,parentid);
+            int maxOrderby = 0;
+            int addOrderby = 1;
+            if(null != ajdzjzmls&&ajdzjzmls.size()>0){
+                for(Ajdzjzml ajdzjzml : ajdzjzmls){
+                    maxOrderby = ajdzjzml.getOrderby()>maxOrderby?ajdzjzml.getOrderby():maxOrderby;
+                }
+                neworderby = maxOrderby + 1;
+            }else{
+                neworderby = Integer.parseInt(parentid + addOrderby);
+            }
+            ajdzjzmlMapper.addParentMl(ajbs,id,typename,neworderby,parentid, new Date());
+        }
+        List<Ajdzjzwj> ajdzjzwjs = ajdzjzwjMapper.selectWjByPage(ajbs,orderby,pageFrom,pageTo);
+        if(null != ajdzjzwjs&&ajdzjzwjs.size()>0){
+            for(int i=0;i<ajdzjzwjs.size();i++){
+                return ajdzjzwjMapper.updateNewsort(ajdzjzwjs.get(i).getId(),id,maxNewsort+i+1);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public Ajdzjzml selectIdByOrderby(Integer orderby,String ajbs) {
+        return ajdzjzmlMapper.selectIdByOrderby(orderby,ajbs);
+    }
+
+    @Override
+    public List<String> selectAllWjCountByMlid(int orderby,String ajbs){
+        return ajdzjzmlMapper.selectAllMlIdListByOrderby(ajbs,orderby);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByMlid(String mlid) {
+        return ajdzjzwjMapper.selectWjByMlid(mlid);
+    }
+
+    @Override
+    public int deleteZtree1(String mlid, String wjid) {
+        int count = 0;
+        if("".equals(mlid)){
+            Ajdzjzwj ajdzjzwj = ajdzjzwjMapper.selectWjById(wjid);
+//            log.info("被删除的文件url是：" + ajdzjzwj.getFilename());
+            fileUtil.deleteFile(ajdzjzwj.getFilename());
+            count = ajdzjzwjMapper.deleteFileById(wjid);
+//            log.info("被删除的文件id是：" + wjid);
+        }else{
+            Ajdzjzml ajdzjzml = ajdzjzmlMapper.selectMlById(mlid);
+            List<String> mlids = ajdzjzmlMapper.selectAllMlIdListByOrderby(ajdzjzml.getAjbs(),ajdzjzml.getOrderby());
+            List<Ajdzjzwj> ajdzjzwjs = ajdzjzwjMapper.selectWjByMlids(mlids);
+            if(null != ajdzjzwjs&&ajdzjzwjs.size() > 0){
+                for(Ajdzjzwj wj : ajdzjzwjs){
+                    fileUtil.deleteFile(wj.getFilename());
+                    count = ajdzjzwjMapper.deleteFileById(wj.getId());
+//                    log.info("被删除的文件id是：" + wj.getId());
+                }
+            }
+            ajdzjzmlMapper.deleteZtreeMl(mlids);
+//            log.info("被删除的文件id是：" + mlids);
+        }
+        return count;
+    }
+
+    @Override
+    public Ajdzjzml selectMlByWjid(String wjid){
+        return ajdzjzmlMapper.selectMlByWjid(wjid);
+    }
+}

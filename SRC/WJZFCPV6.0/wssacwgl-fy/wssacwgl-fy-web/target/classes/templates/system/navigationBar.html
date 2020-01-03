@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>法院--涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_content clear">
+    <div class=" H105_leftBody">
+        <div class="H105_menu">
+            <ul class="I106_navList clear">
+
+                <li  auth:check="sacwglManage">
+                    <div class="I106_navItem  I106_navItemCurrent " >
+                        <span class="I106_navIcon I106_navIcon1"></span>
+                        <span>案件管理</span>
+                        <span class="I106_arrow I106_arrowCurrent"></span>
+                    </div>
+
+                    <ul class="I106_subNavList" style="display: block;">
+                        <li lay-href="ajjbqklist" data-content="案件管理">
+                            <span class="I106_subNavItem">案件管理</span>
+                        </li>
+                    </ul>
+                </li>
+
+                <li   auth:check="sysManage">
+                    <div class="I106_navItem  I106_navItemCurrent">
+                        <span class="I106_navIcon I106_navIcon4"></span>
+                        <span>系统管理</span>
+                        <span class="I106_arrow I106_arrowCurrent"></span>
+                    </div>
+                    <ul class="I106_subNavList">
+                        <li lay-href="/wssacwgl-fy/departments/departmentsList" data-content="科室管理" auth:check="departmentsManage">
+                            <span class="I106_subNavItem">科室管理</span>
+                        </li>
+                        <li  lay-href="/wssacwgl-fy/user/list" data-content="用户管理" auth:check="userManage">
+                            <span class="I106_subNavItem">用户管理</span>
+                        </li>
+                        <li  lay-href="/wssacwgl-fy/resource/list" data-content="资源管理" auth:check="resourceManage">
+                            <span class="I106_subNavItem">资源管理</span>
+                        </li>
+                        <li  lay-href="/wssacwgl-fy/role/list" data-content="角色管理" auth:check="roleManage">
+                            <span class="I106_subNavItem">角色管理</span>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+  <iframe class="H105_iframeright" frameborder="0" th:src="'ajjbqklist?searchCondition='+${ajjbqkQuery.searchCondition}+'&searchContent='+${ajjbqkQuery.searchContent}+'&pageNo='+${pageNo}" sandbox="allow-forms
+                                                                            allow-modals
+                                                                            allow-orientation-lock
+                                                                            allow-pointer-lock
+                                                                            allow-popups
+                                                                            allow-popups-to-escape-sandbox
+                                                                            allow-same-origin
+                                                                            allow-scripts
+                                                                            allow-top-navigation"></iframe>
+    <!--sandbox="allow-scripts allow-top-navigation allow-same-origin allow-forms"-->
+</div>
+</body>
+
+</html>
+

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <title>模板管理</title>
+    <link rel='stylesheet' type='text/css' th:href="${application.basePath}+'/static/css/iWebOffice2009/test.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+
+    <script language="javascript" for=WebOffice2015 event="OnCommand(vIndex, Caption, bCancel)">
+        if (vIndex==1){  //打开本地文件
+            WebOpenLocal();
+        }
+        if (vIndex==2){  //保存本地文件
+            WebSaveLocal();
+        }
+        if (vIndex==4){  //保存并退出
+            SaveDocument();    //保存正文
+            webform.submit();  //提交表单
+        }
+        if (vIndex==6){  //打印文档
+            WebOpenPrint();
+        }
+    </script>
+
+
+    <script language=javascript  th:inline="javascript">
+
+
+        var recordID = "",template = "",fileName = "",userName = "";
+        var webUrl = '/wsgl-fy/OfficeServer/ExecuteRun?bookMarkKeyValue='+'&sdhzWsJlbhs=' + '&curWSLX=';
+
+            var wsmanage = [[${wsmanage}]];
+            if (wsmanage != null) {
+                var template = wsmanage.id;
+                var fileName = wsmanage.wsbt;
+                var userName = wsmanage.adduser;
+                if (fileName == null) {
+                    fileName = "";
+                }
+                if (recordID == null) {
+                    recordID = "";
+                }
+                if (template == null) {
+                    template = "";
+                }
+                if (userName == null) {
+                    userName = "";
+                }
+            }
+
+        //作用：显示操作状态
+        function StatusMsg(mString){
+            document.getElementById("StatusBar").innerText=mString;
+        }
+
+        //作用：载入iWebOffice
+        function Load(){
+            try{
+
+                if ((window.ActiveXObject != undefined) || (window.ActiveXObject != null) || "ActiveXObject" in window) {
+                    //IE调用
+                } else {
+                    //非IE调用,该属性目前只支持IE浏览器，其它浏览器不支持Hook，所以须设置成false，否则会引起异常崩溃。
+                    WebOffice.HookEnabled = false;
+
+                    webform.WebOffice = WebOffice.FuncExtModule;  //获取iWebOffice2015扩展接口对象
+                }
+
+
+                //以下属性必须设置，实始化iWebOffice
+                webform.WebOffice.WebUrl= webUrl;    //WebUrl:系统服务器路径，与服务器文件交互操作，如保存、打开文档，重要文件
+                webform.WebOffice.RecordID="";   //RecordID:本文档记录编号
+                webform.WebOffice.Template=template;   //Template:模板编号
+                webform.WebOffice.FileName=fileName;   //FileName:文档名称
+                webform.WebOffice.FileType=".doc";	//FileType:文档类型  .doc  .xls  .wps
+                webform.WebOffice.EditType="1";	//EditType:编辑类型  方式一、方式二  <参考技术文档>
+                webform.WebOffice.UserName=userName;	//UserName:操作用户名
+
+                webform.WebOffice.PenColor="#FF0000";                   //PenColor:默认批注颜色
+                webform.WebOffice.PenWidth="1";                         //PenWidth:默认批注笔宽
+                webform.WebOffice.Print="1";                            //Print:默认是否可以打印:1可以打印批注,0不可以打印批注
+                webform.WebOffice.ShowToolBar="0";                      //ShowToolBar:是否显示工具栏:1显示,0不显示
+
+                //以下属性可以不要
+               /*
+                webform.WebOffice.ShowToolBar="0";		//ShowToolBar:是否显示工具栏:1显示,0不显示
+                webform.WebOffice.ShowMenu="1";		//ShowMenu:1 显示菜单  0 隐藏菜单
+                webform.WebOffice.AppendMenu("1","打开本地文件(&L)");
+                webform.WebOffice.AppendMenu("2","保存本地文件(&S)");
+                webform.WebOffice.AppendMenu("3","-");
+                webform.WebOffice.AppendMenu("4","保存并退出(&E)");
+                webform.WebOffice.AppendMenu("5","-");
+                webform.WebOffice.AppendMenu("6","打印文档(&P)");
+                webform.WebOffice.DisableMenu("宏(&M);选项(&O)...");      //禁止菜单
+                */
+                webform.WebOffice.SetCharset("UTF-8");
+                LoadDocument();
+              //  webform.WebOffice.WebOpen();			//打开该文档    交互OfficeServer的OPTION="LOADTEMPLATE"  LOADFILE
+                webform.WebOffice.ShowType=1;			//文档显示方式  1:表示文字批注  2:表示手写批注  0:表示文档核稿
+                StatusMsg(webform.WebOffice.Status);
+
+            }catch(e){}
+        }
+
+        //作用：退出iWebOffice
+        function UnLoad(){
+            try{
+                if (!webform.WebOffice.WebClose()){
+                    StatusMsg(webform.WebOffice.Status);
+                }else{
+                    StatusMsg("关闭文档...");
+                }
+            }catch(e){}
+        }
+
+
+        //作用：打开文档
+        function LoadDocument(){
+            StatusMsg("正在打开文档...");
+            webform.WebOffice.WebSetMsgByName("OPTION", "LOADTEMPLATE");
+
+            if (!webform.WebOffice.WebLoadTemplate()){  //交互OfficeServer的OPTION="LOADTEMPLATE"
+                StatusMsg(webform.WebOffice.Status);
+            }else{
+                StatusMsg(webform.WebOffice.Status);
+            }
+        }
+
+
+        //作用：刷新文档
+        function WebReFresh(){
+            webform.WebOffice.WebReFresh();
+            StatusMsg("文档已刷新...");
+        }
+
+
+        //作用：保存文档
+        function SaveDocument() {
+            webform.WebOffice.WebClearMessage();            //清空iWebOffice变量
+
+            webform.WebOffice.WebSetMsgByName("OPTION", "SAVETEMPLATE");
+            //webform.WebOffice.WebSetMsgByName("MyDefine1","自定义变量值1");  //设置变量MyDefine1="自定义变量值1"，变量可以设置多个  在WebSaveTemplate()时，一起提交到OfficeServer中
+            if (!webform.WebOffice.WebSaveTemplate()) {    //交互OfficeServer的OPTION="SAVETEMPLATE"    true
+                StatusMsg(webform.WebOffice.Status);
+                return false;
+            }
+            if (!webform.WebOffice.WebSaveBookMarks()) {    //交互OfficeServer的OPTION="SAVEBOOKMARKS"
+                StatusMsg(webform.WebOffice.Status);
+                    return false;
+            } else {
+                StatusMsg(webform.WebOffice.Status);
+                return true;
+            }
+        }
+
+        //作用：填充模板
+        function LoadBookmarks(){
+            StatusMsg("正在填充模扳...");
+            if (!webform.WebOffice.WebLoadBookmarks()){    //交互OfficeServer的OPTION="LOADBOOKMARKS"
+                StatusMsg(webform.WebOffice.Status);
+            }else{
+                StatusMsg(webform.WebOffice.Status);
+            }
+        }
+
+        //作用：设置书签值  vbmName:标签名称，vbmValue:标签值   标签名称注意大小写
+        function SetBookmarks(vbmName,vbmValue){
+            if (!webform.WebOffice.WebSetBookmarks(vbmName,vbmValue)){
+                StatusMsg(webform.WebOffice.Status);
+            }else{
+                StatusMsg(webform.WebOffice.Status);
+            }
+        }
+
+        //作用：根据标签名称获取标签值  vbmName:标签名称
+        function GetBookmarks(vbmName){
+            var vbmValue;
+            vbmValue=webform.WebOffice.WebGetBookmarks(vbmName);
+            return vbmValue;
+        }
+
+        //作用：打印文档
+        function WebOpenPrint(){
+            try{
+                webform.WebOffice.WebOpenPrint();
+                StatusMsg(webform.WebOffice.Status);
+            }catch(e){}
+        }
+
+        //作用：页面设置
+        function WebOpenPageSetup(){
+            try{
+                if (webform.WebOffice.FileType==".doc"){
+                    webform.WebOffice.WebObject.Application.Dialogs(178).Show();
+                }
+                if(webform.WebOffice.FileType==".xls"){
+                    webform.WebOffice.WebObject.Application.Dialogs(7).Show();
+                }
+            }catch(e){
+
+            }
+        }
+
+        //作用：标签管理
+        function WebOpenBookMarks(){
+            try{
+                webform.WebOffice.WebOpenBookmarks();    //交互OfficeServer的OPTION="LISTBOOKMARKS"
+                StatusMsg(webform.WebOffice.Status);
+            }catch(e){}
+        }
+
+        //作用：存为本地文件
+        function WebSaveLocal(){
+            try{
+                webform.WebOffice.WebSaveLocal();
+                StatusMsg(webform.WebOffice.Status);
+            }catch(e){}
+        }
+
+        //作用：打开本地文件
+        function WebOpenLocal(){
+            try{
+                webform.WebOffice.WebOpenLocal();
+                StatusMsg(webform.WebOffice.Status);
+            }catch(e){}
+        }
+
+        function OnReady() {
+            //获取iWebOffice2015控件对象，WebOffice.FuncExtModule是iWebOffice2015控件扩展接口对象
+
+            WebOffice = document.getElementById('WebOffice2015');
+
+            setTimeout(function () { Load(); }, 500); //需要做一个延时，iWebOffice2015才能获取FuncExtModule扩展接口对象
+        }
+
+    </script>
+
+    <script language="javascript" for="WebOffice2015" event="OnReady()">
+        //获取iWebOffice2015控件对象，WebOffice.FuncExtModule是iWebOffice2015控件扩展接口对象
+        WebOffice = document.getElementById("WebOffice2015");
+        webform.WebOffice = WebOffice.FuncExtModule;          //webform.WebOffice是之前03&09控件使用的对象
+        Load();          //避免页面加载完，控件还没有加载的情况
+    </script>
+</head>
+<body bgcolor="#ffffff"  onunload="UnLoad();"  onbeforeunload="UnLoad();"  onresize="resize();">
+<form name="webform" method="post" action="#" onsubmit="return SaveDocument();">
+    <!--保存iWebOffice后提交表单信息-->
+    <input type="hidden" name="RecordID" value="3a2e5942-d396-4cf7-b715-d90070e0ec1d">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td height="10" align="center" valign="top" >
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="20"  >
+                            &nbsp;
+                        </td>
+                        <td width="343" align="center"   id="td2" style="cursor: pointer">
+                            <table align="left"  >
+                                <tr>
+                                    <td><img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco"></td>
+                                    <td><div class="E105_biaoti "><p>文书格式编辑</p></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td  align="right">
+                           <input type="button" value="添加标签" onclick="WebOpenBookMarks()" class="H105_search1 fl" id="addBookMarks"/>
+                            <input type="button" value="填充标签" onclick="LoadBookmarks()" class="H105_search1 fl" style="display: none;" />
+                            <input type="button" value="取消" class="H105_search1 fl" style="display: none;" />
+
+                            <input type="button" value="保  存" onclick="if(!SaveDocument()){alert('保存文档失败');}parent.disablePopup();" id="saveDocument"
+                                   class="H105_search1 fl" />
+
+                            <input id="btnFullScreem" type="button" value="全  屏" onclick="webform.WebOffice.FullSize();" class="H105_search1" />
+                            <input type="button" value="关  闭" onclick="parent.disablePopup();" class="H105_search1 fl" />
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table border="0" cellpadding="0" cellspacing="0" align="center"  bgcolor="#FFFFFF" width="100%">
+                    <tr>
+                        <td class="bgbg99" height="23">
+                            <script th:src="${application.basePath}+'/static/js/iWebOffice2009/iWebOffice2015.js'" ></script>
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td height="4" align="left">
+                            &nbsp;<input type="text" id="StatusBar" name="StatusBar" readonly style="width: 75%;
+                                    background-color: #ffffff; border-bottom: #000000 0px solid; border-left: #000000 0px solid;
+                                    border-right: #000000 0px solid; border-top: #000000 0px solid; font-size: 9pt;
+                                    text-decoration: none; color: Black;" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+    </table>
+</form>
+<script type="text/javascript"  th:inline="javascript">
+    function resize()
+    {
+        var ss = document.documentElement.clientHeight - 65;//90
+        WebOffice = document.getElementById("WebOffice2015");
+        WebOffice.style.height = ss + "px";
+
+        if ('' == "1") {
+            //
+        }
+
+    }
+    resize();
+    var openFs = [[${openFs}]];
+    if(openFs=="isView") {
+        var addBookMarks = document.getElementById("addBookMarks");
+        addBookMarks.style.display = "none";
+
+        var saveDocument = document.getElementById("saveDocument");
+        saveDocument.style.display = "none";
+    }
+</script>
+</body>
+</html>
+
+

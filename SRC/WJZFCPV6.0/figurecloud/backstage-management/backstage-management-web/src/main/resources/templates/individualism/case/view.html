@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/individualism/case/all.js'"></script>
+    <script th:src="${application.basePath}+'/web/individualism/case/list.js'"></script>
+</head>
+<body>
+<form class="layui-form" >
+    <div>
+
+        <div class="T106_detailsContent" style="margin-top: 20px;">
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <td class="T106_itemName T106_must">姓名</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="createrName" name="createrName" placeholder="请输入"  th:value="${case.createrName}" type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName "></td>
+                        <td class="T106_itemValue">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">部门</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="organizationName" name="organizationName" placeholder="请输入"  th:value="${case.organizationName}" type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName"></td>
+                        <td class="T106_itemValue">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">标题</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="title" name="title" placeholder="请输入"  th:value="${case.title}" type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName "></td>
+                        <td class="T106_itemValue">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">级别</td>
+                        <td class="T106_itemValue">
+                            <input type="hidden" name="grade" id="grade" th:value="${case.grade}">
+                            <div id="gradeDiv"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">案例文件</td>
+                        <td class="T106_itemValue">
+                            <input type="text" id="fileName"
+                                   autocomplete="off" class="layui-input" readonly="readonly" value="附件 ">
+
+                        </td>
+                        <td class="T106_itemValue">
+                            <button style="margin-left: 30px;" type="button" class="layui-btn layui-btn-normal" th:onclick="download([[${case.filesUrl}]])">下载</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">描述</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="remarks" name="remarks" placeholder="请输入"  th:value="${case.remarks}" type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName "></td>
+                        <td class="T106_itemValue">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top:20px;margin-left: 10px; margin-bottom: 10px;">
+                <input type="hidden" id="userListInput" th:value="${userList}">
+                <input type="hidden" id="userId" th:value="${loginId}">
+                <div id="likeDiv" class="A106_button A106_button1" style="margin-top: 5px;" onclick="likeSubmit()">赞</div>
+                <div id="likeUserDiv"></div>
+            </div>
+            <div style="margin-top:20px;margin-left: 10px; margin-bottom: 10px;">
+                <form id="addCommentForm">
+                    <input type="hidden" name="caseId" id="caseId" th:value="${case.id}">
+                    <input type="hidden" name="commentType" id="commentType" th:value="1">
+                    <input type="hidden" name="url" id="url" th:value="'/case/view?caseId='+${case.id}">
+                    <textarea id="detail"name="detail" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>
+                    <div class="A106_button A106_button1" style="margin-top: 5px;" onclick="addCommentSubmit()">评论</div>
+                </form>
+            </div>
+            <div th:replace="common/comment::comment(${case.id},'1',${application.basePath})"></div>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    var jsonUsers = JSON.parse($("#userListInput").val());
+    var userId = $("#userId").val();
+    var str='';
+    if(jsonUsers.length!=0){
+        for(var i =0;i<jsonUsers.length;i++){
+            if(jsonUsers[i].id==userId){
+                $("#likeDiv").html("已赞");
+                str+="我";
+            }else{
+                str+=jsonUsers[i].name;
+            }
+            if(i!=jsonUsers.length-1){
+                str+='、';
+            }
+        }
+        str+="等"+jsonUsers.length+"人觉得很赞！";
+        $("#likeUserDiv").html(str);
+    }
+
+</script>
+</html>
+

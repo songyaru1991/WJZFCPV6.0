@@ -1,0 +1,71 @@
+package com.netmarch.jzznyj.system.mapper;
+
+import com.netmarch.jzznyj.system.bean.Ajdzjzwj;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+public interface AjdzjzwjMapper {
+    int addWj(String id, String ajdzjzmlid, String path,String orgname, Date uploadTime);
+
+    List<Ajdzjzwj> selectWjByFlag(int flag);
+
+    int deleteFileByMlid(String mlid);
+
+    int getWjCountByMlid(String mlid);
+
+    List<Map<String, Object>> getCountByFlag(String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectWjByParentid(String ajbs,String parentid,String mlType);
+
+    void updateOldsort(String wjid, int oldsort);
+
+    List<Ajdzjzwj> selectWjByMlid(String mlid);
+
+    List<Ajdzjzwj> selectExtraByPage(String ajbs,String mlid, String pageFrom, String pageTo,String mlType);
+
+    List<Ajdzjzwj> selectWjByPage(String ajbs,String mlid, int pageFrom, int pageTo,String mlType);
+
+    int updateNewsort(String id, String mlid, int newsort);
+
+    Integer selectMaxNewsort(String ajbs,String typename,String mlType);
+
+    List<Ajdzjzwj> selectWjByMlids(List<String> mlIdList);
+
+    String selectWjid(String ajbs,int oldsort, int pid, String mlType);
+
+    int deleteFileById(String wjid);
+
+    List<Ajdzjzwj> selectWjByOrderby(int orderby,String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectUndealtWj(String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectWjByAjbs(String ajbs,String mlType);
+
+    Object selectMaxNewsortByMlid(String ajbs,String mlid,String mlType);
+
+    int updateMlidAndNewsort(String mlid, int maxnewsort, String wjid);
+
+    Ajdzjzwj selectWjById(String wjid);
+
+    List<Ajdzjzwj> selectWjByAjbsAndOldsort(int oldsort, String ajbs,String mlType);
+
+    int updateWjmlidById(String mlid, String wjid);
+
+    int updateFilenameById(String wjid, String path);
+
+    List<Ajdzjzwj> selectWjByIds(List<String> ids);
+
+    int insert2(String id, String mlid, String path, String picname, int picsort, Date uploadTime);
+
+    int selectAllCount(String mlType);
+
+    Ajdzjzwj getFengmian(String ajbs,String mlType);
+
+    int getScountByMlid(String mlid);
+
+    int updateOcrsort(String id, String ocrsort);
+
+    List<Ajdzjzwj> selectWjNoA(String mlid);
+}

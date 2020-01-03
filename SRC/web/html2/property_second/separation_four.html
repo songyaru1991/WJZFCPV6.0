@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/all.css">
+    <link rel="stylesheet" href="../../css/style_10.css">
+    <script src="../../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <script src="../../js/layui/layui.js"></script>
+    <script src="../../js/main_All.js"></script>
+    <script src="../../js/main_05.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../../js/jquery.backgroundSize.js"></script>
+
+</head>
+<body>
+<div class="S310_chooses">
+    <div class="S310_chooses_itemList">
+        <div class="S310_chooses_title">
+            <span>侦监</span>
+        </div>
+        <div class="S310_chooses_content">
+            <form class="layui-form clear" action="">
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞1">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞2">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞3">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞4">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞5">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞6">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="S310_chooses_itemList">
+        <div class="S310_chooses_title">
+            <span>侦监</span>
+        </div>
+        <div class="S310_chooses_content">
+            <form class="layui-form clear" action="">
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞7">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞8">
+                    </div>
+                </div>
+                <div class="S310_chooses_Checkbox fl clear">
+                    <div class="layui-input-block fl">
+                        <input type="checkbox" name="" lay-skin="primary" title="王晓霞9">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  var choosesData; // 选中结果
+  layui.use('form', function() {
+    var form = layui.form;
+  });
+
+  function callbackdata() {
+    var data = [];
+    $(':checked').each(function() {
+      data.push($(this).attr('title'));
+    });
+    choosesData = data.join(';');
+    return choosesData;
+  };
+</script>
+
+</body>
+</html>

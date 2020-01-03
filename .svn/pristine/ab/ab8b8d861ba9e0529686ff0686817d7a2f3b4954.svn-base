@@ -1,0 +1,119 @@
+package com.netmarch.figurecloud.management.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.figurecloud.management.system.bean.*;
+import com.netmarch.figurecloud.management.system.mapper.SysRoleMapper;
+import com.netmarch.figurecloud.management.system.service.SysRoleService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import util.web.JsonResult;
+import util.web.ResultCodes;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class SysRoleServiceImpl implements SysRoleService {
+
+    @Autowired
+    SysRoleMapper sysRoleMapper;
+
+    @Override
+    public List<SysRole> getAllUserdRoles() {
+        return sysRoleMapper.getAllUserdRoles();
+    }
+
+    @Override
+    public Page<SysRole> getRoleList(SysRole role, String keyword) {
+        PageHelper.startPage(role.getPageNo() == null ? 1 : role.getPageNo(), PagesStatic.PAGES_SIZE);
+        Map<String, Object> map = new HashMap<>();
+        map.put("keyword", keyword);
+        return sysRoleMapper.getRoleList(map);
+    }
+
+    @Override
+    public SysRole getRoleById(Integer id) {
+        return sysRoleMapper.getRoleById(id);
+    }
+
+    @Override
+    public List<SysResource> getRoleResources(Integer id) {
+        return sysRoleMapper.getRoleResources(id);
+    }
+
+    @Override
+    public int addSysRole(SysRole role) {
+        int i = sysRoleMapper.addSysRole(role);
+        if(i < 0)
+            return i;
+        if(!StringUtils.isEmpty(role.getResIds())){
+            String[] arr = role.getResIds().split(",");
+            List<SysResourceRole> list = new ArrayList<>();
+            for (String str : arr) {
+                SysResourceRole srr = new SysResourceRole();
+                srr.setSysRoleId(role.getId());
+                srr.setSysResourceId(Integer.parseInt(str));
+                list.add(srr);
+            }
+            sysRoleMapper.clearByRoleId(role.getId());
+            i = sysRoleMapper.changechangeRoleResources(list);
+            return i;
+        }
+        return i;
+    }
+
+
+    @Override
+    public int editSysRole(SysRole role) {
+        int i = sysRoleMapper.editSysRole(role);
+        if(i < 0)
+            return i;
+        if(!StringUtils.isEmpty(role.getResIds())){
+            String[] arr = role.getResIds().split(",");
+            List<SysResourceRole> list = new ArrayList<>();
+            for (String str : arr) {
+                SysResourceRole srr = new SysResourceRole();
+                srr.setSysRoleId(role.getId());
+                srr.setSysResourceId(Integer.parseInt(str));
+                list.add(srr);
+            }
+            sysRoleMapper.clearByRoleId(role.getId());
+            i = sysRoleMapper.changechangeRoleResources(list);
+            return i;
+        }
+        return i;
+    }
+
+    @Override
+    public JsonResult delBatch(String ids) {
+        String[] arr = ids.split(",");
+        List<Integer> list = new ArrayList<>();
+        for (String str : arr) {
+            list.add(Integer.parseInt(str));
+        }
+        int count = sysRoleMapper.getUsedRoleCount(list);
+        if(count > 0){
+            return new JsonResult(ResultCodes.ERROR, StaticObj.DELETE_MSG_USING);
+        }
+        int i = sysRoleMapper.delBatch(list);
+        if(i < 1){
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }else{
+            return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS, "/role/list");
+        }
+    }
+
+    @Override
+    public int checkRepeatName(SysRole role) {
+        return sysRoleMapper.checkRepeatName(role);
+    }
+
+    @Override
+    public int checkRepeatCode(SysRole role) {
+        return sysRoleMapper.checkRepeatCode(role);
+    }
+}

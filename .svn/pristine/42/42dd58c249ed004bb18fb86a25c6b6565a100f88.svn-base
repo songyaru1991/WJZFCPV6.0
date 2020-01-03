@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="auth-server-core" />
+        <module name="auth-server-exposure" />
+        <module name="backstage-management-exposure" />
+        <module name="backstage-management-service" />
+        <module name="backstage-management-web" />
+        <module name="turbine" />
+        <module name="util" />
+        <module name="zuul" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="alarm" target="1.8" />
+      <module name="auth-server-core" target="1.8" />
+      <module name="auth-server-exposure" target="1.8" />
+      <module name="auth-server-parent" target="1.8" />
+      <module name="backstage-management" target="1.8" />
+      <module name="backstage-management-exposure" target="1.8" />
+      <module name="backstage-management-service" target="1.8" />
+      <module name="backstage-management-web" target="1.8" />
+      <module name="border" target="1.8" />
+      <module name="border-exposure" target="1.8" />
+      <module name="border-service" target="1.8" />
+      <module name="capture" target="1.8" />
+      <module name="capture-exposure" target="1.8" />
+      <module name="capture-service" target="1.8" />
+      <module name="figurecloud-parent" target="1.8" />
+      <module name="flow-data" target="1.8" />
+      <module name="ftp" target="1.8" />
+      <module name="ftp-api-service-impl" target="1.8" />
+      <module name="ftp-scheduled" target="1.8" />
+      <module name="starter-exposure" target="1.8" />
+      <module name="starter-microservice" target="1.8" />
+      <module name="turbine" target="1.8" />
+      <module name="util" target="1.8" />
+      <module name="zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

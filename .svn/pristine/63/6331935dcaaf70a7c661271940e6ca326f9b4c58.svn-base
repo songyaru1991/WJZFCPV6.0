@@ -1,0 +1,68 @@
+package com.netmarch.fdfs.system.service.impl;
+
+import com.netmarch.fdfs.system.bean.Ajdzjzml;
+import com.netmarch.fdfs.system.mapper.AjdzjzmlMapper;
+import com.netmarch.fdfs.system.mapper.AjdzjzwjMapper;
+import com.netmarch.fdfs.system.service.AjdzjzmlService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class AjdzjzmlServiceImpl implements AjdzjzmlService {
+
+    @Autowired
+    private AjdzjzmlMapper ajdzjzmlMapper;
+
+    @Autowired
+    private AjdzjzwjMapper ajdzjzwjMapper;
+
+    @Override
+    public int updateZtree(int orderby,String filename) {
+        int count = ajdzjzmlMapper.getMlByOrderby(orderby);
+        if(count > 0){
+            return ajdzjzmlMapper.updateMl(orderby,filename);
+        }else{
+            // String maxId = (ajdzjzmlMapper.selectMlMaxId() + 1) + "";
+            return ajdzjzmlMapper.addMl(UUID.randomUUID().toString(),filename,orderby,"-1");
+        }
+    }
+
+    @Override
+    public List<Ajdzjzml> selectDzjzmlByParent(String parentId) {
+        return ajdzjzmlMapper.selectDzjzmlByParent(parentId);
+    }
+
+    @Override
+    public String selectLastTreeByParent(String parentId) {
+        return ajdzjzmlMapper.selectLastTreeByParent(parentId);
+    }
+
+    @Override
+    public int deleteZtree(int orderby) {
+//        if("0".equals(parentid)){
+//            parentid = "-1";
+//        }
+        String parentid = orderby + "";
+        return ajdzjzmlMapper.deleteZtree(orderby,parentid);
+    }
+
+    @Override
+    public Ajdzjzml selectMlByOrder(int orderby){
+        return ajdzjzmlMapper.selectMlByOrder(orderby);
+    }
+
+    @Override
+    public int insertWj(String path, String filename,int orderby,String parentid){
+        String id = UUID.randomUUID().toString();
+        int count = ajdzjzmlMapper.addMl(id,filename,orderby,parentid);
+        if(count > 0){
+            return ajdzjzwjMapper.addWj(UUID.randomUUID().toString(),id,path,new Date());
+        }else{
+            return 0;
+        }
+    }
+}

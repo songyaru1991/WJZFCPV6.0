@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wshygl-jcy-service:war">
+    <output-path>$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-service/target</output-path>
+    <root id="archive" name="wshygl-jcy.war">
+      <element id="artifact" artifact-name="wshygl-jcy-service:war exploded" />
+    </root>
+  </artifact>
+</component>

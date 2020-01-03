@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>人工智能阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath} + '/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/ztree/css/zTreeStyle/zTreeStyle.css'">
+    <script th:src="${application.basePath}+'/static/js/ztree/jquery.ztree.all.js'"></script>
+
+</head>
+<body class="clear" style=" ">
+<div class="A105L_body fl">
+    <div class="A105L_title">
+        <img src="../static/images/A105_title.png" alt="" class="A105L_titleBg">
+        <div class="A105L_titleWord">卷宗智能阅卷</div>
+    </div>
+    <div class="A405_martCoat">
+        <div class="A105_mart">
+            <div>
+                <div>
+                    <div class="A105_IDirectory"  th:text="${ajmc}">
+                    </div>
+                    <div class="A105_directory A105_ztree">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    var ajbs = $('<span/>').html('[[${ajbs}]]').text(); // 案件标识
+    var ajmc = $('<span/>').html('[[${ajmc}]]').text(); // 案件名称
+
+    var treeList = $('<span/>').html('[[${treeList}]]').text(); // 原始
+    console.log('ssssssssssssssssssssssssssss:' + treeList);
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+// 点我触发
+        laydate.render({
+            elem: '#Q105P_refereeing1',
+            eventElem: '.Q105_calendar1',
+            trigger: 'click'
+        });
+    });
+    // zTree
+    var zTreeObj; // 原始
+
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = { // 原始
+
+        view: {
+            // 设置是否允许同时选中多个节点。
+            selectedMulti: false
+        },
+        edit: {
+            // 设置 zTree 是否处于编辑状态
+            enable: true,
+            // 设置是否显示删除按钮。
+            showRemoveBtn: false,
+            // 设置是否显示重命名按钮。
+            showRenameBtn: false
+        },
+        data: {
+            keep: {
+                // rue / false 分别表示 锁定 / 不锁定 父节点属性
+                parent: true,
+                // true / false 分别表示 锁定 / 不锁定 叶子节点属性
+                leaf: true
+            },
+            simpleData: {
+                // 简单数据模式 (Array)
+                enable: true
+            }
+        },
+        callback: {
+            // 用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作
+            // beforeDrag: beforeDrag,
+            // 用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作
+            // beforeRemove: beforeRemove,
+            // 用于捕获节点编辑名称结束（Input 失去焦点 或 按下 Enter 键）之后，更新节点名称数据之前的事件回调函数，并且根据返回值确定是否允许更改名称的操作
+            // beforeRename: beforeRename,
+            // 改名
+            // onRename: onRename,
+            // 用于捕获删除节点之后的事件回调函数。
+            // onRemove: onRemove,
+            // 用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作
+            // beforeDrop: beforeDrop,
+            // 用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数
+            // onRightClick: onRightClick,
+            onClick: zTreeOnClick,
+        }
+    };
+    var zNodes = JSON.parse(treeList); // 原始
+
+    $(document).ready(function () {
+        zTreeObj = $.fn.zTree.init($('#treeDemo'), setting, zNodes);
+    });
+
+
+    function zTreeOnClick() {
+        parent.$('.A105_pictureIframe_jq').contents().find('#orgImgContent').empty();
+        parent.$('.A105_pictureIframe_jq').contents().find('#orgImgContent').html();
+        parent.$('.A105_pictureIframe_jq').contents().find('#ocrImgContent').empty();
+        parent.$('.A105_pictureIframe_jq').contents().find('#ocrImgContent').html();
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        nodes = zTree.getSelectedNodes();
+        var treeId = nodes[0].id;
+        var parentid = nodes[0].pId;
+        var wjid = nodes[0].wjid;
+        if(parentid){
+            treeId = parentid;
+        }
+        $.post("/jzzngd/znjz/showOrgImg",{ajbs:ajbs, treeId : treeId, parentid : ''}, function(data) {
+            if(data&&data.length>2) {
+                var wjList = JSON.parse(data);
+                var wj;
+                if(wjid){
+                    $.each(wjList, function (i, obj) {
+                        if(wjid == obj.id){
+                            wj = obj;
+                        }
+                    })
+                }else{
+                    wj = wjList[0];
+                }
+            }
+            $('<div class="A205_content" wjid="'+wj.id+'">' +
+                '<img src="[[${application.fdfsPath}]]'+ wj.filename +'" alt="" style="height:650px;">' +
+                '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('#orgImgContent'));
+            $('<div class="A205_content" style="width:440px" wjid="'+wj.id+'">' + wj.ocrcontent +
+                '</div>').appendTo(parent.$('.A105_pictureIframe_jq').contents().find('#ocrImgContent'));
+        })
+
+    }
+
+
+
+</script>
+</body>
+</html>

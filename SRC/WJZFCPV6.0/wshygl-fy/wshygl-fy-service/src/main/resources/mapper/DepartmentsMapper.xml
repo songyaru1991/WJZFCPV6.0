@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wshy.system.mapper.DepartmentsMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wshy.system.bean.Departments">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="EDITUSER" jdbcType="VARCHAR" property="edituser" />
+    <result column="EDITTIME" jdbcType="TIMESTAMP" property="edittime" />
+    <result column="BM" jdbcType="VARCHAR" property="bm" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="MSG_ID" jdbcType="INTEGER" property="msgId" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="MSG_STATUS" jdbcType="VARCHAR" property="msgStatus" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, EDITUSER, EDITTIME, BM, AREA_CODE, MSG_ID, MSG_OP, MSG_STATUS, MSG_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from departments
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from departments
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wshy.system.bean.Departments">
+    insert into departments (ID, NAME, EDITUSER, 
+      EDITTIME, BM, AREA_CODE, 
+      MSG_ID, MSG_OP, MSG_STATUS, 
+      MSG_DATE)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{edituser,jdbcType=INTEGER}, 
+      #{edittime,jdbcType=TIMESTAMP}, #{bm,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{msgId,jdbcType=INTEGER}, #{msgOp,jdbcType=INTEGER}, #{msgStatus,jdbcType=VARCHAR}, 
+      #{msgDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wshy.system.bean.Departments">
+    insert into departments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="edituser != null">
+        EDITUSER,
+      </if>
+      <if test="edittime != null">
+        EDITTIME,
+      </if>
+      <if test="bm != null">
+        BM,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+      <if test="msgId != null">
+        MSG_ID,
+      </if>
+      <if test="msgOp != null">
+        MSG_OP,
+      </if>
+      <if test="msgStatus != null">
+        MSG_STATUS,
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="edituser != null">
+        #{edituser,jdbcType=INTEGER},
+      </if>
+      <if test="edittime != null">
+        #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bm != null">
+        #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
+        #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatus != null">
+        #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wshy.system.bean.Departments">
+    update departments
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="edituser != null">
+        EDITUSER = #{edituser,jdbcType=INTEGER},
+      </if>
+      <if test="edittime != null">
+        EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bm != null">
+        BM = #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
+        MSG_ID = #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgOp != null">
+        MSG_OP = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatus != null">
+        MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wshy.system.bean.Departments">
+    update departments
+    set NAME = #{name,jdbcType=VARCHAR},
+      EDITUSER = #{edituser,jdbcType=INTEGER},
+      EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      BM = #{bm,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      MSG_ID = #{msgId,jdbcType=INTEGER},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getDepartmentsList" parameterType="com.netmarch.wshy.system.model.Query" resultType="com.netmarch.wshy.system.bean.Departments">
+    select a.id,a.name,a.bm,a.area_code areaCode,b.USERNAME edituser,a.edittime from departments a LEFT JOIN users b on a.edituser=b.USER_ID  where 1=1
+    <if test="bm != '' and bm != null" >
+      and  a.bm=#{bm,jdbcType=VARCHAR}
+    </if>
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchName"'>
+        and a.name like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchAreaCode"'>
+        and a.area_code like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+  </select>
+
+  <select id="getDepartments" parameterType="com.netmarch.wshy.system.model.Query" resultType="com.netmarch.wshy.system.bean.Departments">
+    select id,name,bm,area_code areaCode,edituser,edittime from departments  where 1=1
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchName"'>
+        and name like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchAreaCode"'>
+        and area_code like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+  </select>
+
+  <insert id="addDepartments" parameterType="com.netmarch.wshy.system.bean.Departments">
+    insert into departments (ID, NAME, EDITUSER,
+      EDITTIME, BM, AREA_CODE,
+      MSG_ID, MSG_OP, MSG_STATUS,
+      MSG_DATE)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{edituser,jdbcType=INTEGER},
+      sysdate(), #{bm,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
+      #{msgId,jdbcType=INTEGER}, #{msgOp,jdbcType=INTEGER}, #{msgStatus,jdbcType=VARCHAR},
+      #{msgDate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="getDepartmentsById" parameterType="java.lang.String" resultType="com.netmarch.wshy.system.bean.Departments">
+    select
+          id,name,edituser,edittime,bm,area_code areaCode,MSG_ID msgId,MSG_OP msgOp,MSG_STATUS msgStatus,MSG_DATE msgDate
+    from departments
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <update id="editDepartments" parameterType="com.netmarch.wshy.system.bean.Departments">
+    update departments
+    set NAME = #{name,jdbcType=VARCHAR},
+      EDITUSER = #{edituser,jdbcType=INTEGER},
+      EDITTIME = sysdate()
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="delBatch" parameterType="List">
+    delete from departments where id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="checkDepartmentName" parameterType="com.netmarch.wshy.system.bean.Departments" resultType="java.lang.Integer">
+    select
+    count(*)
+    from departments  where name=#{name,jdbcType=VARCHAR} and area_code = #{areaCode,jdbcType=VARCHAR}
+    <if test="id !=null and id != ''">
+      and id &lt;> #{id,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+</mapper>

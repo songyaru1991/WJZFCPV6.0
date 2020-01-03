@@ -1,0 +1,20 @@
+package com.netmarch.jzznyj.system.mapper;
+
+import com.netmarch.jzznyj.system.bean.Lssqm;
+import com.netmarch.jzznyj.system.bean.Lssqmyj;
+
+import java.util.List;
+
+public interface LssqmMapper {
+    List<Lssqmyj> getLslistByAjbs(String ajbs);
+
+    int insert(Lssqm lssqm);
+
+    int updateSelective(Lssqm lssqm);
+
+    Lssqm getInfoById(String lssqmid);
+
+    int lssqCancel(String lssqmid);
+
+    Lssqm getInfoBySqm(String sqm);
+}

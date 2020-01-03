@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.ZwxxbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wssacw.system.bean.Zwxxb">
+    <id column="jlbh" jdbcType="VARCHAR" property="jlbh" />
+    <result column="ajbs" jdbcType="VARCHAR" property="ajbs" />
+    <result column="ajbh" jdbcType="VARCHAR" property="ajbh" />
+    <result column="zwbh" jdbcType="VARCHAR" property="zwbh" />
+    <result column="zwmc" jdbcType="VARCHAR" property="zwmc" />
+    <result column="zwlb" jdbcType="VARCHAR" property="zwlb" />
+    <result column="zwys" jdbcType="VARCHAR" property="zwys" />
+    <result column="zwxz" jdbcType="VARCHAR" property="zwxz" />
+    <result column="zwzt" jdbcType="VARCHAR" property="zwzt" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="adduser" jdbcType="VARCHAR" property="adduser" />
+    <result column="msg_op" jdbcType="INTEGER" property="msgOp" />
+    <result column="msg_status_ga" jdbcType="VARCHAR" property="msgStatusGa" />
+    <result column="msg_date" jdbcType="TIMESTAMP" property="msgDate" />
+    <result column="msg_status_jcy" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="msg_status_fy" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="msg_status_zfw" jdbcType="VARCHAR" property="msgStatusZfw" />
+    <result column="msg_status_sfj" jdbcType="VARCHAR" property="msgStatusSfj" />
+    <result column="cjdw" jdbcType="VARCHAR" property="cjdw" />
+    <result column="dqlzdw" jdbcType="VARCHAR" property="dqlzdw" />
+    <result column="update_userid" jdbcType="INTEGER" property="updateUserid" />
+    <result column="update_username" jdbcType="VARCHAR" property="updateUsername" />
+    <result column="updatedatetime" jdbcType="TIMESTAMP" property="updatedatetime" />
+    <result column="ajmc" jdbcType="VARCHAR" property="ajmc" />
+    <result column="zwtz" jdbcType="VARCHAR" property="zwtz" />
+    <result column="zwsl" jdbcType="INTEGER" property="zwsl" />
+    <result column="zwje" jdbcType="INTEGER" property="zwje" />
+    <result column="zwdw" jdbcType="VARCHAR" property="zwdw" />
+    <result column="zwbz" jdbcType="VARCHAR" property="zwbz" />
+    <result column="lzz" jdbcType="INTEGER" property="lzz" />
+    <result column="zwlb_fy" jdbcType="VARCHAR" property="zwlbFy" />
+    <result column="zwfk_ga" jdbcType="VARCHAR" property="zwfkGa" />
+    <result column="zwfksj" jdbcType="VARCHAR" property="zwfksj" />
+    <result column="zwfkuser" jdbcType="VARCHAR" property="zwfkuser" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+      jlbh,ajbs,ajbh,zwbh,zwmc,zwlb,zwys,zwxz,zwzt,yuliu1,yuliu2,yuliu3,addtime,
+      adduser,msg_op,msg_status_ga,msg_date,msg_status_jcy,msg_status_fy,msg_status_zfw,
+      msg_status_sfj,cjdw,dqlzdw,update_userid,update_username,updatedatetime,ajmc,zwtz,
+      zwsl,zwje,zwdw,zwbz,lzz,zwlb_fy,zwfk_ga,zwfksj,zwfkuser
+  </sql>
+
+  <select id="getZwxxList"  parameterType="string" resultType="com.netmarch.wssacw.system.bean.Zwxxb">
+    select a.jlbh,a.ajbs,a.ajbh,a.zwbh,a.zwlb,a.zwmc,b.dqlzdw,a.zwje,a.zwsl,a.zwzt from ZWXXB a
+    left outer join (select zwbh,dqlzdw,lzsj from ZWLZ  WHERE CONCAT(zwbh,lzsj) IN (
+    SELECT  CONCAT(zwbh,max(lzsj)) FROM ZWLZ WHERE zwbh IS NOT NULL GROUP BY zwbh)
+    AND zwbh IS NOT NULL group by zwbh) b on a.jlbh=b.zwbh where 1=1
+    <if test="_parameter != '' and _parameter!=null">
+      and a.ajbs=#{ajbs,jdbcType=VARCHAR} ORDER BY  addtime,updatedatetime DESC
+    </if>
+  </select>
+
+  <select id="editZwxx"  parameterType="string" resultType="com.netmarch.wssacw.system.bean.Zwxxb">
+    select jlbh,ajbs,ajbh,ajmc,zwbh,zwmc,zwlb,zwys,zwxz,zwzt,addtime,adduser,cjdw,dqlzdw,update_Userid updateUserid,update_Username updateUsername,
+    updatedatetime,zwtz,zwsl,zwje,zwdw,zwbz
+    from ZWXXB a
+    where 1=1
+    <if test="_parameter != '' and _parameter!=null">
+      and a.jlbh=#{jlbh,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <insert id="saveAddZwxx" parameterType="com.netmarch.wssacw.system.bean.Zwxxb">
+    insert into zwxxb (jlbh, ajbs, ajbh,
+      zwbh, zwmc, zwlb, zwys,
+      zwxz, zwzt, yuliu1,
+      yuliu2, yuliu3, addtime,
+      adduser, msg_op, msg_status_ga,
+      msg_date, msg_status_jcy, msg_status_fy,
+      msg_status_zfw, msg_status_sfj, cjdw,
+      dqlzdw, update_userid, update_username,
+      updatedatetime, ajmc, zwtz,
+      zwje, zwsl, zwdw, zwbz,
+      lzz, zwlb_fy, zwfk_ga,
+      zwfksj, zwfkuser)
+    values (#{jlbh,jdbcType=VARCHAR}, #{ajbs,jdbcType=VARCHAR}, #{ajbh,jdbcType=VARCHAR},
+      #{zwbh,jdbcType=VARCHAR}, #{zwmc,jdbcType=VARCHAR}, #{zwlb,jdbcType=VARCHAR}, #{zwys,jdbcType=VARCHAR},
+      #{zwxz,jdbcType=VARCHAR}, #{zwzt,jdbcType=VARCHAR}, #{yuliu1,jdbcType=VARCHAR},
+      #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, sysdate(),
+      #{adduser,jdbcType=VARCHAR}, #{msgOp,jdbcType=INTEGER}, #{msgStatusGa,jdbcType=VARCHAR},
+      #{msgDate,jdbcType=TIMESTAMP}, #{msgStatusJcy,jdbcType=VARCHAR}, #{msgStatusFy,jdbcType=VARCHAR},
+      #{msgStatusZfw,jdbcType=VARCHAR}, #{msgStatusSfj,jdbcType=VARCHAR}, #{cjdw,jdbcType=VARCHAR},
+      #{dqlzdw,jdbcType=VARCHAR}, #{updateUserid,jdbcType=VARCHAR}, #{updateUsername,jdbcType=VARCHAR},
+      #{updatedatetime,jdbcType=TIMESTAMP}, #{ajmc,jdbcType=VARCHAR}, #{zwtz,jdbcType=VARCHAR},
+      #{zwje,jdbcType=INTEGER}, #{zwsl,jdbcType=INTEGER}, #{zwdw,jdbcType=VARCHAR}, #{zwbz,jdbcType=VARCHAR},
+      #{lzz,jdbcType=INTEGER}, #{zwlbFy,jdbcType=VARCHAR}, #{zwfkGa,jdbcType=VARCHAR},
+      #{zwfksj,jdbcType=VARCHAR}, #{zwfkuser,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="saveEditZwxx" parameterType="com.netmarch.wssacw.system.bean.Zwxxb">
+    update zwxxb
+    <set>
+      <if test="ajbs != null">
+        ajbs = #{ajbs,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null">
+        ajbh = #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="zwbh != null">
+        zwbh = #{zwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="zwmc != null">
+        zwmc = #{zwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zwlb != null">
+        zwlb = #{zwlb,jdbcType=VARCHAR},
+      </if>
+      <if test="zwys != null">
+        zwys = #{zwys,jdbcType=VARCHAR},
+      </if>
+      <if test="zwxz != null">
+        zwxz = #{zwxz,jdbcType=VARCHAR},
+      </if>
+      <if test="zwzt != null">
+        zwzt = #{zwzt,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu1 != null">
+        yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu2 != null">
+        yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu3 != null">
+        yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduser != null">
+        adduser = #{adduser,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        msg_op = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatusGa != null">
+        msg_status_ga = #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        msg_date = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgStatusJcy != null">
+        msg_status_jcy = #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        msg_status_fy = #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        msg_status_zfw = #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        msg_status_sfj = #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="cjdw != null">
+        cjdw = #{cjdw,jdbcType=VARCHAR},
+      </if>
+      <if test="dqlzdw != '' and dqlzdw != null">
+        dqlzdw = #{dqlzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserid != null">
+        update_userid = #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUsername != null">
+        update_username = #{updateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedatetime == null">
+        updatedatetime = sysdate(),
+      </if>
+      <if test="ajmc != null">
+        ajmc = #{ajmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zwtz != null">
+        zwtz = #{zwtz,jdbcType=VARCHAR},
+      </if>
+      <if test="zwje != null">
+        zwje = #{zwje,jdbcType=INTEGER},
+      </if>
+      <if test="zwsl != null">
+        zwsl = #{zwsl,jdbcType=INTEGER},
+      </if>
+      <if test="zwdw != null">
+        zwdw = #{zwdw,jdbcType=VARCHAR},
+      </if>
+      <if test="zwbz != null">
+        zwbz = #{zwbz,jdbcType=VARCHAR},
+      </if>
+      <if test="lzz != null">
+        lzz = #{lzz,jdbcType=INTEGER},
+      </if>
+      <if test="zwlbFy != null">
+        zwlb_fy = #{zwlbFy,jdbcType=VARCHAR},
+      </if>
+      <if test="zwfkGa != null">
+        zwfk_ga = #{zwfkGa,jdbcType=VARCHAR},
+      </if>
+      <if test="zwfksj != null">
+        zwfksj = #{zwfksj,jdbcType=VARCHAR},
+      </if>
+      <if test="zwfkuser != null">
+        zwfkuser = #{zwfkuser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where JLBH = #{jlbh,jdbcType=VARCHAR} and AJBS= #{ajbs,jdbcType=VARCHAR} and AJMC=#{ajmc,jdbcType=VARCHAR}
+  </update>
+
+  <update id="delZwxx" parameterType="java.lang.String">
+   update zwxxb  set  MSG_OP = 3,
+       MSG_STATUS_JCY = 'NEW',
+      MSG_STATUS_FY = 'NEW'
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <select id="checkZwmc" parameterType="com.netmarch.wssacw.system.bean.Zwxxb" resultType="java.lang.Integer">
+    select
+    count(*)
+    from zwxxb  where ajbh = #{ajbh,jdbcType=VARCHAR} and zwmc=#{zwmc,jdbcType=VARCHAR}
+    <if test="jlbh !=null and jlbh != ''">
+      and jlbh &lt;> #{jlbh,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getZwlbByJlbh" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from zwxxb  where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

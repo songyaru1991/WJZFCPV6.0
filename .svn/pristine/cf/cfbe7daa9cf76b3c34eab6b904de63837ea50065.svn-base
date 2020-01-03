@@ -1,0 +1,235 @@
+package com.netmarch.wssacw.system.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Zwlz implements Serializable {
+    private String jlbh;
+
+    private String zwbh;
+
+    private String operateUserid;
+
+    private String operateUsername;
+
+    private String action;
+
+    private Integer msgOp;
+
+    private Date msgDate;
+
+    private String msgStatusGa;
+
+    private String msgStatusJcy;
+
+    private String msgStatusFy;
+
+    private String msgStatusZfw;
+
+    private String msgStatusSfj;
+
+    private String dqlzdw;
+
+    private Date lzsj;
+
+    private String zwje;
+
+    private static final long serialVersionUID = 1L;
+
+    public String getJlbh() {
+        return jlbh;
+    }
+
+    public void setJlbh(String jlbh) {
+        this.jlbh = jlbh == null ? null : jlbh.trim();
+    }
+
+    public String getZwbh() {
+        return zwbh;
+    }
+
+    public void setZwbh(String zwbh) {
+        this.zwbh = zwbh == null ? null : zwbh.trim();
+    }
+
+    public String getOperateUserid() {
+        return operateUserid;
+    }
+
+    public void setOperateUserid(String operateUserid) {
+        this.operateUserid = operateUserid;
+    }
+
+    public String getOperateUsername() {
+        return operateUsername;
+    }
+
+    public void setOperateUsername(String operateUsername) {
+        this.operateUsername = operateUsername == null ? null : operateUsername.trim();
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action == null ? null : action.trim();
+    }
+
+    public Integer getMsgOp() {
+        return msgOp;
+    }
+
+    public void setMsgOp(Integer msgOp) {
+        this.msgOp = msgOp;
+    }
+
+    public Date getMsgDate() {
+        return msgDate;
+    }
+
+    public void setMsgDate(Date msgDate) {
+        this.msgDate = msgDate;
+    }
+
+    public String getMsgStatusGa() {
+        return msgStatusGa;
+    }
+
+    public void setMsgStatusGa(String msgStatusGa) {
+        this.msgStatusGa = msgStatusGa == null ? null : msgStatusGa.trim();
+    }
+
+    public String getMsgStatusJcy() {
+        return msgStatusJcy;
+    }
+
+    public void setMsgStatusJcy(String msgStatusJcy) {
+        this.msgStatusJcy = msgStatusJcy == null ? null : msgStatusJcy.trim();
+    }
+
+    public String getMsgStatusFy() {
+        return msgStatusFy;
+    }
+
+    public void setMsgStatusFy(String msgStatusFy) {
+        this.msgStatusFy = msgStatusFy == null ? null : msgStatusFy.trim();
+    }
+
+    public String getMsgStatusZfw() {
+        return msgStatusZfw;
+    }
+
+    public void setMsgStatusZfw(String msgStatusZfw) {
+        this.msgStatusZfw = msgStatusZfw == null ? null : msgStatusZfw.trim();
+    }
+
+    public String getMsgStatusSfj() {
+        return msgStatusSfj;
+    }
+
+    public void setMsgStatusSfj(String msgStatusSfj) {
+        this.msgStatusSfj = msgStatusSfj == null ? null : msgStatusSfj.trim();
+    }
+
+    public String getDqlzdw() {
+        return dqlzdw;
+    }
+
+    public void setDqlzdw(String dqlzdw) {
+        this.dqlzdw = dqlzdw == null ? null : dqlzdw.trim();
+    }
+
+    public Date getLzsj() {
+        return lzsj;
+    }
+
+    public void setLzsj(Date lzsj) {
+        this.lzsj = lzsj;
+    }
+
+    public String getZwje() {
+        return zwje;
+    }
+
+    public void setZwje(String zwje) {
+        this.zwje = zwje;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Zwlz other = (Zwlz) that;
+        return (this.getJlbh() == null ? other.getJlbh() == null : this.getJlbh().equals(other.getJlbh()))
+            && (this.getZwbh() == null ? other.getZwbh() == null : this.getZwbh().equals(other.getZwbh()))
+            && (this.getOperateUserid() == null ? other.getOperateUserid() == null : this.getOperateUserid().equals(other.getOperateUserid()))
+            && (this.getOperateUsername() == null ? other.getOperateUsername() == null : this.getOperateUsername().equals(other.getOperateUsername()))
+            && (this.getAction() == null ? other.getAction() == null : this.getAction().equals(other.getAction()))
+            && (this.getMsgOp() == null ? other.getMsgOp() == null : this.getMsgOp().equals(other.getMsgOp()))
+            && (this.getMsgDate() == null ? other.getMsgDate() == null : this.getMsgDate().equals(other.getMsgDate()))
+            && (this.getMsgStatusGa() == null ? other.getMsgStatusGa() == null : this.getMsgStatusGa().equals(other.getMsgStatusGa()))
+            && (this.getMsgStatusJcy() == null ? other.getMsgStatusJcy() == null : this.getMsgStatusJcy().equals(other.getMsgStatusJcy()))
+            && (this.getMsgStatusFy() == null ? other.getMsgStatusFy() == null : this.getMsgStatusFy().equals(other.getMsgStatusFy()))
+            && (this.getMsgStatusZfw() == null ? other.getMsgStatusZfw() == null : this.getMsgStatusZfw().equals(other.getMsgStatusZfw()))
+            && (this.getMsgStatusSfj() == null ? other.getMsgStatusSfj() == null : this.getMsgStatusSfj().equals(other.getMsgStatusSfj()))
+            && (this.getDqlzdw() == null ? other.getDqlzdw() == null : this.getDqlzdw().equals(other.getDqlzdw()))
+            && (this.getLzsj() == null ? other.getLzsj() == null : this.getLzsj().equals(other.getLzsj()))
+            && (this.getZwje() == null ? other.getZwje() == null : this.getZwje().equals(other.getZwje()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getJlbh() == null) ? 0 : getJlbh().hashCode());
+        result = prime * result + ((getZwbh() == null) ? 0 : getZwbh().hashCode());
+        result = prime * result + ((getOperateUserid() == null) ? 0 : getOperateUserid().hashCode());
+        result = prime * result + ((getOperateUsername() == null) ? 0 : getOperateUsername().hashCode());
+        result = prime * result + ((getAction() == null) ? 0 : getAction().hashCode());
+        result = prime * result + ((getMsgOp() == null) ? 0 : getMsgOp().hashCode());
+        result = prime * result + ((getMsgDate() == null) ? 0 : getMsgDate().hashCode());
+        result = prime * result + ((getMsgStatusGa() == null) ? 0 : getMsgStatusGa().hashCode());
+        result = prime * result + ((getMsgStatusJcy() == null) ? 0 : getMsgStatusJcy().hashCode());
+        result = prime * result + ((getMsgStatusFy() == null) ? 0 : getMsgStatusFy().hashCode());
+        result = prime * result + ((getMsgStatusZfw() == null) ? 0 : getMsgStatusZfw().hashCode());
+        result = prime * result + ((getMsgStatusSfj() == null) ? 0 : getMsgStatusSfj().hashCode());
+        result = prime * result + ((getDqlzdw() == null) ? 0 : getDqlzdw().hashCode());
+        result = prime * result + ((getLzsj() == null) ? 0 : getLzsj().hashCode());
+        result = prime * result + ((getZwje() == null) ? 0 : getZwje().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", jlbh=").append(jlbh);
+        sb.append(", zwbh=").append(zwbh);
+        sb.append(", operateUserid=").append(operateUserid);
+        sb.append(", operateUsername=").append(operateUsername);
+        sb.append(", action=").append(action);
+        sb.append(", msgOp=").append(msgOp);
+        sb.append(", msgDate=").append(msgDate);
+        sb.append(", msgStatusGa=").append(msgStatusGa);
+        sb.append(", msgStatusJcy=").append(msgStatusJcy);
+        sb.append(", msgStatusFy=").append(msgStatusFy);
+        sb.append(", msgStatusZfw=").append(msgStatusZfw);
+        sb.append(", msgStatusSfj=").append(msgStatusSfj);
+        sb.append(", dqlzdw=").append(dqlzdw);
+        sb.append(", lzsj=").append(lzsj);
+        sb.append(", zwje=").append(zwje);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

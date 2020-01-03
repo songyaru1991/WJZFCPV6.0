@@ -1,0 +1,236 @@
+package com.netmarch.wssacw.system.controller;
+
+import com.github.pagehelper.Page;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.netmarch.sso.loginsystem.bean.LoginUser;
+import com.netmarch.sso.loginsystem.bean.Query;
+import com.netmarch.sso.loginsystem.bean.ResultBean;
+import com.netmarch.sso.loginsystem.client.LoginClient;
+import com.netmarch.sso.loginsystem.client.LoginUserClient;
+import com.netmarch.wssacw.common.controller.FrontBaseController;
+import com.netmarch.wssacw.common.utils.UsersUtil;
+import com.netmarch.wssacw.system.bean.Area;
+import com.netmarch.wssacw.system.bean.Departments;
+import com.netmarch.wssacw.system.bean.SysRole;
+import com.netmarch.wssacw.system.service.AreaService;
+import com.netmarch.wssacw.system.service.DepartmentsService;
+import com.netmarch.wssacw.system.service.LoginUserService;
+import com.netmarch.wssacw.system.service.SysRoleService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import util.web.JsonResult;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * @program: uums
+ * @description: loginuser controller
+ * @author: songyaru
+ * @create: 2019-05-02
+ **/
+@Controller
+@RequestMapping("/user/*")
+@Slf4j
+public class LoginUserController extends FrontBaseController{
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private HttpServletResponse response;
+
+    @Autowired
+    private LoginUserService loginUserService;
+
+    @Autowired
+    private DepartmentsService departmentsService;
+
+    @Autowired
+    private AreaService areaService;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private LoginUserClient loginUserClient;
+
+    @Autowired
+    private LoginClient loginClient;
+
+    @Autowired
+    UsersUtil usersUtil;
+
+    @RequestMapping(value = {"list", "tableList"})
+    public String list(LoginUser user, Query usersQuery, Model model){
+        String requestURI="",user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            usersQuery.setSearchCondition(searchCondition);
+            usersQuery.setSearchContent(searchContent);
+
+            LoginUser loginUser = loginUserClient.getUserById(user_Id);
+            user.setYhlb(loginUser.getYhlb());
+            Page<LoginUser> loginUsers = loginUserService.getUserList(user, usersQuery);
+            model.addAttribute("list", loginUsers);
+            model.addAttribute("usersQuery", usersQuery);
+            log(user_Id,"查询列表","获取用户信息列表","用户管理",false);
+            requestURI=request.getRequestURI();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"查询列表",e.toString(),"用户管理",true);
+        }
+        if(requestURI.equals("/wssacwgl/user/tableList")){
+            return "user/list::table_refresh";
+        }
+        else if(requestURI.equals("/wssacwgl/user/list")) {
+            return "user/list";
+        }
+        return "user/list";
+    }
+
+   /**
+     * 添加页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toAdd")
+    public String toAdd(HttpServletRequest request,Model model){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            String pageNo= request.getParameter("pageNo");
+            model.addAttribute("searchCondition", searchCondition);
+            model.addAttribute("searchContent", searchContent);
+            model.addAttribute("pageNo", pageNo);
+
+            List<Area> arealist=areaService.getArea();
+            model.addAttribute("arealist", arealist);
+
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            model.addAttribute("bean", user);
+
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+            model.addAttribute("area", area);
+            model.addAttribute("areaCode", areaCode);
+
+            List<Departments> departmentsList= departmentsService.getDepartments(null);
+            model.addAttribute("departmentsList", departmentsList);
+
+            List<SysRole> roleList = sysRoleService.getAllUserdRoles();
+            model.addAttribute("roleList",roleList);
+
+        } catch (Exception e) {
+            log(user_Id, "用户列表", e.toString(), "用户管理", true);
+            e.printStackTrace();
+        }
+        return "user/add";
+    }
+
+    /**
+     * 编辑页面
+     * @param model
+     * @return
+     */
+    @GetMapping(value="toEdit" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    public String toEdit(HttpServletRequest request,Model model, String user_Id){
+        String loginUser_Id="";
+        try {
+            loginUser_Id=usersUtil.getLoginUser_Id();
+
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            String pageNo= request.getParameter("pageNo");
+            model.addAttribute("searchCondition", searchCondition);
+            model.addAttribute("searchContent", searchContent);
+            model.addAttribute("pageNo", pageNo);
+
+            List<Area> arealist=areaService.getArea();
+            model.addAttribute("arealist", arealist);
+
+            List<Departments> departmentsList= departmentsService.getDepartments(null);
+            model.addAttribute("departmentsList", departmentsList);
+
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            String roleIds = loginUserService.getUserRoleIdsByUserId(user_Id);
+            user.setGrantroles(roleIds);
+            model.addAttribute("bean", user);
+
+            LoginUser loginUser = loginUserClient.getUserById(loginUser_Id);
+            model.addAttribute("loginUser", loginUser);
+            String area=loginUser.getArea();
+            String areaCode=loginUser.getAreaCode();
+            model.addAttribute("area", area);
+            model.addAttribute("areaCode", areaCode);
+
+            List<SysRole> roleList = sysRoleService.getAllUserdRoles();
+            model.addAttribute("roleList",roleList);
+
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            String jsonResults = gson.toJson(user);
+            log(loginUser_Id, "用户编辑", "编辑前用户信息为:"+jsonResults, "用户管理", false);
+
+        } catch (Exception e) {
+            log(loginUser_Id, "用户编辑", e.toString(), "用户管理", true);
+            e.printStackTrace();
+        }
+        return "user/edit";
+    }
+
+    /**
+     * 保存用户
+     * @param resultBean
+     * @return
+     */
+    @RequestMapping(value="/add" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
+    public JsonResult save(@RequestBody ResultBean resultBean){
+        return loginUserClient.addLoginUser(resultBean);
+    }
+
+    @RequestMapping(value="/edit")
+    @ResponseBody
+    public JsonResult edit(@RequestBody ResultBean resultBean){
+        return loginUserClient.updateLoginUser(resultBean);
+    }
+
+    @RequestMapping(value="delBatch" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
+    public JsonResult delBatch(String ids,String searchCondition,String searchContent,String pageNo){
+        return loginUserClient.delBatch(ids,searchCondition,searchContent,pageNo);
+    }
+
+    @RequestMapping(value="/exportUsers")
+    @ResponseBody
+    public String exportUsers(Query userQuery){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            List<LoginUser> usersList = loginUserClient.getUsers(userQuery);
+            loginUserService.exportUsers(response,usersList);
+            log(user_Id,"导出用户信息","批量导出用户信息成功","用户管理",false);
+        }catch (Exception e){
+            log(user_Id,"导出用户信息",e.toString(),"用户管理",true);
+            e.printStackTrace();
+        }
+        return  null;
+    }
+
+
+
+}

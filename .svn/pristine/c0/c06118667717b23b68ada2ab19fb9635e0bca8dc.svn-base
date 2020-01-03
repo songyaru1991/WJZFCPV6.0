@@ -1,0 +1,39 @@
+package com.netmarch.figurecloud.management.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.figurecloud.management.system.bean.Log;
+import com.netmarch.figurecloud.management.system.mapper.LogMapper;
+import com.netmarch.figurecloud.management.system.service.LogService;
+import com.netmarch.figurecloud.management.system.bean.PagesStatic;
+import com.netmarch.figurecloud.management.system.model.LogQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+
+/**
+ * @ClassName LogServiceImpl
+ * @Description TODO
+ * @Author wangdk
+ * @Date 2019/2/1414:59
+ * @Version 1.0
+ **/
+@Service
+public class LogServiceImpl implements LogService {
+
+    @Autowired
+    public LogMapper logMapper;
+
+    @Override
+    public Page<Log> listLog(LogQuery logQuery) {
+        PageHelper.startPage(logQuery.getPageNo() == null ? 1 : logQuery.getPageNo(), PagesStatic.PAGES_SIZE);
+
+        return logMapper.listLog(logQuery);
+    }
+
+    @Override
+    public void save(String userName,String ip,String model,String action,String content) {
+        logMapper.save(userName,ip,model,action,content,new Date());
+    }
+}

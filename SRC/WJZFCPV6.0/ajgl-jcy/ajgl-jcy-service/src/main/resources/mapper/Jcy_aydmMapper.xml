@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Jcy_aydmMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    <id column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="BZ" jdbcType="VARCHAR" property="bz" />
+    <result column="EDITUSER" jdbcType="VARCHAR" property="edituser" />
+    <result column="EDITTIME" jdbcType="TIMESTAMP" property="edittime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, MC, BZ, EDITUSER, EDITTIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jcy_aydm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jcy_aydm
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    insert into jcy_aydm (CODE, MC, BZ, 
+      EDITUSER, EDITTIME)
+    values (#{code,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, 
+      #{edituser,jdbcType=VARCHAR}, #{edittime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    insert into jcy_aydm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+      <if test="bz != null">
+        BZ,
+      </if>
+      <if test="edituser != null">
+        EDITUSER,
+      </if>
+      <if test="edittime != null">
+        EDITTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="edituser != null">
+        #{edituser,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        #{edittime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    update jcy_aydm
+    <set>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null">
+        BZ = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="edituser != null">
+        EDITUSER = #{edituser,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    update jcy_aydm
+    set MC = #{mc,jdbcType=VARCHAR},
+      BZ = #{bz,jdbcType=VARCHAR},
+      EDITUSER = #{edituser,jdbcType=VARCHAR},
+      EDITTIME = #{edittime,jdbcType=TIMESTAMP}
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getJcyAydmList"  parameterType="com.netmarch.ajgl.system.bean.Query" resultType="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    select
+    code, mc, bz, edituser, edittime
+    from jcy_aydm
+    where 1=1
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchMc"'>
+        and mc like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchCode"'>
+        and code like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    order by edittime desc
+  </select>
+
+  <select id="getJcyAydmByCode" parameterType="java.lang.String" resultType="com.netmarch.ajgl.system.bean.Jcy_aydm">
+    select
+   code, mc, bz, edituser, edittime
+    from jcy_aydm
+    where code = #{code,jdbcType=VARCHAR}
+ </select>
+
+  <select id="checkJcyAydmCode" parameterType="com.netmarch.ajgl.system.bean.Jcy_aydm" resultType="java.lang.Integer">
+    select
+    count(*)
+    from jcy_aydm  where code=#{code,jdbcType=VARCHAR}
+    <if test="id !=null and id != ''">
+      and code &lt;> #{id,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,216 @@
+<!--
+ * Author: wsp 
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/js/util.js'"></script>
+    <script th:src="${application.basePath}+'/web/individualism/notice/notice.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+
+
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" method="get" th:action="${application.basePath}+'/notice/list'" >
+
+    <div class="I106_page">
+        <!--头部页面-->
+        <div th:replace="common/top::top"></div>
+        <!--内容s-->
+        <div class="I106_content">
+            <div class="I106_container clear">
+                <div class="I106_contentTop clear">
+
+                    <div class="I106_title">
+                        <span>通知管理</span>
+                        <img th:src="${application.basePath}+'/images/arrowDown2.png'" alt="">
+                    </div>
+                </div>
+
+                <div class="I106_contentOuter clear">
+                    <div class="I106_contentLeft">
+                        <!--_列表字典树 Start-->
+                        <div class="I108_listDicTree fl">
+                            <div class="I108_dicTreeEdit">
+                            </div>
+                            <div class="I108_dicTreeList">
+                                <ul id="treeDemo" class="ztree">
+                                </ul>
+                            </div>
+                        </div>
+                        <!--listDicTree_列表字典树 End-->
+                    </div>
+
+                    <div class="I106_contentRight">
+                        <div class="I106_tabelOuter">
+                            <table class="layui-table I106_table"  lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                                <thead>
+                                <tr>
+
+                                    <th lay-data="{field:'typeTitle',width: 700}" >我的通知</th>
+                                    <th lay-data="{field:'status',width: 100}" >状态</th>
+                                    <th lay-data="{field:'time',width: 200}">时间</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr  th:each="notice,listState : ${list.result}" >
+                                    <td th:if="${notice.status==0}">
+                                        <span>您的</span><span th:text="${notice.type}" />
+                                        <a href="javascript:void(0)" th:onclick="'customer.finishRead( '+${notice.id}+')'"  ><span style="color: #5FB878; "  th:text="${notice.typeTitle}" /></a>
+                                        <span th:text="被" />
+                                        <span style="color: #5FB878; " th:text="${notice.createUserName}" /><span th:text="${notice.sysDictId}" />
+                                        <span th:text="了"/>
+                                    </td>
+                                    <td th:if="${notice.status==1}">
+                                        <span>您的</span><span th:text="${notice.type}" />
+                                        <a href="javascript:void(0)" th:onclick="'customer.finishRead( '+${notice.id}+ ')'" ><span style="color: #5FB878; "  th:text="${notice.typeTitle}" /></a>
+                                        <span th:text="被" />
+                                        <span style="color: #5FB878; " th:text="${notice.createUserName}" /><span th:text="${notice.sysDictId}" />
+                                        <span th:text="了"/>
+                                    </td>
+                                    <td th:if="${notice.status==1}" th:text="已读"></td>
+                                    <td th:if="${notice.status==0}" th:text="未读"></td>
+                                    <td th:text="${#dates.format(notice.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--分页引用-->
+                        <div th:replace="common/pages::pages"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--底部页面-->
+        <div th:replace="common/bottom::bottom"></div>
+    </div>
+</form>
+
+<script th:inline="javascript">
+
+
+    var table = null;
+    var contextPath = getContextPath();
+
+    layui.use('table',function () {
+
+        layui.table.init('demo', {
+            limit: 15
+        });
+
+        table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+
+        });
+    })
+
+    var customer = {
+        index: null,
+        returnURL: function (url) {
+            return /*[[@{*/url/*}]]*/;
+        },
+        targer_url: function (url) {
+            location.href = customer.returnURL(url);
+        },
+        finishRead: function (id) {
+
+            $.ajax({
+                type: "get",
+                url: contextPath+'/notice/finishRead',
+                data:{"id":id},
+                dataType: 'json',
+                success: function (data) {
+
+                    layui.layer.open({
+                        title:'<img src="'+[[${application.basePath}]]+'/images/I208_edit.png"><span>查看</span>',
+                        type: 2,
+                        shadeClose: false,
+                        shade: 0.6,
+                        skin:'A106_layer',
+                        area: ['1200px', '780px'], //宽高
+                        content:[contextPath+ data.nextUrl,'yes']//不允许出现滚动条
+                    })
+                }
+            })
+
+
+
+        }
+
+    };
+
+    $(document).ready(function(){
+
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            view: {
+                showIcon: false
+            },
+            edit: {
+                enable: true,
+                showRemoveBtn: false,
+                idKey : "id",//节点id
+                pIdKey : "parentId",//父节点id
+                showRenameBtn: false
+            },
+            data: {
+                keep: {
+                    parent:true,
+                    leaf:true
+                }
+            },
+            callback: {
+                onClick: zTreeOnClick
+            }
+        };
+        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+
+        var zNodes =[[${ZtreeList}]];
+        var noticeQuery =[[${noticeQuery}]];
+        $(document).ready(function(){
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            zTreeObj.expandAll(true);
+            var val;
+            if(noticeQuery.status == null){
+                val=zTreeObj.getNodeByParam("pid","0" );
+            }else{
+                val=zTreeObj.getNodeByParam("value",noticeQuery.status );
+            }
+
+            zTreeObj.selectNode(val,true);
+        });
+
+
+        function zTreeOnClick(event, treeId, treeNode) {
+            console.info(treeNode.value);
+            if(treeNode.value !=null){
+                customer.targer_url(contextPath+'/notice/list?status='+treeNode.value);
+            }else{
+                customer.targer_url(contextPath+'/notice/list');
+            }
+        };
+
+    });
+
+
+</script>
+</body>
+</html>

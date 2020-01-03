@@ -1,0 +1,19 @@
+package util;
+
+import lombok.Data;
+
+/**
+ * @program: datacollect
+ * @description: result
+ * @author: dinggan
+ * @create: 2018-12-19 10:52
+ **/
+@Data
+public class Result {
+
+    private String serviceName;
+
+    private String errorCode;
+
+    private String appIdentityKey;
+}

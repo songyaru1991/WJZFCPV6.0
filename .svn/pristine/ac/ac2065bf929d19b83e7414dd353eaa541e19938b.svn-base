@@ -1,0 +1,35 @@
+package com.netmarch.lssqyj.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.lssqyj.system.bean.Departments;
+import com.netmarch.lssqyj.system.model.Query;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * @Author: songyaru
+ * @Date: 2019/5/17 11:11
+ * @Version 1.0
+ */
+@Service
+public interface DepartmentsService {
+    Page<Departments> getDepartmentsList(Departments departments, Query departmentsQuery);
+
+    int addDepartments(Departments departments);
+
+    Departments getDepartmentsById(String id);
+
+    int editDepartments(Departments departments);
+
+    int delBatch(String ids);
+
+    String exportDepartments(HttpServletResponse response, List<Departments> departmentsList);
+
+    List<Departments> getDepartments(Query departmentsQuery);
+
+    List<Departments> getDepartmentsByBm(String bm);
+
+    int checkDepartmentName(Departments departments);
+}

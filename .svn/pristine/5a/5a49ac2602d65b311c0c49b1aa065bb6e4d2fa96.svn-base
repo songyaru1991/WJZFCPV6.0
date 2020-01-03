@@ -1,0 +1,130 @@
+package com.netmarch.jzznyj.system.bean;
+
+import java.io.Serializable;
+
+public class Area implements Serializable {
+    private String id;
+
+    private String gajAreaName;
+
+    private String areaCode;
+
+    private String jcyAreaName;
+
+    private String fyAreaName;
+
+    private String sfjAreaName;
+
+    private String zfwAreaName;
+
+    private static final long serialVersionUID = 1L;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getGajAreaName() {
+        return gajAreaName;
+    }
+
+    public void setGajAreaName(String gajAreaName) {
+        this.gajAreaName = gajAreaName == null ? null : gajAreaName.trim();
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode == null ? null : areaCode.trim();
+    }
+
+    public String getJcyAreaName() {
+        return jcyAreaName;
+    }
+
+    public void setJcyAreaName(String jcyAreaName) {
+        this.jcyAreaName = jcyAreaName == null ? null : jcyAreaName.trim();
+    }
+
+    public String getFyAreaName() {
+        return fyAreaName;
+    }
+
+    public void setFyAreaName(String fyAreaName) {
+        this.fyAreaName = fyAreaName == null ? null : fyAreaName.trim();
+    }
+
+    public String getSfjAreaName() {
+        return sfjAreaName;
+    }
+
+    public void setSfjAreaName(String sfjAreaName) {
+        this.sfjAreaName = sfjAreaName == null ? null : sfjAreaName.trim();
+    }
+
+    public String getZfwAreaName() {
+        return zfwAreaName;
+    }
+
+    public void setZfwAreaName(String zfwAreaName) {
+        this.zfwAreaName = zfwAreaName == null ? null : zfwAreaName.trim();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Area other = (Area) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getGajAreaName() == null ? other.getGajAreaName() == null : this.getGajAreaName().equals(other.getGajAreaName()))
+            && (this.getAreaCode() == null ? other.getAreaCode() == null : this.getAreaCode().equals(other.getAreaCode()))
+            && (this.getJcyAreaName() == null ? other.getJcyAreaName() == null : this.getJcyAreaName().equals(other.getJcyAreaName()))
+            && (this.getFyAreaName() == null ? other.getFyAreaName() == null : this.getFyAreaName().equals(other.getFyAreaName()))
+            && (this.getSfjAreaName() == null ? other.getSfjAreaName() == null : this.getSfjAreaName().equals(other.getSfjAreaName()))
+            && (this.getZfwAreaName() == null ? other.getZfwAreaName() == null : this.getZfwAreaName().equals(other.getZfwAreaName()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getGajAreaName() == null) ? 0 : getGajAreaName().hashCode());
+        result = prime * result + ((getAreaCode() == null) ? 0 : getAreaCode().hashCode());
+        result = prime * result + ((getJcyAreaName() == null) ? 0 : getJcyAreaName().hashCode());
+        result = prime * result + ((getFyAreaName() == null) ? 0 : getFyAreaName().hashCode());
+        result = prime * result + ((getSfjAreaName() == null) ? 0 : getSfjAreaName().hashCode());
+        result = prime * result + ((getZfwAreaName() == null) ? 0 : getZfwAreaName().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", gajAreaName=").append(gajAreaName);
+        sb.append(", areaCode=").append(areaCode);
+        sb.append(", jcyAreaName=").append(jcyAreaName);
+        sb.append(", fyAreaName=").append(fyAreaName);
+        sb.append(", sfjAreaName=").append(sfjAreaName);
+        sb.append(", zfwAreaName=").append(zfwAreaName);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

@@ -1,0 +1,93 @@
+package com.netmarch.figurecloud.auth.exposure.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/** 
+* @Description: UserContext 用户上下文
+* @Author: fengxiang
+* @Date: 2019/2/15 11:21
+*/
+@ToString
+public class UserContext {
+    private final String username;
+
+    public LoginMode getMode() {
+        return mode;
+    }
+
+    private final LoginMode mode;
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+    private final Integer organizationId;
+    private UserContext(){
+        organizationId = null;
+        mode = null;
+        username = null;
+    }
+
+    private List<GrantedAuthority> authorities;
+
+    private UserContext(String username, LoginMode mode, Integer organizationId, List<GrantedAuthority> authorities) {
+        this.username = username;
+        this.mode = mode;
+        this.organizationId = organizationId;
+        this.authorities = authorities;
+    }
+
+    /**
+     *
+     * @param username 用户名
+     * @param mode   登录方式
+     * @param organizationId  用户组织
+     * @param authorities  角色数组
+     * @return
+     */
+    public static UserContext create(String username, LoginMode mode, Integer organizationId, List<GrantedAuthority> authorities) {
+        if (StringUtils.isEmpty(username)) {
+            throw new IllegalArgumentException("用户名为空");
+        }
+        return new UserContext(username, mode, organizationId, authorities);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * json序列化字段
+     * @return
+     */
+    public List<String> getRoles(){
+        return !CollectionUtils.isEmpty(authorities) ? authorities.stream().map(item -> {
+            return item.getAuthority();
+        }).collect(Collectors.toList()) : new ArrayList<>();
+    }
+    /**
+     * json序列化字段
+     * @return
+     */
+    @JsonSetter("roles")
+    public void setRoles(List<String> roles){
+            this.authorities = roles.stream().map(item -> {
+                return  new SimpleGrantedAuthority(item);
+            }).collect(Collectors.toList());
+    }
+    @JsonIgnore
+    public List<GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+}

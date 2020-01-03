@@ -1,0 +1,32 @@
+package com.netmarch.figurecloud.management.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.figurecloud.management.system.bean.SysResource;
+import com.netmarch.figurecloud.management.system.bean.ZtreeObj;
+
+import java.util.List;
+import java.util.Map;
+
+public interface SysResourcesMapper {
+    Page<SysResource> getResourcesList(Map<String, Object> keyword);
+
+    List<ZtreeObj> getTree();
+
+    SysResource getResourceById(int i);
+
+    int save(SysResource resource);
+
+    int editResource(SysResource resource);
+
+    int deleteResourceRole(List<Integer> list);
+
+    int delBath(List<Integer> list);
+
+    List<String> getResourceCodesByIds(List<Integer> roleIds);
+
+    List<SysResource> getResourcesListByRoleIds(List<Integer> roleIds);
+
+    int checkRepeatByName(SysResource resource);
+
+    int checkRepeatByCode(SysResource resource);
+}

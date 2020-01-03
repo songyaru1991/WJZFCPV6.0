@@ -1,0 +1,43 @@
+package com.netmarch.figurecloud.auth.core.service.impl;
+
+import com.netmarch.figurecloud.auth.core.mapper.SysLoginUserMapper;
+import com.netmarch.figurecloud.auth.core.mapper.SysRoleMapper;
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import com.netmarch.figurecloud.auth.core.service.SysLoginUserService;
+import com.netmarch.figurecloud.auth.exposure.model.SysRole;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
+
+import java.nio.file.OpenOption;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Log4j2
+public class SysLoginUserServiceImpl implements SysLoginUserService {
+    @Autowired
+    SysLoginUserMapper sysLoginUserMapper;
+    @Autowired
+    SysRoleMapper sysRoleMapper;
+    @Override
+    public Optional<SysLoginUser> queryHasRoles(String nameOrNum) {
+        SysLoginUser sysLoginUser = null;
+        try {
+            Example example = new Example(SysLoginUser.class);
+            example.or().orEqualTo("loginName",nameOrNum).orEqualTo("policeNum",nameOrNum);
+            List<SysLoginUser> sysLoginUsers = sysLoginUserMapper.selectByExample(example);
+            // 防止警号和账号同名查出两个
+            sysLoginUser = CollectionUtils.isEmpty(sysLoginUsers) ? null : sysLoginUsers.get(0);
+            if (sysLoginUser != null){
+                List<SysRole> sysRoles = sysRoleMapper.selectByUserId(sysLoginUser.getId());
+                sysLoginUser.setSysRoles(sysRoles);
+            }
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return Optional.ofNullable(sysLoginUser);
+    }
+}

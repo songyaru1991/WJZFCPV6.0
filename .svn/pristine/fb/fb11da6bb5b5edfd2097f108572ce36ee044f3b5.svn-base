@@ -1,0 +1,41 @@
+package com.netmarch.wshy.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.wshy.system.bean.LoginUser;
+import com.netmarch.wshy.system.bean.Query;
+import com.netmarch.wshy.system.bean.SysRole;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+public interface LoginUserService {
+    Page<LoginUser> getUserList(LoginUser user, Query usersQuery);
+
+    String exportUsers(HttpServletResponse response, List<LoginUser> usersList);
+
+    List<SysRole> getRoleIdByUserId(String user_Id);
+
+    String getUserRoleIdsByUserId(String user_Id);
+
+    Integer getUserTypeByUserId(String user_Id);
+
+    int checkRepeatLoginName(LoginUser loginUser);
+
+    LoginUser checkLoginByUserId(LoginUser loginUser);
+
+    int updateLoginUser(LoginUser loginUser);
+
+    int insertUserRole(LoginUser loginUser);
+
+    int delUserRoles(String ids);
+
+    int editUserRoleByUser(LoginUser loginUser);
+
+    int addLoginUser(LoginUser loginUser);
+
+    int delBatch(String ids);
+
+    int getUserCountById(String user_id);
+
+    LoginUser getLoginUserByUserId(String user_id);
+}

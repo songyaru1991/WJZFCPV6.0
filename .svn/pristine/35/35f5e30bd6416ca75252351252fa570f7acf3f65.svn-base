@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>文书管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright"  auth:check="toJcyWsysToGa">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>文书管理：检察院文书移送至法院</p>
+            </div>
+
+        </div>
+        <div id="table_refresh" th:fragment="table_refresh">
+            <div class="H105_sysList H105_sysList1">
+            <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                <thead>
+                <tr>
+                    <th lay-data="{type:'checkbox'}"></th>
+                    <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                    <td lay-data="{field:'1'}">文书文号</td>
+                    <td lay-data="{field:'2'}">文书标题名称</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean,beanStat : ${list}">
+                    <td><input type="checkbox" name="box" th:value="${bean.jlbh}" class="box" checked
+                               lay-skin="primary"/></td>
+                    <td th:text="${bean.jlbh}" style="display:none;"></td>
+                    <td th:text="${bean.wsh}">文书文号</td>
+                    <td th:text="${bean.wsbtmc}">文书标题名称</td>
+                </tr>
+                </tbody>
+            </table>
+                <input type="hidden" name="searchCondition" id="searchCondition" th:value="${wsglQuery.searchCondition}"/>
+                <input type="hidden" name="searchContent" id="searchContent" th:value="${wsglQuery.searchContent}"/>
+                <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+                <input type="hidden" name="ajbs" id="ajbs" th:value="${ajbs}"/>
+
+                <div class="S105_btnCoat1 ">
+                    <div class="E105_saveBtnCoat clear">
+                        <div class="S105_saveBtn fl cursor"  th:onclick="saveWsysToFy()"><p>移送</p></div>
+                        <div class="S105_saveBtn fl cursor jq_E105_cannel3"><p>返回</p></div>
+                    </div>
+                </div>
+
+        </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        $(".box").prop("checked",true)
+
+        var contextPath = getContextPath();
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 12
+            });
+
+            table = layui.table;
+            //监听表格复选框选择
+            table.on('checkbox(demo)', function (obj) {
+                console.log(obj)
+            });
+        })
+
+        //获取选中行FexId属性值公共方法
+        //value 为传入的  {field: 'id',style:'display:none;'} field值
+        //返回结果 是这一列被选中的 用,隔开的字符串
+        function getRowFexId(value) {
+            var checkStatus = table.checkStatus('tables')
+                , data = checkStatus.data, arr = new Array();
+            ;
+            for (var i = 0; i < data.length; i++) {
+                arr.push(data[i][value]);
+            }
+            return arr.join(",");
+            checkStatus
+        }
+
+        function getRowCount() {
+            var checkStatus = table.checkStatus('tables')
+                , data = checkStatus.data, arr = new Array();
+            ;
+            return data.length;
+        }
+
+        function layerclose() {
+            layer.close(layIndex);
+        }
+
+        function saveWsysToFy() {
+            var searchCondition = $('#searchCondition').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var count = getRowCount("id");
+            if (count < 1) {
+                layer.alert("请至少选择一条数据！");
+                return;
+            }
+
+            var jlbhs = getRowFexId("id");
+            if (jlbhs == '') {
+                layer.alert("请至少选择一条数据！");
+                return;
+            }
+            layer.confirm('已选择 '+count+' 个文书，确定要移送至法院吗？', {btn: ['确定', '取消']}, function (index) {
+                layer.close(index);
+                $.ajax({
+                    url: contextPath + "/Wsgl/saveWsysToFy",
+                    type: "post",
+                    data:{"jlbhs":jlbhs,"searchCondition":searchCondition,"searchContent":searchContent,"pageNo":pageNo},
+                    dataType: "json",
+                    success: function (result) {
+                        if (200 == result.code) {
+                            layer.alert(result.message, function (index) {
+                                layer.close(layer.index);
+                                parent.parent.$('.src_iframeleft').attr('src', result.nextUrl);
+                            });
+
+                        } else {
+                            layer.alert(result.message);
+                            return;
+                        }
+                    }
+                })
+            })
+        }
+
+
+    </script>
+</div>
+</body>
+</html>

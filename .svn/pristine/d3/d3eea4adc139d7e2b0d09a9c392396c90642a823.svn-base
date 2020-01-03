@@ -1,0 +1,9 @@
+package com.netmarch.lssqyj.system.mapper;
+
+import java.util.List;
+
+public interface SysDictMapper {
+    List<String> selectDzjzmlByDict();
+
+    List<String> selectHywsByDict();
+}

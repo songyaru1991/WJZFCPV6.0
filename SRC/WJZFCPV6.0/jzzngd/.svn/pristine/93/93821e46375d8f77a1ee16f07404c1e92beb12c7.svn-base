@@ -1,0 +1,84 @@
+package com.netmarch.jzzngd.common.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.netmarch.jzzngd.common.utils.HttpClientUtils;
+import com.netmarch.jzzngd.common.utils.UsersUtil;
+import com.netmarch.jzzngd.system.bean.LoginUser;
+import com.netmarch.jzzngd.system.bean.ZtreeNode;
+import com.netmarch.jzzngd.system.enums.IndividulType;
+import com.netmarch.jzzngd.system.service.LogService;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class FrontBaseController extends BaseController {
+
+    @Autowired
+    public LogService logService;
+
+    @Autowired
+    private UsersUtil usersUtil;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    protected  void log(String yhm,String czlx,String cznr,String gjz,boolean isException) {
+        String requestURI = "", user_Id = "";
+        try {
+            String jwt = usersUtil.getJwtCookie();
+            user_Id = usersUtil.getLoginUser_Id();
+            //  logService.save(yhm,getIp(),czlx,cznr,gjz,isException);
+            String url = uumsUrl + "/log/saveLog";
+            String body = "";
+            Map<String, Object> logMap = new HashMap<String, Object>();
+            logMap.put("yhm", yhm);
+            logMap.put("ip", getIp());
+            logMap.put("czlx", czlx);
+            logMap.put("cznr", cznr);
+            logMap.put("gjz", gjz);
+            logMap.put("isException", isException);
+
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(logMap), jwt);
+            LoginUser loginUser = null;
+            if (body != "" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                loginUser = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public List<ZtreeNode> showTypeTree() {
+        List<ZtreeNode> listTree = new ArrayList<ZtreeNode>();
+
+        ZtreeNode ztree = new ZtreeNode();
+        ztree.setId("1");
+        ztree.setPid("0");
+        ztree.setName("全部" );
+        ztree.setParent(true);
+        List<ZtreeNode> list = new ArrayList<ZtreeNode>();
+        int i = 1;
+        for(IndividulType type: IndividulType.values()){
+            ZtreeNode ztreeUnRead = new ZtreeNode();
+            ztreeUnRead.setId("1" + (i++));
+            ztreeUnRead.setName(type.getDescription());
+            ztreeUnRead.setPid("1");
+            ztreeUnRead.setValue(type.getValue().toString());
+            list.add(ztreeUnRead);
+        }
+        ztree.setChildren(list);
+        listTree.add(ztree);
+
+        return listTree;
+    }
+
+
+}

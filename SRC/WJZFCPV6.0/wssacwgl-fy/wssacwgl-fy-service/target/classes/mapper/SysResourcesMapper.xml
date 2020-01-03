@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.SysResourcesMapper">
+    <select id="getResourcesList" parameterType="Map"
+            resultType="com.netmarch.wssacw.system.bean.SysResource">
+        select a.id,a.code,a.name,a.url,a.type,a.css_Selector cssSelector,a.status,a.sort_Index sortIndex,a.parent_Id parentId,a.name pName,a.imgUrl1,a.imgUrl2 from sys_resource a where a.parent_id = #{parentId}
+        <if test="keyword != '' and keyword != null">
+          and a.name like '%${keyword}%'
+        </if>
+    </select>
+    
+    <select id="getTree" resultType="com.netmarch.wssacw.system.bean.ZtreeObj">
+        select id, parent_id as pId, name, type from sys_resource
+    </select>
+
+    <select id="getResourceById" parameterType="Integer"
+            resultType="com.netmarch.wssacw.system.bean.SysResource">
+        select a.id,a.code,a.name,a.url,a.type,a.css_Selector cssSelector,a.status,a.sort_Index sortIndex,a.parent_Id parentId,a.name pName,a.imgUrl1,a.imgUrl2,b.name as pName from sys_resource a
+        inner join sys_resource b
+        on a.parent_id = b.id
+        where a.id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.netmarch.wssacw.system.bean.SysResource">
+        insert into sys_resource (code, name, url, type, status, sort_index, parent_id) VALUES
+        (#{code},#{name},#{url},#{type},1,#{sortIndex},#{parentId})
+    </insert>
+    
+    <update id="editResource"
+            parameterType="com.netmarch.wssacw.system.bean.SysResource">
+        update sys_resource set code=#{code}, name=#{name}, url=#{url}, type=#{type},
+        status=#{status}, sort_index=#{sortIndex}, parent_id=#{parentId} where id = #{id}
+    </update>
+
+    <delete id="deleteResourceRole" parameterType="List">
+        delete from sys_resource_role where sys_resource_id in 
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delBath" parameterType="List">
+        delete from sys_resource where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getResourceCodesByIds" parameterType="List" resultType="String">
+        select code from sys_resource where id in (
+          select sys_resource_id from sys_resource_role  where sys_role_id in
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        )
+    </select>
+
+    <select id="getResourcesListByRoleIds" parameterType="List"
+            resultType="com.netmarch.wssacw.system.bean.SysResource">
+        select * from sys_resource where id in (
+        select sys_resource_id from sys_resource_role  where sys_role_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ) order by sort_index
+    </select>
+
+    <select id="checkRepeatByName"
+            parameterType="com.netmarch.wssacw.system.bean.SysResource"
+            resultType="int">
+        select count(1) from sys_resource where name = #{name}
+        <if test="id != null and id != 0">
+            and id &lt;&gt; #{id}
+        </if>
+    </select>
+
+    <select id="checkRepeatByCode"
+            parameterType="com.netmarch.wssacw.system.bean.SysResource"
+            resultType="int">
+        select count(1) from sys_resource where code = #{code}
+        <if test="id != null and id != 0">
+            and id &lt;&gt; #{id}
+        </if>
+    </select>
+
+</mapper>

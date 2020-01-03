@@ -1,0 +1,180 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>公安局--文书管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<form id="form" method="post" action="" enctype="multipart/form-data">
+    <div class="E105_wripper jq_iframeleft">
+    <div class="E105_case1">
+
+        <div class="E105_tableCoat ">
+
+            <div class="E105_baseInfo">
+                <div class="E105_checkCoat fr    " style="margin-top: -12px;">
+                    <input type="button" value="编辑文书内容" id="showWS" class="H105_search3 fl" onclick="showWSNR();">
+                </div>
+                <div class="E105_info  ">
+                    <p>文书格式</p>
+                </div>
+
+            </div>
+
+            <div class="P105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>文书代码:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input3  fl" name="wsdm" id="wsdm" th:value="${bean.wsdm}">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>文书标题</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input3  fl" name="wsbt" id="wsbt" th:value="${bean.wsbt}">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>判决列表</p>
+                            </div>
+                            <select name="wsgnlb" id="wsgnlb" class="E105_input3  fl">
+                                <option value="">请选择</option>
+                                <option th:each="wsgnlbList : ${wsgnlbList}" th:text="${wsgnlbList.gnmc}" th:value="${wsgnlbList.id}"
+                                         th:selected="${bean.wsgnlb == wsgnlbList.id}">判决列表</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+            <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+            <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+            <input type="hidden" name="id" id="id" th:value="${bean.id}"/>
+
+            <div class="S105_btnCoat1 ">
+                <div class="E105_saveBtnCoat clear">
+                    <div class="S105_saveBtn fl cursor"  th:onclick="saveWsgs()"><p>保存</p></div>
+                    <div class="S105_saveBtn fl cursor jq_E105_cannel3"><p>返回</p></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</form>
+
+<div id="popupContact" style="width: 530; height: 500px; z-index: 30; display: none;">
+    <div id="contactArea">
+    </div>
+    <div id="contactArea1" style="display: none;">
+        <iframe id="iframeWS" style="width: 500px; height: 500px; border: #000000 solid 0px;
+                overflow: hidden;" scrolling="no" frameborder="0"></iframe>
+    </div>
+</div>
+
+</body>
+<script>
+    var contextPath = getContextPath();
+
+    saveWsgs = function (){
+        var data = {
+            wsdm: "input NotNull", wsbt: "input NotNull"
+        };
+        var flag = V_CHECK(data);
+        if (!flag) {
+            return;
+        }
+
+        $.ajax({
+            url: contextPath + '/Wsgssz/saveEdit',
+            type:"post",
+            data:$("#form").serialize(),
+            dataType:"json",
+            success: function (result) {
+                if (result.code == 200) {
+                    layer.alert(result.message, function (index) {
+                        layer.close(layer.index);
+                        parent.$('.src_iframeleft').attr('src', result.nextUrl);
+                    });
+
+                } else {
+                    layer.alert(result.message);
+                    return;
+                }
+            },
+            error: function (result) {
+                alert("error");
+                $('.src_iframeleft').attr('src', result.nextUrl);
+            }
+        })
+        return false;
+    }
+
+
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+    })
+
+    function showWSNR() {
+        $("#contactArea").html($("#contactArea1").html());
+        var TemplateID = $("#id").val();
+        $("#iframeWS").attr("src", '../TDocEdit/TTemplateEdit?id=' + TemplateID );
+        resizeiframe();
+        $("#popupContact").fadeIn();
+    };
+
+    function disablePopup() {
+
+        $("#popupContact").fadeOut("slow");
+    }
+    function resizeiframe() {
+        var windowWidth = document.documentElement.clientWidth - 1;
+        var windowHeight = document.documentElement.clientHeight - 10;
+        $("#iframeWS").css({
+            "width": windowWidth,
+            "height": windowHeight
+        });
+        $("#popupContact").css({
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": windowWidth,
+            "height": windowHeight
+        });
+    }
+    window.onresize = function () {
+        resizeiframe();
+    }
+
+
+</script>
+</html>

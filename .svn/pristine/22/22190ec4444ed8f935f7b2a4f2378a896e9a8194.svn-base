@@ -1,0 +1,183 @@
+package com.netmarch.jzznyj.system.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Departments  extends PagesStatic implements Serializable {
+    private String id;
+
+    private String name;
+
+    private String edituser;
+
+    private Date edittime;
+
+    private String bm;
+
+    private String areaCode;
+
+    private String area;
+
+    private Integer msgId;
+
+    private Integer msgOp;
+
+    private String msgStatus;
+
+    private Date msgDate;
+
+    private static final long serialVersionUID = 1L;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getEdituser() {
+        return edituser;
+    }
+
+    public void setEdituser(String edituser) {
+        this.edituser = edituser;
+    }
+
+    public Date getEdittime() {
+        return edittime;
+    }
+
+    public void setEdittime(Date edittime) {
+        this.edittime = edittime;
+    }
+
+    public String getBm() {
+        return bm;
+    }
+
+    public void setBm(String bm) {
+        this.bm = bm == null ? null : bm.trim();
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode == null ? null : areaCode.trim();
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area == null ? null : area.trim();
+    }
+
+    public Integer getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(Integer msgId) {
+        this.msgId = msgId;
+    }
+
+    public Integer getMsgOp() {
+        return msgOp;
+    }
+
+    public void setMsgOp(Integer msgOp) {
+        this.msgOp = msgOp;
+    }
+
+    public String getMsgStatus() {
+        return msgStatus;
+    }
+
+    public void setMsgStatus(String msgStatus) {
+        this.msgStatus = msgStatus == null ? null : msgStatus.trim();
+    }
+
+    public Date getMsgDate() {
+        return msgDate;
+    }
+
+    public void setMsgDate(Date msgDate) {
+        this.msgDate = msgDate;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Departments other = (Departments) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getEdituser() == null ? other.getEdituser() == null : this.getEdituser().equals(other.getEdituser()))
+            && (this.getEdittime() == null ? other.getEdittime() == null : this.getEdittime().equals(other.getEdittime()))
+            && (this.getBm() == null ? other.getBm() == null : this.getBm().equals(other.getBm()))
+            && (this.getAreaCode() == null ? other.getAreaCode() == null : this.getAreaCode().equals(other.getAreaCode()))
+            && (this.getArea() == null ? other.getArea() == null : this.getArea().equals(other.getArea()))
+            && (this.getMsgId() == null ? other.getMsgId() == null : this.getMsgId().equals(other.getMsgId()))
+            && (this.getMsgOp() == null ? other.getMsgOp() == null : this.getMsgOp().equals(other.getMsgOp()))
+            && (this.getMsgStatus() == null ? other.getMsgStatus() == null : this.getMsgStatus().equals(other.getMsgStatus()))
+            && (this.getMsgDate() == null ? other.getMsgDate() == null : this.getMsgDate().equals(other.getMsgDate()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getEdituser() == null) ? 0 : getEdituser().hashCode());
+        result = prime * result + ((getEdittime() == null) ? 0 : getEdittime().hashCode());
+        result = prime * result + ((getBm() == null) ? 0 : getBm().hashCode());
+        result = prime * result + ((getAreaCode() == null) ? 0 : getAreaCode().hashCode());
+        result = prime * result + ((getArea() == null) ? 0 : getArea().hashCode());
+        result = prime * result + ((getMsgId() == null) ? 0 : getMsgId().hashCode());
+        result = prime * result + ((getMsgOp() == null) ? 0 : getMsgOp().hashCode());
+        result = prime * result + ((getMsgStatus() == null) ? 0 : getMsgStatus().hashCode());
+        result = prime * result + ((getMsgDate() == null) ? 0 : getMsgDate().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", name=").append(name);
+        sb.append(", edituser=").append(edituser);
+        sb.append(", edittime=").append(edittime);
+        sb.append(", bm=").append(bm);
+        sb.append(", areaCode=").append(areaCode);
+        sb.append(", area=").append(area);
+        sb.append(", msgId=").append(msgId);
+        sb.append(", msgOp=").append(msgOp);
+        sb.append(", msgStatus=").append(msgStatus);
+        sb.append(", msgDate=").append(msgDate);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

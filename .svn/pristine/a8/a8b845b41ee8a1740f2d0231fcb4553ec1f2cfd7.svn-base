@@ -1,0 +1,36 @@
+package util.excel.model;//package cn.com.flaginfo.biz.exam.service.common.excel.model;
+//
+//import java.io.Serializable;
+//import java.math.BigDecimal;
+//
+//import cn.com.flaginfo.biz.exam.service.common.excel.annotation.util.ExcelImportField;
+//import cn.com.flaginfo.biz.exam.service.common.excel.annotation.validate.NotNull;
+//import lombok.Data;
+//
+//@Data
+//public class ExamQuestionExcel  implements Serializable{
+//	
+//	private static final long serialVersionUID = 4533380631120297389L;
+//
+//	@ExcelImportField(order=1)
+//	private String classifyName;
+//	
+//	@ExcelImportField(order=2)
+//	@NotNull
+//	private String name;
+//	
+//	@ExcelImportField(order=3)
+//	@NotNull
+//	private String typeName;
+//	
+//	@ExcelImportField(order=4)
+//	private String options;
+//	
+//	@ExcelImportField(order=5)
+//	@NotNull
+//	private String  correctAnswers;
+//	
+//	@ExcelImportField(order=5)
+//	@NotNull
+//	private String score;
+//}

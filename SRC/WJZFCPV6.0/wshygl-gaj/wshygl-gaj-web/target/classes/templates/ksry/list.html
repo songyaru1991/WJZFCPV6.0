@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+   <title>公安局--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright"  auth:check="ksshyManage">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>看守所换押管理：人员基本信息</p>
+            </div>
+
+            <div class="H105_searchCoat fr clear">
+                <select id="searchCondition" name="searchCondition" class="H105_select fl">
+                    <option value="searchKsryBH" th:selected="${ksryQuery.searchCondition=='searchKsryBH'}">人员编号</option>
+                    <option value="searchKsryXM" th:selected="${ksryQuery.searchCondition=='searchKsryXM'}">姓名</option>
+                </select>
+                <input type="text" id="searchContent" name="searchContent" class="H105_search fl" th:value="${ksryQuery.searchContent}">
+                <div class="H105_searchBtn fl " onclick="localRefresh()">搜索</div>
+                <div class="H105_search1 fl" onclick="toAdd()" auth:check="ksryAdd">新增</div>
+                <div class="H105_search1 fl" onclick="importKsry()" auth:check="importKsry">导入</div>
+
+            </div>
+        </div>
+        <div id="table_refresh" th:fragment="table_refresh">
+            <div class="H105_sysList H105_sysList1">
+            <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'1',width:70}">序号</th>
+                    <th lay-data="{field:'2'}">姓名</th>
+                    <th lay-data="{field:'3'}">性别</th>
+                    <th lay-data="{field:'4'}">户籍所在地</th>
+                    <th lay-data="{field:'5'}">现居住地址</th>
+                    <th lay-data="{field:'6'}">案件类别</th>
+                    <th lay-data="{field:'7'}">入所原因</th>
+                    <th lay-data="{field:'8',width:200}">入所时间</th>
+                    <th lay-data="{field:'9', width:280}">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean,beanStat : ${list}">
+                    <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}" >
+                        序号
+                    </td>
+                    <td th:text="${bean.XM}">姓名</td>
+                    <td th:text="${bean.XB}">性别</td>
+                    <td th:text="${bean.HJSZD}">户籍所在地</td>
+                    <td th:text="${bean.XZZXXDZ}">现居住地址</td>
+                    <td th:text="${bean.AJLB}">案件类别</td>
+                    <td th:text="${bean.RSYY}">入所原因</td>
+                    <td th:text="${bean.RSSJ}">入所时间</td>
+                    <td>
+                        <!--   <a th:href="${'javascript:viewClickEvent('''+bean.RYBH+''')'}"  auth:check="ksryView">-->
+                        <a th:href="${'javascript:toView('''+bean.RYBH+''')'}"  auth:check="ksryView">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/H105_checkIco1.png'"
+                                 alt="">
+                            <span>查看</span>
+                        </a>
+                        <a th:href="${'javascript:toEdit('''+bean.RYBH+''')'}"  auth:check="ksryEdit">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                 alt="">
+                            <span>编辑</span>
+                        </a>
+                        <a  th:href="${'javascript:toDelete('''+bean.RYBH+''')'}" auth:check="ksryDelete">
+                            <img class="I108_imgHover"
+                                 th:src="${application.basePath}+'/static/images/I108_icon_list_to_del_hover.png'"
+                                 alt="">
+                            <span>删除</span>
+                        </a>
+
+                        <a  th:href="${'javascript:toHyWs('''+bean.AJBS+''')'}" auth:check="fyWenshu">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                 alt="">
+                            <span>法院文书</span>
+                        </a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--分页引用-->
+            <div class="H105_pageCoat clear">
+                <div class="H105_first clear fl">
+                    本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                </div>
+                <div th:replace="common/pages::pages"></div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        function localRefresh() {
+            // 装载局部刷新返回的页面
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var param = {"searchContent": searchContent, "searchCondition": searchCondition, "pageNo": pageNo};
+            $("#table_refresh").load("../Ksry/tableList", param, function () {
+                layui.use('table', function () {
+                    layui.table.init('demo', {
+                        limit: 12
+                    });
+                });
+            });
+        }
+
+        var contextPath = getContextPath();
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 12
+            });
+
+            table = layui.table;
+        })
+
+        function toAdd() {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            layIndex = layui.layer.open({
+                title: '<span>请选择</span>',
+                type: 2,
+                shadeClose: false,
+                shade: 0.6,
+                skin: 'A105_layer',
+                area: ['590px', '375px'], //宽高
+                content: [contextPath + '/Ksry/toAdd', 'yes'],//不允许出现滚动条
+            })
+        }
+
+        function toDelete(rybh) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            layer.confirm('确定删除该看守人员吗？', {btn: ['确定', '取消']}, function (index) {
+                layer.close(index);
+                $.ajax({
+                    url: contextPath + "/Ksry/toDelete",
+                    type: "post",
+                    data:{"rybh":rybh,"searchCondition":searchCondition,"searchContent":searchContent,"pageNo":pageNo},
+                    dataType: "json",
+                    success: function (result) {
+                        if (200 == result.code) {
+                            layer.alert(result.message, function () {
+                                //window.location.reload();
+                                layer.close(layer.index);
+                                $("#table_refresh").load("../Ksry/tableList", function () {
+                                    layui.use('table', function () {
+                                        layui.table.init('demo', {
+                                            limit: 12
+                                        });
+                                    });
+                                });
+                            });
+                        } else {
+                            layer.alert(result.message);
+                            return;
+                        }
+                    }
+                })
+            })
+        }
+
+        function importKsry() {
+            layIndex = layui.layer.open({
+                title: '<span>导入看守所人员信息</span>',
+                type: 2,
+                shadeClose: false,
+                shade: 0.6,
+                skin: 'A105_layer',
+                area: ['550px', '280px'], //宽高
+                content: [contextPath + '/Ksry/importKsry', 'yes'],//不允许出现滚动条
+            })
+        }
+
+        function layerclose() {
+            layer.close(layIndex);
+        }
+
+        function toView(rybh) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '查看';
+            var layHref ='/wshygl-gaj/Ksry/toView?rybh=' + rybh+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo+'&modelType=kssksry';
+            hyViewClickEvent(layContent,layHref);
+        }
+
+        function toEdit(rybh) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '编辑';
+            var layHref ='/wshygl-gaj/Ksry/toEdit?rybh=' + rybh+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+            hyViewClickEvent(layContent,layHref);
+        }
+
+        var hywsPath=  [[${application.hywsPath}]];
+        function toHyWs(ajbs) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '换押文书';
+            ajbs = ajbs + 'abc'
+            var layHref = hywsPath +'&ajbs='+ajbs;
+            hyViewClickEvent(layContent,layHref);
+        }
+
+    </script>
+</div>
+</body>
+</html>

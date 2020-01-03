@@ -1,0 +1,48 @@
+<!--
+ * Author: wsp
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+   <title>公安局--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/select2.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/web/system/access/access.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/static/js/project/importKsry.js'"></script>
+</head>
+<body>
+<form id="form" method="post">
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="H105_search2 fl">
+                选择看守所人员信息文件:
+                <input type="file" class="file" name="file" id="fileUpload">
+                <br/>
+                <a class="A105_downloadModel" href="/wshygl-gaj/Ksry/downloadModel">下载模板</a>
+            </div>
+
+        </div>
+        <div class="A105_buttonOuter">
+            <div class="A105_button A105_button1" onclick="saveImportKsry();">导入信息</div>
+            <div class="A105_button A105_button2" onclick="javascript:window.parent.layerclose();">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>法院--文书管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_All">
+    <!--头部s-->
+    <div class="H105_top">
+        <div class="H105_title fl">
+            <p>文书管理系统</p>
+        </div>
+        <div class="H105_dateCoat fr">
+            <div class="H105_date fl">
+                <span class="H105_dateTime"></span>
+            </div>
+            <img th:src="${application.basePath}+'/static/images/H105_badge.png'" alt="" class="H105_badge fl">
+            <div class="H105_name fl">
+                <span  th:text="${userName}">XXX</span>
+            </div>
+            <img th:src="${application.basePath}+'/static/images/xgmm.png'" alt="修改密码"
+                 class="H105_setting fl" data-name="修改密码" onclick="toMidifyPassword()">
+          <img th:src="${application.basePath}+'/static/images/tcxt.png'" alt="退出系统" class="H105_setting fl" th:onclick="toLoginOut()">
+        </div>
+
+        <div class="H105_labelCoat">
+            <img th:src="${application.basePath}+'/static/images/H105_type.png'" alt="" class="H105_type fl">
+            <div class="H105_label H105_label2 fl"  lay-href='/wsgl-fy/Ajjbqk/navigationBarWsglList' data-content='文书管理'>
+                <span>文书管理</span>
+            </div>
+        </div>
+
+    </div>
+
+    <iframe class="H105_conIframe jq_iframeleft src_iframeleft" frameborder="0" src="/wsgl-fy/Ajjbqk/navigationBarWsglList"></iframe>
+    <!--sandbox="allow-scripts allow-top-navigation allow-same-origin  allow-forms"-->
+</div>
+</body>
+<script>
+    var contextPath = getContextPath();
+    var uumsPath = '[[${application.uumsPath}]]';
+    var wsglPath  = '[[${application.wsglPath}]]';
+    var userBmName  = '[[${application.userBmName}]]';
+    var yhlb  = '[[${application.yhlb}]]';
+    var layer ;
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+
+    function toMidifyPassword(){
+        var layContent = '修改密码';
+        var layHref ='/wsgl-fy/user/toModifyPassword';
+
+        hyViewClickEvent(layContent,layHref);
+    }
+
+    function toLoginOut(){
+        $.ajax({
+            url:contextPath + "/logout",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                if (data.status == 200) {
+                    location.href =uumsPath + "/login?userBmName=" + userBmName +"&yhlb="+yhlb+ "&callbackURL=" + wsglPath + "/loginVerify";
+                } else {
+                    layer.alert("登出失败，原因是：" + data.msg);
+                }
+            },
+            error:function (data) {
+                console.log(data.msg);
+                layer.alert(data.msg);
+            }
+        })
+    }
+    initPage();
+    function initPage() {
+        //如果是在ifream中子页面，刷新最外层页面
+        if (window.top != window.self ){
+            var jwt = GetQueryString("jwt");
+            window.top.location.href = wsglPath + "/loginVerify?jwt="+jwt;
+        }
+    }
+
+</script>
+</html>

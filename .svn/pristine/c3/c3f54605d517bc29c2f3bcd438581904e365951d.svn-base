@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>政法部门协同办案系统</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.admin.css">
+    <script src="../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+
+
+</head>
+<body>
+<div class="H105_page">
+    <div class="H105_top">
+        <div class="H105_title fl">
+            <p>南明区政法部门协同办案（刑事）系统</p>
+        </div>
+        <div class="H105_dateCoat fr">
+            <div class="H105_date fl">
+                <span class="H105_dateTime"></span>
+            </div>
+            <img src="../images/H105_badge.png" alt="" class="H105_badge fl">
+            <div class="H105_name fl">
+                <span>屈臣元</span>
+            </div>
+            <img src="../images/H105_setting.png" alt="" class="H105_setting fl">
+        </div>
+
+        <div class="H105_labelCoat">
+            <img src="../images/H105_type.png" alt="" class="H105_type fl">
+            <div class="H105_label H105_label2 fl">
+                <span>案件管理</span>
+                <img src="../images/H105_x1.png" alt="" class="H105_close">
+            </div>
+            <div class="H105_label  fl">
+                <span>xxxx</span>
+                <img src="../images/H105_x1.png" alt="" class="H105_close">
+            </div>
+            <div class="H105_label  fl"><span>xx123xx</span> <img src="../images/H105_x1.png" alt="" class="H105_close">
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--iframe1-->
+
+    <div class="E105_wripper jq_iframeleft">
+        <div class="E105_case1">
+
+            <div class="P105_subtitle clear">
+                <div class="E105_biaoti fl">
+                    <img src="../images/H105_edit.png" alt="" class="E105_editIco">
+                    <p>王宝田，柳姚天案件涉案财物编辑</p>
+                </div>
+            </div>
+
+            <div class="E105_tableCoat ">
+
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>案件基本信息</p>
+                    </div>
+
+                </div>
+
+                <div class="P105_tableFloor">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件编号:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <input type="text" class="E105_input  fl">
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物名称:</p><span class="E105_star">*</span>
+                                </div>
+                                <input type="text" class="E105_input  fl">
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物类别:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <select name="" id="" class="E105_input  fl">
+                                    <option value="aaaa">电子通讯</option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件名称:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <input type="text" class="E105_input  fl">
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物性质:</p>
+                                </div>
+
+                                <input type="text" class="E105_input  fl  ">
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物状态:</p>
+                                </div>
+
+                                <input type="text" class="E105_input  fl  ">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物颜色:</p>
+                                </div>
+                                <input type="text" class="E105_input  fl  ">
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>目的流转单位::</p>
+                                </div>
+                                <select name="" id="" class="E105_input  fl">
+                                    <option value="aaaa">请选择</option>
+                                </select>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>涉案财物特征:</p>
+                                </div>
+                                <input type="text" class="E105_input  fl  ">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>涉案财物数量或金额:</p>
+                                </div>
+                                <select name="" id="" class="E105_input  fl">
+                                    <option value="aaaa">5000.00--7000.00元</option>
+                                </select>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p> 涉案财物单位:</p>
+                                </div>
+                                <select name="" id="" class="E105_input  fl">
+                                    <option value="aaaa">滨江区公安局</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>涉案财物备注:</p>
+                                </div>
+
+                                <input type="text" class="E105_input1  fl">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>涉案财物二维码:</p>
+                                </div>
+
+                                <div class="P105_qrCodeBg fl">
+                                    <img src="../images/P105_qrCode.png" alt="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>涉案财物图片:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <div class="P105_qrCodeBg1 fl">
+                                    <!--选择照片-->
+                                    <div  class="P105_choose1"  >
+                                        <div class="P105_fileUpLoad" >
+                                            <input type="file" class=" ">
+                                            <img src="../images/P105_choosePic.png" alt="" class="P105_fileUpLoadImg">
+                                        </div>
+                                    </div>
+                                    <!--继续上传 -->
+                                    <div style="display: none;">
+                                        <div class="P105_succeed clear">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                            <img src="../images/P105_phone.png" alt="">
+                                        </div>
+                                        <div class="P105_start clear  ">
+                                            <div class="P105_upload">
+                                                <img src="../images/P105_start.png" alt="">
+                                                <p>开始上传</p>
+                                            </div>
+                                            <div class="P105_upload1">
+                                                <p>继续添加</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>涉案财物流转记录:</p>
+                                </div>
+
+                                <div class="P105_record">
+                                    <table class="P105_table">
+                                        <tr class="P105_titlebg">
+                                            <td class="clear">
+                                                <p>操作人 </p>
+                                            </td>
+                                            <td class="clear">
+                                                <p>单位 </p>
+
+                                            </td>
+                                            <td class="clear">
+                                                <p>时间 </p>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="P105_tr">
+                                            <td class="clear">
+                                                <p>管理员</p>
+                                            </td>
+                                            <td class="clear">
+                                                <p>滨江区人民法院 </p>
+
+                                            </td>
+                                            <td class="clear">
+                                                <p>2019-01-10 13：35：21</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="P105_trColor">
+                                            <td class="clear">
+                                                <p>管理员</p>
+                                            </td>
+                                            <td class="clear">
+                                                <p>滨江区人民法院 </p>
+
+                                            </td>
+                                            <td class="clear">
+                                                <p>2019-01-10 13：35：21</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="P105_tr">
+                                            <td class="clear">
+                                                <p>管理员</p>
+                                            </td>
+                                            <td class="clear">
+                                                <p>滨江区人民法院 </p>
+
+                                            </td>
+                                            <td class="clear">
+                                                <p>2019-01-10 13：35：21</p>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="P105_btnCoat1 ">
+                    <div class="E105_saveBtnCoat clear">
+
+                        <button class="E105_saveBtn fl cursor"><p>保存</p></button>
+                        <button class="E105_saveBtn fl cursor"><p>取消</p></button>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="P105_propertyFlow">
+
+                    <div class="P105_involvedTitle">
+                        <p>涉案财物流转记录</p>
+                        <div class="P105_arrowup cursor">
+
+                        </div>
+                    </div>
+
+                    <div class="P105_chenban">
+                        <div class="P105_ele">
+                            <!--左侧-->
+                            <div class="P105C_imgCoat">
+                                <img src="../images/P105_police.png" alt="">
+
+                            </div>
+
+                            <div class="P105C_title">
+                                <p>承办单位：xxx公安局</p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人: </p>
+                                        <span>王二 </span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间: </p>
+                                        <span>2018/11/21</span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值: </p>
+                                        <span>120000000.88万元</span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注: </p>
+                                        <span class="ellipsis">专家鉴定专专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定 </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="P105_ele">
+                            <!--左侧-->
+                            <div class="P105C_imgCoat">
+                                <img src="../images/P105_police2.png" alt="">
+
+                            </div>
+
+                            <div class="P105C_title">
+                                <p>承办单位：xxx公安局</p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人:</p>
+                                        <span>王二 </span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间:</p>
+                                        <span>2018/11/21</span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值:</p>
+                                        <span>120000000.88万元</span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注:</p>
+                                        <span class="ellipsis">专家鉴定专专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定 </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="P105_ele">
+                            <!--左侧-->
+                            <div class="P105C_imgCoat">
+                                <img src="../images/P105_police3.png" alt="">
+
+                            </div>
+
+                            <div class="P105C_title">
+                                <p>承办单位：xxx公安局</p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人:</p>
+                                        <span>王二 </span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间:</p>
+                                        <span>2018/11/21</span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值:</p>
+                                        <span>120000000.88万元</span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注:</p>
+                                        <span class="ellipsis">专家鉴定专专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定 </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <!--/iframe1-->
+
+
+</div>
+</body>
+</html>

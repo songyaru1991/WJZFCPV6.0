@@ -1,0 +1,71 @@
+<div th:fragment="navigationBar" xmlns:th="http://schemas.xmlsoap.org/wsdl/" xmlns:auth="http://www.thymeleaf.org">
+
+    <ul class="I106_navList clear">
+        <li>
+            <div class="I106_navItem ">
+                <span class="I106_navIcon I106_navIcon1"></span>
+                <span>公安局换押管理</span>
+                <span class="I106_arrow I106_arrowCurrent"></span>
+            </div>
+
+            <ul class="I106_subNavList" style="display: block;" auth:check="gajhyManage">
+                <li lay-href="/wshygl-gaj/Gajhy/ksrylist" data-content="公安局_网上换押" auth:check="gajhy">
+                    <span class="I106_subNavItem">网上换押</span>
+                </li>
+                <li lay-href="/wshygl-gaj/GajJstc/jstcHyxxList" data-content="公安局_接收退查" auth:check="gajJstc">
+                    <span class="I106_subNavItem">接收退查</span>
+                </li>
+                <li lay-href="/wshygl-gaj/GajLshyjl/lshyjlHyxxList" data-content="公安局_历史换押记录" auth:check="gajLshyjl">
+                    <span class="I106_subNavItem">历史换押记录</span>
+                </li>
+                <li lay-href="/wshygl-gaj/GajHytj/HytjHyxxList" data-content="公安局_换押信息统计" auth:check="gajHytj">
+                    <span class="I106_subNavItem">换押信息统计</span>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="I106_navItem  I106_navItemCurrent ">
+                <span class="I106_navIcon I106_navIcon1"></span>
+                <span>看守所换押管理</span>
+                <span class="I106_arrow I106_arrowCurrent"></span>
+            </div>
+
+            <ul class="I106_subNavList" style="display: none;" auth:check="ksshyManage">
+                <li lay-href="/wshygl-gaj/Ksry/ksrylist" data-content="看守所_人员基本信息" auth:check="kssRyjbxx">
+                    <span class="I106_subNavItem">人员基本信息</span>
+                </li>
+                <li lay-href="/wshygl-gaj/Ksshy/ksshylist" data-content="看守所_查看换押" auth:check="kssViewHy">
+                    <span class="I106_subNavItem">查看换押</span>
+                </li>
+                <li lay-href="/wshygl-gaj/KssHytj/KssHytjlist" data-content="看守所_换押统计" auth:check="kssHytjManage">
+                    <span class="I106_subNavItem">换押统计</span>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="I106_navItem  I106_navItemCurrent" auth:check="sysManage">
+                <span class="I106_navIcon I106_navIcon4"></span>
+                <span>系统管理</span>
+                <span class="I106_arrow I106_arrowCurrent"></span>
+            </div>
+            <ul class="I106_subNavList">
+                <li lay-href="/wshygl-gaj/departments/departmentsList" data-content="科室管理" auth:check="departmentsManage">
+                    <span class="I106_subNavItem">科室管理</span>
+                </li>
+                <li lay-href="/wshygl-gaj/user/list" data-content="用户管理" auth:check="userManage">
+                    <span class="I106_subNavItem">用户管理</span>
+                </li>
+                <li lay-href="/wshygl-gaj/resource/list" data-content="资源管理" auth:check="resourceManage">
+                    <span class="I106_subNavItem">资源管理</span>
+                </li>
+                <li lay-href="/wshygl-gaj/role/list" data-content="角色管理" auth:check="roleManage">
+                    <span class="I106_subNavItem">角色管理</span>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+
+</div>

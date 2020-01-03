@@ -1,0 +1,14 @@
+package com.netmarch.gaj.system.service;
+
+import java.util.List;
+
+;
+
+public interface GajhyService {
+
+    List<String> getFzxxAreaCodesByareaCode(String areaCode);
+
+    List<String>  getHybmByareaCode(List<String> areaCodesList);
+
+
+}

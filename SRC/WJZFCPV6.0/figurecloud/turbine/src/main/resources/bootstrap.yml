@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: turbine
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: 172.16.1.144
+      port: 8501
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        hostname: ${spring.cloud.client.ip-address}
+        port: ${server.port}
+        healthCheckPath: /actuator/health
+      config:
+        enabled: true
+        format: yaml
+        profileSeparator: '::'
+        data-key: data
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 8001

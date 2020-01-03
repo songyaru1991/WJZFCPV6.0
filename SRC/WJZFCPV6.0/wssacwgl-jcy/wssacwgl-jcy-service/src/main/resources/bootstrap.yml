@@ -1,0 +1,126 @@
+spring:
+  mvc:
+    static-path-pattern: /statis/**
+  application:
+    name: wssacwgl-jcy
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: http://172.16.1.144
+      port: 8501
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        hostname: ${spring.cloud.client.ip-address}
+        port: ${server.port}
+        healthCheckPath: /wssacwgl-jcy/actuator/health
+      config:
+        enabled: true
+        format: YAML
+        profileSeparator: '::'
+        data-key: data
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      maxRequestSize: 500Mb
+      enabled: true
+
+  devtools:
+    restart:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+log:
+  level: info
+  path: /logs
+
+  cache:
+    type: redis
+
+# 打印sql
+logging:
+  level:
+    com.netmarch.wssacw.system.mapper : debug
+
+#Tomcat
+server:
+  port: 8092
+  servlet:
+    context-path: /wssacwgl-jcy
+pagehelper:
+  reasonable: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+netmarch:
+  zuul-path: wssacwgl-jcy
+  application-path: wssacwgl-jcy
+
+zuul:
+  #需要忽略的头部信息，不在传播到其他服务
+  sensitive-headers: Access-Control-Allow-Origin
+  ignored-headers: Access-Control-Allow-Origin,H-APP-Id,Token,APPToken
+  max:
+    host:
+      connections: 5000 #最大请求时间
+  host:  #等待
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+
+redis:
+  host:
+  port: 6379
+  password: 123456
+  #连接超时时间(毫秒)
+  timeout: 2000
+  pool:
+    #最大连接数(负数表示没有限制)
+    max-active: -1
+    #最大空闲连接
+    max-idle: 10
+    #最大阻塞等待时间(负数表示没有限制)
+    max-wait: 100000
+  database: 0
+
+
+refreshTokenExpireTime: 1800
+
+uums:
+  url: http://172.16.11.251:8080/uums-jcy
+
+wssacwgl:
+  url: http://172.16.11.251:8092/wssacwgl-jcy
+
+userBm:
+  name: 检察院端
+
+yhlb:
+  name: jcyxt
+
+fdfs:
+  connect-timeout: 600
+  pool:
+    max-total: 200
+  resHost: 172.16.1.169
+  so-timeout: 1500
+  #  storagePort: 82
+  storagePort: 81
+  thumbImage:
+    height: 150
+    width: 150
+  #tracker地址
+  trackerList: 172.16.1.169:22122
+
+

@@ -1,0 +1,21 @@
+package com.netmarch.wssacw.system.mapper;
+
+import com.netmarch.wssacw.system.bean.Zwlb;
+
+import java.util.List;
+
+public interface ZwlbMapper {
+    int deleteByPrimaryKey(String jlbh);
+
+    int insert(Zwlb record);
+
+    int insertSelective(Zwlb record);
+
+    Zwlb selectByPrimaryKey(String jlbh);
+
+    int updateByPrimaryKeySelective(Zwlb record);
+
+    int updateByPrimaryKey(Zwlb record);
+
+    List<Zwlb> getZwlbList();
+}

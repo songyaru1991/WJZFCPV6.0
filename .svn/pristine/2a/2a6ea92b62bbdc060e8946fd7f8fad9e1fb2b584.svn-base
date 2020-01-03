@@ -1,0 +1,212 @@
+<!--
+ * Author: wsp
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/web/system/access/access.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/js/util.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="modifyform" method="get" th:action="@{/access/modify}" >
+
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>基本信息</legend>
+                </fieldset>
+            </div>
+
+            <input  name="id"  type="hidden" th:value="${access.id}" >
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <td class="T106_itemName T106_must">门禁编号</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="accessNo" autocomplete="off" placeholder="请输入门禁编号" id="accessNo" type="text" th:value="${access.accessNo}" maxlength="40">
+                        </td>
+                        <td class="T106_itemName T106_must">门禁名称</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="accessName" autocomplete="off" placeholder="请输入门禁名称" id="accessName" type="text" th:value="${access.accessName}" maxlength="40">
+                        </td>
+                        <td class="T106_itemName T106_must">门禁地址</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="address" autocomplete="off" placeholder="请输入门禁地址" id="address" type="text" th:value="${access.address}" >
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">门禁经度</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="longitude" autocomplete="off" placeholder="请输入门禁经度" id="longitude" type="text" th:value="${access.longitude}" >
+                        </td>
+                        <td class="T106_itemName T106_must">门禁纬度</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="latitude" autocomplete="off" placeholder="请输入门禁名称" id="latitude" type="text" th:value="${access.latitude}">
+                        </td>
+                        <td class="T106_itemName T106_must">所属派出所</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="policeStations"  id="policeStations">
+                                <option value="">选择所属派出所</option>
+                                <option th:each="tlist,orgStat:${listOrg}" th:value="${tlist.regionCode}" th:text="${tlist.name}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>房东信息</legend>
+                </fieldset>
+            </div>
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+
+                    <tr>
+                        <td class="T106_itemName">房东姓名</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="landlordName" autocomplete="off"  placeholder="请输入房东姓名" id="landlordName" type="text" th:value="${access.landlordName}" >
+                        </td>
+                        <td class="T106_itemName ">房东电话</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="landlordPhone" autocomplete="off" placeholder="请输入房东电话" id="landlordPhone" type="text" th:value="${access.landlordPhone}">
+                        </td>
+                        <td class="T106_itemName ">房东身份证号</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="landlordIdCard" autocomplete="off"  placeholder="请输入房东身份证号" id="landlordIdCard" type="text" th:value="${access.landlordIdCard}" >
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>接收人信息</legend>
+                </fieldset>
+            </div>
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr>
+                        <td class="T106_itemName">接收警员</td>
+                        <td class="T106_itemValue" colspan="5" >
+                            <div >
+                                <div id="inputText">
+                                    <textarea placeholder="选择警员"  autocomplete="off"  id="receivePolice"  th:value="${access.receivePolice}" type="text"class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                        </td>
+
+
+                    </tr>
+                </table>
+            </div>
+
+
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="customer.modify()">确定</div>
+            <div class="A106_button A106_button2" onclick="customer.cancel()">取消</div>
+        </div>
+    </div>
+</form>
+<script th:inline="javascript">
+    var contextPath = getContextPath();
+    var table = null;
+    layui.use(['form', 'table', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            ,  table = layui.table
+            , laydate = layui.laydate;
+
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+
+        });
+
+    });
+
+    var customer = {
+        index: null,
+        returnURL: function (url) {
+            return /*[[@{*/url/*}]]*/;
+        },
+        targer_url: function (url) {
+            location.href = customer.returnURL(url);
+        },
+        cancel: function() {
+            index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        },
+        dict: function(){
+            layui.layer.open({
+                title:'<img src="'+[[${application.basePath}]]+'/images/I208_edit.png"><span>所属派出所字典</span>',
+                type: 2,
+                shadeClose: false,
+                shade: 0.6,
+                skin:'A106_layer',
+                area: ['1200px', '780px'], //宽高
+                content:[contextPath+'/access/dicPolice','yes'] //允许出现滚动条
+            })
+        },
+        modify: function () {
+            var data = {
+                accessNo: "input NotNull",
+                accessName: "input NotNull",
+                address: "input NotNull",
+                longitude: "input NotNull",
+                latitude: "input NotNull",
+                policeStations: "input NotNull"
+            };
+
+            var flag = V_CHECK(data);
+            if (flag) {
+                var index1 = layer.load(1, {
+                    shade: [0.1, '#fff'] //0.1透明度的白色背景
+                });
+
+                $.ajax({
+                    type: "get",
+                    url: contextPath+'/access/modify',
+                    data:$("#modifyform").serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        layer.close(index1);
+                        layer.alert(data.message,function () {
+                            window.parent.location.reload();//刷新父页面
+                            index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+
+                        });
+                    }
+                })
+            }
+
+        }
+    };
+</script>
+</body>
+</html>

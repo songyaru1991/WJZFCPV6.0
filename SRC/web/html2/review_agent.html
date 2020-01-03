@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <link rel="stylesheet" href="../css/style_10.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <script src="../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img src="../images/H105_edit.png" alt="" class="E105_editIco">
+                <p>承办人审核</p>
+            </div>
+            <div class="E105_checkCoat fr    ">
+                <div class="E105_check fl cursor E105_checkClick">
+                    <img src="../images/H105_checkIco1.png" alt="" class="E105_checkIco">
+                    <p>查看</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco2.png" alt="" class="E105_checkIco2">
+                    <p>编辑</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco3.png" alt="" class="E105_checkIco2">
+                    <p>社会调查 </p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco4.png" alt="" class="E105_checkIco2">
+                    <p>文书管理</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco5.png" alt="" class="E105_checkIco2">
+                    <p>资料补充</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco6.png" alt="" class="E105_checkIco2">
+                    <p>涉案财物</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco7.png" alt="" class="E105_checkIco3">
+                    <p>案件追踪</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco8.png" alt="" class="E105_checkIco3">
+                    <p>会见申请</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_x1.png" alt="" class="E105_checkIco">
+                    <p>关闭标签</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>收案信息</p>
+                </div>
+                <div class="E105_arrowup cursor"></div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear" style="width: 51.5%;">
+                            <div class="R110_bianhao fl clear">
+                                <p>嫌疑人姓名:</p>
+                            </div>
+                            <input type="text" class="R110_input1 fl">
+                            <div class="R110_criminal clear fl">
+                                <button class="R110_BtnPrevious fl cursor"><p>上一人</p></button>
+                                <button class="R110_BtnNext fl cursor"><p>下一人</p></button>
+                                <div class="R110_criminalTotal fl"><span>共1人</span></div>
+                                <div class="R110_criminalCheckbox fl clear">
+                                    <form class="layui-form fl clear" action="">
+                                        <div class="layui-input-block fl">
+                                            <input type="checkbox" name="" lay-skin="primary" title="">
+                                        </div>
+                                    </form>
+                                    <span>对多个嫌疑人执行统一审查</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>提请案由:</p>
+                            </div>
+                            <input type="text" class="R110_input  fl">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info">
+                    <p>承办人意见</p>
+                </div>
+                <div class="E105_arrowup cursor"></div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>嫌疑人姓名:</p>
+                            </div>
+                            <input type="text" class="R110_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>审定案由:</p>
+                            </div>
+                            <input type="text" class="R110_input  fl">
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td class="clear" style="position: relative;">
+                            <div class="R110_bianhao fl clear">
+                                <p>审查结论:</p>
+                            </div>
+                            <input type="button" data-method="setTable" value="选择审查结果" class="R110_input_button">
+                            <img src="../images/R110_dropDown.png" alt="" class="R110_input_icon">
+                        </td>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>理由:</p>
+                            </div>
+                            <input type="text" class="R110_input  fl  ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>承办人:</p>
+                            </div>
+                            <input type="text" class="R110_input  fl  ">
+                        </td>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>时间:</p>
+                            </div>
+
+                            <div class="R110_input_layer fl">
+                                <input
+                                        type="text"
+                                        id="R110_refereeing"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../images/E105_date.png" alt="" class="R110_calendar"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="E105_tableCoat">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>审核人</p>
+                </div>
+                <div class="E105_arrowup cursor"></div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table" style="width: 50%;">
+                    <tr>
+                        <td class="clear">
+                            <div class="R110_bianhao fl clear">
+                                <p>审核人:</p>
+                            </div>
+                            <input type="text" class="R110_input  fl">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="E105_btnCoat">
+            <div class="E105_saveBtnCoat clear">
+                <button class="E105_saveBtn fl cursor"><p>保存</p></button>
+                <button class="E105_saveBtn fl cursor"><p>取消</p></button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="R110_dropDown_content clear" style="display: none">
+    <div class="R110_dropDown_title clear fl">
+        <div class="fl"><span>审查决定</span></div>
+        <div class="fr"><span>理由</span></div>
+    </div>
+    <div class="R110_dropDown_itemsList clear fl">
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>起诉</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>一次退查</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>二次退查</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>不起诉</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>不起诉</span></div>
+            <div class="fr"><span>法定不起诉</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>不起诉</span></div>
+            <div class="fr"><span>情节轻微不起诉</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>不起诉</span></div>
+            <div class="fr"><span>证据不足不起诉</span></div>
+        </div>
+        <div class="R110_dropDown_item fl clear">
+            <div class="fl"><span>上报市院</span></div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+  layui.use(['form', 'laydate'], function() {
+    var laydate = layui.laydate;
+    var form = layui.form;
+
+    //触发事件
+    active = {
+      setTable: function(othis) {
+        layer.open({
+          type: 1
+          , title: false
+          , area: '24.7em'
+          , offset: ['18.7em', '15.4em']
+          , closeBtn: false
+          , shade: 0
+          , anim: 0
+          , skin: 'R110_dropDown'
+          , content: $('.R110_dropDown_content')
+        });
+      }
+    };
+    $('.R110_input_button').on('click', function() {
+      var othis = $(this), method = othis.data('method');
+      active[method] ? active[method].call(this, othis) : '';
+    });
+    // 点我触发
+    laydate.render({
+      elem: '#R110_refereeing',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+  });
+
+  $('.R110_dropDown_item').hover(function() {
+    $(this).addClass('R110_listBgc').siblings().removeClass('R110_listBgc');
+  });
+
+  $('.R110_dropDown_item').on('click', function(event) {
+    var name = event.target.innerText.toString();
+    $('.R110_input_button').val(name);
+    layer.closeAll();
+  });
+
+</script>
+</html>

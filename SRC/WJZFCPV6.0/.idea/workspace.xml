@@ -1,0 +1,2173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutomaticModuleUnloader">
+    <loaded-modules>
+      <module name="auth-server-parent" />
+      <module name="auth-server-web" />
+      <module name="backstage-management" />
+      <module name="auth-server-exposure" />
+      <module name="backstage-management-web" />
+      <module name="figurecloud-parent" />
+      <module name="starter-exposure" />
+      <module name="starter-microservice" />
+      <module name="backstage-management-service" />
+      <module name="auth-server-core" />
+      <module name="turbine" />
+      <module name="backstage-management-exposure" />
+      <module name="util" />
+      <module name="uums-web" />
+      <module name="wsgl-fy" />
+      <module name="wsgl-fy-service" />
+      <module name="wsgl-fy-web" />
+      <module name="uums-exposure" />
+      <module name="wsgl-gaj" />
+      <module name="wsgl-gaj-exposure" />
+      <module name="wsgl-gaj-web" />
+      <module name="uums-service" />
+      <module name="wsgl-jcy-exposure" />
+      <module name="wsgl-gaj-service" />
+      <module name="wsgl-jcy-service" />
+      <module name="wsgl-jcy" />
+      <module name="wsgl-jcy-web" />
+      <module name="wsgl-fy-exposure" />
+      <module name="wsgl-sfj-web" />
+      <module name="wsgl-sfj-exposure" />
+      <module name="wshygl-fy" />
+      <module name="wshygl-gaj" />
+      <module name="wshygl-fy-web" />
+      <module name="wshygl-gaj-exposure" />
+      <module name="wshygl-gaj-service" />
+      <module name="wshygl-jcy" />
+      <module name="wshygl-fy-service" />
+      <module name="wshygl-jcy-exposure" />
+      <module name="wshygl-fy-exposure" />
+      <module name="wshygl-gaj-web" />
+      <module name="wshygl-jcy-service" />
+      <module name="wshygl-jcy-web" />
+      <module name="wssacwgl-web" />
+      <module name="wssacwgl-exposure" />
+      <module name="zuul" />
+      <module name="wssacwgl-service" />
+      <module name="wssacwgl" />
+      <module name="wsgl-sfj" />
+      <module name="wsgl-sfj-service" />
+    </loaded-modules>
+  </component>
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-service/src/main/java/com/netmarch/wshy/system/service/KsryService.java" description="int updateKsryWshy(Ksryjbxx ksryjbxx);" line="29" />
+    <bookmark url="file://$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-service/src/main/java/com/netmarch/wshy/system/service/WshyService.java" description="String getMaxYcrqByHyxxjlbh(String hyxxJlbh);" line="24" />
+    <bookmark url="file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-service/src/main/java/com/netmarch/wsgl/system/service/BqglService.java" description="bookMarks" line="13" />
+    <bookmark url="file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-service/src/main/java/com/netmarch/wsgl/system/service/WsgnlbService.java" description="int delWsgnlb(String id);" line="24" />
+    <bookmark url="file://$PROJECT_DIR$/wsgl-jcy/wsgl-jcy-service/src/main/java/com/netmarch/wsgl/system/service/BqglService.java" description="String getBookMarkValue(BookMarks bookMarks,String..." line="35" />
+    <bookmark url="file://$PROJECT_DIR$/wsgl-fy/wsgl-fy-service/src/main/java/com/netmarch/wsgl/system/service/WsglService.java" description="int insertFyWs(Aj_flws_fy ajFlwsFy);" line="30" />
+    <bookmark url="file://$PROJECT_DIR$/figurecloud/backstage-management/backstage-management-service/src/main/java/com/netmarch/figurecloud/management/system/service/SysResourcesService.java" description="int delBatch(String ids);" line="20" />
+    <bookmark url="file://$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-service/src/main/java/com/netmarch/wssacw/system/service/AjjbqkService.java" description="String exportAjjbqk(HttpServletResponse response,L..." line="19" />
+    <bookmark url="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/JcygroupService.java" description="getGroupListByAreaCode" line="9" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3db1761a-926d-4fba-84cf-0ca36d3205d7" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/util/target/" />
+    <ignored path="$PROJECT_DIR$/starter-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/auth-server/auth-server-core/target/" />
+    <ignored path="$PROJECT_DIR$/auth-server/auth-server-web/target/" />
+    <ignored path="$PROJECT_DIR$/backstage-management/target/" />
+    <ignored path="$PROJECT_DIR$/uums-sso/target/" />
+    <ignored path="$PROJECT_DIR$/auth-server/auth-server-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/turbine/target/" />
+    <ignored path="$PROJECT_DIR$/uums-sso/uums-sso-service/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/auth-server/target/" />
+    <ignored path="$PROJECT_DIR$/backstage-management/backstage-management-web/target/" />
+    <ignored path="$PROJECT_DIR$/uums-sso/uums-sso-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/starter-microservice/target/" />
+    <ignored path="$PROJECT_DIR$/backstage-management/backstage-management-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/uums-sso/uums-sso-web/target/" />
+    <ignored path="$PROJECT_DIR$/zuul/target/" />
+    <ignored path="$PROJECT_DIR$/backstage-management/backstage-management-service/target/" />
+    <ignored path="$PROJECT_DIR$/uums/target/" />
+    <ignored path="$PROJECT_DIR$/uums/uums-web/target/" />
+    <ignored path="$PROJECT_DIR$/uums/uums-service/target/" />
+    <ignored path="$PROJECT_DIR$/uums/uums-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
+    <ignored path="$PROJECT_DIR$/wshygl/wshygl-service/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl/wshygl-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl/wshygl-web/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl/wshygl-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl/wssacwgl-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl/wssacwgl-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl/wssacwgl-web/target/" />
+    <ignored path="$PROJECT_DIR$/fdfs/fdfs-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/fdfs/fdfs-service/target/" />
+    <ignored path="$PROJECT_DIR$/fdfs/fdfs-web/target/" />
+    <ignored path="$PROJECT_DIR$/fdfs/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-gaj/wshygl-gaj-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-gaj/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-gaj/wshygl-gaj-web/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-gaj/wshygl-gaj-service/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-jcy/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-web/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-fy/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-fy/wshygl-fy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-fy/wshygl-fy-web/target/" />
+    <ignored path="$PROJECT_DIR$/wshygl-fy/wshygl-fy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-gaj/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-web/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-service/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-jcy/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-jcy/wsgl-jcy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-jcy/wsgl-jcy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-jcy/wsgl-jcy-web/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-fy/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-fy/wsgl-fy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-fy/wsgl-fy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-fy/wsgl-fy-web/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-sfj/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-sfj/wsgl-sfj-service/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-sfj/wsgl-sfj-web/target/" />
+    <ignored path="$PROJECT_DIR$/wsgl-sfj/wsgl-sfj-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-web/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-gaj/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-web/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-web/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-jcy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-fy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-fy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-fy/wssacwgl-fy-web/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-jcy-service/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-jcy-web/target/" />
+    <ignored path="$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-jcy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-jcy/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-gaj/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-gaj/ajgl-gaj-exposure/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-gaj/ajgl-gaj-service/target/" />
+    <ignored path="$PROJECT_DIR$/ajgl-gaj/ajgl-gaj-web/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/WJZFCPV6_0$WssacwglApplication.ic" NAME="WssacwglApplication Coverage Results" MODIFIED="1560396444814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.netmarch.wssacw.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/figurecloud_parent$All_Features_in__figurecloud.ic" NAME="All Features in: figurecloud Coverage Results" MODIFIED="1555554669155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cucumber.api.cli.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/figurecloud$SsologinsystemApplication.ic" NAME="SsologinsystemApplication Coverage Results" MODIFIED="1556161555933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.netmarch.sso.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1934919230">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="class" value="4" />
+          <entry key="java" value="20" />
+          <entry key="xml" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="4" />
+          <entry key="JAVA" value="20" />
+          <entry key="XML" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="273" />
+          <entry key="txt" value="22" />
+          <entry key="xml" value="18" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="273" />
+          <entry key="PLAIN_TEXT" value="22" />
+          <entry key="XML" value="18" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="-1467012213">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="html" value="1" />
+          <entry key="iml" value="2" />
+          <entry key="java" value="93" />
+          <entry key="xml" value="8" />
+          <entry key="yml" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="1" />
+          <entry key="IDEA_MODULE" value="2" />
+          <entry key="JAVA" value="93" />
+          <entry key="XML" value="8" />
+          <entry key="YAML" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="html" value="15" />
+          <entry key="java" value="6" />
+          <entry key="xml" value="6" />
+          <entry key="yml" value="10" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="HTML" value="15" />
+          <entry key="JAVA" value="6" />
+          <entry key="XML" value="6" />
+          <entry key="YAML" value="10" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="-1360264199">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="14" />
+          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.21" value="1" />
+          <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.28" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.37" value="1" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.opened" value="16" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="0-SNAPSHOT" value="1" />
+          <entry key="LOGS" value="1" />
+          <entry key="html" value="80" />
+          <entry key="http" value="1" />
+          <entry key="iml" value="8" />
+          <entry key="java" value="948" />
+          <entry key="js" value="17" />
+          <entry key="png" value="5" />
+          <entry key="properties" value="9" />
+          <entry key="sql" value="9" />
+          <entry key="xml" value="189" />
+          <entry key="yml" value="68" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="80" />
+          <entry key="IDEA_MODULE" value="8" />
+          <entry key="Image" value="5" />
+          <entry key="JAVA" value="948" />
+          <entry key="JavaScript" value="17" />
+          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="Properties" value="9" />
+          <entry key="SQL" value="8" />
+          <entry key="Scratch" value="2" />
+          <entry key="UML" value="1" />
+          <entry key="XML" value="189" />
+          <entry key="YAML" value="68" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="dummy" value="29" />
+          <entry key="html" value="687" />
+          <entry key="java" value="3511" />
+          <entry key="properties" value="72" />
+          <entry key="sql" value="25" />
+          <entry key="xml" value="336" />
+          <entry key="yml" value="241" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="HTML" value="687" />
+          <entry key="JAVA" value="3511" />
+          <entry key="PLAIN_TEXT" value="29" />
+          <entry key="Properties" value="72" />
+          <entry key="SQL" value="23" />
+          <entry key="Scratch" value="4" />
+          <entry key="XML" value="334" />
+          <entry key="YAML" value="241" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.spring.boot.mvc.usages">
+        <counts>
+          <entry key="RestClientRequestEditorNavigator.fromCode" value="1" />
+          <entry key="RestClientRequestRunnerNavigator.fromCode" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="1525546831">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="134" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.10" value="3" />
+          <entry key="project.open.time.108" value="1" />
+          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.110" value="1" />
+          <entry key="project.open.time.114" value="1" />
+          <entry key="project.open.time.12" value="2" />
+          <entry key="project.open.time.13" value="3" />
+          <entry key="project.open.time.131" value="1" />
+          <entry key="project.open.time.14" value="7" />
+          <entry key="project.open.time.15" value="11" />
+          <entry key="project.open.time.16" value="2" />
+          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.18" value="3" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.20" value="2" />
+          <entry key="project.open.time.24" value="2" />
+          <entry key="project.open.time.26" value="2" />
+          <entry key="project.open.time.27" value="3" />
+          <entry key="project.open.time.29" value="4" />
+          <entry key="project.open.time.3" value="4" />
+          <entry key="project.open.time.30" value="2" />
+          <entry key="project.open.time.32" value="2" />
+          <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.34" value="1" />
+          <entry key="project.open.time.35" value="2" />
+          <entry key="project.open.time.37" value="1" />
+          <entry key="project.open.time.38" value="4" />
+          <entry key="project.open.time.39" value="3" />
+          <entry key="project.open.time.40" value="2" />
+          <entry key="project.open.time.41" value="1" />
+          <entry key="project.open.time.42" value="3" />
+          <entry key="project.open.time.43" value="1" />
+          <entry key="project.open.time.44" value="3" />
+          <entry key="project.open.time.45" value="2" />
+          <entry key="project.open.time.46" value="3" />
+          <entry key="project.open.time.47" value="1" />
+          <entry key="project.open.time.48" value="4" />
+          <entry key="project.open.time.49" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.50" value="6" />
+          <entry key="project.open.time.51" value="3" />
+          <entry key="project.open.time.52" value="4" />
+          <entry key="project.open.time.53" value="3" />
+          <entry key="project.open.time.54" value="2" />
+          <entry key="project.open.time.55" value="1" />
+          <entry key="project.open.time.56" value="3" />
+          <entry key="project.open.time.57" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.60" value="3" />
+          <entry key="project.open.time.61" value="3" />
+          <entry key="project.open.time.65" value="1" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.74" value="1" />
+          <entry key="project.open.time.75" value="3" />
+          <entry key="project.open.time.76" value="1" />
+          <entry key="project.open.time.77" value="1" />
+          <entry key="project.open.time.78" value="1" />
+          <entry key="project.open.time.79" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.87" value="2" />
+          <entry key="project.open.time.89" value="1" />
+          <entry key="project.open.time.94" value="2" />
+          <entry key="project.opened" value="143" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="class" value="13" />
+          <entry key="css" value="244" />
+          <entry key="html" value="2788" />
+          <entry key="iml" value="7" />
+          <entry key="java" value="6186" />
+          <entry key="jpg" value="2" />
+          <entry key="js" value="347" />
+          <entry key="jsp" value="6" />
+          <entry key="less" value="1" />
+          <entry key="log" value="15" />
+          <entry key="png" value="6" />
+          <entry key="pom" value="1" />
+          <entry key="properties" value="20" />
+          <entry key="rnc" value="8" />
+          <entry key="sql" value="7" />
+          <entry key="svg" value="1" />
+          <entry key="xml" value="1363" />
+          <entry key="yml" value="259" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="13" />
+          <entry key="CSS" value="244" />
+          <entry key="HTML" value="2788" />
+          <entry key="IDEA_MODULE" value="7" />
+          <entry key="Image" value="8" />
+          <entry key="JAVA" value="6186" />
+          <entry key="JSP" value="6" />
+          <entry key="JavaScript" value="347" />
+          <entry key="Less" value="1" />
+          <entry key="PLAIN_TEXT" value="15" />
+          <entry key="Properties" value="20" />
+          <entry key="RNG Compact" value="8" />
+          <entry key="SQL" value="7" />
+          <entry key="SVG" value="1" />
+          <entry key="XML" value="1364" />
+          <entry key="YAML" value="259" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="css" value="891" />
+          <entry key="dummy" value="79" />
+          <entry key="ft" value="8" />
+          <entry key="html" value="27376" />
+          <entry key="java" value="44796" />
+          <entry key="js" value="4268" />
+          <entry key="jsp" value="54" />
+          <entry key="properties" value="16" />
+          <entry key="sql" value="8" />
+          <entry key="xml" value="7315" />
+          <entry key="yml" value="933" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CSS" value="892" />
+          <entry key="HTML" value="27364" />
+          <entry key="JAVA" value="44796" />
+          <entry key="JSP" value="54" />
+          <entry key="JavaScript" value="4265" />
+          <entry key="PLAIN_TEXT" value="79" />
+          <entry key="Properties" value="16" />
+          <entry key="RegExp" value="1" />
+          <entry key="SQL" value="292" />
+          <entry key="ThymeleafExpressions" value="13" />
+          <entry key="VTL" value="8" />
+          <entry key="XML" value="7031" />
+          <entry key="YAML" value="933" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.spring.boot.run.usages">
+        <counts>
+          <entry key="EditRuntimeResource.fromToolWindowPanel" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="WJZFCPV6.0" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/uums/uums-web/src/main/resources/templates/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="106">
+              <caret line="140" column="17" selection-start-line="140" selection-start-column="17" selection-end-line="140" selection-end-column="17" />
+              <folding>
+                <element signature="e#5449#5548#0" />
+                <element signature="e#5587#5644#0" />
+                <element signature="e#7592#7635#0" />
+                <element signature="e#7701#7744#0" />
+                <element signature="e#7787#7834#0" />
+                <element signature="e#8115#8270#0" />
+                <element signature="e#8303#8489#0" />
+                <element signature="e#8536#8902#0" />
+                <element signature="e#10530#10608#0" />
+                <element signature="e#10651#10881#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/uums/uums-service/src/main/java/com/netmarch/sso/loginsystem/controller/LoginController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="199" column="15" selection-start-line="199" selection-start-column="15" selection-end-line="199" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>JSONArray</find>
+      <find>操作</find>
+      <find>String ids</find>
+      <find>plfa</find>
+      <find>table</find>
+      <find>window.location.href</find>
+      <find>showXsclList</find>
+      <find>$(&quot;body&quot;)</find>
+      <find>localRefresh</find>
+      <find>sasj</find>
+      <find>tableList</find>
+      <find>decode</find>
+      <find>[[</find>
+      <find>URLEncoder.encode</find>
+      <find>pages_change</find>
+      <find>change</find>
+      <find>onclick</find>
+      <find>script</find>
+      <find>lockLoginBtn</find>
+      <find>recordPwdCookieObj</find>
+      <find>unlockLoginBtn</find>
+      <find>isLoginBtnLocked</find>
+      <find>/auth/token</find>
+      <find>login_btn</find>
+      <find>record_password</find>
+      <find>recordPwd</find>
+      <find>recordPwdCookieName</find>
+      <find>isNeedLoginTmp</find>
+      <find>pwdLength</find>
+      <find>SUCCESS</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>法院换押管理</replace>
+      <replace>公安局换押管理</replace>
+      <replace>wshy</replace>
+      <replace>司法局文书管理</replace>
+      <replace>公安局文书管理</replace>
+      <replace>检察院文书管理</replace>
+      <replace>法院文书管理</replace>
+      <replace>wsgl</replace>
+      <replace>ajgl</replace>
+      <replace>政法部门协同办案（刑事）系统-检察院</replace>
+      <replace>检察院--政法部门协同办案（刑事）系统</replace>
+      <replace>uums-gaj</replace>
+      <replace>uums-jcy</replace>
+      <replace>&lt;title&gt;公安局--涉案财物管理系统&lt;/title&gt;</replace>
+      <replace>&lt;title&gt;法院--涉案财物管理系统&lt;/title&gt;</replace>
+      <replace>uums-sfj</replace>
+      <replace>uums-fy</replace>
+      <replace>Scantype</replace>
+      <replace>承办人</replace>
+      <replace>目录</replace>
+      <replace>小组</replace>
+      <replace>案由</replace>
+      <replace>相关设置</replace>
+      <replace>Gj_ajjbqk</replace>
+      <replace>Gj_ajjbqkMapper</replace>
+      <replace>uums</replace>
+      <replace>：</replace>
+      <replace>table_refresh</replace>
+      <replace>ajlbSearch</replace>
+      <replace>ajjbqk</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\uums\uums-service\src\main\java\com\netmarch\sso\config\redis</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl\wshygl-exposure</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl\wshygl-service\src\main\java\com\netmarch\wssacw</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-gaj\wshygl-gaj-service\src\main\java\com\netmarch\gaj\system\controller</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\uums\uums-exposure\src</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wssacwgl</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-gaj\wshygl-gaj-service\src\main\resources\mapper</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-fy\wshygl-fy-service\src\main\resources\mapper</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl\wshygl-service</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wsgl-f</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wsgl-sf</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wssacwgl\wssacwgl-service</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\uums</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-fy\</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wsgl-sfj</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wsgl-fy</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-fy</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wsgl-jcy</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wssacwgl-jcy</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wssacwgl-gaj</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wssacwgl-fy</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wsgl-gaj</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-jcy</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\wshygl-gaj</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\uums\</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-gaj</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\templates</dir>
+      <dir>D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy</dir>
+    </dirStrings>
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="E:/../../freedom/java/sshj" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Jcy_groupMapper.xml" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/JcyCbrServiceImpl.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/Jcy_cbrMapper.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Jcy_cbrMapper.xml" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/Gj_ajjbqkList.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/AjjbqkService.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/Gj_ajjbqkMapper.java" />
+        <option value="$PROJECT_DIR$/uums/uums-service/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/uums/uums-service/src/main/java/com/netmarch/sso/loginsystem/bean/StaticObj.java" />
+        <option value="$PROJECT_DIR$/uums/uums-service/src/main/java/com/netmarch/sso/loginsystem/controller/LoginController.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/Bbbsajfa/selectCbr.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/user/list.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/AjjbqkServiceImpl.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajsalist.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/system/navigationBar.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajthaj.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/BbbsajsaController.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/Gj_xyrqk.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Gj_xyrqkMapper.xml" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/Bbbsajfa/ajfathaj.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/ajsathaj.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/common/utils/DompareXml/DompareImportCaseXml.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/Bbbsajfa/bbbsajfalist.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/Bbbsajfa/view.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/Bbbsajfa/edit.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Gj_ajjbqkMapper.xml" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mybatis-generator-config.xml" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/AjAjlbService.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/AjAjlbServiceImpl.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectYsajdxzjglb.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectTqay.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectYsqtay.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajscaj.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectHjd.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/edit.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/ajedit.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/view.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/ajfathaj.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/static/css/style05.css" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Aj_ajlbMapper.xml" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/Aj_ajlbMapper.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectAjlb.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/Aj_ajlb.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/ToOpenModelController.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectGtfzxz.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/BbbsajfaController.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/jcycbr/list.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/editaj.html" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/common/controller/FrontBaseController.java" />
+        <option value="$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/bbbsajfalist.html" />
+        <option value="$PROJECT_DIR$/uums/uums-web/src/main/resources/templates/login.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="E:/WorkSoft/Maven/apache-maven-3.3.9" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="ajgl-jcy-service" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="ajgl-jcy-service" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="ajgl-jcy-service" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="mybatis-generator" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="turbine" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="uums-service" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="uums-service" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="11" />
+    <option name="y" value="4" />
+    <option name="width" value="1920" />
+    <option name="height" value="995" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages Scope="false" ProjectPane="false" />
+      <showModules Scope="true" />
+      <hideEmptyPackages Scope="true" ProjectPane="false" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="netmarch" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="wshygl" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="wssacwgl-service" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="netmarch" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="wssacw" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="netmarch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="netmarch" type="462c0819:PsiDirectoryNode" />
+              <item name="sso" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="netmarch" type="462c0819:PsiDirectoryNode" />
+              <item name="sso" type="462c0819:PsiDirectoryNode" />
+              <item name="loginsystem" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WJZFCPV6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="uums" type="462c0819:PsiDirectoryNode" />
+              <item name="uums-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="netmarch" type="462c0819:PsiDirectoryNode" />
+              <item name="sso" type="462c0819:PsiDirectoryNode" />
+              <item name="loginsystem" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-excluded-files" value="false" />
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-exposure" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-service" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-service" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-service" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+              <item name="netmarch" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-service" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+              <item name="netmarch" type="1f31426a:PackageElementNode" />
+              <item name="wssacw" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-service" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+              <item name="netmarch" type="1f31426a:PackageElementNode" />
+              <item name="wssacw" type="1f31426a:PackageElementNode" />
+              <item name="system" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-service" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+              <item name="netmarch" type="1f31426a:PackageElementNode" />
+              <item name="wssacw" type="1f31426a:PackageElementNode" />
+              <item name="system" type="1f31426a:PackageElementNode" />
+              <item name="controller" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-web" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-web" type="616d4139:PackageViewModuleNode" />
+              <item name="static" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-web" type="616d4139:PackageViewModuleNode" />
+              <item name="static" type="1f31426a:PackageElementNode" />
+              <item name="js" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-web" type="616d4139:PackageViewModuleNode" />
+              <item name="static" type="1f31426a:PackageElementNode" />
+              <item name="js" type="1f31426a:PackageElementNode" />
+              <item name="project" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-web" type="616d4139:PackageViewModuleNode" />
+              <item name="templates" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="WJZFCPV6.0" type="58d84e3e:PackageViewProjectNode" />
+              <item name="wssacwgl-web" type="616d4139:PackageViewModuleNode" />
+              <item name="templates" type="1f31426a:PackageElementNode" />
+              <item name="ajjbqk" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="MyBatisLogPluginindexNum" value="19754" />
+    <property name="MyBatisLogPluginparameters" value="Parameters:" />
+    <property name="MyBatisLogPluginpreparing" value="Preparing:" />
+    <property name="MyBatisLogPluginrunning" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Project/WJZFCPV6.0/SRC/WJZFCPV6.0/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajsalist.html" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1577672251369" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/backstage-management/backstage-management-web/src/main/resources/templates/system" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.24771689" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/wssacwgl/wssacwgl-service/pom.xml" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="templates" />
+      <recent name="com.netmarch.sso" />
+      <recent name="com.netmarch.sso.system" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\templates\openmodel" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\templates\Bbbsajfa" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\static" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-service\src\main\java\com\netmarch\ajgl\common\utils" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\static\images" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.netmarch.ajgl.system.service.impl" />
+      <recent name="com.netmarch.ajgl.system.service" />
+      <recent name="com.netmarch.ajgl.system.controller" />
+      <recent name="com.netmarch.ajgl.system.bean" />
+      <recent name="com.netmarch.wssacw.system.bean" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\templates\openmodel" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\static\downfile" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\templates\jcygroup" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\ajgl-jcy\ajgl-jcy-web\src\main\resources\templates\jcyaydm" />
+      <recent name="D:\Project\WJZFCPV6.0\SRC\WJZFCPV6.0\uums\uums-service\src\main\resources\mapper\loginsystem" />
+    </key>
+  </component>
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8088/uums/login" />
+          <option name="urlPath" value="" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GajWssacwglApplication">
+    <configuration name="Auth2Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="auth-server-core" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.figurecloud.auth.core.Auth2Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FyWshyglApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="wshygl-fy-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.netmarch.wshy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.wshy.FyWshyglApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FyWssacwglApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="wssacwgl-fy-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.netmarch.wssacw.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.wssacw.FyWssacwglApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GajWshyglApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="wshygl-gaj-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.netmarch.wshy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.wshy.GajWshyglApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GajWssacwglApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="wssacwgl-gaj-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.netmarch.wssacw.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.wssacw.GajWssacwglApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JcyAjglApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="ajgl-jcy-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.netmarch.ajgl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.ajgl.JcyAjglApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SsologinsystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="uums-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.netmarch.sso.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.sso.SsologinsystemApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TurbineApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="turbine" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.figurecloud.turbine.TurbineApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ZuulServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="zuul" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.netmarch.figurecloud.gateway.ZuulServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.Auth2Application" />
+      <item itemvalue="Spring Boot.TurbineApplication" />
+      <item itemvalue="Spring Boot.ZuulServerApplication" />
+      <item itemvalue="Spring Boot.SsologinsystemApplication" />
+      <item itemvalue="Spring Boot.JcyAjglApplication" />
+      <item itemvalue="Spring Boot.GajWshyglApplication" />
+      <item itemvalue="Spring Boot.FyWssacwglApplication" />
+      <item itemvalue="Spring Boot.FyWshyglApplication" />
+      <item itemvalue="Spring Boot.GajWssacwglApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.GajWssacwglApplication" />
+        <item itemvalue="Spring Boot.JcyAjglApplication" />
+        <item itemvalue="Spring Boot.GajWshyglApplication" />
+        <item itemvalue="Spring Boot.FyWshyglApplication" />
+        <item itemvalue="Spring Boot.FyWssacwglApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_ANONYMOUS" />
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3db1761a-926d-4fba-84cf-0ca36d3205d7" name="Default Changelist" comment="" />
+      <created>1551328699644</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1551328699644</updated>
+      <workItem from="1551328702428" duration="6719000" />
+      <workItem from="1551340733288" duration="4066000" />
+      <workItem from="1551662009860" duration="5091000" />
+      <workItem from="1551681732458" duration="1599000" />
+      <workItem from="1552552643441" duration="2523000" />
+      <workItem from="1555553975332" duration="567000" />
+      <workItem from="1555554564612" duration="2758000" />
+      <workItem from="1555557432341" duration="1788000" />
+      <workItem from="1555560678053" duration="3822000" />
+      <workItem from="1555566889873" duration="25893000" />
+      <workItem from="1555658443149" duration="9491000" />
+      <workItem from="1555891994088" duration="7555000" />
+      <workItem from="1555899580872" duration="26859000" />
+      <workItem from="1555987930957" duration="22728000" />
+      <workItem from="1556013266728" duration="7086000" />
+      <workItem from="1556020377668" duration="31765000" />
+      <workItem from="1556093574554" duration="17117000" />
+      <workItem from="1556155337667" duration="44710000" />
+      <workItem from="1556260714710" duration="11906000" />
+      <workItem from="1556410193760" duration="51061000" />
+      <workItem from="1556526592330" duration="778000" />
+      <workItem from="1556529707172" duration="28470000" />
+      <workItem from="1557015190029" duration="40166000" />
+      <workItem from="1557110862229" duration="19873000" />
+      <workItem from="1557135804051" duration="773000" />
+      <workItem from="1557188046961" duration="824000" />
+      <workItem from="1557188922075" duration="24000" />
+      <workItem from="1557188971658" duration="1675000" />
+      <workItem from="1557190683320" duration="27614000" />
+      <workItem from="1557276840623" duration="56780000" />
+      <workItem from="1557389405273" duration="588000" />
+      <workItem from="1557390028948" duration="23455000" />
+      <workItem from="1557472238075" duration="1802000" />
+      <workItem from="1557474183848" duration="6218000" />
+      <workItem from="1557706378409" duration="6987000" />
+      <workItem from="1557713423153" duration="444000" />
+      <workItem from="1557713902153" duration="62787000" />
+      <workItem from="1557890938598" duration="33550000" />
+      <workItem from="1557984050244" duration="45314000" />
+      <workItem from="1558311639615" duration="23571000" />
+      <workItem from="1558338516457" duration="49646000" />
+      <workItem from="1558499483567" duration="3859000" />
+      <workItem from="1558503411003" duration="77362000" />
+      <workItem from="1558916227739" duration="28277000" />
+      <workItem from="1558946848221" duration="4050000" />
+      <workItem from="1559003606162" duration="1360000" />
+      <workItem from="1559004999715" duration="12000" />
+      <workItem from="1559005173352" duration="21018000" />
+      <workItem from="1559029967544" duration="57948000" />
+      <workItem from="1559200193187" duration="45651000" />
+      <workItem from="1559521348569" duration="18796000" />
+      <workItem from="1559543378850" duration="384000" />
+      <workItem from="1559543794707" duration="89902000" />
+      <workItem from="1560125972307" duration="98292000" />
+      <workItem from="1560481034319" duration="21160000" />
+      <workItem from="1560730288670" duration="17243000" />
+      <workItem from="1560819437560" duration="22597000" />
+      <workItem from="1561000554880" duration="17274000" />
+      <workItem from="1561336373092" duration="39005000" />
+      <workItem from="1561448363518" duration="79798000" />
+      <workItem from="1561705841908" duration="3372000" />
+      <workItem from="1561709374758" duration="4656000" />
+      <workItem from="1561940180903" duration="65609000" />
+      <workItem from="1562118589423" duration="81847000" />
+      <workItem from="1562545050578" duration="69790000" />
+      <workItem from="1562804543229" duration="2519000" />
+      <workItem from="1562890952201" duration="3644000" />
+      <workItem from="1563064731844" duration="3157000" />
+      <workItem from="1563237860234" duration="5847000" />
+      <workItem from="1563409166580" duration="39083000" />
+      <workItem from="1563755304734" duration="43909000" />
+      <workItem from="1564013785085" duration="3045000" />
+      <workItem from="1564100590879" duration="12782000" />
+      <workItem from="1564359677116" duration="5734000" />
+      <workItem from="1564446145621" duration="808000" />
+      <workItem from="1564532502351" duration="9916000" />
+      <workItem from="1564618802190" duration="12226000" />
+      <workItem from="1564705136555" duration="21879000" />
+      <workItem from="1564964479953" duration="30307000" />
+      <workItem from="1565050613944" duration="12747000" />
+      <workItem from="1565066688409" duration="18622000" />
+      <workItem from="1565137160037" duration="28855000" />
+      <workItem from="1565223375501" duration="28354000" />
+      <workItem from="1565309724928" duration="26535000" />
+      <workItem from="1565569217998" duration="25101000" />
+      <workItem from="1565655435230" duration="27659000" />
+      <workItem from="1565744804967" duration="26685000" />
+      <workItem from="1565828409754" duration="29379000" />
+      <workItem from="1565914801585" duration="27304000" />
+      <workItem from="1566174139066" duration="27347000" />
+      <workItem from="1566260451212" duration="16293000" />
+      <workItem from="1566287671037" duration="1163000" />
+      <workItem from="1566346920052" duration="2584000" />
+      <workItem from="1566354535507" duration="17731000" />
+      <workItem from="1566433757687" duration="6568000" />
+      <workItem from="1566451373020" duration="1214000" />
+      <workItem from="1566519768225" duration="11913000" />
+      <workItem from="1566778944939" duration="912000" />
+      <workItem from="1566779898247" duration="17049000" />
+      <workItem from="1566865457559" duration="24295000" />
+      <workItem from="1566896270621" duration="2590000" />
+      <workItem from="1566951693141" duration="25984000" />
+      <workItem from="1567038019834" duration="26345000" />
+      <workItem from="1567124305791" duration="27662000" />
+      <workItem from="1567238087558" duration="1238000" />
+      <workItem from="1567311836886" duration="11170000" />
+      <workItem from="1567399857698" duration="14506000" />
+      <workItem from="1567417830077" duration="25369000" />
+      <workItem from="1567556499552" duration="21920000" />
+      <workItem from="1567589812255" duration="375000" />
+      <workItem from="1567642847307" duration="18030000" />
+      <workItem from="1567729676724" duration="46013000" />
+      <workItem from="1568102745151" duration="25090000" />
+      <workItem from="1568248010973" duration="27714000" />
+      <workItem from="1568593294234" duration="8379000" />
+      <workItem from="1568605825127" duration="51671000" />
+      <workItem from="1568711956771" duration="88903000" />
+      <workItem from="1569198019037" duration="50098000" />
+      <workItem from="1569311381543" duration="33829000" />
+      <workItem from="1569457185147" duration="57196000" />
+      <workItem from="1569716243283" duration="53036000" />
+      <workItem from="1570494034073" duration="29217000" />
+      <workItem from="1570580515570" duration="44443000" />
+      <workItem from="1570695066535" duration="246000" />
+      <workItem from="1570695347592" duration="35555000" />
+      <workItem from="1570840469186" duration="3319000" />
+      <workItem from="1570849268611" duration="23110000" />
+      <workItem from="1571012668014" duration="49139000" />
+      <workItem from="1571185312740" duration="18692000" />
+      <workItem from="1571271850820" duration="7942000" />
+      <workItem from="1571358282067" duration="14979000" />
+      <workItem from="1571617368090" duration="55602000" />
+      <workItem from="1571800859778" duration="4257000" />
+      <workItem from="1571813273773" duration="60692000" />
+      <workItem from="1572222271505" duration="63569000" />
+      <workItem from="1572826992248" duration="37601000" />
+      <workItem from="1573086125129" duration="31540000" />
+      <workItem from="1573432060085" duration="11113000" />
+      <workItem from="1573445236510" duration="2301000" />
+      <workItem from="1573449405658" duration="99422000" />
+      <workItem from="1574036672585" duration="53967000" />
+      <workItem from="1574212286611" duration="63481000" />
+      <workItem from="1574641566317" duration="51403000" />
+      <workItem from="1574904215688" duration="1123000" />
+      <workItem from="1574905643361" duration="33000" />
+      <workItem from="1574905716858" duration="163000" />
+      <workItem from="1574905915590" duration="664000" />
+      <workItem from="1574906616921" duration="348000" />
+      <workItem from="1574907003814" duration="16835000" />
+      <workItem from="1574994052638" duration="18655000" />
+      <workItem from="1575246389548" duration="122921000" />
+      <workItem from="1575682231619" duration="23677000" />
+      <workItem from="1575881952135" duration="5555000" />
+      <workItem from="1575959352448" duration="114000" />
+      <workItem from="1575967079160" duration="25338000" />
+      <workItem from="1576232079882" duration="1464000" />
+      <workItem from="1576648802025" duration="248000" />
+      <workItem from="1576652949065" duration="1654000" />
+      <workItem from="1576920457098" duration="2993000" />
+      <workItem from="1576993457071" duration="6229000" />
+      <workItem from="1577081156113" duration="1233000" />
+      <workItem from="1577163741372" duration="2483000" />
+      <workItem from="1577346524153" duration="1323000" />
+      <workItem from="1577669315413" duration="2936000" />
+    </task>
+    <task id="LOCAL-00001" summary="解决异常处理问题">
+      <created>1551333668025</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1551333668025</updated>
+    </task>
+    <task id="LOCAL-00002" summary="解决异常处理问题小bug 解决">
+      <created>1551339325409</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1551339325409</updated>
+    </task>
+    <task id="LOCAL-00003" summary="解决异常处理问题小bug 解决">
+      <created>1551418089348</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1551418089348</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="All_Features_in__wshygl-jcy - 2019.08.06 at 12h 42m 15s.xml">
+      <configuration name="All Features in: wshygl-jcy" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__hytj - 2019.08.06 at 13h 39m 14s.xml">
+      <configuration name="All Features in: hytj" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wshygl-fy-exposure - 2019.08.16 at 14h 25m 28s.xml">
+      <configuration name="All Features in: wshygl-fy-exposure" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wshygl-fy-web - 2019.08.16 at 14h 31m 54s.xml">
+      <configuration name="All Features in: wshygl-fy-web" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wshygl-fy-service - 2019.08.16 at 15h 16m 26s.xml">
+      <configuration name="All Features in: wshygl-fy-service" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wsgl-jcy - 2019.10.08 at 17h 07m 47s.xml">
+      <configuration name="All Features in: wsgl-jcy" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wsgl-jcy - 2019.10.08 at 17h 08m 02s.xml">
+      <configuration name="All Features in: wsgl-jcy" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wsgl-gaj-service - 2019.10.08 at 17h 12m 05s.xml">
+      <configuration name="All Features in: wsgl-gaj-service" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wsgl-sfj - 2019.10.12 at 11h 03m 23s.xml">
+      <configuration name="All Features in: wsgl-sfj" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+    <history-entry file="All_Features_in__wsgl-sfj-service - 2019.10.12 at 11h 08m 44s.xml">
+      <configuration name="All Features in: wsgl-sfj-service" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3773568000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="11" y="4" width="1920" height="995" extended-state="1" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" x="-4" y="45" width="517" height="605" id="Project" order="0" sideWeight="0.8741497" visible="true" weight="0.21344087" />
+      <window_info id="JRebel" order="1" side_tool="true" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" sideWeight="0.12585033" side_tool="true" weight="0.26492536" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Web" order="7" sideWeight="0.13319239" side_tool="true" weight="0.28144988" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49400985" weight="0.30085263" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4946695" weight="0.16601816" />
+      <window_info anchor="bottom" id="TODO" order="3" weight="0.32481363" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.8905192" weight="0.3006608" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Problems" order="7" sideWeight="0.5056784" side_tool="true" weight="0.5127893" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.10948081" side_tool="true" weight="0.55518764" />
+      <window_info anchor="bottom" id="MyBatis Log" order="9" weight="0.2753304" />
+      <window_info anchor="bottom" id="Spring" order="10" weight="0.32792208" />
+      <window_info anchor="bottom" id="Gradle View" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="JRebel Executor" order="14" />
+      <window_info anchor="bottom" id="JRebel Console" order="15" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="16" sideWeight="0.49775785" weight="0.0608828" />
+      <window_info anchor="bottom" id="Java Enterprise" order="17" weight="0.3277512" />
+      <window_info anchor="bottom" id="Terminal" order="18" weight="0.4221968" />
+      <window_info anchor="bottom" auto_hide="true" x="109" y="149" width="492" height="924" id="Structure" order="19" sideWeight="0.08008658" weight="0.25785482" />
+      <window_info anchor="bottom" id="Apicloud Log" order="20" weight="0.32929516" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24984948" />
+      <window_info anchor="right" id="Database" order="2" weight="0.23927765" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.1433902" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="right" id="Bean Validation" order="8" weight="0.16309255" />
+      <window_info anchor="right" id="Key Promoter X" order="9" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.5032258" side_tool="true" weight="0.20895523" />
+      <window_info anchor="right" id="Maven Projects" order="11" sideWeight="0.4967742" weight="0.20146728" />
+      <window_info anchor="right" id="Mybatis datasource" order="12" show_stripe_button="false" side_tool="true" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" x="-4" y="45" width="517" height="605" id="Project" order="0" sideWeight="0.8741497" visible="true" weight="0.24097066" />
+      <window_info id="JRebel" order="1" side_tool="true" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" sideWeight="0.12585033" side_tool="true" weight="0.26492536" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Web" order="7" sideWeight="0.13319239" side_tool="true" weight="0.28144988" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49400985" weight="0.30099228" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4946695" weight="0.35211268" />
+      <window_info anchor="bottom" id="TODO" order="3" weight="0.3261105" />
+      <window_info active="true" anchor="bottom" id="Debug" order="4" sideWeight="0.48827294" visible="true" weight="0.19393283" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Problems" order="7" sideWeight="0.5056784" side_tool="true" weight="0.51328504" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5117271" side_tool="true" weight="0.42686892" />
+      <window_info anchor="bottom" id="Spring" order="9" weight="0.32792208" />
+      <window_info anchor="bottom" id="Gradle View" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="JRebel Executor" order="13" />
+      <window_info anchor="bottom" id="JRebel Console" order="14" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="15" sideWeight="0.49775785" weight="0.20910075" />
+      <window_info anchor="bottom" id="Java Enterprise" order="16" weight="0.3278496" />
+      <window_info anchor="bottom" id="Terminal" order="17" weight="0.4221968" />
+      <window_info anchor="bottom" auto_hide="true" x="109" y="149" width="492" height="924" id="Structure" order="18" sideWeight="0.08008658" weight="0.25785482" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24984948" />
+      <window_info anchor="right" id="Database" order="2" weight="0.23927765" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.1433902" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="right" id="Bean Validation" order="8" visible="true" weight="0.0033860046" />
+      <window_info anchor="right" id="Key Promoter X" order="9" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.5032258" side_tool="true" weight="0.20895523" />
+      <window_info anchor="right" id="Maven Projects" order="11" sideWeight="0.4967742" weight="0.094243795" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/wssacwgl/wssacwgl-service/src/main/java/com/netmarch/wssacw/system/service/impl/AreaServiceImpl.java</url>
+          <line>24</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backstage-management/backstage-management-service/src/main/java/com/netmarch/figurecloud/management/system/controller/AuthController.java</url>
+          <line>52</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backstage-management/backstage-management-service/src/main/java/com/netmarch/figurecloud/management/system/controller/AuthController.java</url>
+          <line>54</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-service/src/main/java/com/netmarch/wsgl/system/iWebOffice2015/DBstep/iMsgServer2015.java</url>
+          <line>69</line>
+          <properties />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/wsgl-jcy/wsgl-jcy-service/src/main/java/com/netmarch/wsgl/system/iWebOffice2015/Servlet/OfficeServer.java</url>
+          <line>257</line>
+          <properties />
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/wssacwgl/wssacwgl-web/src/main/resources/templates/common/pages.html</url>
+          <line>4</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-web/src/main/resources/templates/wsgl/wsgllist.html</url>
+          <line>40</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-web/src/main/resources/templates/wsgl/edit.html</url>
+          <line>31</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajscaj.html</url>
+          <line>438</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="args[0]" language="JAVA" />
+        <watch expression="e" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>args[0]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>request.getParts()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>option</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>request.getParameterMap()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>roleIds</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/Aj_ajlb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/AjAjlbServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/Aj_dictionaryMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.10.RELEASE/spring-web-5.0.10.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="208" selection-start-line="208" selection-end-line="208" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/ToOpenModelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/Gj_ajjbqk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5302">
+          <caret line="249" column="54" selection-start-line="249" selection-start-column="20" selection-end-line="249" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="14" column="16" lean-forward="true" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectGtfzxz.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="94" column="31" lean-forward="true" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/jcycbr/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-88">
+          <caret line="119" column="32" selection-start-line="119" selection-start-column="27" selection-end-line="119" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/editaj.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4370">
+          <caret line="604" column="36" lean-forward="true" selection-start-line="604" selection-start-column="36" selection-end-line="604" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajscaj.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2039">
+          <caret line="413" column="87" selection-start-line="413" selection-start-column="84" selection-end-line="413" selection-end-column="87" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/StaticObj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-748">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/bean/PagesStatic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/github/pagehelper/pagehelper/5.1.8/pagehelper-5.1.8-sources.jar!/com/github/pagehelper/PageHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1351">
+          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/github/pagehelper/pagehelper/5.1.8/pagehelper-5.1.8-sources.jar!/com/github/pagehelper/page/PageMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="111" column="80" selection-start-line="111" selection-start-column="75" selection-end-line="111" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/BbbsajfaController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="113" column="59" lean-forward="true" selection-start-line="113" selection-start-column="55" selection-end-line="113" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/Aj_ajlbMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Aj_ajlbMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="52" column="32" selection-start-line="52" selection-start-column="32" selection-end-line="52" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/static/css/style05.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="384" column="1" selection-start-line="384" selection-start-column="1" selection-end-line="384" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/openmodel/selectAjlb.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="27" column="84" selection-start-line="27" selection-start-column="84" selection-end-line="27" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/Gj_ajjbqkMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="34" column="20" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/common/pages.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="167" selection-start-line="7" selection-start-column="155" selection-end-line="7" selection-end-column="167" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/common/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-432">
+          <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/CzlcjlServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="23" column="86" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/CzlcjlService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="81" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-service/src/main/java/com/netmarch/wsgl/system/service/impl/SysResourcesServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="50" column="34" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backstage-management/backstage-management-service/src/main/java/com/netmarch/figurecloud/management/system/service/impl/SysResourcesServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="50" column="34" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/common/controller/FrontBaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/selectCbr.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2222">
+          <caret line="101" column="27" selection-start-line="101" selection-start-column="15" selection-end-line="101" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajfa/bbbsajfalist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="291" column="55" selection-start-line="291" selection-start-column="46" selection-end-line="291" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/user/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4488">
+          <caret line="233" column="57" selection-start-line="233" selection-start-column="57" selection-end-line="233" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/AjjbqkService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="24" column="98" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/AjjbqkServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1144">
+          <caret line="72" column="49" selection-start-line="72" selection-start-column="49" selection-end-line="72" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-web/src/main/resources/templates/bbbsajsa/bbbsajsalist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1056">
+          <caret line="48" column="60" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/AjjbqkController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1474">
+          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/LoginUserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3872">
+          <caret line="210" column="27" selection-start-line="210" selection-start-column="27" selection-end-line="210" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/Interceptor/LoginInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1188">
+          <caret line="70" column="62" selection-start-line="70" selection-start-column="62" selection-end-line="70" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/LoginUserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="11" column="66" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/service/impl/LoginUserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-web/src/main/resources/templates/ajjbqk/ajjbqklist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1518">
+          <caret line="69" column="135" selection-start-line="69" selection-start-column="128" selection-end-line="69" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-web/src/main/resources/templates/ajjbqk/editZwxx.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8800">
+          <caret line="400" column="7" selection-start-line="400" selection-start-column="1" selection-end-line="400" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/mapper/LoginUserMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="12" column="58" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/system/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1386">
+          <caret line="88" column="42" selection-start-line="88" selection-start-column="42" selection-end-line="88" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/java/com/netmarch/ajgl/common/utils/UsersUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="57" column="18" selection-start-line="57" selection-start-column="18" selection-end-line="57" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/src/main/resources/mapper/Gj_ajjbqkMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3740">
+          <caret line="1423" column="2" selection-start-line="1423" selection-start-column="2" selection-end-line="1423" selection-end-column="2" />
+          <folding>
+            <element signature="n#resultMap#0;n#mapper#0;n#!!top" />
+            <element signature="n#sql#0;n#mapper#0;n#!!top" />
+            <element signature="n#select#0;n#mapper#0;n#!!top" />
+            <element signature="n#delete#0;n#mapper#0;n#!!top" />
+            <element signature="n#insert#0;n#mapper#0;n#!!top" />
+            <element signature="n#insert#1;n#mapper#0;n#!!top" />
+            <element signature="n#update#0;n#mapper#0;n#!!top" />
+            <element signature="n#select#2;n#mapper#0;n#!!top" />
+            <element signature="n#select#3;n#mapper#0;n#!!top" />
+            <element signature="n#select#4;n#mapper#0;n#!!top" />
+            <element signature="n#select#5;n#mapper#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgl-sfj/wsgl-sfj-web/src/main/resources/templates/wsbqgl/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="74" column="59" selection-start-line="74" selection-start-column="51" selection-end-line="74" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/src/main/java/util/web/ResultCodes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="35" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/figurecloud/auth-server/auth-server-core/src/main/java/com/netmarch/figurecloud/auth/core/security/endpoint/RefreshTokenEndpoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uums/uums-exposure/src/main/java/com/netmarch/sso/loginsystem/bean/LoginResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uums/uums-service/src/main/java/com/netmarch/sso/loginsystem/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="199" column="15" selection-start-line="199" selection-start-column="15" selection-end-line="199" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uums/uums-web/src/main/resources/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="140" column="17" selection-start-line="140" selection-start-column="17" selection-end-line="140" selection-end-column="17" />
+          <folding>
+            <element signature="e#5449#5548#0" />
+            <element signature="e#5587#5644#0" />
+            <element signature="e#7592#7635#0" />
+            <element signature="e#7701#7744#0" />
+            <element signature="e#7787#7834#0" />
+            <element signature="e#8115#8270#0" />
+            <element signature="e#8303#8489#0" />
+            <element signature="e#8536#8902#0" />
+            <element signature="e#10530#10608#0" />
+            <element signature="e#10651#10881#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArquillianSettingsConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>uums-service:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>wssacwgl-fy-web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.24771689" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

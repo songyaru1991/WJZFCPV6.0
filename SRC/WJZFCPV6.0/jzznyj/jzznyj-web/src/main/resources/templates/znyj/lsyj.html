@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>律师阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+
+</head>
+<body>
+<!--头部s-->
+<div class="H105_top">
+    <div class="H105_title fl">
+        <p>律师阅卷系统</p>
+    </div>
+    <div class="H105_dateCoat fr">
+        <div class="H105_date fl">
+            <span class="H105_dateTime"></span>
+        </div>
+        <img th:src="${application.basePath}+'/static/images/H105_badge.png'" alt="" class="H105_badge fl">
+        <div class="H105_name fl">
+            <span  th:text="${userName}">XXX</span>
+        </div>
+        <img th:src="${application.basePath}+'/static/images/tcxt.png'" alt="退出系统" class="H105_setting fl" th:onclick="toLoginOut()">
+    </div>
+
+    <div class="H105_labelCoat">
+        <img th:src="${application.basePath}+'/static/images/H105_type.png'" alt="" class="H105_type fl">
+        <div class="H105_label H105_label2 fl" lay-href='/jzznyj/znyj/lsyj' data-content='律师阅卷'>
+            <span>律师阅卷</span>
+        </div>
+    </div>
+</div>
+<div class="A105_wripper">
+    <div class="A105_body  ">
+        <iframe class="A105_catalogue  A105_catalogue_jq  fl " frameborder="0" th:src="'./lsyj_left?sqm='+${sqm}+'&type='+${type}"></iframe>
+        <iframe class="A105_pictureIframe  A105_pictureIframe_jq  fl " frameborder="0" src="./lsyj_right"></iframe>
+    </div>
+
+
+</div>
+</body>
+</html>

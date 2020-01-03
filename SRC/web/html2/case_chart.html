@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <link rel="stylesheet" href="../css/style_10.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.admin.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <script src="../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+    <script src="../js/echart4.2.1/echarts.js"></script>
+
+</head>
+<body>
+<div class="C110_wripper">
+    <div class="C110_case">
+        <div class="C110_subtitle clear">
+            <div class="C110_titleText fl">
+                <img src="../images/H105_edit.png" alt="" class="fl">
+                <p class="fl">案件统计: 案由统计</p>
+            </div>
+            <div class="H105_searchCoat layui-form fr clear">
+                <div class="S105_caseInput clear">
+                    <p>受理时间：</p>
+                    <input
+                            type="text"
+                            id="C110_refereeing1"
+                            class="layui-input   "
+                            autocomplete="off">
+                    <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar1">
+
+                </div>
+                <div class="S105_caseInput clear" style="margin-right: 1rem;">
+                    <p class="S105_jorizontal">—</p>
+                    <input
+                            type="text"
+                            id="C110_refereeing2"
+                            class="layui-input   "
+                            autocomplete="off">
+                    <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar2">
+                </div>
+                <div class="S205_search1 fl" style="background: #10c5ba;">统计</div>
+            </div>
+        </div>
+        <div class="C110_scasChart clear">
+            <div class="C110_scasChart_total">
+                <span>2019.09.01 - 2019.09.30</span>
+                <span>案件总数<span class="C110_scasChart_totalNum">9</span>起</span>
+            </div>
+            <div class="C110_scasChart_button clear">
+                <div class="C110_button_left fl">
+                    <img src="../images/C110_button_left.png" alt="">
+                    <div class="C110_button_name"><span>报补</span></div>
+                    <div class="C110_button_number"><span>4</span></div>
+                </div>
+                <div class="C110_button_center fl">
+                    <img src="../images/C110_button_center.png" alt="">
+                    <div class="C110_button_name"><span>起诉</span></div>
+                    <div class="C110_button_number"><span>0</span></div>
+                </div>
+                <div class="C110_button_right fl">
+                    <img src="../images/C110_button_right.png" alt="">
+                    <div class="C110_button_name"><span>报诉</span></div>
+                    <div class="C110_button_number"><span>5</span></div>
+                </div>
+            </div>
+            <div class="C110_scasChart_echarts">
+                <div class="C110_echarts" id="C110_echarts"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+  $(document).ready(function() {
+    layui.use(['form', 'laydate'], function() {
+      var laydate = layui.laydate;
+      // 点我触发
+      laydate.render({
+        elem: '#C110_refereeing1',
+        eventElem: '.Q105_calendar1',
+        trigger: 'click'
+      });
+      laydate.render({
+        elem: '#C110_refereeing2',
+        eventElem: '.Q105_calendar2',
+        trigger: 'click'
+      });
+    });
+    // echarts
+    var options = {
+      title: {
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      // 图例
+      legend: {
+        show: true,
+        right: 50,
+        top: 15,
+        orient: 'horizontal',
+        textStyle: {
+          color: ['#313131']
+        },
+        itemWidth: 15,
+        itemHeight: 15,
+      },
+      grid: {
+        top: '15%',
+        left: '5%',
+        right: '2%',
+        bottom: '8%'
+      },
+      // x轴
+      xAxis: {
+        // name: '（单位：年）',
+        nameTextStyle: {
+          color: '#000',
+          fontSize: 14,
+        },
+        type: 'category',
+        data: [
+          '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
+          '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24',
+          '25', '26', '27', '28', '29', '30',
+        ],
+        boundaryGap: true,
+        axisLine: {
+          lineStyle: {
+            color: '#d0e8f5',//坐标轴线线的颜色。
+            width: 1,
+          }
+        },
+        axisTick: {
+          show: false
+        },
+        axisLabel: {//坐标文字颜色
+          interval: 0,
+          // margin: 15,
+          // rotate: 25,
+          fontSize: 14,
+          fontFamily: 'MicrosoftYaHei',
+          color: '#000',
+          fontWeight: 'normal'
+        }
+      },
+      // y轴
+      yAxis: {
+        name: '案件数量：(起)',
+        nameTextStyle: {
+          color: '#000',
+          fontSize: 14,
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#d0e8f5',
+            width: 1
+          }
+        },
+        axisLabel: {
+          interval: 0,
+          fontSize: 14,
+          fontFamily: 'MicrosoftYaHei',
+          color: '#000'
+        },
+        axisTick: {
+          show: false
+        },
+        // 网格线
+        splitLine: {
+          // show:false,
+          lineStyle: {
+            color: '#d0e8f5',
+            width: 1
+          }
+        },
+        // 网格线段数
+        splitNumber: 5
+      },
+      series: [
+        {
+          name: '提请逮捕案件',
+          type: 'bar',
+          barWidth: '15%',
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#d7d5fd'
+                }, {
+                  offset: 1,
+                  color: '#8181ef'
+                }]),
+              barBorderRadius: 10,
+            },
+          },
+          data: [
+            41, 43, 42, 44, 43, 45, 44, 46, 45, 47, 46, 48,
+            47, 49, 48, 50, 49, 50, 48, 49, 47, 48, 46, 47,
+            45, 46, 44, 45, 43, 44,
+          ],
+        },
+        {
+          name: '不批准逮捕',
+          type: 'bar',
+          barWidth: '15%',
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#ffc2ea'
+                }, {
+                  offset: 1,
+                  color: '#fe6ed7'
+                }]),
+              barBorderRadius: 10,
+            }
+
+          },
+          data: [
+            31, 33, 32, 34, 33, 35, 34, 36, 35, 37, 36, 38,
+            37, 39, 38, 40, 39, 40, 38, 39, 37, 38, 36, 37,
+            35, 36, 34, 35, 33, 34,
+          ],
+        },
+        {
+          name: '补充侦查',
+          type: 'bar',
+          barWidth: '15%',
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#66e5ff'
+                }, {
+                  offset: 1,
+                  color: '#7cb3ff'
+                }]),
+              barBorderRadius: 10,
+            }
+          },
+          data: [
+            21, 23, 22, 24, 23, 25, 24, 26, 25, 27, 26, 28,
+            27, 29, 28, 30, 29, 30, 28, 29, 27, 28, 26, 27,
+            25, 26, 24, 25, 23, 24,
+          ],
+        }
+      ],
+    };
+    var myChart;
+    var C110_echarts = document.getElementById('C110_echarts');
+    echarts_resize();
+    myChart = echarts.init(C110_echarts);
+    myChart.setOption(options);
+
+    function echarts_resize() {
+      var Windows_width = document.body.clientWidth;
+      C110_echarts.style.width = Windows_width * .84 + 'px';
+      C110_echarts.style.height = Windows_width * .27 + 'px';
+    }
+
+    function onresize() {
+      echarts_resize();
+      myChart.resize();
+    }
+
+    var resizeTimer = null;
+    // 自适应事件有最小间隔100
+    $(window).on('resize', function() {
+        if (resizeTimer) {
+          clearTimeout(resizeTimer);
+        }
+        resizeTimer = setTimeout(onresize, 100);
+      }
+    );
+  });
+</script>
+</html>

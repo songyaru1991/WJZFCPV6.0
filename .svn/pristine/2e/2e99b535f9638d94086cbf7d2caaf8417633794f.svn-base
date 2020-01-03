@@ -1,0 +1,61 @@
+package com.netmarch.jzznyj.system.controller;
+
+import com.netmarch.jzznyj.common.controller.FrontBaseController;
+import com.netmarch.jzznyj.common.utils.HttpClientUtils;
+import com.netmarch.jzznyj.common.utils.UsersUtil;
+import com.netmarch.jzznyj.system.bean.LoginUser;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/16 15:33
+ */
+@Controller
+@Slf4j
+public class IndexController  extends FrontBaseController {
+
+    @Autowired
+    private UsersUtil usersUtil;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @RequestMapping("/")
+    public String casejbxx(Model model) {
+        String userName = "", user_Id = "";
+        try {
+            String jwt = usersUtil.getJwtCookie();
+            user_Id = usersUtil.getLoginUser_Id();
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String, String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+
+            LoginUser loginUser = new LoginUser();
+            body = HttpClientUtils.sendPostDataByJson(url, JSONObject.fromObject(user_IdMap).toString(), jwt);
+            if (body != "" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                loginUser = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+            userName = loginUser.getUsername();
+            model.addAttribute("userName", userName);
+            log(user_Id, "看守人员基本信息列表", "看守人员基本信息列表", "看守所换押管理(网上换押管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "看守人员基本信息列表", e.toString(), "看守所换押管理(网上换押管理系统)", true);
+            e.printStackTrace();
+        }
+        return "system/jzznyj";
+    }
+}

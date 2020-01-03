@@ -1,0 +1,31 @@
+package com.netmarch.figurecloud.management.system.service.impl;
+
+import com.netmarch.figurecloud.management.system.bean.SysOrganization;
+import com.netmarch.figurecloud.management.system.mapper.SysOrganizationMapper;
+import com.netmarch.figurecloud.management.system.service.SysOrganizationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class SysOrganizationServiceImpl implements SysOrganizationService {
+
+    @Autowired
+    SysOrganizationMapper sysOrganizationMapper;
+
+    @Override
+    public List<SysOrganization> getAllUsedOrg() {
+        return sysOrganizationMapper.getAllUsedOrg();
+    }
+
+    @Override
+    public SysOrganization getOrganizationById(Integer id) {
+        return sysOrganizationMapper.getOrganizationById(id);
+    }
+
+    @Override
+    public List<SysOrganization> getOrganizationName() {
+        return sysOrganizationMapper.getOrganizationName();
+    }
+}

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wssacwgl-fy-service:war">
+    <output-path>$PROJECT_DIR$/wssacwgl-fy/wssacwgl-fy-service/target</output-path>
+    <root id="archive" name="wssacwgl-fy.war">
+      <element id="artifact" artifact-name="wssacwgl-fy-service:war exploded" />
+    </root>
+  </artifact>
+</component>

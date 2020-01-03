@@ -1,0 +1,37 @@
+package com.netmarch.jzznyj.system.bean;
+
+import lombok.Data;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.Date;
+
+/**
+ * @program: figurecloud
+ * @description: 字典实体类
+ * @author: dinggan
+ * @create: 2019-02-14 10:16
+ **/
+
+@Data
+@Table(name="sys_dict")
+public class Dict {
+
+    @Id
+    @GeneratedValue(generator = "JDBC")
+    private Integer id;
+    private String name;
+    private String code;
+    private String parentCode;
+    private String comments;
+    private Date createTime;
+    private Integer creater;
+    private Date updateTime;
+    private Integer updater;
+    private Integer isDelete;
+
+    @Transient
+    private String parentName;
+}

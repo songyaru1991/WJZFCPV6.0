@@ -1,0 +1,10 @@
+package com.netmarch.jzzngd.system.service;
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface SysDictService {
+    List<String> selectDzjzmlByDict();
+}

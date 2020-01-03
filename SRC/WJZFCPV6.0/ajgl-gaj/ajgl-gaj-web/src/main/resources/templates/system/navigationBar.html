@@ -1,0 +1,46 @@
+<div th:fragment="navigationBar" xmlns:th="http://schemas.xmlsoap.org/wsdl/" xmlns:auth="http://www.thymeleaf.org">
+
+    <ul class="I106_navList clear">
+
+        <li>
+            <div class="I106_navItem  I106_navItemCurrent " auth:check="ajgl-gaj">
+                <span class="I106_navIcon I106_navIcon1"></span>
+                <span>案件管理</span>
+                <span class="I106_arrow I106_arrowCurrent"></span>
+            </div>
+
+            <ul class="I106_subNavList" style="display: block;">
+                <li lay-href="/ajgl-gaj/caseQuery" data-content="案件查找" auth:check="caseQuery">
+                    <span class="I106_subNavItem">案件查找</span>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="I106_navItem" auth:check="sysManage">
+                <span class="I106_navIcon I106_navIcon4"></span>
+                <span>系统管理</span>
+                <span class="I106_arrow"></span>
+            </div>
+            <ul class="I106_subNavList">
+                <li lay-href="/ajgl-gaj/departments/departmentsList" data-content="科室管理" auth:check="departmentsManage">
+                    <span class="I106_subNavItem">科室管理</span>
+                </li>
+                <li lay-href="/ajgl-gaj/user/list" data-content="用户管理" auth:check="userManage">
+                    <span class="I106_subNavItem">用户管理</span>
+                </li>
+                <li lay-href="/ajgl-gaj/resource/list" data-content="资源管理" auth:check="resourceManage">
+                    <span class="I106_subNavItem">资源管理</span>
+                </li>
+                <li lay-href="/ajgl-gaj/role/list" data-content="角色管理" auth:check="roleManage">
+                    <span class="I106_subNavItem">角色管理</span>
+                </li>
+<!--                <li lay-href="/ajgl-gaj/dict/list" data-content="字典管理" auth:check="dictManage">-->
+<!--                    <span class="I106_subNavItem">字典管理</span>-->
+<!--                </li>-->
+            </ul>
+        </li>
+
+    </ul>
+
+</div>

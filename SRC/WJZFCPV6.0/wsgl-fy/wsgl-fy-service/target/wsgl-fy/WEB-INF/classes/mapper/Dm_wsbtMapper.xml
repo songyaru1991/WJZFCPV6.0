@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wsgl.system.mapper.Dm_wsbtMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wsgl.system.bean.Dm_wsbt">
+    <result column="CODE" jdbcType="CHAR" property="code" />
+    <result column="MS" jdbcType="VARCHAR" property="ms" />
+  </resultMap>
+  <insert id="insert" parameterType="com.netmarch.wsgl.system.bean.Dm_wsbt">
+    insert into dm_wsbt (CODE, MS)
+    values (#{code,jdbcType=CHAR}, #{ms,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wsgl.system.bean.Dm_wsbt">
+    insert into dm_wsbt
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="ms != null">
+        MS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="ms != null">
+        #{ms,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

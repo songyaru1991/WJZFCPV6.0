@@ -1,0 +1,569 @@
+package com.netmarch.fdfs.system.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.Page;
+import com.netmarch.fdfs.common.utils.HttpUtil;
+import com.netmarch.fdfs.common.utils.PingYinUtil;
+import com.netmarch.fdfs.common.utils.ZipUtil;
+import com.netmarch.fdfs.common.utils.common.FdfsUtil;
+import com.netmarch.fdfs.system.bean.*;
+import com.netmarch.fdfs.system.service.AjdzjzmlService;
+import com.netmarch.fdfs.system.service.AjdzjzwjService;
+import com.netmarch.fdfs.system.service.AjjbxxService;
+import com.netmarch.fdfs.system.service.SysDictService;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.math.BigDecimal;
+import java.util.*;
+
+/**
+ * @ClassName: ArchiveController
+ * @Desc:
+ * @Author: gdy
+ * @Date: 2019/5/9
+ */
+@Controller
+@Slf4j
+@RequestMapping("/archive")
+public class ArchiveController {
+
+    @Autowired
+    private SysDictService sysDictService;
+
+    @Autowired
+    private AjdzjzmlService ajdzjzmlService;
+
+    @Autowired
+    private AjdzjzwjService ajdzjzwjService;
+
+    @Autowired
+    private AjjbxxService ajjbxxService;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @Autowired
+    private HttpUtil httpUtil;
+
+
+    @RequestMapping("/caseManage")
+    public String caseManage(){
+        return "/case/caseManage";
+    }
+
+    @RequestMapping("/rgznjzbm")
+    public String rgznjzbm(){
+        return "/case/rgznjzbm";
+    } // 人工智能卷宗编目
+
+    @RequestMapping("/third_rgznjzbm")
+    public String third_rgznjzbm(HttpServletRequest request,Model model){
+        String ajbs = request.getParameter("ajbs");
+        String ajmc = request.getParameter("ajmc");
+        model.addAttribute("ajbs", ajbs);
+        model.addAttribute("ajmc", ajmc);
+        return "/case/third_rgznjzbm";
+    }
+
+    @RequestMapping("/third_caseManage")
+    public String third_caseManage(){
+        return "/case/third_caseManage";
+    }
+
+    @RequestMapping("/rgznjzbm_left")
+    public String rgznjzbm_left(HttpServletRequest request,Model model){
+        String ajbs = request.getParameter("ajbs");
+        String ajmc = request.getParameter("ajmc");
+        List<String> dictList = sysDictService.selectDzjzmlByDict(); // 默认目录
+        model.addAttribute("dictList", dictList);
+        model.addAttribute("ajbs", ajbs);
+        model.addAttribute("ajmc", ajmc);
+        model.addAttribute("treeList", getZtree(0,ajbs));
+        model.addAttribute("treeList2", getZtree(1,ajbs));
+        return "/case/third_artificial/rgznjzbm_left";
+    }
+
+    @RequestMapping("/rgznjzbm_right")
+    public String rgznjzbm_right(){
+        return "/case/third_artificial/rgznjzbm_right";
+    }
+
+    @RequestMapping("/caseManage_left")
+    public String caseManage_left(){
+        return "/case/third_artificial/caseManage_left";
+    }
+
+    @RequestMapping("/caseManage_right")
+    public String caseManage_right(HttpServletRequest request,Model model){
+        Integer pageNo = null == request.getParameter("pageNo") ? 1 : Integer.valueOf(request.getParameter("pageNo"));
+        String searchField = null == request.getParameter("searchField") ? "" : request.getParameter("searchField");
+        String searchName = null == request.getParameter("searchName") ? "" : request.getParameter("searchName");
+        log.info("searchField:[" + searchField + "],searchName:[" + searchName + "]");
+//        Page<Map<String,Object>> caseList = ajjbxxService.getAllCase(pageNo);
+        Page<Ajjbxx> caseList = ajjbxxService.getAllCase(pageNo,searchField,searchName);
+        if(null != caseList&&caseList.size()>0){
+            for(Ajjbxx ajjbxx : caseList){
+                List<Ajdzjzwj> wjList = ajdzjzwjService.selectWjByAjbs(ajjbxx.getAjbs());
+                if(wjList.isEmpty()){ // 文件表为空
+                    ajjbxx.setJzzt(JzztEnum.DSC.getValue()); //待上传
+                }else{
+                    int ocriszero = 0;
+                    int ocrisone = 0;
+                    int newsortcount = 0;
+                    for(Ajdzjzwj ajdzjzwj : wjList){
+                        if("0".equals(ajdzjzwj.getOcrsort())){ // 文件表中ocrsort字段为0
+                            ocriszero++;
+                        }else if("1".equals(ajdzjzwj.getOcrsort())){ // 文件表中ocrsort字段为1
+                            ocrisone++;
+                        }
+                        if(null != ajdzjzwj.getNewsort()){
+                            newsortcount++;
+                        }
+                    }
+                    if(ocriszero>0){
+                        ajjbxx.setJzzt(JzztEnum.OCRSBZ.getValue()); //OCR识别中
+                    }
+                    if(ocrisone == wjList.size()){
+                        ajjbxx.setJzzt(JzztEnum.DBM.getValue()); //待编目
+                    }
+                    if(newsortcount == wjList.size()){
+                        ajjbxx.setJzzt(JzztEnum.BMWC.getValue()); //编目完成
+                    }else if(newsortcount < wjList.size()){
+                        ajjbxx.setJzzt(JzztEnum.BMZ.getValue()); //编目中
+                    }
+                }
+            }
+        }
+        model.addAttribute("list", caseList);
+        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchName", searchName);
+        return "/case/third_artificial/caseManage_right";
+    }
+
+    /**
+     *
+     * @Desc: 更新ztree节点名称
+     * @return
+     * @Date: 2019/5/17
+     */
+    @PostMapping("/updateZtree")
+    @ResponseBody
+    public int updateZtree(HttpServletRequest request){
+        String ajbs = request.getParameter("ajbs");
+        int orderby = Integer.parseInt(request.getParameter("orderby"));
+        String parentid = "".equals(request.getParameter("parentid"))?"-1":request.getParameter("parentid");
+        String filename = request.getParameter("name");
+        return ajdzjzmlService.updateZtree(ajbs,orderby,filename,parentid);
+    }
+
+    /**
+     *
+     * @Desc: 删除ztree节点
+     * @return
+     * @Date: 2019/5/17
+     */
+    @PostMapping("/deleteZtree")
+    @ResponseBody
+    public int deleteZtree(HttpServletRequest request){
+        String orderby = request.getParameter("orderby");
+        String ajbs = request.getParameter("ajbs");
+        String parentid = null == request.getParameter("parentid")?"":request.getParameter("parentid");
+        return ajdzjzmlService.deleteZtree(ajbs,orderby,parentid);
+    }
+
+    /**
+     *
+     * @Desc: 删除目录（文件）
+     * @return
+     * @Date: 2019/5/17
+     */
+    @PostMapping("/deleteFile")
+    @ResponseBody
+    public int deleteFile(HttpServletRequest request){
+        String wjid = request.getParameter("wjid");
+        String filePath = request.getParameter("filePath");
+        return ajdzjzmlService.deleteFileByMlid(wjid,filePath);
+    }
+
+    /**
+     *
+     * @Desc: 刷新ztree
+     * @return
+     * @Date: 2019/5/17
+     */
+    @PostMapping ("/flushLeft")
+    @ResponseBody
+    public Object flushLeft(@RequestParam("ajbs") String ajbs){
+        return getZtree(0,ajbs);
+    }
+
+    /**
+     *
+     * @Desc: 根据节点获取目录，文件列表
+     * @param treeId
+     * @return
+     * @Date: 2019/5/20
+     */
+    @PostMapping ("/getImgList")
+    @ResponseBody
+    public Object getImgList(@RequestParam("treeId") String treeId,@RequestParam("ajbs") String ajbs){
+        int orderby = Integer.parseInt(treeId);
+        List<Ajdzjzwj> ajdzjzwjs = ajdzjzwjService.selectWjByOrderby(orderby,ajbs);
+        return JSONArray.toJSONString(ajdzjzwjs);
+    }
+
+    /**
+     *
+     * @Desc: 智能目录的文件拖拽
+     * @return
+     * @Date: 2019/6/12
+     */
+    @PostMapping ("/addToZnml")
+    @ResponseBody
+    public Object addToZnml(@RequestParam("ajbs") String ajbs,@RequestParam("orderby") Integer orderby,@RequestParam("wjid") String wjid){
+        Ajdzjzml ajdzjzml = ajdzjzmlService.selectIdByOrderby(orderby,ajbs);
+        String mlid = ajdzjzml.getId();
+        int count = ajdzjzwjService.updateMlidById(ajbs,mlid,wjid);
+        if(count > 0){
+            return getZtree(1,ajbs);
+        }else{
+            return "";
+        }
+    }
+
+    /**
+     *
+     * @Desc: 上传文件
+     * @param file
+     * @param treeId
+     * @return
+     * @Date: 2019/5/28
+     */
+    @PostMapping ("/uploadJzFiles")
+    @ResponseBody
+    public Object uploadJzFiles(@RequestParam("ajbs") String ajbs,@RequestParam("file") MultipartFile file, @RequestParam("treeId") String treeId) throws IOException {
+//        int wjOrderby = 1;
+//        int oldsort = 1;
+//        List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent(treeId);
+//        if(null != mlList && mlList.size() > 0){
+//            oldsort = wjOrderby = mlList.size() + 1;
+//        }
+//        wjOrderby = Integer.parseInt(treeId + wjOrderby);
+//        List<String> pathList = new ArrayList<>();
+        //判断file数组不能为空并且长度大于0
+//        if(files!=null&&files.length>0){
+//            //循环获取file数组中得文件
+//            for(int i = 0;i<files.length;i++){
+//                MultipartFile file = files[i];
+        //文件初始名称
+//        String orgname = file.getOriginalFilename();
+//        String filename = oldsort+"."+orgname.substring(orgname.lastIndexOf(".") + 1);
+        //文件名称，oldsort的值，三位数字位数不足前面补0
+//        String filename = String.format("%03d", oldsort)+"."+orgname.substring(orgname.lastIndexOf(".") + 1);
+        //保存文件
+        String filename = file.getOriginalFilename();
+        String path = fileUtil.uploadFile(file,filename);
+//        String path = "";
+        int count = ajdzjzmlService.insertWj(ajbs,path,filename,treeId);
+//        pathList.add(path);
+//        log.info(">>>>>>>>>>>>>>>>>>" + path);
+//            }
+//        }
+        return count; //JSONArray.toJSONString(pathList)
+    }
+
+    /**
+     *
+     * @Desc: OCR处理进度
+     * @Date: 2019/5/31
+     */
+    @PostMapping ("/ocrProgress")
+    @ResponseBody
+    public Object ocrProgress(@RequestParam("ajbs") String ajbs){
+        // 多文件同时上传，并发文件表的oldsort字段处理
+        List<String> mlids = ajdzjzmlService.selectAllParentids(ajbs);
+
+        if(null != mlids&&mlids.size() > 0){
+            for(int p=0;p<mlids.size();p++){
+                int maxOldsort = 0;
+                List<Ajdzjzwj> wjList = ajdzjzwjService.selectWjByMlid(mlids.get(p));
+                List<Ajdzjzwj> newList = new ArrayList<>();
+                if(null != wjList&&wjList.size() > 0){
+                    for(Ajdzjzwj a : wjList){
+                        maxOldsort = a.getOldsort()>maxOldsort?a.getOldsort():maxOldsort;
+                        if(a.getOldsort()==0){
+                            newList.add(a);
+                        }
+                    }
+                }
+                if(newList.size() > 0){
+                    for(int i=0;i<newList.size();i++){
+                        int oldsort = maxOldsort + i +1;
+                        String wjid = newList.get(i).getId();
+                        ajdzjzwjService.updateOldsort(wjid,oldsort);
+                    }
+                }
+            }
+        }
+
+
+
+
+        // ocr 识别进度
+        List<Map<String,Object>> list = ajdzjzwjService.getCountByFlag(ajbs);
+
+        if(null != list&&list.size()>0){
+            if(list.size() == 1){
+                if(list.get(0).get("flag").toString().equals("1")){
+                    return 1;      // 处理完成
+                }else{
+                    return "00";      //  未处理,与下面处理进度格式保持一致
+                }
+            }else{
+                int finish = Integer.parseInt(list.get(0).get("flagCount").toString());
+                int untreated = Integer.parseInt(list.get(1).get("flagCount").toString());
+                int total = finish + untreated;
+                int result = (int) ((new BigDecimal((float) finish / total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())*100);
+//                String str = result+"%";
+                return result;       // 处理进度
+            }
+        }else{
+            return 0;      // 没有文件
+        }
+    }
+
+    /**
+     *
+     * @Desc: 智能编目
+     * @return
+     * @Date: 2019/6/2
+     */
+    @PostMapping ("/intelligentCatalog")
+    @ResponseBody
+    public Object intelligentCatalog(@RequestParam("ajbs") String ajbs,@RequestParam("ajmc") String ajmc) throws Exception {
+        ajmc = PingYinUtil.getPingYin(ajmc); // 案件名称汉字转拼音
+        String outUrl = "D:\\"+ajmc; // 生成文件夹目录
+        Map<String,Integer> secondMlMap = new HashMap<>();
+        // 1.动态生成文件夹与文件
+        File file = new File(outUrl);
+        if(!file.exists()){//如果文件夹不存在
+            file.mkdir();//创建文件夹
+        }
+        List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent(ajbs,"-1");
+        for(Ajdzjzml ajdzjzml : mlList){
+            String secondMlName = PingYinUtil.getPingYin(ajdzjzml.getTypename()); // 一级目录的名称，汉语拼音
+            secondMlMap.put(secondMlName,ajdzjzml.getOrderby());
+            File ml = new File(outUrl+"\\"+secondMlName);
+            if(!ml.exists()){//如果文件夹不存在
+                ml.mkdir();//创建文件夹
+            }
+            List<Ajdzjzwj> wjList = ajdzjzwjService.selectWjByMlid(ajdzjzml.getId());
+            for(Ajdzjzwj wj:wjList){
+                try{//异常处理
+                    //创建文件
+                    BufferedWriter bw=new BufferedWriter(new FileWriter(outUrl+"\\"+secondMlName+"\\"+wj.getOcrsort()+".txt"));
+                    bw.write(wj.getOcrcontent());//在创建好的文件中写入ocr识别内容
+                    bw.close();//一定要关闭文件
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            FileOutputStream fos1 = new FileOutputStream(new File(outUrl+".zip"));
+            ZipUtil.toZip(outUrl, fos1, true);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+        // 2.卷宗上传
+        String url1 = "http://172.16.0.33:8080/autocatalog/submittask";
+        String url2 = "http://172.16.0.33:8080/autocatalog/getresult?taskid=";
+        String zipPath = outUrl+".zip";
+        String filename = ajmc+".zip";
+        String result = httpUtil.uploadFileToServer(zipPath,filename,url1); // post 上传压缩文件
+//        String testResult = "{\"taskid\":\"18\",\"statecode\":\"20\",\"message\":\"文件提交成功\"}";
+        JSONObject jsonObject = new JSONObject(result); // JSONObject.parseObject(result);
+        String taskid = jsonObject.get("taskid").toString();
+        String statecode = jsonObject.get("statecode").toString();
+        long startTime = System.currentTimeMillis();
+        while(true){
+            long endTime = System.currentTimeMillis();
+            if(endTime-startTime > 60*1000){
+                break;
+            }else{
+                if("20".contains(statecode)){ // 上传成功
+                    // 3.状态查询
+                    String getResult = httpUtil.doGet(url2 + taskid); // get 处理结果
+                    JSONObject finalObject = new JSONObject(getResult);
+                    String statecode2 = finalObject.get("statecode").toString();
+                    if("23".contains(statecode2)){ // 处理完成
+                        if(null != secondMlMap&&secondMlMap.size()>0){
+                            Set<String> secondMlMapKeys = secondMlMap.keySet();
+                            for (String secondMlMapKey:secondMlMapKeys){
+                                String xmlPath = finalObject.get(secondMlMapKey).toString();
+                                // 4.获取目录文件
+//                                String mlXml = httpUtil.doGet("http://172.16.0.33:8080/autocatalog/tasks/20/goody/qisujuanzong/catalogue.xml");
+                                String mlXml = httpUtil.doGet(xmlPath);
+                                JSONObject oObject = XML.toJSONObject(mlXml);
+                                String outline = oObject.get("outline").toString();
+                                JSONObject aObject = new JSONObject(outline);
+                                String archiveoutline = aObject.get("archiveoutline").toString();
+                                if(archiveoutline.replace(" ", "").length()>0){
+                                    JSONObject iObject = new JSONObject(archiveoutline);
+                                    Stack<JSONObject> stObj = new Stack<>();
+                                    stObj.push(iObject);
+                                    Map<String, Object> resultMap =new HashMap<>();
+                                    JsonToMap(stObj,resultMap);
+                                    Set<String> keys = resultMap.keySet();
+                                    for (String key:keys){
+                                        List<Ajdzjzznml> ajdzjzznmls = (List<Ajdzjzznml>) JSONArray.parseArray(resultMap.get(key).toString(), Ajdzjzznml.class);
+                                        for(Ajdzjzznml ajdzjzznml : ajdzjzznmls){
+//                                        log.info("oooooooooooooooooooooooooooooooooooo:" + ajdzjzznml.getTitle());
+                                            String typename = ajdzjzznml.getTitle();
+                                            int orderby = secondMlMap.get(secondMlMapKey);
+                                            int pageFrom = ajdzjzznml.getPageFrom();
+                                            int pageTo = ajdzjzznml.getPageTo();
+                                            ajdzjzmlService.addZnMl(ajbs,typename,orderby,pageFrom,pageTo);
+                                        }
+                                    }
+                                }else{
+                                    log.info("待编目文件内容为空！");
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return getZtree(1,ajbs);
+    }
+
+    /**
+     * @Author：gdy
+     * @Description：把json对象数据存储在map以键值对的形式存储，只存储叶节点
+     * @Date：
+     */
+    private static void JsonToMap(Stack<JSONObject> stObj, Map<String, Object> resultMap) throws Exception {
+        if(stObj == null && stObj.pop() == null){
+            return ;
+        }
+        JSONObject json = stObj.pop();
+        Iterator it = json.keys();
+        while(it.hasNext()){
+            String key = (String) it.next();
+            //得到value的值
+            Object value = json.get(key);
+            //System.out.println(value);
+            if(value instanceof JSONObject)
+            {
+                stObj.push((JSONObject)value);
+                //递归遍历
+                JsonToMap(stObj,resultMap);
+            }
+            else {
+                resultMap.put(key, value);
+            }
+        }
+    }
+
+    /**
+     *
+     * @Desc: 获取zTree
+     * @Date: 2019/6/10
+     */
+    private Object getZtree(int type,String ajbs){
+        List<Ajdzjzwj> undealtList = ajdzjzwjService.selectUndealtWj(ajbs);
+        String undealt = "未识别";
+        if(null != undealtList && undealtList.size() > 0){
+            undealt = undealt + " (" + undealtList.size() +")";
+        }
+        List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent(ajbs,"-1");
+        List<Map<String,Object>> treeList = new ArrayList<>();
+        if(mlList.size() > 0) {
+            for (int i = 0; i < mlList.size(); i++) {
+                Map<String,Object> treeMap = new HashMap<>();
+                treeMap.put("id",mlList.get(i).getOrderby());
+                treeMap.put("pId",0);
+                treeMap.put("name",mlList.get(i).getTypename());
+                if("-1".equals(mlList.get(i).getParentid())){
+//            treeMap.put("open",true);// 展开
+                    treeMap.put("drag",false);// 禁止拖拽
+                    treeMap.put("isParent",true);
+                }
+                treeList.add(treeMap); // 一级目录
+                if(type == 0){
+                    List<String> mlids = new ArrayList<>();
+                    mlids.add(mlList.get(i).getId());
+                    List<Ajdzjzml> ajdzjzmlList = ajdzjzmlService.selectDzjzmlByParent(ajbs,mlList.get(i).getOrderby().toString());
+                    if(null != ajdzjzmlList && ajdzjzmlList.size() > 0){
+                        for(Ajdzjzml ajdzjzml : ajdzjzmlList){
+                            mlids.add(ajdzjzml.getId());
+                        }
+                    }
+                    List<Ajdzjzwj> wjList = ajdzjzwjService.selectWjByMlids(mlids);
+                    setZtree(mlList,wjList,treeList,i);
+//                    List<Ajdzjzwj> wjList = ajdzjzwjService.selectWjByMlid(mlList.get(i).getId());
+//                    setZtree(mlList,wjList,treeList,i);// 目录文件
+//                    List<Ajdzjzml> secondMl = ajdzjzmlService.selectDzjzmlByParent(mlList.get(i).getOrderby().toString());
+//                    if(secondMl.size()>0){
+//                        for(Ajdzjzml a : secondMl){
+//                            List<Ajdzjzwj> wjList2 = ajdzjzwjService.selectWjByMlid(a.getId());
+//                            setZtree(mlList,wjList2,treeList,i);// 智能目录下的文件
+//                        }
+//                    }
+                }else if(type == 1){
+                    List<Ajdzjzml> znml = ajdzjzmlService.selectDzjzmlByParent(ajbs,mlList.get(i).getOrderby().toString());
+                    if(null != znml && znml.size() > 0){
+                        for (int z=0;z<znml.size();z++) {
+                            Map<String, Object> znMap = new HashMap<>();
+                            znMap.put("id", znml.get(z).getOrderby());
+                            znMap.put("pId", znml.get(z).getParentid());
+                            znMap.put("name", znml.get(z).getTypename());
+                            znMap.put("drag",false);// 禁止拖拽
+                            treeList.add(znMap);
+                        }
+                        Map<String, Object> otherMap2 = new HashMap<>();
+                        otherMap2.put("id", 10001);
+                        otherMap2.put("pId", mlList.get(i).getOrderby());
+                        otherMap2.put("name", undealt);
+                        otherMap2.put("drag",false);// 禁止拖拽
+                        treeList.add(otherMap2);
+                    }else{
+                        treeList.clear();
+                    }
+                }
+
+            }
+        }
+        return JSONArray.toJSONString(treeList);
+    }
+
+    /**
+     * @Desc: zTree赋值
+     * @Date: 2019/5/21
+     */
+    private void setZtree(List<Ajdzjzml> mlList,List<Ajdzjzwj> wjList,List<Map<String,Object>> treeList,int n){
+        if(null != wjList && wjList.size() > 0){
+            for (int k=0;k<wjList.size();k++) {
+                Map<String, Object> treeMap = new HashMap<>();
+                treeMap.put("id", mlList.get(n).getOrderby() + "" + wjList.get(k).getOldsort());
+                treeMap.put("pId", mlList.get(n).getOrderby());
+                treeMap.put("name", String.format("%03d", wjList.get(k).getOldsort()));
+                treeMap.put("wjid", wjList.get(k).getId());
+                treeList.add(treeMap);
+            }
+        }
+    }
+
+}

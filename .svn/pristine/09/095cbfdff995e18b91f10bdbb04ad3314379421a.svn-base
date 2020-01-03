@@ -1,0 +1,31 @@
+package com.netmarch.fdfs.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.fdfs.system.bean.Ajjbxx;
+import com.netmarch.fdfs.system.bean.PagesStatic;
+import com.netmarch.fdfs.system.mapper.AjjbxxMapper;
+import com.netmarch.fdfs.system.service.AjjbxxService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
+
+@Service
+public class AjjbxxServiceImpl implements AjjbxxService {
+
+    @Autowired
+    private AjjbxxMapper ajjbxxMapper;
+
+
+//    @Override
+//    public Page<Map<String, Object>> getAllCase(Integer pageNo) {
+//        PageHelper.startPage(pageNo, PagesStatic.PAGES_SIZE);
+//        return ajjbxxMapper.getAllCase();
+//    }
+    @Override
+    public Page<Ajjbxx> getAllCase(Integer pageNo) {
+        PageHelper.startPage(pageNo, PagesStatic.PAGES_SIZE);
+        return ajjbxxMapper.getAllCase();
+    }
+}

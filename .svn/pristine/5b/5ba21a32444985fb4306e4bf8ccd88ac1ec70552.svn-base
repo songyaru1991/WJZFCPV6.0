@@ -1,0 +1,26 @@
+package util.excel.model;//package cn.com.flaginfo.biz.exam.service.common.excel.model;
+//
+//import java.io.Serializable;
+//
+//import org.apache.poi.hssf.util.HSSFColor;
+//
+//import cn.com.flaginfo.biz.exam.service.common.excel.annotation.util.ExcelField;
+//import lombok.Data;
+//
+//@Data
+//public class ExamUserExcel  implements Serializable{
+//	@ExcelField(title = "序号",order=1,columnWidth=20)
+//	private Integer num;
+//	
+//	@ExcelField(title = "姓名",order=1,columnWidth=50,color=HSSFColor.BLUE_GREY.index)
+//	private String name;
+//	
+//	@ExcelField(title = "所属组织",order=1,columnWidth=50,align="left")
+//	private String groupName;
+//	
+//	@ExcelField(title = "联系方式",order=1,columnWidth=30,align="right")
+//	private String phone;
+//	
+//	@ExcelField(title = "回收状态",order=1,columnWidth=30,color=HSSFColor.RED.index,align="center")
+//	private String  status;
+//}

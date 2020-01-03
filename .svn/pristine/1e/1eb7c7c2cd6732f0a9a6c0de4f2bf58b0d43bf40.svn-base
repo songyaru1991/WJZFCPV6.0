@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>涉案财物列表</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.admin.css">
+    <script src="../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+
+
+</head>
+<body>
+<div class="H105_page">
+    <div class="H105_top">
+        <div class="H105_title fl">
+            <p>南明区政法部门协同办案（刑事）系统</p>
+        </div>
+        <div class="H105_dateCoat fr">
+            <div class="H105_date fl">
+                <span class="H105_dateTime"></span>
+            </div>
+            <img src="../images/H105_badge.png" alt="" class="H105_badge fl">
+            <div class="H105_name fl">
+                <span>屈臣元</span>
+            </div>
+            <img src="../images/H105_setting.png" alt="" class="H105_setting fl">
+        </div>
+
+        <div class="H105_labelCoat">
+            <img src="../images/H105_type.png" alt="" class="H105_type fl">
+            <div class="H105_label H105_label2 fl" lay-id="html/index1.html" >
+                <span>案件管理</span>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!--iframe1-->
+    <div class="H105_content clear jq_iframeleft">
+        <div class="H105_leftBody">
+            <div class="H105_menu">
+
+                <ul class="I106_navList clear">
+
+                    <li>
+                        <div class="I106_navItem  I106_navItemCurrent ">
+                            <span class="I106_navIcon I106_navIcon1"></span>
+                            <span>案件管理</span>
+                            <span class="I106_arrow I106_arrowCurrent"></span>
+                        </div>
+
+                        <ul class="I106_subNavList" style="display: block;">
+                            <li  lay-href="html/index1.html" data-content="报案财物">
+                                <span class="I106_subNavItem">报案财物</span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li  lay-href="html/xxfb222.html" data-content="报财1">
+                                <span class="I106_subNavItem">报财1</span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li  lay-href="html/xxfb333.html" data-content="案物2">
+                                <span class="I106_subNavItem">案物2</span>
+                                <div class="H105_num">18</div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <div class="I106_navItem   ">
+                            <span class="I106_navIcon I106_navIcon2"></span>
+                            <span>换押管理</span>
+                            <span class="I106_arrow "></span>
+                        </div>
+                        <ul class="I106_subNavList"  >
+                            <li>
+                                <span class="I106_subNavItem">案件查找 </span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li>
+                                <span class="I106_subNavItem">案件查找 </span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li>
+                                <span class="I106_subNavItem">报捕案件(1410124)</span>
+                                <div class="H105_num">18</div>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <div class="I106_navItem   ">
+                            <span class="I106_navIcon I106_navIcon3"></span>
+                            <span>文书管理</span>
+                            <span class="I106_arrow "></span>
+                        </div>
+                        <ul class="I106_subNavList" >
+                            <li>
+                                <span class="I106_subNavItem">案件查找 </span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li>
+                                <span class="I106_subNavItem">案件查找 </span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li>
+                                <span class="I106_subNavItem">报捕案件(1410124)</span>
+                                <div class="H105_num">18</div>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <div class="I106_navItem   ">
+                            <span class="I106_navIcon I106_navIcon4"></span>
+                            <span>系统管理</span>
+                            <span class="I106_arrow "></span>
+                        </div>
+                        <ul class="I106_subNavList"  >
+                            <li>
+                                <span class="I106_subNavItem">案件查找 </span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li>
+                                <span class="I106_subNavItem">案件查找 </span>
+                                <div class="H105_num">18</div>
+                            </li>
+                            <li>
+                                <span class="I106_subNavItem">报捕案件(1410124)</span>
+                                <div class="H105_num">18</div>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!--iframe2-->
+        <div class="H105_iframeright">
+            <div class="H105_wripper">
+                <div class="H105_subtitle clear">
+                    <div class="H105_local fl">
+                        <img src="../images/H105_local.png" alt="" class="H105_caseImg fl">
+                        <p>案件管理：在办案件</p>
+                    </div>
+
+                    <div class="H105_searchCoat fr clear">
+                        <select name="" id="" class="H105_select fl">
+                            <option value="">案件名称</option>
+                            <option value="">嫌疑人名称</option>
+                            <option value="">案件编号</option>
+                        </select>
+                        <input type="text" class="H105_search fl">
+                        <div class="H105_searchBtn fl ">搜索</div>
+                        <div class="H105_search1 fl">新增</div>
+                    </div>
+                </div>
+                <div class="H105_sysList">
+
+
+                    <table class="H105_table ">
+                        <tr class="H105_thead">
+                            <td >案件编号</td>
+                            <td>案件名称</td>
+                            <td>嫌疑人</td>
+                            <td>立案时间</td>
+                            <td>主办单位</td>
+                            <td>案件状态</td>
+
+                        </tr>
+                        <tr>
+                            <td  class="H105_clickEvent" lay-href="html/xxfb111.html" data-content="李思盗窃案">FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+                        </tr>
+                        <tr >
+                            <td class="H105_clickEvent" lay-href="html/xxfb222.html" data-content="11">FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td class="H105_clickEvent" lay-href="html/xxfb333.html" data-content="2222"> FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                        <tr>
+                            <td>FX45464646131</td>
+                            <td>李思盗窃案</td>
+                            <td>吴武进</td>
+                            <td>报送收案</td>
+                            <td>2018-10-26 13:20</td>
+                            <td>2018-10-26 13:20</td>
+
+                        </tr>
+                    </table>
+                    <div class="H105_pageCoat clear">
+                        <div class="H105_show clear fl">
+                            <p> 本页显示:1-10 总记录数： 38 </p>
+                            <img src="../images/H105_refresh.png" alt="" class="H105_refreshImg fl">
+                            <img src="../images/H105_refresh2.png" alt="" class="H105_refreshImg fl">
+                            <img src="../images/H105_refresh3.png" alt="" class="H105_refreshImg fl">
+                        </div>
+
+
+                        <div class="H105_page fr    clear">
+                            <img src="../images/H105_lasePage1.png" alt="" class="H105_lastPage fl">
+                            <img src="../images/H105_lasePage2.png" alt="" class="H105_lastPage fl">
+                            <div class="H105_first fl">
+                                第 <input type="text"> 页，共4页
+                            </div>
+                            <img src="../images/H105_lasePage3.png" alt="" class="H105_lastPage fl">
+                            <img src="../images/H105_lasePage4.png" alt="" class="H105_lastPage fl">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--/iframe2-->
+    </div>
+    <!--/iframe1-->
+
+</div>
+</body>
+</html>

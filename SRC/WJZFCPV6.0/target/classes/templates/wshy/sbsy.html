@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<form id="form" method="post">
+    <div class="E105_wripper jq_iframeleft">
+    <div class="E105_case1">
+
+        <div class="E105_tableCoat ">
+
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>上报市院</p>
+                </div>
+
+            </div>
+
+            <div class="P105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>人员编号:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" name="RYBH" id="RYBH" th:value="${ksryjbxx.RYBH}" readonly="true">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人姓名:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl" name="XM" id="XM" th:value="${ksryjbxx.XM}" readonly="true">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>性别:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl" name="XB" id="XB" th:value="${ksryjbxx.XB}"  readonly="true">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>证件号码</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" name="ZJHM" id="ZJHM" th:value="${ksryjbxx.ZJHM}" readonly="true">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>换押部门</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl" name="HYBM" id="HYBM"  th:value="${hyxxb.HYBM}">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>换押原因</p><span class="E105_star">*</span>
+                            </div>
+                            <select name="HYYY" id="HYYY" class="E105_input  fl">
+                                <option value="">--请选择--</option>
+                                <option value="逮捕">逮捕</option>
+                                <option  value="审查起诉">审查起诉</option>
+                                <option  value="退回公安补充侦查">退回公安补充侦查</option>
+                                <option  value="起诉">起诉</option>
+                                <option  value="退回检察补充侦查">退回检察补充侦查</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>换押日期</p><span class="E105_star">*</span>
+                            </div>
+                            <input name="HYRQ"
+                                   type="text"
+                                   id="HYRQ"
+                                   class="E105_input  fl"
+                                   autocomplete="off">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>文书文号</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" name="WSWH" id="WSWH" th:value="${hyxxb.WSWH}">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>同案人</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" name="TAR" id="TAR" th:value="${hyxxb.TAR}">
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <input type="hidden" name="JLBH" id="JLBH" th:value="${hyxxb.JLBH}"/>
+
+            <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+            <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+            <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+            <input type="hidden" name="isShowAll" id="isShowAll" th:value="${isShowAll}"/>
+
+            <div class="S105_btnCoat1 ">
+                <div class="E105_saveBtnCoat clear">
+                    <div class="S105_saveBtn fl cursor"  th:onclick="saveJcySbsy()"><p>保存</p></div>
+                    <div class="S105_saveBtn fl cursor jq_E105_cannel3"><p>返回</p></div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+</form>
+</body>
+<script>
+    var contextPath = getContextPath();
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+// 点我触发
+        laydate.render({
+            elem: '#HYRQ',
+            trigger: 'click',
+            format: 'yyyy-MM-dd',
+            value:new Date(),
+            min:0
+        });
+    });
+
+    saveJcySbsy = function (){
+        var data = {
+            RYBH: "input NotNull", HYBM: "input NotNull",HYYY: "input NotNull", HYRQ: "input NotNull"
+        };
+        var flag = V_CHECK(data);
+        if (!flag) {
+            return;
+        }
+
+        $.ajax({
+            url: contextPath + '/Wshy/saveJcySbsy',
+            type:"post",
+            data:$("#form").serialize(),
+            dataType:"json",
+            success: function (result) {
+                if (result.code == 200) {
+                    layer.alert(result.message, function (index) {
+                        layer.close(layer.index);
+                        parent.$('.src_iframeleft').attr('src', result.nextUrl);
+                    });
+
+                } else {
+                    layer.alert(result.message);
+                    return;
+                }
+            },
+            error: function (result) {
+                alert("error");
+                $('.src_iframeleft').attr('src', result.nextUrl);
+            }
+        })
+        return false;
+    }
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+    })
+</script>
+</html>

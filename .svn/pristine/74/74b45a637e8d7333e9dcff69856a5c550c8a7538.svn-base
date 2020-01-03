@@ -1,0 +1,65 @@
+package com.netmarch.gaj.common.utils;
+
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hwpf.HWPFDocumentCore;
+import org.apache.poi.hwpf.converter.WordToHtmlConverter;
+import org.apache.poi.hwpf.converter.WordToHtmlUtils;
+import org.apache.poi.xwpf.converter.core.BasicURIResolver;
+import org.apache.poi.xwpf.converter.core.FileImageExtractor;
+import org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;
+import org.apache.poi.xwpf.converter.xhtml.XHTMLOptions;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
+
+/**
+ * @author gdy
+ * @Title: WordUtil
+ * @Package utils
+ * @Description: 文档处理
+ * @date 2019/9/3 17:13
+ */
+public class WordUtil {
+    //docx转换html
+    public static String docxToHtml(String fileName) throws IOException {
+        XWPFDocument docxDocument = new XWPFDocument(new FileInputStream(fileName));
+        // 配置
+        XHTMLOptions options = XHTMLOptions.create();
+        // 设置图片存储路径
+        String path = System.getProperty("java.io.tmpdir");
+        String firstImagePathStr = path + "/" + String.valueOf(System.currentTimeMillis());
+        options.setExtractor(new FileImageExtractor(new File(firstImagePathStr)));
+        options.URIResolver(new BasicURIResolver(firstImagePathStr));
+        // 转换html
+        ByteArrayOutputStream htmlStream = new ByteArrayOutputStream();
+        XHTMLConverter.getInstance().convert(docxDocument, htmlStream, options);
+        String htmlStr = htmlStream.toString();
+        // 将image文件转换为base64并替换到html字符串里
+        String middleImageDirStr = "/word/media";
+        String imageDirStr = firstImagePathStr + middleImageDirStr;
+        File imageDir = new File(imageDirStr);
+        String[] imageList = imageDir.list();
+        if (imageList != null) {
+            for (int i = 0; i < imageList.length; i++) {
+                String oneImagePathStr = imageDirStr + "/" + imageList[i];
+                File oneImageFile = new File(oneImagePathStr);
+                String imageBase64Str = new String(Base64.encodeBase64(FileUtils.readFileToByteArray(oneImageFile)), "UTF-8");
+                htmlStr = htmlStr.replace(oneImagePathStr, "data:image/png;base64," + imageBase64Str);
+            }
+        }
+        //删除图片路径
+        File firstImagePath = new File(firstImagePathStr);
+        FileUtils.deleteDirectory(firstImagePath);
+        System.out.println(htmlStr);
+        return htmlStr;
+    }
+}

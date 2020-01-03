@@ -1,0 +1,206 @@
+package com.netmarch.jzzngd.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.netmarch.jzzngd.common.controller.FrontBaseController;
+import com.netmarch.jzzngd.common.thymeleaf.AuthElementTagProcessor;
+import com.netmarch.jzzngd.common.utils.UsersUtil;
+import com.netmarch.jzzngd.system.bean.StaticObj;
+import com.netmarch.jzzngd.system.bean.SysResource;
+import com.netmarch.jzzngd.system.bean.ZtreeObj;
+import com.netmarch.jzzngd.system.service.SysResourcesService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import util.web.JsonResult;
+import util.web.ResultCodes;
+
+import java.util.List;
+
+/**
+ * @program: figurecloud
+ * @description: resource controller
+ **/
+@Controller
+@RequestMapping("/resource/*")
+@Slf4j
+public class SysResourcesController extends FrontBaseController {
+
+    @Autowired
+    private SysResourcesService sysResourcesService;
+
+    @Autowired
+    private UsersUtil usersUtil;
+
+    @RequestMapping("list")
+    public String list(SysResource resource, String keyword, Model model){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            Page<SysResource> resourcesList = sysResourcesService.getResourcesList(keyword, resource);
+            model.addAttribute("list", resourcesList);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("parentId", resource.getParentId());
+            log(user_Id, "查询列表", "获取资源信息列表", "资源管理(涉案财物系统)", false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id, "查询列表",  e.toString(), "资源管理(涉案财物系统)", true);
+        }
+        return "resource/list";
+    }
+
+    @RequestMapping("/ztree")
+    @ResponseBody
+    public List<ZtreeObj> getTree(){
+        String user_Id= usersUtil.getLoginUser_Id();
+        List<ZtreeObj> list = sysResourcesService.getTree();
+        log(user_Id, "查询列表", "获取资源树", "资源管理(涉案财物系统)", false);
+        return list;
+    }
+
+
+
+    /**
+     * 添加页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toAdd")
+    public String toAdd(Model model, String pId){
+        String user_Id = "";
+        try {
+            user_Id = usersUtil.getLoginUser_Id();
+            pId = StringUtils.isEmpty(pId) ? "1" : pId;
+            String pName = "";
+            if (!"1".equals(pId)) {
+                pName = sysResourcesService.getResourceById(pId).getName();
+            } else {
+                pName = "根结点";
+            }
+            model.addAttribute("pName", pName);
+            model.addAttribute("pId", pId);
+            log(user_Id, "点击资源新增按钮", "打开资源新增页面", "资源管理(涉案财物系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击资源新增按钮", e.toString(), "资源管理(涉案财物系统)", true);
+            e.printStackTrace();
+        }
+        return "resource/add";
+    }
+
+    /**
+     * 编辑页面
+     * @param model
+     * @return
+     */
+    @GetMapping("toEdit")
+    public String toEdit(Model model, String id){
+        String user_Id = "";
+        try {
+            user_Id = usersUtil.getLoginUser_Id();
+            SysResource resouce = sysResourcesService.getResourceById(id);
+            model.addAttribute("bean", resouce);
+            String jsonResults = JSON.toJSONString(resouce);
+            log(user_Id, "点击资源编辑按钮", "编辑前资源信息为:" + jsonResults, "资源管理(涉案财物系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击资源编辑按钮", e.toString(), "资源管理(涉案财物系统)", true);
+            e.printStackTrace();
+        }
+        return "resource/edit";
+    }
+
+    /**
+     * 保存
+     * @param resource
+     * @return
+     */
+    @RequestMapping("/add")
+    @ResponseBody
+    public JsonResult save(SysResource resource){
+        String user_Id="";
+        try {
+             user_Id= usersUtil.getLoginUser_Id();
+            int countName = sysResourcesService.checkRepeatByName(resource);
+            if(countName > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_NAME);
+            }
+            int countCode = sysResourcesService.checkRepeatByCode(resource);
+            if(countCode > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_CODE);
+            }
+            String jsonResults=JSON.toJSONString(resource);
+            int result = sysResourcesService.save(resource);
+            if(result < 0){
+                log(user_Id,"新增资源","新增资源失败"+jsonResults,"资源管理(涉案财物系统)",false);
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+            }
+
+            log(user_Id,"新增资源",jsonResults,"资源管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            log(user_Id,"新增资源",e.toString(),"资源管理(涉案财物系统)",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS, StaticObj.UPDATE_MSG_SUCCESS,
+                "/resource/list?parentId="+resource.getParentId());
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public JsonResult edit(SysResource resource){
+        String user_Id="";
+        try {
+            user_Id= usersUtil.getLoginUser_Id();
+            int countName = sysResourcesService.checkRepeatByName(resource);
+            if(countName > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_NAME);
+            }
+            int countCode = sysResourcesService.checkRepeatByCode(resource);
+            if(countCode > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_CODE);
+            }
+            int result = sysResourcesService.editResource(resource);
+            String jsonResults=JSON.toJSONString(resource);
+            if(result <= 0){
+                log(user_Id,"编辑资源","编辑资源失败"+jsonResults,"资源管理(涉案财物系统)",false);
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+            log(user_Id,"编辑资源","编辑后资源信息:"+jsonResults,"资源管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            log(user_Id,"编辑资源",e.toString(),"资源管理",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS,
+                "/resource/list?parentId="+resource.getParentId());
+    }
+
+    @RequestMapping("delBatch")
+    @ResponseBody
+    public JsonResult delBatch(String ids, Integer pId){
+        String user_Id="";
+        try {
+            user_Id= usersUtil.getLoginUser_Id();
+            int result = sysResourcesService.delBatch(ids);
+            if(result <= 0){
+                log(user_Id,"删除资源","批量删除id为"+ids+"的资源信息失败","资源管理(涉案财物系统)",false);
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+            log(user_Id,"删除资源","批量删除id为"+ids+"的资源信息","资源管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            log(user_Id,"删除资源",e.toString(),"资源管理(涉案财物系统)",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS,
+                "/resource/list?parentId="+pId);
+    }
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>法院--涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/web/system/access/access.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <style>
+        .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
+            /* display: none; */
+            display: inline-block!important;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" method="get"
+      th:action="${application.basePath}+'/user/edit'" >
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>基本信息</legend>
+                </fieldset>
+            </div>
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <input type="hidden" id="id" name="id" th:value="${bean.id}">
+                        <td class="T106_itemName T106_must">角色名称</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" type="text" name="name" id="name"
+                                   th:value="${bean.name}">
+                        </td>
+                        <td class="T106_itemName T106_must">编码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" type="text" name="code" id="code"
+                                   th:value="${bean.code}">
+                        </td>
+                        <td class="T106_itemName T106_must">描述</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="description" id="description" type="text"
+                                   th:value="${bean.description}">
+                        </td>
+                        <td></td>
+                    </tr>
+                    <input type="hidden" name="resIds" id="resIds">
+                </table>
+            </div>
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>权限资源</legend>
+                </fieldset>
+            </div>
+            <div class="T106_tableOuter" style="max-height: 420px; overflow-y: auto;">
+                <ul id="treeData" class="ztree" style="padding-left: 10%;"></ul>
+            </div>
+            <input type="hidden" id="parentId" name="parentId" th:value="${parentId}"/>
+
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="submit();">确定</div>
+            <div class="A106_button A106_button2" onclick="javascript:window.parent.layerclose();">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var resids = [[${resids}]];
+    var basePath = [[${application.basePath}]];
+    /*]]>*/
+
+    $(function(){
+        loadTree();
+    })
+
+
+    function submit() {
+        var data = {name:"input NotNull", code:"input NotNull", description:"input NotNull"};
+        var flag = V_CHECK(data);
+        if(!flag){
+            return;
+        }
+        var resIds = '';
+        $("input:checkbox[name='resId']:checked").each(function () {
+            resIds += $(this).val() + ",";
+        })
+        resIds = resIds.substring(0,resIds.length-1);
+        if(resIds == ''){
+            layer.alert("请选择权限资源！");
+            return;
+        }
+        $("#resIds").val(resIds);
+        $.ajax({
+            url:basePath+"/role/edit",
+            type:"post",
+            data:$("#form").serialize(),
+            dataType:"json",
+            success:function(result){
+                if(result.code == 200){
+                    layer.alert(result.message,function () {
+                        parent.parent.$('.H105_iframeright').attr('src', basePath+result.nextUrl);
+                    });
+                }else{
+                    layer.alert(result.message);
+                    return;
+                }
+            }
+        })
+    }
+
+    function loadTree(){
+        var id = $("#parentId").val() == 0 ? 1 : $("#parentId").val();
+        $.ajax({
+            url:basePath+"/resource/ztree",
+            type:"post",
+            dataType:"json",
+            success:function (result) {
+                $.fn.zTree.init($("#treeData"), setting, result);
+                var treeObj = $.fn.zTree.getZTreeObj("treeData");
+                treeObj.expandAll(true);
+                selNode(id);
+            }
+        })
+    }
+
+    var setting = {
+        data:{
+            simpleData:{
+                enable:true
+            }
+        },
+        view:{
+            showIcon: false,
+            addDiyDom:addCheckBox
+        },
+        callback:{
+            beforeClick: zTreeBeforeClick
+        }
+    }
+
+    function addCheckBox(treeId,treeNode) {
+        var  strCheck = "";
+        if(resids != null){
+            for (var int = 0; int < resids.length; int++) {
+                if(treeNode.id == (resids[int]*1)) strCheck = "checked";
+            }
+        }
+        if (treeNode.parentNode && treeNode.parentNode.id!=0) return;
+        var aObj = $("#" + treeNode.tId + "_a");
+        var editStr = "";
+        if(treeNode.type == "1"){
+            editStr +=
+                "<span><input lay-ignore id='selAll"+treeNode.tId+"' "+strCheck+" name='resId' value='"+treeNode.id+"' type='checkbox'/> 主菜单</span>";
+        }else if(treeNode.type == "2"){
+            editStr +=
+                "<span><input lay-ignore id='selAll"+treeNode.tId+"' "+strCheck+" name='resId' value='"+treeNode.id+"' type='checkbox'/> 子菜单</span>";
+        }else if(treeNode.type != ""){
+            editStr +=
+                "<span><input lay-ignore id='selAll"+treeNode.tId+"' "+strCheck+" name='resId' value='"+treeNode.id+"' type='checkbox'/>按钮</span>";
+        }
+        aObj.after(editStr);
+        $("#selAll" + treeNode.tId).click(function(){
+            checked(this,treeId,treeNode);
+        });
+
+    }
+    function checked(obj,treeId, treeNode) {
+        if (treeNode.isParent) {
+            var childrenNodes = treeNode.children;
+            if (childrenNodes) {
+                for (var i = 0; i < childrenNodes.length; i++) {
+                    $("#selAll" + childrenNodes[i].tId).prop("checked",obj.checked);
+                    checked(obj,treeId, childrenNodes[i]);
+                }
+            }
+        }
+    }
+
+    function zTreeBeforeClick(treeId, treeNode, clickFlag) {
+        $("#parentId").val(treeNode.id);
+    }
+
+    function selNode(id) {
+        $("#parentId").val(id);
+        var treeObj = $.fn.zTree.getZTreeObj("treeData");
+        var node = treeObj.getNodeByParam("id",id);
+        treeObj.cancelSelectedNode();
+        treeObj.selectNode(node, true);
+        treeObj.expandNode(node, true, false);
+    }
+</script>
+</html>

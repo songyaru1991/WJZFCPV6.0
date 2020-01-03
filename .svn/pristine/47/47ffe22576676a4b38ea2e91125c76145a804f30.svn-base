@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.lssqyj.system.mapper.LoginUserMapper">
+
+    <select id="getUserList" parameterType="String"
+            resultType="com.netmarch.lssqyj.system.bean.LoginUser">
+        select a.user_Id,a.loginname,a.password,a.username,a.jh,a.AREA_CODE areaCode,a.area,a.yhlb,
+        GROUP_CONCAT(r.name) as grantroles,a.zhiwei,a.mobilephone,
+        a.yhdw, b.name ssks,a.sfxszjclaj,a.fingertemplate,a.userstate,a.addtime,a.adduser,a.IP_LIMIT ipLimit,a.usertype
+        from users a left join departments b on a.SSKS=b.ID
+        inner join sys_role r  on FIND_IN_SET(r.id,a.grantroles)
+        where 1=1
+        <if test="yhlb != '' and yhlb != null" >
+            and  a.yhlb=#{yhlb,jdbcType=VARCHAR}
+        </if>
+
+        <if test="areaCode != '' and areaCode != null" >
+            and  a.AREA_CODE=#{areaCode,jdbcType=VARCHAR}
+        </if>
+
+        <if test="area != '' and area != null" >
+            and  a.area=#{area,jdbcType=VARCHAR}
+        </if>
+
+        <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+            <if test='searchCondition == "searchLoginName"'>
+                and a.loginname like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchUserName"'>
+                and a.username like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchSsks"'>
+                and b.name like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+        </if>
+        group by a.user_Id
+    </select>
+
+    <select id="getRoleIdByUserId"
+            parameterType="String"  resultType="com.netmarch.lssqyj.system.bean.SysRole">
+        select a.id,a.id,a.code,a.name,a.create_User createUser,a.create_Time createTime,a.update_User updateUser,a.update_Time updateTime,
+        a.is_Delete isDelete,a.description
+        from sys_role a join sys_users_role b on a.id=b.sys_role_id where 1=1
+        <if test="_parameter != '' and _parameter != null" >
+            and  b.sys_users_id = #{user_Id}
+        </if>
+    </select>
+
+    <select id="getUserRoleIdsByUserId" parameterType="String" resultType="Integer">
+        select sys_role_id from sys_users_role where sys_users_id = #{user_Id}
+    </select>
+
+    <select id="getUserTypeByUserId" parameterType="String" resultType="Integer">
+        select usertype from users where user_id = #{user_Id}
+    </select>
+
+    <insert id="insertUserRole" parameterType="List">
+        insert into sys_users_role (sys_users_id, sys_role_id) VALUES
+        <foreach collection="list" item="bean" index="index" separator=",">
+            (#{bean.sysLoginUserId},#{bean.sysRoleId})
+        </foreach>
+    </insert>
+
+</mapper>

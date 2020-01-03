@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.ZwlzMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wssacw.system.bean.Zwlz">
+    <id column="JLBH" jdbcType="VARCHAR" property="jlbh" />
+    <result column="ZWBH" jdbcType="VARCHAR" property="zwbh" />
+    <result column="OPERATE_USERID" jdbcType="VARCHAR" property="operateUserid" />
+    <result column="OPERATE_USERNAME" jdbcType="VARCHAR" property="operateUsername" />
+    <result column="ACTION" jdbcType="VARCHAR" property="action" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+    <result column="MSG_STATUS_GA" jdbcType="VARCHAR" property="msgStatusGa" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="MSG_STATUS_FY" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="MSG_STATUS_ZFW" jdbcType="VARCHAR" property="msgStatusZfw" />
+    <result column="MSG_STATUS_SFJ" jdbcType="VARCHAR" property="msgStatusSfj" />
+    <result column="DQLZDW" jdbcType="VARCHAR" property="dqlzdw" />
+    <result column="LZSJ" jdbcType="TIMESTAMP" property="lzsj" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    JLBH, ZWBH, OPERATE_USERID, OPERATE_USERNAME, ACTION, MSG_OP, MSG_DATE, MSG_STATUS_GA, 
+    MSG_STATUS_JCY, MSG_STATUS_FY, MSG_STATUS_ZFW, MSG_STATUS_SFJ, DQLZDW, LZSJ
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zwlz
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from zwlz
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wssacw.system.bean.Zwlz">
+    insert into zwlz (JLBH, ZWBH, OPERATE_USERID, 
+      OPERATE_USERNAME, ACTION, MSG_OP, 
+      MSG_DATE, MSG_STATUS_GA, MSG_STATUS_JCY, 
+      MSG_STATUS_FY, MSG_STATUS_ZFW, MSG_STATUS_SFJ, 
+      DQLZDW, LZSJ)
+    values (#{jlbh,jdbcType=VARCHAR}, #{zwbh,jdbcType=VARCHAR}, #{operateUserid,jdbcType=INTEGER}, 
+      #{operateUsername,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{msgOp,jdbcType=INTEGER}, 
+      #{msgDate,jdbcType=TIMESTAMP}, #{msgStatusGa,jdbcType=VARCHAR}, #{msgStatusJcy,jdbcType=VARCHAR}, 
+      #{msgStatusFy,jdbcType=VARCHAR}, #{msgStatusZfw,jdbcType=VARCHAR}, #{msgStatusSfj,jdbcType=VARCHAR}, 
+      #{dqlzdw,jdbcType=VARCHAR}, #{lzsj,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wssacw.system.bean.Zwlz">
+    insert into zwlz
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        JLBH,
+      </if>
+      <if test="zwbh != null">
+        ZWBH,
+      </if>
+      <if test="operateUserid != null">
+        OPERATE_USERID,
+      </if>
+      <if test="operateUsername != null">
+        OPERATE_USERNAME,
+      </if>
+      <if test="action != null">
+        ACTION,
+      </if>
+      <if test="msgOp != null">
+        MSG_OP,
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE,
+      </if>
+      <if test="msgStatusGa != null">
+        MSG_STATUS_GA,
+      </if>
+      <if test="msgStatusJcy != null">
+        MSG_STATUS_JCY,
+      </if>
+      <if test="msgStatusFy != null">
+        MSG_STATUS_FY,
+      </if>
+      <if test="msgStatusZfw != null">
+        MSG_STATUS_ZFW,
+      </if>
+      <if test="msgStatusSfj != null">
+        MSG_STATUS_SFJ,
+      </if>
+      <if test="dqlzdw != null">
+        DQLZDW,
+      </if>
+      <if test="lzsj != null">
+        LZSJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        #{jlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="zwbh != null">
+        #{zwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserid != null">
+        #{operateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="operateUsername != null">
+        #{operateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgStatusGa != null">
+        #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="dqlzdw != null">
+        #{dqlzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="lzsj != null">
+        #{lzsj,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wssacw.system.bean.Zwlz">
+    update zwlz
+    <set>
+      <if test="zwbh != null">
+        ZWBH = #{zwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserid != null">
+        OPERATE_USERID = #{operateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="operateUsername != null">
+        OPERATE_USERNAME = #{operateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        ACTION = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        MSG_OP = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgStatusGa != null">
+        MSG_STATUS_GA = #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        MSG_STATUS_JCY = #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        MSG_STATUS_FY = #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        MSG_STATUS_ZFW = #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        MSG_STATUS_SFJ = #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="dqlzdw != null">
+        DQLZDW = #{dqlzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="lzsj != null">
+        LZSJ = #{lzsj,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wssacw.system.bean.Zwlz">
+    update zwlz
+    set ZWBH = #{zwbh,jdbcType=VARCHAR},
+      OPERATE_USERID = #{operateUserid,jdbcType=INTEGER},
+      OPERATE_USERNAME = #{operateUsername,jdbcType=VARCHAR},
+      ACTION = #{action,jdbcType=VARCHAR},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      MSG_STATUS_GA = #{msgStatusGa,jdbcType=VARCHAR},
+      MSG_STATUS_JCY = #{msgStatusJcy,jdbcType=VARCHAR},
+      MSG_STATUS_FY = #{msgStatusFy,jdbcType=VARCHAR},
+      MSG_STATUS_ZFW = #{msgStatusZfw,jdbcType=VARCHAR},
+      MSG_STATUS_SFJ = #{msgStatusSfj,jdbcType=VARCHAR},
+      DQLZDW = #{dqlzdw,jdbcType=VARCHAR},
+      LZSJ = #{lzsj,jdbcType=TIMESTAMP}
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="saveZwlzdw" parameterType="com.netmarch.wssacw.system.bean.Zwlz">
+    insert into zwlz (JLBH, ZWBH, OPERATE_USERID,
+      OPERATE_USERNAME, ACTION, MSG_OP,
+      MSG_DATE, MSG_STATUS_GA, MSG_STATUS_JCY,
+      MSG_STATUS_FY, MSG_STATUS_ZFW, MSG_STATUS_SFJ,
+      DQLZDW, LZSJ,OPERATE_DW)
+    values (#{jlbh,jdbcType=VARCHAR}, #{zwbh,jdbcType=VARCHAR}, #{operateUserid,jdbcType=INTEGER},
+      #{operateUsername,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{msgOp,jdbcType=INTEGER},
+      #{msgDate,jdbcType=TIMESTAMP}, #{msgStatusGa,jdbcType=VARCHAR}, #{msgStatusJcy,jdbcType=VARCHAR},
+      #{msgStatusFy,jdbcType=VARCHAR}, #{msgStatusZfw,jdbcType=VARCHAR}, #{msgStatusSfj,jdbcType=VARCHAR},
+      #{dqlzdw,jdbcType=VARCHAR}, sysdate(),#{operateDw,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="getZwlzByZwbh" parameterType="java.lang.String" resultType="com.netmarch.wssacw.system.bean.Zwlz">
+      select
+    a.jlbh, a.zwbh,a.OPERATE_USERID operateUserid, a.OPERATE_USERNAME operateUsername, a.dqlzdw, a.lzsj,b.zwje,a.OPERATE_DW operateDw,b.zwbz
+    from zwlz a join zwxxb b on a.zwbh=b.jlbh
+    where a.zwbh = #{zwbh,jdbcType=VARCHAR}  ORDER BY  a.lzsj DESC
+  </select>
+
+  <update id="delZwlz" parameterType="java.lang.String">
+   update zwlz  set  MSG_OP = 3,
+       MSG_STATUS_JCY = 'NEW',
+      MSG_STATUS_FY = 'NEW'
+    where zwbh = #{zwbh,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateZwlzJcyStatus" parameterType="java.lang.String">
+   update zwlz  set
+       MSG_STATUS_JCY = 'NEW'
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateZwlzFyStatus" parameterType="java.lang.String">
+   update zwlz  set
+       MSG_STATUS_FY = 'NEW'
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/all.css">
+    <link rel="stylesheet" href="../../css/style05.css">
+    <script src="../../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../../js/layui/css/layui.admin.css">
+    <script src="../../js/layui/layui.js"></script>
+    <script src="../../js/main_All.js"></script>
+    <script src="../../js/main_05.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../../js/jquery.backgroundSize.js"></script>
+
+</head>
+<body>
+<div class="H205_wripper">
+        <div class="H205_subtitle clear">
+            <div class="H105_local fl">
+                <img src="../../images/H105_local.png" alt="" class="H105_caseImg fl">
+                <p>案件查询</p>
+            </div>
+
+
+        </div>
+        <div class="H405_sysList layui-form">
+            <!--搜索栏-->
+            <div class="H405_conditionCoat ">
+                <table class="H405_ConditionTable jq_H405_ConditionTable">
+                    <tr>
+                        <td>
+                            <div class="layui-form-item H405_down">
+                                <p class="layui-form-label">部门：</p>
+                                <div class="layui-input-block">
+                                    <select name="interest" lay-filter="aihao">
+                                        <option value=""></option>
+                                        <option value="0"  selected="">单位</option>
+                                        <option value="1">阅读</option>
+                                        <option value="2">游戏</option>
+                                        <option value="3">音乐</option>
+                                        <option value="4">旅行</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>案件名称：</p>
+                                <input type="text" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>嫌疑人姓名：</p>
+                                <input type="text" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="layui-form-item H405_down">
+                                <p class="layui-form-label">案件状态：</p>
+                                <div class="layui-input-block">
+                                    <select name="interest" lay-filter="aihao">
+                                        <option value=""></option>
+                                        <option value="0" selected="">单位</option>
+                                        <option value="1" >阅读</option>
+                                        <option value="2">游戏</option>
+                                        <option value="3">音乐</option>
+                                        <option value="4">旅行</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="display: none">
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>移送案由：</p>
+                                <input type="text" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>承办人：</p>
+                                <input type="text" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>受理时间：</p>
+                                <input
+                                        type="text"
+                                        id="Q105P_refereeing1"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar1"></div>
+                        </td>
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>至</p>
+                                <input
+                                        type="text"
+                                        id="Q105P_refereeing2"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar2">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="display: none">
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>完成日期:</p>
+                                <input
+                                        type="text"
+                                        id="Q105P_refereeing3"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../../images/E105_date.png" alt=""
+                                     class="Q105_calendar Q105_calendar3">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="H405_caseInput">
+                                <p>至  </p>
+                                <input
+                                        type="text"
+                                        id="Q105P_refereeing4"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../../images/E105_date.png" alt=""
+                                     class="Q105_calendar Q105_calendar4">
+                            </div>
+                        </td>
+
+                    </tr>
+
+                </table>
+                <div class="H405_search  ">
+                    搜索
+                </div>
+                <div class="H405_search1  ">
+                    搜索
+                </div>
+                <div class="H405_spread jq_H405_search">
+                    展开
+                    <img src="../../images/H405_down.png" alt="">
+                    <img src="../../images/H405_up.png" alt="" style="display: none">
+
+                </div>
+            </div>
+            <div>
+
+
+            </div>
+            <table class="H205_table ">
+                <tr class="H205_thead">
+                    <td >案件编号</td>
+                    <td>案件名称</td>
+                    <td>嫌疑人</td>
+                    <td>立案时间</td>
+                    <td>主办单位</td>
+                    <td>案件状态</td>
+
+                </tr>
+                <tr>
+                    <td  class="H105_clickEvent" lay-href="./propertyEdit_second.html" data-content="李思盗窃案">FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+                </tr>
+                <tr >
+                    <td class="H105_clickEvent" lay-href="./propertyEdit_second.html" data-content="11">FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+                <tr>
+                    <td class="H105_clickEvent" lay-href="./propertyEdit_second.html" data-content="2222"> FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+                <tr>
+                    <td>FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+                <tr>
+                    <td>FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+                <tr>
+                    <td>FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+                <tr>
+                    <td>FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+                <tr>
+                    <td>FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+                </tr>
+                <tr>
+                    <td>FX45464646131</td>
+                    <td>李思盗窃案</td>
+                    <td>吴武进</td>
+                    <td>报送收案</td>
+                    <td>2018-10-26 13:20</td>
+                    <td>2018-10-26 13:20</td>
+
+                </tr>
+
+            </table>
+            <div class="H105_pageCoat clear">
+                <div class="H105_show clear fl">
+                    <p> 本页显示:1-10 总记录数： 38 </p>
+                    <img src="../../images/H105_refresh.png" alt="" class="H105_refreshImg fl">
+                    <img src="../../images/H105_refresh2.png" alt="" class="H105_refreshImg fl">
+                    <img src="../../images/H105_refresh3.png" alt="" class="H105_refreshImg fl">
+                </div>
+
+
+                <div class="H105_page fr    clear">
+                    <img src="../../images/H105_lasePage1.png" alt="" class="H105_lastPage fl">
+                    <img src="../../images/H105_lasePage2.png" alt="" class="H105_lastPage fl">
+                    <div class="H105_first fl">
+                        第 <input type="text"> 页，共4页
+                    </div>
+                    <img src="../../images/H105_lasePage3.png" alt="" class="H105_lastPage fl">
+                    <img src="../../images/H105_lasePage4.png" alt="" class="H105_lastPage fl">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+  //Demo
+  layui.use(['form','laydate'], function(){
+    var laydate = layui.laydate;
+// 点我触发
+    laydate.render({
+      elem: '#Q105P_refereeing1',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+
+    laydate.render({
+      elem: '#Q105P_refereeing2',
+      eventElem: '.Q105_calendar2',
+      trigger: 'click'
+    });
+    laydate.render({
+      elem: '#Q105P_refereeing3',
+      eventElem: '.Q105_calendar3',
+      trigger: 'click'
+    });
+
+    laydate.render({
+      elem: '#Q105P_refereeing4',
+      eventElem: '.Q105_calendar4',
+      trigger: 'click'
+    });
+  });
+
+
+  // jquery  点击切换背景色*/
+  $('.jq_H405_search').click(function () {
+    $('.H405_conditionCoat ').toggleClass('H405_darkSide');
+  });
+</script>
+</body>
+
+</html>

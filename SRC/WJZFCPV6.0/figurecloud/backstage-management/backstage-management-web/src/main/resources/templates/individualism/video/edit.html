@@ -1,0 +1,60 @@
+<!--
+ * Author: wsp
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html id="html" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/individualism/video/detail.js'"></script>
+</head>
+<body>
+<div>
+    <fieldset class="layui-elem-field">
+        <legend>视频信息区域</legend>
+        <form class="layui-form" method="post" th:object="${video}">
+            <!--新增表单-->
+            <div class="T106_detailsContent">
+                <div class="T106_tableOuter">
+                    <table class="T106_table T206_table">
+                        <tr>
+                            <td class="T106_itemName T106_must">标题</td>
+                            <td class="T106_itemValue">
+                                <input disabled class="layui-input" name="title" id="title" th:value="*{title}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="T106_itemName T106_must">分享人</td>
+                            <td class="T106_itemValue">
+                                <input disabled class="layui-input" name="createrName" id="createrName"
+                                       th:value="*{createrName}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <video th:src="${application.basePath}+*{videoUrl}" controls="controls">
+                    您的浏览器不支持播放，请使用Internet Explorer 9+, Firefox, Opera, Chrome 以及 Safari 浏览器尝试
+                </video>
+            </div>
+            <div class="A106_buttonOuter">
+                <div class="A106_button A106_button1" onclick="customer.addComment()">提交回复</div>
+                <div class="A106_button A106_button2" onclick="customer.cancel()">取消</div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+</body>
+</html>

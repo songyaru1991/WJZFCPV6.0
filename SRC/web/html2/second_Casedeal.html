@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.admin.css">
+    <script src="../js/layui/layui.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+    <script src="../js/echart4.2.1/echarts.js"></script>
+
+</head>
+<body>
+<div class="W105_wripper">
+    <div class="W105_subtitle clear">
+        <div class="W105_local fl">
+            <img src="../images/H105_edit.png" alt="" class="W105_caseImg fl">
+            <p>案件分案</p>
+        </div>
+
+        <div class="H105_searchCoat layui-form fr clear">
+            <div class="S105_caseInput clear">
+                <p>受理时间：</p>
+                <input
+                        type="text"
+                        id="Q105P_refereeing1"
+                        class="layui-input   "
+                        autocomplete="off">
+                <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar1">
+
+            </div>
+            <div class="S105_caseInput clear" style="margin-right: 1rem;">
+            <p class="S105_jorizontal">—</p>
+            <input
+                    type="text"
+                    id="Q105P_refereeing2"
+                    class="layui-input   "
+                    autocomplete="off">
+            <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar2">
+            </div>
+            <div class="S205_search1 fl" style="background: #10c5ba;">统计</div>
+        </div>
+    </div>
+    <div class="W105_sysList">
+        <div class="W105_listBtn1  fl " style=" ">
+            <p class="S205_btnEmphasis">报捕案件</p>
+            <p>报捕案件</p>
+
+        </div>
+        <div class="W105_echartCoat"  >
+                    <div class="W105_title">
+                    报诉案件处理情况分析
+                </div>
+                <div class="W105_riqi">
+                    2019.09.01-2019.09.30
+                </div>
+            <div class="W105_echarts">
+                <div    id="W105_echarts" style="  width: 100%;height: 100%;"
+                ></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script>
+  //Demo
+  layui.use(['form','laydate'], function() {
+    var laydate = layui.laydate;
+// 点我触发
+    laydate.render({
+      elem: '#Q105P_refereeing1',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+
+    laydate.render({
+      elem: '#Q105P_refereeing2',
+      eventElem: '.Q105_calendar2',
+      trigger: 'click'
+    });
+
+  })
+  // jquery  点击切换背景色*/
+  $('.W105_listBtn1>p').click(function () {
+    $(this).addClass('S205_btnEmphasis').siblings().removeClass('S205_btnEmphasis');
+  });
+
+  // 超期总数量：
+  var rocket1 ="image://../images/W105_arrow.png"
+  option = {
+    color: ['#fff', '#fff'],
+    legend: {
+      show:false,
+      data: ['pictorial element', 'reference bar']
+    },
+    grid: {
+      top: '10%',
+      left: '5%',
+      right: 0,
+      bottom: '15%',
+    },
+    xAxis: {
+      //
+      axisLine:{
+      show:true,
+        color:'#d0e8f5',
+        lineStyle:{
+          color:'#d0e8f5'
+        },
+      },
+      data: ['提交案件', '报诉案件', '报诉案件收案', '案件分案','在办案件', '公诉结案', '案件分案', '在办案件', '已结案件'],
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        interval: 0,
+        color: '#000',
+        fontSize: efontSize(16)
+      }
+    },
+    yAxis: {
+      name:'处理耗时(小时）',
+      axisLine:{
+        show:true,
+        lineStyle:{
+          color:'#d0e8f5'
+        },
+        color:'#d0e8f5'
+      },
+      nameTextStyle:{
+        align:'center',
+        padding:[0,0,0,efontSize(50)],
+        fontSize:efontSize(16),
+        color:'#000'
+      },
+      axisLabel: {
+        color: '#000',
+        fontSize: efontSize(16)
+      },
+      splitLine: {
+        show: false,
+        lineStyle:{
+          color:'#d0e8f5'
+        }
+      }
+    },
+    series: [{
+      type: 'pictorialBar',
+      name: 'pictorial element',
+      symbol: rocket1,
+      z: 10,
+      label:{
+        show:true,
+        position:'top',
+        color: '#ea9011',
+        fontSize:efontSize(24),
+      },
+      data: [{
+        value: 18,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      },  {
+        value: 15,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      },{
+        value: 10,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      },  {
+        value: 38,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      }, {
+        value: 6,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      },{
+        value: 10,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      }, {
+        value: 56,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      },  {
+        value: 6,
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ]
+      },{
+        symbolSize: [
+          '50%', // 50% of the width of reference bar.
+          '100%' // 100% of the height of reference bar.
+        ],
+        value:[ 18,15,10,38,6,10,56,6,24,10]
+
+      },  ]
+    }, {
+      type: 'bar',
+      name: 'reference bar',
+      barGap: '-100%',
+      data: [60, 60, 60, 60]
+    }]
+  };
+  var myChart;
+  var W105_echarts = document.getElementById('W105_echarts');
+  myChart = echarts.init(W105_echarts);
+  myChart.setOption(option);
+  myChart.resize();
+
+  function efontSize(res) {
+    var clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (!clientWidth) return;
+    var fontSize = 1 * (clientWidth / 1920);
+    return res * fontSize;
+  }
+
+  /**
+   * 自适应
+   */
+  $(function () {
+    function onresiz_05 () {
+      myChart.resize();
+    }
+
+    var resizeTimer = null;
+    // 自适应事件有最小间隔400
+    $(window).on('resize', function () {
+        if (resizeTimer) {
+          clearTimeout(resizeTimer);
+        }
+        resizeTimer = setTimeout(onresiz_05, 400);
+      }
+    );
+  });
+</script>
+
+</body>
+</html>

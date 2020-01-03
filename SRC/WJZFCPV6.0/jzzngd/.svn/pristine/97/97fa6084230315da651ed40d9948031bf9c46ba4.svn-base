@@ -1,0 +1,11 @@
+package com.netmarch.jzzngd.system.model;
+
+import lombok.Data;
+
+/**
+ * @Author:xieqiang
+ * @Date:2019/2/22
+ */
+@Data
+public class PageDTO {
+}

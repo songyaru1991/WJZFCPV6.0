@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style_10.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <script src="../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+    <script src="../js/echart4.2.1/echarts.js"></script>
+</head>
+<body>
+<div class="S210_wripper">
+    <div class="S210_case">
+        <div class="S210_statistical clear">
+            <div id="layerDemo">
+                <button data-method="getPhoto0" class="layui-btn layui-btn-primary">按钮(图片正常)</button>
+                <button data-method="getPhoto1" class="layui-btn layui-btn-primary">按钮(图片加载失败)</button>
+                <button data-method="getPhoto2" class="layui-btn layui-btn-primary">按钮(暂无图片)</button>
+                <button data-method="offset" class="layui-btn layui-btn-primary">按钮(消息提示)</button>
+                <button data-method="toLead" class="layui-btn layui-btn-primary">按钮(导入)</button>
+                <button data-method="choose" class="layui-btn layui-btn-primary">按钮(选择)</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="P110_chooseContent" style="display: none">
+    <div class="P110_chooseContent_search">
+        <input type="text"><img src="../images/P110_search.png" alt="">
+    </div>
+    <div class="P110_chooseContent_itemsList layui-form">
+        <input type="radio" name="" value="0" title="刑事案件">
+        <input type="radio" name="" value="1" title="危害国家安全案">
+        <input type="radio" name="" value="2" title="背叛,分裂国家案">
+        <input type="radio" name="" value="3" title="颠覆国家政权案">
+        <input type="radio" name="" value="4" title="刑事案件">
+        <input type="radio" name="" value="5" title="危害国家安全案">
+        <input type="radio" name="" value="6" title="背叛,分裂国家案">
+        <input type="radio" name="" value="7" title="颠覆国家政权案">
+        <input type="radio" name="" value="8" title="刑事案件">
+        <input type="radio" name="" value="9" title="危害国家安全案">
+    </div>
+    <div class="P110_chooseContent_bottom">
+        <div id="modePage" class="P110_chooseContent_pageMode"></div>
+    </div>
+</div>
+
+</body>
+
+<script>
+  layui.use(['form', 'layer', 'laypage'], function() { //独立版的layer无需执行这一句
+    var $ = layui.jquery, laypage = layui.laypage, layer = layui.layer, form = layui.form; //独立版的layer无需执行这一句
+
+    laypage.render({
+      elem: 'modePage'
+      ,theme: '#1E9FFF'
+      , count: 100
+      , groups: 3
+      , first: '首页'
+      , last: '尾页'
+      , prev: '<em>←</em>'
+      , next: '<em>→</em>'
+    });
+
+    //触发事件
+    var active = {
+      getPhoto0: function() {
+        layer.open({
+          type: 1
+          , title: false //不显示标题栏
+          , closeBtn: true
+          , area: ['420px', '610px']
+          , shade: 0.3
+          , id: 'photo0_layuipro' //设定一个id，防止重复弹出
+          , skin: 'P110_photo'
+          , moveType: 1 //拖拽模式，0或者1
+          , content: '<div class="P110_photo_content0"></div>'
+        });
+      },
+      getPhoto1: function() {
+        layer.open({
+          type: 1
+          , title: false //不显示标题栏
+          , closeBtn: true
+          , area: ['740px', '410px']
+          , shade: 0.3
+          , id: 'photo1_layuipro' //设定一个id，防止重复弹出
+          , skin: 'P110_photo'
+          , moveType: 1 //拖拽模式，0或者1
+          , content: '<div class="P110_photo_content1"></div>'
+        });
+      },
+      getPhoto2: function() {
+        layer.open({
+          type: 1
+          , title: false //不显示标题栏
+          , closeBtn: true
+          , area: ['740px', '410px']
+          , shade: 0.3
+          , id: 'photo2_layuipro' //设定一个id，防止重复弹出
+          , skin: 'P110_photo'
+          , moveType: 1 //拖拽模式，0或者1
+          , content: '<div class="P110_photo_content2"></div>'
+        });
+      },
+      offset: function() {
+        layer.open({
+          type: 1
+          , title: '信息提示'
+          , area: ['385px', '245px']
+          , offset: 'auto'
+          , id: 'layerHint'
+          , skin: 'P110_hint'
+          , content: '<div class="P110_hintContent">' +
+          '<img src="../images/P110_hint.png" alt="">' +
+          '<div class="P110_hintContent_text"><span>您没有选择要移送的电子卷宗,确定要移送吗?</span></div>' +
+          '</div>'
+          , btn: ['确定', '取消']
+          , btnAlign: 'c' //按钮居中
+          , shade: 0.3 //不显示遮罩
+          , yes: function() {
+            layer.closeAll();
+          }
+          , btn2: function() {
+            layer.closeAll();
+          }
+        });
+      },
+      toLead: function() {
+        layer.open({
+          type: 1
+          , title: '导入案件信息'
+          , area: ['575px', '375px']
+          , offset: 'auto'
+          , id: 'layerLead'
+          , skin: 'P110_toLead'
+          , content: '<div class="P110_toLeadContent">' +
+          '<div class="clear"><button class="layui-btn layui-btn-primary fr">选择文件</button></div>' +
+          '<div class="P110_toLead_itemsList">' +
+          '<div class="P110_toLead_item"><span>文件114563.xlsx</span><img src="../images/P110_ImportFailure.png" alt=""></div>' +
+          '<div class="P110_toLead_item"><span>文件114563.xlsx</span><img src="../images/P110_ImportFailure.png" alt=""></div>' +
+          '<div class="P110_toLead_item"><span>文件114563.xlsx</span><img src="../images/P110_ImportFailure.png" alt=""></div>' +
+          '<div class="P110_toLead_item"><span>文件114563.xlsx</span><img src="../images/P110_ImportFailure.png" alt=""></div>' +
+          '<div class="P110_toLead_item"><span>文件114563.xlsx</span><img src="../images/P110_ImportFailure.png" alt=""></div>' +
+          '<div class="P110_toLead_item"><span>文件114563.xlsx</span><img src="../images/P110_ImportFailure.png" alt=""></div>' +
+          '</div></div>'
+          , btn: ['导入', '取消']
+          , btnAlign: 'c' //按钮居中
+          , shade: 0.3 //不显示遮罩
+          , yes: function() {
+            layer.closeAll();
+          }
+          , btn2: function() {
+            layer.closeAll();
+          }
+        });
+      },
+      choose: function() {
+        layer.open({
+          type: 1
+          , title: '选择'
+          , area: ['475px', '525px']
+          , offset: 'auto'
+          , id: 'layerChoose'
+          , skin: 'P110_chooseBox'
+          , content: $('.P110_chooseContent')
+          , btn: ['确认', '关闭']
+          , btnAlign: 'c' //按钮居中
+          , shade: 0.3 //不显示遮罩
+          , yes: function() {
+            layer.closeAll();
+          }
+          , btn2: function() {
+            layer.closeAll();
+          }
+        });
+      },
+    };
+
+    $('#layerDemo .layui-btn').on('click', function() {
+      var othis = $(this), method = othis.data('method');
+      active[method] ? active[method].call(this, othis) : '';
+    });
+
+  });
+</script>
+</html>

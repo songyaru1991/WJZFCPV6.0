@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wsgl.system.mapper.BookMarksMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wsgl.system.bean.BookMarks">
+    <id column="BOOKMARKID" jdbcType="VARCHAR" property="bookmarkid" />
+    <result column="BOOKMARKNAME" jdbcType="VARCHAR" property="bookmarkname" />
+    <result column="BOOKMARKDESC" jdbcType="VARCHAR" property="bookmarkdesc" />
+    <result column="TABLEFIELDNAME" jdbcType="VARCHAR" property="tablefieldname" />
+    <result column="KEYNAME" jdbcType="VARCHAR" property="keyname" />
+    <result column="VIEWNAME" jdbcType="VARCHAR" property="viewname" />
+    <result column="ADDTIME" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BOOKMARKID, BOOKMARKNAME, BOOKMARKDESC, TABLEFIELDNAME, KEYNAME, VIEWNAME, ADDTIME
+  </sql>
+  <select id="getBookMarkById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bookmarks
+    where BOOKMARKID = #{bookmarkid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bookmarks
+    where BOOKMARKID = #{bookmarkid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wsgl.system.bean.BookMarks">
+    insert into bookmarks (BOOKMARKID, BOOKMARKNAME, BOOKMARKDESC, 
+      TABLEFIELDNAME, KEYNAME, VIEWNAME, 
+      ADDTIME)
+    values (#{bookmarkid,jdbcType=VARCHAR}, #{bookmarkname,jdbcType=VARCHAR}, #{bookmarkdesc,jdbcType=VARCHAR}, 
+      #{tablefieldname,jdbcType=VARCHAR}, #{keyname,jdbcType=VARCHAR}, #{viewname,jdbcType=VARCHAR}, 
+      sysdate())
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wsgl.system.bean.BookMarks">
+    insert into bookmarks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookmarkid != null">
+        BOOKMARKID,
+      </if>
+      <if test="bookmarkname != null">
+        BOOKMARKNAME,
+      </if>
+      <if test="bookmarkdesc != null">
+        BOOKMARKDESC,
+      </if>
+      <if test="tablefieldname != null">
+        TABLEFIELDNAME,
+      </if>
+      <if test="keyname != null">
+        KEYNAME,
+      </if>
+      <if test="viewname != null">
+        VIEWNAME,
+      </if>
+      <if test="addtime != null">
+        ADDTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookmarkid != null">
+        #{bookmarkid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookmarkname != null">
+        #{bookmarkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bookmarkdesc != null">
+        #{bookmarkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tablefieldname != null">
+        #{tablefieldname,jdbcType=VARCHAR},
+      </if>
+      <if test="keyname != null">
+        #{keyname,jdbcType=VARCHAR},
+      </if>
+      <if test="viewname != null">
+        #{viewname,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wsgl.system.bean.BookMarks">
+    update bookmarks
+    <set>
+      <if test="bookmarkname != null">
+        BOOKMARKNAME = #{bookmarkname,jdbcType=VARCHAR},
+      </if>
+      <if test="bookmarkdesc != null">
+        BOOKMARKDESC = #{bookmarkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tablefieldname != null">
+        TABLEFIELDNAME = #{tablefieldname,jdbcType=VARCHAR},
+      </if>
+      <if test="keyname != null">
+        KEYNAME = #{keyname,jdbcType=VARCHAR},
+      </if>
+      <if test="viewname != null">
+        VIEWNAME = #{viewname,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where BOOKMARKID = #{bookmarkid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wsgl.system.bean.BookMarks">
+    update bookmarks
+    set BOOKMARKNAME = #{bookmarkname,jdbcType=VARCHAR},
+      BOOKMARKDESC = #{bookmarkdesc,jdbcType=VARCHAR},
+      TABLEFIELDNAME = #{tablefieldname,jdbcType=VARCHAR},
+      KEYNAME = #{keyname,jdbcType=VARCHAR},
+      VIEWNAME = #{viewname,jdbcType=VARCHAR},
+       ADDTIME = sysdate()
+    where BOOKMARKID = #{bookmarkid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getBqListPage" parameterType="com.netmarch.wsgl.system.bean.Query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bookmarks
+    where 1=1
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchName"'>
+        and bookmarkname like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchDesc"'>
+        and bookmarkdesc like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    order by addtime desc
+  </select>
+
+  <select id="checkRepeatName" parameterType="com.netmarch.wsgl.system.bean.BookMarks" resultType="Integer">
+    select count(*) from BookMarks where bookmarkname = #{bookmarkname,jdbcType=VARCHAR}
+    <if test="bookmarkid != null and bookmarkid != ''">
+      and bookmarkid &lt;&gt; #{bookmarkid,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getBookMarksList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bookmarks order by addtime desc
+  </select>
+
+  <select id="getBookMarkByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bookmarks
+    where bookMarkName = #{bookMarkName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getBookMarkValue" parameterType="java.lang.String" resultType="String">
+    select ${tablefieldname}
+    from ${viewname}
+    where ${keyname} = #{bookMarkKeyValue,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style_10.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+    <div class="E105_wripper">
+        <div class="E105_case1 layui-form">
+            <div class="E105_subtitle clear">
+                <div class="E105_biaoti fl" th:switch="${ajlx_bbbs}">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p th:case="101">报捕案件办理</p>
+                    <p th:case="113">报诉案件办理</p>
+                </div>
+
+                <div class="E105_checkCoat fr">
+
+                    <div class="E105_check fl cursor E105_checkClick"
+                         data-name="生成案件"
+                         th:data-url="'../Bbbsajsa/toBbbsajScaj?ajbs=' + ${gjAjjbqk.ajbs} +'&ajlx_bbbs='+${ajlx_bbbs}"
+                         data-type="tabAdd" auth:check="BbbsajScaj">
+                        <img th:src="${application.basePath}+'/static/images/H105_checkIco1.png'" alt="" class="E105_checkIco">
+                        <p>生成案件</p>
+                    </div>
+                    <div class="E105_check fl cursor"
+                         data-name="退回案件"  th:data-url="'../Bbbsajsa/toAjsaThaj?ajbs=' + ${gjAjjbqk.ajbs} +'&ajlx_bbbs='+${ajlx_bbbs}"
+                         data-type="tabAdd"  auth:check="BbbsajThaj">
+                        <img th:src="${application.basePath}+'/static/images/H105_checkIco10.png'" alt="" class="E105_checkIco2">
+                        <p>退回案件</p>
+                    </div>
+
+                    <div class="E105_check fl cursor" data-name="电子卷宗"
+                          data-url=""
+                          data-type="tabAdd" auth:check="BbbsajfaTh">
+                        <img class="E105_checkIco2" th:src="${application.basePath}+'/static/images/H105_checkIco2.png'" alt="">
+                        <p>电子卷宗 </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="E105_tableCoat3">
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>案件基本信息</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor3">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案号:</p>
+                                </div>
+                                <span class="E105_span" th:text="${gjAjjbqk.ah}" id="ah" name="ah" >案号</span>
+
+                                <input type="submit" value="点击生成案号"
+                                       id="btnAH" class="E105_saveBtn" style="width:120px;">
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>收案时间:</p>
+                                </div>
+                                <span class="E105_span" th:text="${#dates.format(gjAjjbqk.sasj, 'yyyy-MM-dd HH:mm:ss')}">收案时间</span>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>查看文书:</p>
+                                </div>
+                                <span class="E105_span" th:text="${gjAjjbqk.gacbr}">查看文书</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件名称:</p>
+                                </div>
+
+                                <span class="E105_span" th:text="${gjAjjbqk.ajmc}">案件名称</span>
+                            </td>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件状态:</p>
+                                </div>
+
+                                <span class="E105_span" th:text="${gjAjjbqk.ajzt}">案件状态</span>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件类型:</p>
+                                </div>
+
+                                <span class="E105_span" th:if="${gjAjjbqk.ajlx == '101'}" th:text="报捕">案件类型</span>
+                                <span class="E105_span" th:if="${gjAjjbqk.ajlx == '113'}" th:text="报诉">案件类型</span>
+                                <span class="E105_span" th:if="${gjAjjbqk.ajlx == ''}" th:text="">案件类型</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件编号:</p>
+                                </div>
+                                <span class="E105_span" th:text="${gjAjjbqk.ajbh}">案件编号</span>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>关联编号:</p>
+                                </div>
+                                <span class="E105_span" th:text="${gjAjjbqk.glbh}">关联编号</span>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>侦查机关:</p>
+                                </div>
+                                <span class="E105_span" th:text="${gjAjjbqk.tqdwmc}">侦查机关</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>移送时间:</p>
+                                </div>
+                                <span class="E105_span"
+                                      th:text="${#dates.format(gjAjjbqk.yssj, 'yyyy-MM-dd HH:mm:ss')}">移送时间</span>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>公安局文书文号:</p>
+                                </div>
+                                <span class="E105_span">公安局文书文号</span>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p> 主办单位:</p>
+                                </div>
+                                <span class="E105_span" th:text="${gjAjjbqk.zbdwmc}">主办单位</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>是否是申报案件:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="sfcbaj" value="1" title="是" th:checked="${gjAjjbqk.sfcbaj=='Y' || gjAjjbqk.sfcbaj=='1'}">
+                                    <input type="radio" name="sfcbaj" value="0" title="否" th:checked="${gjAjjbqk.sfcbaj=='N' || gjAjjbqk.sfcbaj=='0'}">
+                                </div>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>是否认罪轻案案件:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="sfrzqa" value="1" title="是" th:checked="${gjAjjbqk.sfrzqa=='Y' || gjAjjbqk.sfrzqa=='1'}">
+                                    <input type="radio" name="sfrzqa" value="0" title="否" th:checked="${gjAjjbqk.sfrzqa=='N' || gjAjjbqk.sfrzqa=='0'}">
+                                </div>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>嫌疑人是否有未成年人:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="xyrsfwcnr" value="1" title="是" th:checked="${gjAjjbqk.xyrsfwcnr=='Y' || gjAjjbqk.xyrsfwcnr=='1'}">
+                                    <input type="radio" name="xyrsfwcnr" value="0" title="否" th:checked="${gjAjjbqk.xyrsfwcnr=='N' || gjAjjbqk.xyrsfwcnr=='0'}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>被害人是否有未成年人:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="bhrsfwcnr" value="1" title="是" th:checked="${gjAjjbqk.bhrsfwcnr=='Y'|| gjAjjbqk.bhrsfwcnr=='1'}">
+                                    <input type="radio" name="bhrsfwcnr" value="0" title="否" th:checked="${gjAjjbqk.bhrsfwcnr=='N'|| gjAjjbqk.bhrsfwcnr=='0'}">
+                                </div>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>嫌疑人是否有台湾人:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="xyrsftwr" value="1" title="是" th:checked="${gjAjjbqk.xyrsftwr=='Y' || gjAjjbqk.xyrsftwr=='1'}">
+                                    <input type="radio" name="xyrsftwr" value="0" title="否" th:checked="${gjAjjbqk.xyrsftwr=='N' || gjAjjbqk.xyrsftwr=='0'}">
+                                </div>
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>被害人是否有台湾人:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="bhrsftwr" value="1" title="是" th:checked="${gjAjjbqk.bhrsftwr=='Y' || gjAjjbqk.bhrsftwr=='1'}">
+                                    <input type="radio" name="bhrsftwr" value="0" title="否" th:checked="${gjAjjbqk.bhrsftwr=='N' || gjAjjbqk.bhrsftwr=='0'}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>是否非公企业:</p>
+                                </div>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="sffgqy" value="1" title="是" th:checked="${gjAjjbqk.sffgqy=='Y' || gjAjjbqk.sffgqy=='1'}">
+                                    <input type="radio" name="sffgqy" value="0" title="否" th:checked="${gjAjjbqk.sffgqy=='N' || gjAjjbqk.sffgqy=='0'}">
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="clear">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>主案由:</p>
+                                </div>
+
+                                <div class="T110_input1 fl">
+                                    <input type="text" class="layui-input openModel" lay-verType="tips" name="tqay" id="tqay" th:value="${gjAjjbqk.tqay}" data-method="chooseTqay" >
+                                    <input type="text" class="layui-input" lay-verType="tips" name="tqaydm" id="tqaydm" th:value="${gjAjjbqk.tqaydm}" style="display: none">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="text" id="ajbs" name="ajbs" th:value="${gjAjjbqk.ajbs}" style="display: none">
+                    <input type="text" name="ajlx_bbbs" th:value="${ajlx_bbbs}" style="display: none">
+                </div>
+            </div>
+
+            <div class="E105_tableCoat3" th:each="gjXyrqk,gjXyrqkStat : ${gjXyrqkList}" >
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>嫌疑人信息</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor3">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>嫌疑人编号:</p>
+                                </div>
+
+                                <div class="T110_input fl">
+                                    <input type="text" class="layui-input" lay-verType="tips"
+                                           th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].xyrbh'" th:value="${gjXyrqk.xyrbh}" maxlength="50">
+                                </div>
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>姓名:</p>
+                                </div>
+                                <div class="T110_input fl">
+                                    <input type="text" class="layui-input" lay-verType="tips" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].xyrxm'" th:value="${gjXyrqk.xyrxm}">
+                                </div>
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>性别:</p>
+                                </div>
+                                <div class="T110_input fl">
+                                    <select lay-verify="required" lay-verType="tips" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].xyrxbdm'">
+                                        <option value="">请选择</option>
+                                        <option th:each="xb : ${xblist}" th:text="${xb.mc}" th:value="${xb.code}" th:selected="${xb.code==gjXyrqk.xyrxbdm}">性别</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>身份证号:</p>
+                                </div>
+                                <div class="T110_input fl">
+                                    <input type="text" class="layui-input" lay-verify="required|identity" lay-verType="tips"
+                                           placeholder="必填项" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].sfzhm'" th:value="${gjXyrqk.sfzhm}"  maxlength="50">
+                                </div>
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>强制措施:</p>
+                                </div>
+
+                                <div class="T110_input fl">
+                                    <select lay-verify="required" lay-verType="tips" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].qzcsdm'">
+                                        <option value="">请选择</option>
+                                        <option value="1" th:selected="${gjXyrqk.qzcsdm=='1'}">拘传</option>
+                                        <option value="2" th:selected="${gjXyrqk.qzcsdm=='2'}">保证人取保候审</option>
+                                        <option value="3" th:selected="${gjXyrqk.qzcsdm=='3'}">保证金取保候审</option>
+                                        <option value="4" th:selected="${gjXyrqk.qzcsdm=='4'}">监视居住</option>
+                                        <option value="5" th:selected="${gjXyrqk.qzcsdm=='5'}">拘留</option>
+                                        <option value="6" th:selected="${gjXyrqk.qzcsdm=='6'}">逮捕</option>
+                                    </select>
+                                </div>
+
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>政治面貌:</p>
+                                </div>
+                                <div class="T110_input fl">
+                                    <select lay-filter="zzmmFilter" lay-verify="required" lay-verType="tips" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].zzmmdm'">
+                                        <option value="">请选择</option>
+                                        <option th:each="zzmm : ${zzmmlist}" th:text="${zzmm.mc}" th:value="${zzmm.code}" th:selected="${zzmm.mc==gjXyrqk.zzmm}">政治面貌</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="clear T110_itemList">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>户籍祥址:</p>
+                                </div>
+                                <div class="T110_input fl">
+                                    <input type="text" class="layui-input openModel" lay-verify="required" lay-verType="tips" th:id="'xyrhjd'+${gjXyrqkStat.index}"
+                                           placeholder="必填项" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].xyrhjd'" th:value="${gjXyrqk.xyrhjd}" data-method="chooseHjd"  maxlength="50">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="clear T110_itemList">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>提请案由:</p>
+                                </div>
+
+                                <div class="T110_input fl">
+                                    <input type="text" class="layui-input" lay-verify="required" lay-verType="tips"
+                                           placeholder="必填项" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].xyrtqay'" th:value="${gjXyrqk.xyrtqay}" maxlength="200">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="text" th:name="'gjXyrqks['+ ${gjXyrqkStat.index} +'].xyrbs'" th:value="${gjXyrqk.xyrbs}" style="display: none">
+                </div>
+            </div>
+
+            <div class="E105_tableCoat3" >
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>文书信息</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor">
+                    <div id="popupContact" class="popupContact">
+                        <div id="contactArea" >
+                            <iframe id="iframeWS"  class="iframeWS"
+                                    scrolling="no" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="S105_btnCoat1 ">
+                <div class="T110_saveBtnCoat clear">
+                    <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">生成案件
+                    </button>
+                    <button class="layui-btn fl site-demo-active2" data-type="tabDelete" >取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script th:inline="javascript">
+
+
+    var contextPath = getContextPath();
+
+    layui.use(['form','layer'], function(){
+        var $ = layui.jquery, layer = layui.layer, form = layui.form; //独立版的layer无需执行这一句
+
+        form.on('submit(formDemo)', function (saveform) {   //saveform是form表单中所选中所有数据 saveform.field 为表单中的值
+            $.ajax({
+                url: contextPath + "/Bbbsajsa/bbbsajScaj",
+                type: "post",
+                data: saveform.field,
+                dataType: "json",
+                success: function (result) {
+                    if(result.code == 200){
+                        layer.alert(result.message,function () {
+                            layer.close(layer.index);
+                            //刷新案件列表页面的table
+
+                            //调用案件列表页面的刷新
+                            window.parent.$("#id_H105_conIframe").contents().find("#frm")[0].contentWindow.localRefresh();
+
+                            //关闭生成案件页面
+                            window.parent.parent.$('.layui_H105_title .layui-this').attr('lay-id');
+                            $(this).data('url',window.parent.parent.$('.layui_H105_title .layui-this').attr('lay-id'));
+                            $(this).data('type',"tabDelete");
+                            window.parent.parent.active1($(this));
+
+                        });
+                    }else{
+                        layer.alert(result.message);
+                        return;
+                    }
+                }
+
+            })
+        });
+
+    });
+    var hjdLayIndex,tqayLayIndex;
+    //触发事件
+    var active = {
+        chooseHjd: function () {
+            var inputHjdId=$(this).attr('id');
+            hjdLayIndex = layer.open({
+                type: 2
+                , title: '选择'
+                , area: ['580px', '525px'] //宽高
+                , offset: 'auto'
+                , skin: 'P110_chooseBox'
+                , content: [contextPath + '/ToOpenModel/toHjdModel?inputHjdId='+inputHjdId]
+                , shade: 0.3 //不显示遮罩
+            });
+        },
+        chooseTqay: function () {
+            tqayLayIndex = layer.open({
+                type: 2
+                , title: '选择'
+                , area: ['580px', '525px'] //宽高
+                , offset: 'auto'
+                , skin: 'P110_chooseBox'
+                , content: [contextPath + '/ToOpenModel/toTqayModel']
+                , shade: 0.3 //不显示遮罩
+            });
+        }
+    };
+
+    $('.openModel').on('click', function() {
+        var othis = $(this), method = othis.data('method');
+        active[method] ? active[method].call(this, othis) : '';
+    });
+
+    $('#btnAH').on('click', function() {
+        $.ajax({
+            url: contextPath + "/Bbbsajsa/scah",
+            type: "post",
+            data: {},
+            dataType: "json",
+            success: function (result) {
+                if (result!=null && result != -1) {
+                    layer.alert("案号生成成功!", function () {
+                        $('#ah').val(result);
+                        layer.close(layer.index);
+
+                    });
+                } else {
+                    layer.alert("案号生成失败!");
+                    return;
+                }
+            }
+        })
+    });
+
+    function hjdLayerclose() {
+        layer.close(hjdLayIndex);
+    }
+
+    function tqayLayerclose() {
+        layer.close(tqayLayIndex);
+    }
+
+    //文书word展示
+    showWSNR();
+    function showWSNR() {
+        var bookMarkKeyValue = $("#ajbs").val();
+        var curWSLX="GAJ";
+        var ajlx=[[${ajlx_bbbs}]];
+        $("#iframeWS").attr("src", '../TDocEdit/TDocumentEdit?bookMarkKeyValue='+bookMarkKeyValue+'&curWSLX='+curWSLX+'&ajlx='+ajlx);
+     //   resizeiframe();
+        $("#popupContact").fadeIn();
+    };
+
+    function disablePopup() {
+
+        $("#popupContact").fadeOut("slow");
+    }
+    function resizeiframe() {
+        var windowWidth = document.documentElement.clientWidth - 1;
+        var windowHeight = document.documentElement.clientHeight - 10;
+        $("#iframeWS").css({
+            "width": windowWidth,
+            "height": windowHeight
+        });
+        $("#popupContact").css({
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": windowWidth,
+            "height": windowHeight
+        });
+    }
+    window.onresize = function () {
+        resizeiframe();
+    }
+
+</script>
+
+</html>

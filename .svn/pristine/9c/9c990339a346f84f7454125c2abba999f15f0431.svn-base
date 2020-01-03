@@ -1,0 +1,22 @@
+package com.netmarch.sso.loginsystem.service;
+
+import com.github.pagehelper.Page;
+
+import com.netmarch.sso.loginsystem.bean.LoginUser;
+
+public interface LoginUserService {
+
+    Page<LoginUser> getUserList(LoginUser user, String keyword);
+
+    LoginUser getUserById(String id);
+
+    int editLoginUser(LoginUser loginUser);
+
+    int addLoginUser(LoginUser loginUser);
+
+    int delBatch(String ids);
+
+    int checkRepeatLoginName(LoginUser loginUser);
+
+    LoginUser checkLoginByLoginName(LoginUser loginUser);
+}

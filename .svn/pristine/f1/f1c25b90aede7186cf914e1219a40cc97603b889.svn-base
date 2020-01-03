@@ -1,0 +1,171 @@
+package com.netmarch.sso.loginsystem.controller;
+
+import com.netmarch.sso.common.controller.FrontBaseController;
+import com.netmarch.sso.common.utils.JedisUtil;
+import com.netmarch.sso.common.utils.JwtUtil;
+import com.netmarch.sso.loginsystem.bean.LoginUser;
+import com.netmarch.sso.loginsystem.bean.StaticObj;
+import com.netmarch.sso.loginsystem.client.LoginUserClient;
+import com.netmarch.sso.loginsystem.model.LoginResult;
+import com.netmarch.sso.loginsystem.service.LoginUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import util.web.ResultCodes;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+
+
+/**
+ * @program: uums
+ * @description: loginuser controller
+ * @author: songyaru
+ * @create: 2019-04-19
+ **/
+
+@Controller
+@Slf4j
+public class LoginController extends FrontBaseController implements LoginUserClient {
+    @Autowired
+    private LoginUserService loginUserService;
+    /**
+     * RefreshToken过期时间
+     */
+    @Value("${refreshTokenExpireTime}")
+    private String refreshTokenExpireTime;
+
+
+    /**
+     * 登录
+     * @return
+     */
+    @GetMapping("/login")
+    public String toLogin(){//@RequestHeader("Referer") String url, Model model){
+        // model.addAttribute("redirect", url);
+        return "login";
+    }
+
+    @RequestMapping("/userLogin")
+    @ResponseBody
+   public LoginResult  login(@RequestBody LoginUser loginUser,HttpServletRequest request, HttpServletResponse response) {
+        // 查询数据库中的帐号信息
+        LoginResult result = new LoginResult();
+        try {
+           // String callbackURL = request.getParameter("callbackURL");
+            LoginUser loginUserTemp = new LoginUser();
+            loginUserTemp.setLoginname(loginUser.getLoginname());
+            loginUserTemp = loginUserService.checkLoginByLoginName(loginUserTemp);
+            if (loginUserTemp == null) {
+                result.setStatus(ResultCodes.ERROR);
+                result.setMsg(StaticObj.R_LOGIN_USERNAME_MSG);
+                return result;
+            }
+            // 密码进行Spring Security BCryptPasswordEncoder解密
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String dbPassword = loginUserTemp.getPassword();
+            if (loginUserTemp.getUserstate() == 0) {//账号禁用
+                result.setStatus(ResultCodes.ERROR);
+                result.setMsg(StaticObj.R_LOGIN_DISABLE_MSG);
+                return result;
+            }
+            if (encoder.matches(loginUser.getPassword(), dbPassword)) {
+                //给用户jwt加密生成token
+                String currentTimeMillis = String.valueOf(System.currentTimeMillis());
+                String token = JwtUtil.sign(loginUserTemp, currentTimeMillis);
+                // 从Header中Authorization返回AccessToken，时间戳为当前时间戳
+           /* response.setHeader("Authorization", token);
+            response.setHeader("Access-Control-Expose-Headers", "Authorization");*/
+
+                //密码验证成功产生sessionID的cookie
+                Cookie sidCookie = new Cookie("sid", token);
+                response.addCookie(sidCookie);
+                Cookie loginNameCookie = new Cookie("loginName", loginUserTemp.getLoginname());
+                response.addCookie(loginNameCookie);
+                String userId = loginUserTemp.getUser_Id();
+                if (userId != null && !userId.equals("")) {
+                    String key= StaticObj.PREFIX_ACCESS_TOKEN + userId;
+                    JedisUtil.setObject(key, token, Integer.parseInt(refreshTokenExpireTime));// 刷新redis key 设置生存时间，当 key 过期时(生存时间为 0 )，它会被自动删除
+                    result.setStatus(ResultCodes.SUCCESS);
+                    result.setMsg(StaticObj.R_LOGIN_USERNAME_MSG);
+                } else {
+                    result.setStatus(ResultCodes.ERROR);
+                    result.setMsg(StaticObj.R_LOGIN_FAIL_MSG);
+                }
+              /*  if (callbackURL != "" && !callbackURL.equals("")) {
+                    result.setStatus(ResultCodes.SUCCESS);
+                    result.setMsg(StaticObj.R_LOGIN_USERNAME_MSG);
+                    result.setCallbackURL(callbackURL);
+                }*/
+            } else {
+                result.setStatus(ResultCodes.ERROR);
+                result.setMsg(StaticObj.R_LOGIN_PASSWORD_MSG);
+            }
+        } catch (Exception e) {
+            result.setStatus(ResultCodes.ERROR);
+            result.setMsg(StaticObj.R_LOGIN_FAIL_MSG);
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @GetMapping("error-page")
+    public ModelAndView toError(ModelAndView modelAndView, HttpServletRequest request){
+        String status = request.getParameter("no");
+        String message = request.getParameter("msg");
+        HashMap<String,String> param = new HashMap<>();
+        param.put("status",status);
+        param.put("message",message);
+        modelAndView.addObject("data",param);
+        modelAndView.setViewName("/common/error-page");
+        return modelAndView;
+    }
+    @GetMapping("/index")
+    public String toIndex(HttpServletRequest request, Model model){
+        LoginUser loginUser = new LoginUser();
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("loginName")) {
+                    loginUser.setLoginname(c.getValue());
+                }
+            }
+        }
+        model.addAttribute("loginUser", loginUser);
+        return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        //清除cookie 清除redis
+        String userId="";
+        Cookie[] cookies = request.getCookies();
+        if(null!=cookies){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("sid")){
+                    userId = JwtUtil.getClaim(cookie.getValue(), StaticObj.USERID);
+                    if(userId!=null && !userId.equals((""))){
+                        JedisUtil.delKey(userId);
+                    }
+                    cookie.setValue(null);
+                    cookie.setMaxAge(-1);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+        }
+        return "redirect:/login";
+    }
+
+
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/system/camera/all.js'"></script>
+    <script th:src="${application.basePath}+'/web/system/camera/list.js'"></script>
+</head>
+<body>
+<form action="/camera/save" class="layui-form" id="addCameraForm">
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <span>直属节点:</span>
+                <span th:text="${org.name}"></span>
+            </div>
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <td class="T106_itemName T106_must">摄像头名称</td>
+                        <td class="T106_itemValue">
+                            <input type="hidden" name="attribution" th:value="${orgId}">
+                            <input class="layui-input" id="name" name="name" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName T106_must">设备类型</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" id="deviceType" name="deviceType" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${device_type}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName T106_must">视频平台</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" id="videoPlatform" name="videoPlatform" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${video_platform}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">经度</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="longitude" name="longitude" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName T106_must">维度</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="latitude" name="latitude" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName T106_must">抓拍类型</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" id="snapType" name="snapType" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${snap_type}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">URL</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="url" name="url" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName T106_must">国标ID</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="nationalStandardId" name="nationalStandardId" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName T106_must">IP地址</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="cameraIp" name="cameraIp" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">型号</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="model" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">用户名</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="username" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">摄像机品牌</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="brand" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">IPV6地址</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="ipv6" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">密码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="password" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">设备厂商</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="factory" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">视频编码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="videoCode" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">端口</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="port" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">网络接入方式</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="netType" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">信号类型</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="signalType" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${signal_type}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName">摄像机像素</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="pixel" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${pixel}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName">推送类型</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="pushType" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${push_type}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">是否接入平台</td>
+                        <td class="T106_itemValue">
+                            <div class="Y106_radioOuter T106_radioOuter" >
+                                <input type="radio" name="access" value="1" title="是" >
+                                <input type="radio" name="access" value="0" title="否" checked="">
+                            </div>
+                        </td>
+                        <td class="T106_itemName">是否启动</td>
+                        <td class="T106_itemValue">
+                            <div class="Y106_radioOuter T106_radioOuter">
+                                <input type="radio" name="enable" value="1" title="是" >
+                                <input type="radio" name="enable" value="0" title="否" checked="">
+                            </div>
+                        </td>
+                        <td class="T106_itemName">是否可控</td>
+                        <td class="T106_itemValue">
+                            <div class="Y106_radioOuter T106_radioOuter" >
+                                <input type="radio" name="controlled" value="1" title="是" >
+                                <input type="radio" name="controlled" value="0" title="否" checked="">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">设备监控方位</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="direction" >
+                                <option value="">请选择</option>
+                                <option th:each="dict:${direction}"  th:text="${dict.name}" th:value="${dict.code}">
+                                </option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName">通道</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="path" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">接口协议</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="agreement" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">GSID</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" id="gsid" name="gsid" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">管辖单位代码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="unitCode" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">安装行政区划代码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="adminCode" placeholder="请输入"  type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">位置名</td>
+                        <td colspan="5" class="T106_itemValue">
+                            <input class="layui-input" name="location" placeholder="请输入" type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">监控区域说明</td>
+                        <td colspan="5" class="T106_itemValue">
+                            <input class="layui-input" name="comment" placeholder="请输入" type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="addCameraSubmit()">确定</div>
+            <div class="A106_button A106_button2" onclick="abandon()">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+
+</html>
+

@@ -1,0 +1,30 @@
+package com.netmarch.figurecloud.auth.core.security.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ConfigurationProperties(prefix = "netmarch.security.jwt")
+@Data
+public class JwtSettings {
+    /**
+     * 过期时间
+     */
+    private Integer tokenExpirationTime;
+
+    /**
+     * Token 发行人
+     */
+    private String tokenIssuer;
+    
+    /**
+     * 签名key
+     */
+    private String tokenSigningKey;
+    
+    /**
+     * 刷新token过期时间
+     */
+    private Integer refreshTokenExpTime;
+}

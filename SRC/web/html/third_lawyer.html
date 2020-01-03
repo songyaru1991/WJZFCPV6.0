@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <script src="../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+    <link rel="stylesheet" href="../js/zTree/css/zTreeStyle/zTreeStyle.css">
+    <script src="../js/zTree/jquery.ztree.all.js"></script>
+    <script src="../js/zTree/jquery.ztree.exhide.js"></script>
+
+    <script src="../js/zTree/fuzzysearch.js"></script>
+
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img src="../images/H105_edit.png" alt="" class="E105_editIco">
+                <p>王宝田，柳姚天案件律师授权</p>
+            </div>
+
+
+        </div>
+        <!--律师基本信息-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>律师基本信息</p>
+                </div>
+                <div class="E105_arrowup cursor">
+
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>律师姓名:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" value="正好杨">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>性别:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl" value="男">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>身份证号:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl" value="24111119742245">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>年龄:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl" value="45">
+
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>律所:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  " value="昊阳律师事务所">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>介入阶段:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  " value="报诉">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>联系方式: </p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl  " value="1811114644">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>邮箱: </p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl  " value="1455222333@qq.com">
+                        </td>
+
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        <!--授权律师案件-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>授权律师案件</p>
+                </div>
+                <div class="E105_arrowup cursor">
+
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <div class="E205_tree clear ">
+                    <div class="E205_choose fl">
+                        <div class="E205_subtitle">
+                            <p>选择案件:</p>
+                        </div>
+                        <div class="E205_chazhao">
+                            <input type="text" placeholder="请输入" id="jq_key">
+                            <img src="../images/A305_search.png" alt="">
+                            <p><span>查找</span></p>
+                        </div>
+                        <div class="E205_please">
+                            <p>请选择案由</p>
+                        </div>
+                        <div class="  A105_ztree E205_ztree">
+                            <ul id="treeDemo" class="ztree"></ul>
+
+                        </div>
+
+                    </div>
+                    <div class="E205_choose1">
+                        <div class="E205_btn ">
+                            <p class="E205_click_choose"><span>选择</span></p>
+                            <!--<p class="E205_click_delete"><span>删除</span></p>-->
+
+                        </div>
+                    </div>
+                    <div class="E205_choose fr">
+                        <div class="E205_subtitle">
+                            <p>已选卷宗:</p>
+                        </div>
+                        <div class="E205_chazhao1">
+                            <p>已选择(9/10)</p>
+                        </div>
+                        <div class="E205_please1">
+                            <p class="E205_please_jq">清空</p>
+                        </div>
+                        <div class="  A105_ztree E205_ztree">
+                            <ul id="treeDemo1" class="ztree"></ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!--生成授权码-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>生成授权码</p>
+                </div>
+            </div>
+            <div class="E105_tableCoat2">
+                <div class="E105_accredit">
+                    <p> 授权码：<span>446467979111111s6d</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="E105_btnCoat">
+            <div class="E105_saveBtnCoat clear">
+                <div class="E105_saveBtn fl cursor"><p>保存</p></div>
+                <div class="E105_saveBtn fl cursor"><p>取消</p></div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+<script type="text/javascript">
+
+
+  // zTree
+  var zTreeObj;
+  // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+  var setting = {
+    check: {
+      enable: true
+    },
+    view: {
+      nameIsHTML: true, //允许name支持html
+      // 设置是否允许同时选中多个节点。
+      selectedMulti: false
+    },
+    // edit: {
+    //   // 设置 zTree 是否处于编辑状态 开启拖拽
+    //   enable: true,
+    //   // 设置是否显示删除按钮。
+    //   showRemoveBtn: false,
+    //   // 设置是否显示重命名按钮。
+    //   showRenameBtn: false
+    // },
+    data: {
+
+      // keep: {
+      //   // rue / false 分别表示 锁定 / 不锁定 父节点属性
+      //   parent: true,
+      //   // true / false 分别表示 锁定 / 不锁定 叶子节点属性
+      //   leaf: true
+      // },
+      // simpleData: {
+      //   // 简单数据模式 (Array)
+      //   enable: true
+      // }
+    },
+    callback: {
+      // 用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作
+      // beforeDrag: beforeDrag,
+      // 用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作
+      // beforeRemove: beforeRemove,
+      // 用于捕获节点编辑名称结束（Input 失去焦点 或 按下 Enter 键）之后，更新节点名称数据之前的事件回调函数，并且根据返回值确定是否允许更改名称的操作
+      // beforeRename: beforeRename,
+      // 用于捕获删除节点之后的事件回调函数。
+      // onRemove: onRemove,
+      // 用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作
+      // beforeDrop: beforeDrop,
+      // 用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数
+      // onRightClick: onRightClick,
+    }
+  };
+  // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+
+  var zNodes = [
+    {id: 1, pId: 0, name: '随意拖拽 1', open: true},
+    {
+      name: '父节点11 - 折叠',
+      children: [
+        {name: '叶子节点11'},
+        {name: '叶子节点12'},
+        {name: '叶子节点13'},
+        {
+          name: '叶子节点14', children: [
+            {name: '叶子节点141'},
+            {name: '叶子节点142'}
+          ]
+        },
+        {
+          name: '叶子节点15', children: [
+            {name: '叶子节点151'},
+            {name: '叶子节点152'}
+          ]
+        }
+      ]
+    },
+    {id: 11, pId: 1, name: '随意拖拽 1-1'},
+    {id: 111, pId: 11, name: '随意勾选 1-1-1'},
+    {id: 112, pId: 11, name: '随意勾选 1-1-2'},
+    {id: 12, pId: 1, name: '随意拖拽 1-2', open: true},
+    {id: 121, pId: 12, name: '随意拖拽 1-2-1'},
+    {id: 122, pId: 12, name: '随意拖拽 1-2-2'},
+    {id: 123, pId: 12, name: '随意拖拽 1-2-3'},
+    {id: 13, pId: 1, name: '禁止拖拽 1-3', open: true, drag: false},
+    {id: 131, pId: 13, name: '禁止拖拽 1-3-1', drag: false},
+    {id: 132, pId: 13, name: '禁止拖拽 1-3-2', drag: false},
+    {id: 133, pId: 13, name: '随意拖拽 1-3-3'},
+    {id: 2, pId: 0, name: '随意拖拽 2', open: true},
+    {id: 21, pId: 2, name: '随意拖拽 2-1'},
+    {id: 22, pId: 2, name: '禁止拖拽到我身上 2-2', open: true, drop: false},
+    {id: 221, pId: 22, name: '随意拖拽 2-2-1'},
+    {id: 222, pId: 22, name: '随意拖拽 2-2-2'},
+    {id: 223, pId: 22, name: '随意拖拽 2-2-3'},
+    {id: 23, pId: 2, name: '随意拖拽 2-3'}
+  ];
+
+  var zNodes1 = [
+    {
+      name: '已选择 - 折叠',
+      children: [
+        {name: '叶子节点111'},
+        {name: '叶子节点112'},
+        {name: '叶子节点113'},
+        {name: '叶子节点114'}
+      ]
+    },
+    {id: 1, pId: 0, name: '随意拖拽 1', open: true},
+    {id: 11, pId: 1, name: '随意拖拽 1-1'},
+    {id: 111, pId: 11, name: '随意勾选 1-1-1'},
+    {id: 112, pId: 11, name: '随意勾选 1-1-2'},
+    {id: 12, pId: 1, name: '随意拖拽 1-2', open: true},
+    {id: 121, pId: 12, name: '随意拖拽 1-2-1'},
+    {id: 122, pId: 12, name: '随意拖拽 1-2-2'},
+    {id: 123, pId: 12, name: '随意拖拽 1-2-3'},
+    {id: 13, pId: 1, name: '禁止拖拽 1-3', open: true, drag: false},
+    {id: 131, pId: 13, name: '禁止拖拽 1-3-1', drag: false},
+    {id: 132, pId: 13, name: '禁止拖拽 1-3-2', drag: false},
+    {id: 133, pId: 13, name: '随意拖拽 1-3-3'},
+    {id: 2, pId: 0, name: '随意拖拽 2', open: true},
+    {id: 21, pId: 2, name: '随意拖拽 2-1'},
+    {id: 22, pId: 2, name: '禁止拖拽到我身上 2-2', open: true, drop: false},
+    {id: 221, pId: 22, name: '随意拖拽 2-2-1'},
+    {id: 222, pId: 22, name: '随意拖拽 2-2-2'},
+    {id: 223, pId: 22, name: '随意拖拽 2-2-3'},
+    {id: 23, pId: 2, name: '随意拖拽 2-3'}
+  ];
+
+  var RC_treeNode;
+
+  var newCount = 1;
+
+  $(document).ready(function () {
+    var zTreeObj1;
+    zTreeObj = $.fn.zTree.init($('#treeDemo'), setting, zNodes);
+    fuzzySearch('treeDemo', '#jq_key', null, true); //初始化模糊搜索方法
+    function Recursion (depth) {
+      for (var i = 0; i < depth.length; i++) {
+        if (depth[i].children instanceof Array) {
+          Recursion(depth[i].children);
+          if (depth[i].children.length == 0) {
+            depth.splice(i, 1);
+            i--;
+          }
+        } else if (depth[i].checked == undefined || depth[i].checked == false) {
+          depth.splice(i, 1);
+          i--;
+        }
+      }
+
+    }
+
+    $('.E205_click_choose').click(function () {
+
+      var zTree = $.fn.zTree.getZTreeObj('treeDemo');
+      var nodesOrginal = zTree.getCheckedNodes();
+
+      var nodes = JSON.parse(JSON.stringify(nodesOrginal));
+      // console.log('原数组: ', nodes);
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].level != 0) {
+          nodes.splice(i, 1);
+          i--;
+        }
+      }
+      // console.log('过滤后',nodes);
+      // return;
+      Recursion(nodes);
+      // console.log('元素生成数据:',nodes);
+      zTreeObj1 = $.fn.zTree.init($('#treeDemo1'), setting, nodes);
+    });
+    $('.E205_please_jq').click(function () {
+      $.fn.zTree.destroy('treeDemo1');
+    });
+
+  });
+
+</script>
+
+</html>

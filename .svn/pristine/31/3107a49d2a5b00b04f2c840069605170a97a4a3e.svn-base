@@ -1,0 +1,13 @@
+package com.netmarch.fdfs.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.fdfs.system.bean.Ajjbxx;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
+
+@Service
+public interface AjjbxxService {
+//    Page<Map<String, Object>> getAllCase(Integer pageNo);
+Page<Ajjbxx> getAllCase(Integer pageNo,String searchField,String searchName);
+}

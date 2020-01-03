@@ -1,0 +1,39 @@
+package com.netmarch.jzznyj.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.jzznyj.system.bean.Ajjbxx;
+import com.netmarch.jzznyj.system.bean.PagesStatic;
+import com.netmarch.jzznyj.system.mapper.AjjbxxMapper;
+import com.netmarch.jzznyj.system.service.AjjbxxService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AjjbxxServiceImpl implements AjjbxxService {
+
+    @Autowired
+    private AjjbxxMapper ajjbxxMapper;
+
+
+//    @Override
+//    public Page<Map<String, Object>> getAllCase(Integer pageNo) {
+//        PageHelper.startPage(pageNo, PagesStatic.PAGES_SIZE);
+//        return ajjbxxMapper.getAllCase();
+//    }
+    @Override
+    public Page<Ajjbxx> getAllCase(Integer pageNo,String searchField,String searchName) {
+        PageHelper.startPage(pageNo, PagesStatic.PAGES_SIZE);
+        return ajjbxxMapper.getAllCase(searchField,searchName);
+    }
+
+    @Override
+    public Page<Ajjbxx> getCaseByAjbs(String ajbs){
+        return ajjbxxMapper.getCaseByAjbs(ajbs);
+    }
+
+    @Override
+    public String getCaseNameByCode(String code){
+        return ajjbxxMapper.getCaseNameByCode(code);
+    }
+}

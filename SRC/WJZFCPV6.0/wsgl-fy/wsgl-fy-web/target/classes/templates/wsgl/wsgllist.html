@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>法院--文书管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright"  auth:check="toFyAjjbqkWsgl">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>文书管理</p>
+            </div>
+            <div class="H105_searchCoat fr clear">
+                <input type="button" id="btnAddWS" class="H105_search1 fl " value="新增文书" onclick="addWs()"  auth:check="fyWsglAdd"/>
+                <input type="button" class="H105_search1 fl " value="添加送达回证" onclick="addSdhz()"  auth:check="fyAddSdhz" style="width: 100px"/>
+            </div>
+        </div>
+
+        <div class="H105_sysList H105_sysList1">
+            <div class="E105_baseInfo">
+                <div class="H105_handing6">
+                    <div onclick="changebg('1','GAJ')" id="td1" class="H105_handing6Item">
+                        <p>公安局交换文书</p>
+                    </div>
+                    <div class="H105_shu">
+                    </div>
+                    <div onclick="changebg('2','JCY')" id="td2" class="H105_handing6Item">
+                        <p>检察院交换文书</p>
+                    </div>
+                    <div class="H105_shu">
+                    </div>
+                    <div onclick="changebg('3','3')" id="td3" class="H105_handing6Item H105_handing6Choose">
+                        <p>法院文书</p>
+                    </div>
+                    <div onclick="changebg('4','SFJ')" id="td4" class="H105_handing6Item">
+                        <p>司法局交换文书</p>
+                    </div>
+                </div>
+                <input type="hidden" name="hidWSLX" id="hidWSLX" value="1">
+            </div>
+
+            <div class="E105_tableFloor" id="d1" style="display: none">
+                <table class="layui-table H105_table" lay-data="{id:'tablesGaj'}" lay-skin="line" lay-filter="demo">
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox'}"></th>
+                        <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                        <th lay-data="{field:'1'}">文书标题</th>
+                        <th lay-data="{field:'2'}">文书文号</th>
+                        <th lay-data="{field:'3'}">填发时间</th>
+                        <th lay-data="{field:'4'}">填发人</th>
+                        <th lay-data="{field:'5', width:190}">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bean,beanStat : ${gajjhwsList}">
+                        <td><input type="checkbox" name="box" th:value="${bean.jlbh}" class="box" checked
+                                   lay-skin="primary"/></td>
+                        <td th:text="${bean.jlbh}" style="display:none;"></td>
+                        <td th:text="${bean.wsbtmc}">文书标题</td>
+                        <td th:text="${bean.wswh}">文书文号</td>
+                        <td th:text="${bean.tfsj}">填发时间</td>
+                        <td th:text="${bean.tfrxm}">填发人</td>
+                        <td>
+                            <a th:href="${'javascript:toView('''+bean.jlbh+''')'}"  auth:check="fyWsglEdit">
+                                <img class="I108_imgNormal"
+                                     th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                     alt="">
+                                <span>查看</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="E105_tableFloor" id="d2" style="display: none;">
+                <table class="layui-table H105_table" lay-data="{id:'tablesJcy'}" lay-skin="line" lay-filter="demo">
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox'}"></th>
+                        <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                        <th lay-data="{field:'1'}">文书标题</th>
+                        <th lay-data="{field:'2'}">文书文号</th>
+                        <th lay-data="{field:'3'}">填发时间</th>
+                        <th lay-data="{field:'4'}">填发人</th>
+                        <th lay-data="{field:'5', width:190}">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bean,beanStat : ${jcyjhwsList}">
+                        <td><input type="checkbox" name="box" th:value="${bean.jlbh}" class="box" checked
+                                   lay-skin="primary"/></td>
+                        <td th:text="${bean.jlbh}" style="display:none;"></td>
+                        <td th:text="${bean.wsbtmc}">文书标题</td>
+                        <td th:text="${bean.wswh}">文书文号</td>
+                        <td th:text="${bean.tfsj}">填发时间</td>
+                        <td th:text="${bean.tfrxm}">填发人</td>
+                        <td>
+                            <a th:href="${'javascript:toView('''+bean.jlbh+''')'}"  auth:check="fyWsglEdit">
+                                <img class="I108_imgNormal"
+                                     th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                     alt="">
+                                <span>查看</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="E105_tableFloor" id="d3" style="display: block">
+                <table class="layui-table H105_table" lay-data="{id:'tablesFy'}" lay-skin="line" lay-filter="demo">
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox'}"></th>
+                        <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                        <th lay-data="{field:'1'}">文书标题</th>
+                        <th lay-data="{field:'2'}">文书文号</th>
+                        <th lay-data="{field:'3'}">填发时间</th>
+                        <th lay-data="{field:'4'}">填发人</th>
+                        <th lay-data="{field:'5', width:190}">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bean,beanStat : ${fywsList}">
+                        <td><input type="checkbox" name="box" th:value="${bean.jlbh}" class="box" checked
+                                   lay-skin="primary"/></td>
+                        <td th:text="${bean.jlbh}" style="display:none;"></td>
+                        <td th:text="${bean.wsbtmc}">文书标题</td>
+                        <td th:text="${bean.wswh}">文书文号</td>
+                        <td th:text="${bean.tfsj}">填发时间</td>
+                        <td th:text="${bean.tfrxm}">填发人</td>
+
+                        <td>
+                            <a th:href="${'javascript:toEdit('''+bean.jlbh+''')'}"  auth:check="fyWsglEdit">
+                                <img class="I108_imgNormal"
+                                     th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                     alt="">
+                                <span>编辑</span>
+                            </a>
+                            <a  th:href="${'javascript:toDelete('''+bean.jlbh+''')'}" auth:check="fyWsglDelete">
+                                <img class="I108_imgHover"
+                                     th:src="${application.basePath}+'/static/images/I108_icon_list_to_del_hover.png'"
+                                     alt="">
+                                <span>删除</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="E105_tableFloor" id="d4" style="display: none">
+                <table class="layui-table H105_table" lay-data="{id:'tablesSfj'}" lay-skin="line" lay-filter="demo">
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox'}"></th>
+                        <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                        <th lay-data="{field:'1'}">文书标题</th>
+                        <th lay-data="{field:'2'}">文书文号</th>
+                        <th lay-data="{field:'3'}">填发时间</th>
+                        <th lay-data="{field:'4'}">填发人</th>
+                        <th lay-data="{field:'5', width:190}">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bean,beanStat : ${sfjjhwsList}">
+                        <td><input type="checkbox" name="box" th:value="${bean.jlbh}" class="box" checked
+                                   lay-skin="primary"/></td>
+                        <td th:text="${bean.jlbh}" style="display:none;"></td>
+                        <td th:text="${bean.wsbtmc}">文书标题</td>
+                        <td th:text="${bean.wswh}">文书文号</td>
+                        <td th:text="${bean.tfsj}">填发时间</td>
+                        <td th:text="${bean.tfrxm}">填发人</td>
+                        <td>
+                            <a th:href="${'javascript:toView('''+bean.jlbh+''')'}"  auth:check="fyWsglEdit">
+                                <img class="I108_imgNormal"
+                                     th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                     alt="">
+                                <span>查看</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <input type="hidden" name="searchCondition" id="searchCondition" th:value="${wsglQuery.searchCondition}"/>
+        <input type="hidden" name="searchContent" id="searchContent" th:value="${wsglQuery.searchContent}"/>
+        <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+        <input type="hidden" name="ajbs" id="ajbs" th:value="${ajbs}"/>
+
+    </div>
+</div>
+
+<div id="popupContact" style="width: 530; height: 500px; z-index: 30; display: none;">
+    <div id="contactArea">
+    </div>
+    <div id="contactArea1" style="display: none;">
+        <iframe id="iframeWS" style="width: 500px; height: 500px; border: #000000 solid 0px;
+                overflow: hidden;" scrolling="no" frameborder="0"></iframe>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    $(".box").prop("checked",true)
+
+    var contextPath = getContextPath();
+    var layIndex;
+    var table = null;
+    layui.use('table', function () {
+        layui.table.init('demo', {
+            limit: 12
+        });
+
+        table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+            console.log(obj)
+        });
+    })
+    //获取选中行FexId属性值公共方法
+    //value 为传入的  {field: 'id',style:'display:none;'} field值
+    //返回结果 是这一列被选中的 用,隔开的字符串
+    function getRowFexIdJcy(value) {
+        var checkStatus = table.checkStatus('tablesJcy')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        for (var i = 0; i < data.length; i++) {
+            arr.push(data[i][value]);
+        }
+        return arr.join(",");
+        checkStatus
+    }
+    function getRowCountJcy() {
+        var checkStatus = table.checkStatus('tablesJcy')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        return data.length;
+    }
+
+    function getRowFexIdGaj(value) {
+        var checkStatus = table.checkStatus('tablesGaj')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        for (var i = 0; i < data.length; i++) {
+            arr.push(data[i][value]);
+        }
+        return arr.join(",");
+        checkStatus
+    }
+    function getRowCountGaj() {
+        var checkStatus = table.checkStatus('tablesGaj')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        return data.length;
+    }
+
+    function getRowFexIdFy(value) {
+        var checkStatus = table.checkStatus('tablesFy')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        for (var i = 0; i < data.length; i++) {
+            arr.push(data[i][value]);
+        }
+        return arr.join(",");
+        checkStatus
+    }
+    function getRowCountFy() {
+        var checkStatus = table.checkStatus('tablesFy')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        return data.length;
+    }
+
+    function getRowFexIdSfj(value) {
+        var checkStatus = table.checkStatus('tablesSfj')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        for (var i = 0; i < data.length; i++) {
+            arr.push(data[i][value]);
+        }
+        return arr.join(",");
+        checkStatus
+    }
+    function getRowCountSfj() {
+        var checkStatus = table.checkStatus('tablesSfj')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        return data.length;
+    }
+
+    function layerclose() {
+        layer.close(layIndex);
+    }
+
+    function addSdhz() {
+
+        var ajbs = $("#ajbs").val();
+        var searchCondition = $('#searchCondition option:selected').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+
+        var countJcy = getRowCountJcy();
+
+        var countGaj = getRowCountGaj();
+
+        var countFy = getRowCountFy();
+
+        var countSfj = getRowCountSfj();
+
+        if (countJcy < 1 && countGaj < 1 && countFy < 1  && countSfj < 1) {
+            layer.alert("请选择要送达回证的文书!");
+            return;
+        }
+
+        //取文书标题
+        var sdhzWsJlbhs = '';
+
+        if(countGaj > 0){
+            var sdhzWsJlbhs = getRowFexIdGaj("id");
+            if (sdhzWsJlbhs == '') {
+                layer.alert("请选择要送达回证的文书!");
+                return;
+            }
+        }
+        if(countJcy > 0){
+            var sdhzWsJlbhs = getRowFexIdJcy("id");
+            if (sdhzWsJlbhs == '') {
+                layer.alert("请选择要送达回证的文书!");
+                return;
+            }
+        }
+        if(countFy > 0){
+            var sdhzWsJlbhs = getRowFexIdFy("id");
+            if (sdhzWsJlbhs == '') {
+                layer.alert("请选择要送达回证的文书!");
+                return;
+            }
+        }
+
+        if(countSfj > 0){
+            var sdhzWsJlbhs = getRowFexIdSfj("id");
+            if (sdhzWsJlbhs == '') {
+                layer.alert("请选择要送达回证的文书!");
+                return;
+            }
+        }
+
+        var layContent = '添加送达回证';
+        var layHref ='/wsgl-fy/Wsgl/toAddSdhz?sdhzWsJlbhs='+sdhzWsJlbhs+'&ajbs='+ajbs+'&wslx='+curWSLX+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+
+        hyViewClickEvent(layContent,layHref);
+    }
+
+    // 返回更新一级标签,不做修改保存的提示*/
+    $('.jq_E105_cannel4').on('click', function (event) {
+
+        var searchCondition = $('#searchCondition').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+
+        // 阻止冒泡
+        event.stopPropagation();
+
+        var layHref = "/wsgl-fy/Ajjbqk/navigationBarWsglList?searchCondition="+searchCondition+"&searchContent="+searchContent+"&pageNo="+pageNo;
+        // 重新加载
+        parent.parent.$('.src_iframeleft').attr('src', layHref);
+
+    });
+
+    var curWSLX = $("#hidWSLX").val();
+    function changebg(num, wslx) {
+        var mtd = "#td" + num;
+        var dd = "#d" + num;
+
+        for (var i = 1; i < 5; i++) {
+            $("#td" + i).removeClass("H105_handing6Choose");
+            $("#d" + i).hide();
+        }
+        $(mtd).addClass("H105_handing6Choose");
+        $(dd).show();
+
+        $("#hidWSLX").val(wslx);
+        curWSLX = wslx;
+        if (num == "1" || num == "2" || num == "4") {
+            $("#btnAddWS").hide();
+        } else {
+            $("#btnAddWS").show();
+        }
+    }
+
+    function toEdit(jlbh) {
+        var searchCondition = $('#searchCondition option:selected').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+        var ajbs = $("#ajbs").val();
+
+        var layContent = '编辑';
+        var layHref ='/wsgl-fy/Wsgl/toEdit?jlbh=' + jlbh+'&ajbs='+ajbs+'&wslx='+curWSLX+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+
+        hyViewClickEvent(layContent,layHref);
+    }
+
+    function addWs() {
+        var ajbs = $("#ajbs").val();
+        var searchCondition = $('#searchCondition option:selected').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+
+        var layContent = '新增';
+        var layHref ='/wsgl-fy/Wsgl/toAdd?ajbs='+ajbs+'&wslx='+curWSLX+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+
+        hyViewClickEvent(layContent,layHref);
+    }
+
+    function toDelete(jlbh) {
+        var searchCondition = $('#searchCondition option:selected').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+        var ajbs = $("#ajbs").val();
+        layer.confirm('确定删除该记录吗？', {btn: ['确定', '取消']}, function (index) {
+            layer.close(index);
+            $.ajax({
+                url: contextPath + "/Wsgl/toDelete",
+                type: "post",
+                data:{"jlbh":jlbh,"ajbs":ajbs,"searchCondition":searchCondition,"searchContent":searchContent,"pageNo":pageNo},
+                dataType: "json",
+                success: function (result) {
+                    if (200 == result.code) {
+                        layer.alert(result.message, function (index) {
+                            layer.close(layer.index);
+                            parent.$('.src_iframeleft').attr('src', result.nextUrl);
+                        });
+                    } else {
+                        layer.alert(result.message);
+                        return;
+                    }
+                }
+            })
+        })
+    }
+
+    function toView(jlbh) {
+        $("#contactArea").html($("#contactArea1").html());
+        var bookMarkKeyValue = $("#ajbs").val();
+        var wsmanageid = '';
+        $("#iframeWS").attr("src", '../TDocEdit/TDocumentEdit?id=' + jlbh +'&wsmanageid='+ wsmanageid+ '&bookMarkKeyValue='+bookMarkKeyValue+'&curWSLX='+curWSLX);
+        resizeiframe();
+        $("#popupContact").fadeIn();
+    };
+
+    function disablePopup() {
+
+        $("#popupContact").fadeOut("slow");
+    }
+    function resizeiframe() {
+        var windowWidth = document.documentElement.clientWidth - 1;
+        var windowHeight = document.documentElement.clientHeight - 10;
+        $("#iframeWS").css({
+            "width": windowWidth,
+            "height": windowHeight
+        });
+        $("#popupContact").css({
+            "position": "absolute",
+            "top": 0,
+            "left": 0,
+            "width": windowWidth,
+            "height": windowHeight
+        });
+    }
+    window.onresize = function () {
+        resizeiframe();
+    }
+
+</script>
+</html>

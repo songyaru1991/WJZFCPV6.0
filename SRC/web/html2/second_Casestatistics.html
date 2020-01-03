@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.admin.css">
+    <script src="../js/layui/layui.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+    <script src="../js/echart4.2.1/echarts.js"></script>
+
+</head>
+<body>
+<div class="W105_wripper">
+    <div class="W105_subtitle clear">
+        <div class="W105_local fl">
+            <img src="../images/H105_edit.png" alt="" class="W105_caseImg fl">
+            <p>案件统计：案由统计</p>
+        </div>
+
+        <div class="H105_searchCoat layui-form fr clear">
+            <div class="layui-form-item W105_down">
+                <div class="layui-input-block">
+                    <select name="interest" lay-filter="aihao">
+                        <option value="0" selected="">公安移送时间</option>
+                        <option value="1">检察院移送时间</option>
+                        <option value="2">法院移送时间</option>
+                    </select>
+                </div>
+            </div>
+            <div class="S105_caseInput clear">
+                <input
+                        type="text"
+                        id="Q105P_refereeing1"
+                        class="layui-input   "
+                        autocomplete="off">
+                <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar1">
+
+            </div>
+            <div class="S105_caseInput clear" style="margin-right: 1rem;">
+            <p class="S105_jorizontal">—</p>
+            <input
+                    type="text"
+                    id="Q105P_refereeing2"
+                    class="layui-input   "
+                    autocomplete="off">
+            <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar2">
+            </div>
+            <div class="S205_search1 fl" style="background: #10c5ba;">统计</div>
+            <div class="S205_search1 fl" style="background: #62bdde;">导出xcel  </div>
+        </div>
+    </div>
+    <div class="S305_sysList">
+        <div class="S305_baseInfo">
+            <div class="S305_info  ">
+                <p>案件基本信息</p>
+            </div>
+
+        </div>
+
+        <div class="S305_tableCoat">
+            <table class="S305_table ">
+                <tr class="S305_thead">
+                    <td  rowspan="2">案由</td>
+                    <td colspan="4">案件名称</td>
+                    <td colspan="4">嫌疑人</td>
+                    <td  rowspan="2">合计</td>
+                </tr>
+                <tr class="S305_thead1">
+                    <td>收案</td>
+                    <td>分案  </td>
+                    <td>在办</td>
+                    <td>结案  </td>
+                    <td>收案</td>
+                    <td>分案  </td>
+                    <td>在办</td>
+                    <td>结案  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+                <tr>
+                    <td   >背叛国家罪</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                    <td   >0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0  </td>
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<script>
+  //Demo
+  layui.use(['form','laydate'], function() {
+    var laydate = layui.laydate;
+// 点我触发
+    laydate.render({
+      elem: '#Q105P_refereeing1',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+
+    laydate.render({
+      elem: '#Q105P_refereeing2',
+      eventElem: '.Q105_calendar2',
+      trigger: 'click'
+    });
+
+  })
+
+</script>
+
+</body>
+</html>

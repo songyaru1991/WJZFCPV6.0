@@ -1,0 +1,118 @@
+<!--
+ * Author: wsp 
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/system/gallery/list.js'"></script>
+</head>
+<body>
+<form action="" class="layui-form">
+    <div class="I106_page">
+        <!--头部s-->
+        <div th:replace="common/top::top"></div>
+        <!--头部e-->
+        <!--内容s-->
+        <div class="I106_content">
+            <div class="I106_container">
+                <div class="I106_contentTop clear">
+                    <div class="I106_title">
+                        <span>底图库管理</span>
+                        <img th:src="${application.basePath}+'/images/arrowDown2.png'" alt="">
+                    </div>
+                </div>
+                <div class="I106_contentOuter clear">
+                    <div class="I106_contentLeft">
+                        <!--listDicTree_列表字典树 Start-->
+                        <div class="I108_listDicTree fl">
+                            <div class="I108_dicTreeEdit">
+
+                            </div>
+                            <div class="I108_dicTreeList">
+                                <ul id="treeDemo" class="ztree"></ul>
+                            </div>
+                        </div>
+                        <!--listDicTree_列表字典树 End-->
+                    </div>
+                    <div class="I106_contentRight">
+                        <div class="I106_tabelOuter">
+                            <table class="layui-table I106_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                                <thead>
+                                <tr>
+                                    <th lay-data="{type:'checkbox', fixed: 'left', width:50}">
+                                        <input class="layui-input" type="checkbox" lay-skin="primary">
+                                    </th>
+                                    <th lay-data="{field:'username0',width: 70}">序号</th>
+                                    <th lay-data="{field:'username1',width: 200}">人员类型</th>
+                                    <th lay-data="{field:'username7',width: 150}">人员总数</th>
+                                    <th lay-data="{field:'username7',width: 140}">图片总数</th>
+                                    <th lay-data="{field:'username8',width: 200}">更新时间</th>
+                                    <th lay-data="{field: 'id',style:'display:none;'}"></th>
+                                    <!--<th lay-data="{field:'sss',fixed: 'right', width:200}">操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="gallery,listMeta : ${list}">
+                                    <td>
+                                        <input class="layui-input" type="checkbox" lay-skin="primary">
+                                    </td>
+                                    <td th:text="${listMeta.count}">序号</td>
+                                    <td th:text="${gallery.baseRepositoryName}">人员类型</td>
+                                    <td th:text="${gallery.personCount}">人员总数</td>
+                                    <td th:text="${gallery.imageCount}">图片总数</td>
+                                    <td th:text="${#dates.format(gallery.updateTime,'yyyy-MM-dd hh:mm:ss')}">更新时间</td>
+                                    <td th:text="${gallery.baseRepositoryId}"></td>
+                                    <td>
+                                        <span class="I106_tableBtn" th:onclick="edit([[${gallery.baseRepositoryId}]])">查看</span>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="L106_paging">
+                            <!--分页引用-->
+                            <div th:replace="common/pages::pages"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--listTableEdit_列表内容表编辑 Start-->
+                <div class="I108_listTableEdit">
+                    <div class="I108_listEditBtn">
+                        <a class="I108_editUlToggle" href="javascript:void(0)">
+                            <img th:src="${application.basePath}+'/images/I108_icon_list_edit.png'" alt="">
+                        </a>
+                    </div>
+                    <ul class="I108_listEditUl">
+                        <li class="I108_imgShow">
+                            <a href="javascript:customer.toEdit()">
+                                <img class="I108_imgNormal" th:src="${application.basePath}+'/images/I108_icon_list_to_edit.png'" alt="">
+                                <img class="I108_imgHover" th:src="${application.basePath}+'/images/I108_icon_list_to_edit_hover.png'" alt="">
+                                <span>编辑</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!--listTableEdit_列表内容表编辑 End-->
+            </div>
+        </div>
+        <!--内容e-->
+        <div th:replace="common/bottom::bottom"></div>
+    </div>
+</form>
+</body>
+</html>

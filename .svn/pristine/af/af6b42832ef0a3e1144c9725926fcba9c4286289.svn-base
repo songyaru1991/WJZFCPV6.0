@@ -1,0 +1,400 @@
+package com.netmarch.jzznyj.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.Page;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.netmarch.jzznyj.common.controller.FrontBaseController;
+import com.netmarch.jzznyj.common.utils.HttpClientUtils;
+import com.netmarch.jzznyj.common.utils.UsersUtil;
+import com.netmarch.jzznyj.system.bean.*;
+import com.netmarch.jzznyj.system.service.AreaService;
+import com.netmarch.jzznyj.system.service.DepartmentsService;
+import com.netmarch.jzznyj.system.service.LoginUserService;
+import com.netmarch.jzznyj.system.service.SysRoleService;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @program: wssacwgl
+ * @description: loginuser controller
+ * @author: songyaru
+ * @create: 2019-05-02
+ **/
+@Controller
+@RequestMapping("/user/*")
+@Slf4j
+public class LoginUserController extends FrontBaseController{
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private LoginUserService loginUserService;
+
+    @Autowired
+    private DepartmentsService departmentsService;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private AreaService areaService;
+
+    @Autowired
+    private UsersUtil usersUtil;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @RequestMapping(value = {"list", "tableList"})
+    public String list(LoginUser user, Query usersQuery, Model model){
+        String requestURI="",user_Id="";
+        try {
+            String jwt = usersUtil.getJwtCookie();
+            user_Id=usersUtil.getLoginUser_Id();
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= null == request.getParameter("searchContent")?"":request.getParameter("searchContent").trim();
+            usersQuery.setSearchCondition(searchCondition);
+            usersQuery.setSearchContent(searchContent);
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String,String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            LoginUser loginUser = null;
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                loginUser = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+           // LoginUser loginUser = loginUserClient.getUserById(user_Id);
+            user.setYhlb(loginUser.getYhlb());
+            user.setAreaCode(loginUser.getAreaCode());
+            user.setArea(loginUser.getArea());
+            Page<LoginUser> loginUsers = loginUserService.getUserList(user, usersQuery);
+            model.addAttribute("list", loginUsers);
+            model.addAttribute("usersQuery", usersQuery);
+            if(searchContent==null || searchContent.equals("")){
+                log(user_Id,"用户信息列表","获取所有的用户信息","用户管理(涉案财物系统)",false);
+            }
+            else{
+                log(user_Id,"用户信息列表","获取所有用户信息列表,查询参数为:" +  JSON.toJSONString(usersQuery),"用户管理(涉案财物系统)",false);
+            }
+            requestURI=request.getRequestURI();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"查询列表",e.toString(),"用户管理",true);
+        }
+        if(requestURI.equals("/jzznyj/user/tableList")){
+            return "user/list::table_refresh";
+        }
+        else if(requestURI.equals("/jzznyj/user/list")) {
+            return "user/list";
+        }
+        return "user/list";
+    }
+
+   /**
+     * 添加页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toAdd")
+    public String toAdd(HttpServletRequest request,Model model){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            String pageNo= request.getParameter("pageNo");
+            model.addAttribute("searchCondition", searchCondition);
+            model.addAttribute("searchContent", searchContent);
+            model.addAttribute("pageNo", pageNo);
+
+            List<Area> arealist=areaService.getArea();
+            model.addAttribute("arealist", arealist);
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String,String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+            LoginUser user = new LoginUser();
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                user = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+          //  LoginUser user = loginUserClient.getUserById(user_Id);
+            model.addAttribute("bean", user);
+
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+            model.addAttribute("area", area);
+            model.addAttribute("areaCode", areaCode);
+           String bm = "";
+            if(area.indexOf("公安局") != -1){
+                bm = "公安局";
+            }else if(area.indexOf("检察院") != -1){
+                bm = "检察院";
+            }else if(area.indexOf("法院") != -1){
+                bm = "法院";
+            }
+            else if(area.indexOf("司法局") != -1){
+                bm = "司法局";
+            }
+            else if(area.indexOf("政法委") != -1){
+                bm = "政法委";
+            }
+            List<Departments> departmentsList= departmentsService.getDepartmentsByBm(bm);
+            model.addAttribute("departmentsList", departmentsList);
+
+            List<SysRole> roleList = sysRoleService.getAllUserdRoles(user);
+            model.addAttribute("roleList",roleList);
+
+            log(user_Id, "点击用户新增按钮", "打开用户新增页面", "用户管理(涉案财物系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击用户新增按钮", e.toString(), "用户管理(涉案财物系统)", true);
+            e.printStackTrace();
+        }
+        return "user/add";
+    }
+
+    /**
+     * 编辑页面
+     * @param model
+     * @return
+     */
+    @GetMapping(value="toEdit" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    public String toEdit(HttpServletRequest request,Model model, String user_Id){
+        String loginUser_Id="";
+        try {
+            loginUser_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            String pageNo= request.getParameter("pageNo");
+            model.addAttribute("searchCondition", searchCondition);
+            model.addAttribute("searchContent", searchContent);
+            model.addAttribute("pageNo", pageNo);
+
+            List<Area> arealist=areaService.getArea();
+            model.addAttribute("arealist", arealist);
+
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String,String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            LoginUser user = new LoginUser();
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                user = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+          //  LoginUser user = loginUserClient.getUserById(user_Id);
+            String roleIds = loginUserService.getUserRoleIdsByUserId(user_Id);
+            user.setGrantroles(roleIds);
+            model.addAttribute("bean", user);
+            Map<String,String> loginUser_IdMap = new HashMap<String, String>();
+            loginUser_IdMap.put("user_Id", loginUser_Id);
+                body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(loginUser_IdMap), jwt);
+                LoginUser loginUser = null;
+                if (body != "" && !body.equals("")) {
+                    JSONObject loginUserJsonobject = JSONObject.fromObject(body);
+                    loginUser = (LoginUser) JSONObject.toBean(loginUserJsonobject, LoginUser.class);
+                }
+            model.addAttribute("loginUser", loginUser);
+            String area=loginUser.getArea();
+            String areaCode=loginUser.getAreaCode();
+            model.addAttribute("area", area);
+            model.addAttribute("areaCode", areaCode);
+            String bm = "";
+            if(area.indexOf("公安局") != -1){
+                bm = "公安局";
+            }else if(area.indexOf("检察院") != -1){
+                bm = "检察院";
+            }else if(area.indexOf("法院") != -1){
+                bm = "法院";
+            }
+            else if(area.indexOf("司法局") != -1){
+                bm = "司法局";
+            }
+            else if(area.indexOf("政法委") != -1){
+                bm = "政法委";
+            }
+            List<Departments> departmentsList= departmentsService.getDepartmentsByBm(bm);
+            model.addAttribute("departmentsList", departmentsList);
+
+            List<SysRole> roleList = sysRoleService.getAllUserdRoles(loginUser);
+            model.addAttribute("roleList",roleList);
+
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            String jsonResults = gson.toJson(user);
+            log(loginUser_Id, "点击用户编辑按钮", "编辑前用户信息为:"+jsonResults, "用户管理(涉案财物系统)", false);
+
+        } catch (Exception e) {
+            log(loginUser_Id, "点击用户编辑按钮", e.toString(), "用户管理(涉案财物系统)", true);
+            e.printStackTrace();
+        }
+        return "user/edit";
+    }
+
+    /**
+     * 保存用户
+     * @param resultBean
+     * @return
+     */
+    @RequestMapping(value="/add" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
+    public JsonResult save(@RequestBody ResultBean resultBean){
+        //return loginUserClient.addLoginUser(resultBean);
+        JsonResult jsonResult = null;
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+            String url = uumsUrl + "/userClient/add";
+            String body = "";
+            LoginUser loginUser=resultBean.getLoginUser();
+            loginUser.setYhlb("jzznyj");
+            resultBean.setLoginUser(loginUser);
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(resultBean), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject jsonobject = JSONObject.fromObject(body);
+               jsonResult = (JsonResult) JSONObject.toBean(jsonobject, JsonResult.class);
+            }else{
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+            }
+        } catch (Exception e) {
+            log(user_Id, "点击用户新增按钮", e.toString(), "用户管理(涉案财物系统)", true);
+            e.getStackTrace();
+        }
+
+        return jsonResult;
+    }
+
+    @RequestMapping(value="/edit")
+   @ResponseBody
+    public JsonResult edit(@RequestBody ResultBean resultBean) {
+        //  return loginUserClient.updateLoginUser(resultBean);
+        JsonResult jsonResult = null;
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+            String url = uumsUrl + "/userClient/updateLoginUser";
+            String body = "";
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(resultBean), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject jsonobject = JSONObject.fromObject(body);
+                jsonResult = (JsonResult) JSONObject.toBean(jsonobject, JsonResult.class);
+            }else{
+                log(user_Id, "用户编辑", "HttpClient调用uums系统的用户编辑方法返回结果为null", "用户管理(涉案财物系统)", true);
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+            }
+        } catch (Exception e) {
+            log(user_Id, "用户编辑", e.toString(), "用户管理", true);
+            e.getStackTrace();
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+
+        return jsonResult;
+    }
+
+    @RequestMapping(value="delBatch" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
+    public JsonResult delBatch(String ids,String searchCondition,String searchContent,String pageNo){
+        //return loginUserClient.delBatch(ids,searchCondition,searchContent,pageNo);
+        JsonResult jsonResult = null;
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+            String url = uumsUrl + "/userClient/delBatch";
+            String body = "";
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("ids", ids);
+            map.put("searchCondition", searchCondition);
+            map.put("searchContent", searchContent);
+            map.put("pageNo", pageNo);
+
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(map), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject jsonobject = JSONObject.fromObject(body);
+                jsonResult = (JsonResult) JSONObject.toBean(jsonobject, JsonResult.class);
+            }else{
+                log(user_Id, "用户删除", "HttpClient调用uums系统的用户删除方法返回结果为null", "用户管理(涉案财物系统)", true);
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+            }
+        } catch (Exception e) {
+            log(user_Id, "用户删除", e.toString(), "用户管理", true);
+            e.getStackTrace();
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+
+        return jsonResult;
+    }
+
+    @RequestMapping(value="/exportUsers")
+    @ResponseBody
+    public String exportUsers(HttpServletResponse response,Query userQuery){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+          //  List<LoginUser> usersList = loginUserClient.getUsers(userQuery);
+
+            List<LoginUser> usersList=null;
+
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String,String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            LoginUser loginUser = new LoginUser();
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                loginUser = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+            // LoginUser loginUser = loginUserClient.getUserById(user_Id);
+
+            ResultBean resultBean = new ResultBean();
+            resultBean.setLoginUser(loginUser);
+            resultBean.setSearchCondition(userQuery.getSearchCondition());
+            resultBean.setSearchContent(userQuery.getSearchContent());
+            resultBean.setPageNo(userQuery.getPageNo().toString());
+
+          url = uumsUrl + "/userClient/getUsers";
+            body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(resultBean), jwt);
+            if(body!="" && !body.equals("")) {
+                usersList = (List<LoginUser>) JSONArray.parseArray(body, LoginUser.class);
+            }
+            loginUserService.exportUsers(response,usersList);
+            log(user_Id,"导出用户信息","批量导出用户信息成功","用户管理(涉案财物系统)",false);
+        }catch (Exception e){
+            log(user_Id,"导出用户信息",e.toString(),"用户管理(涉案财物系统)",true);
+            e.printStackTrace();
+            return null;
+        }
+        return  null;
+    }
+
+
+
+}

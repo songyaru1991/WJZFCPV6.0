@@ -1,0 +1,16 @@
+package com.netmarch.wshy.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.wshy.system.bean.LoginUser;
+import com.netmarch.wshy.system.bean.SysRole;
+
+import java.util.List;
+
+public interface LoginUserMapper {
+
+    Page<LoginUser> getUserList(String yhlb,String searchCondition,String searchContent);
+
+    List<SysRole> getRoleIdByUserId(String user_Id);
+
+    List<Integer> getUserRoleIdsByUserId(String user_Id);
+}

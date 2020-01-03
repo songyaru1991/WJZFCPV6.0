@@ -1,0 +1,16 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.DictGa;
+
+import java.util.List;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/30 13:29
+ */
+public interface DictGaMapper {
+    List<DictGa> getDictGaBySmId(String smId);
+}

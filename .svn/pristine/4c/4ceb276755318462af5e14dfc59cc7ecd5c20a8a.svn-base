@@ -1,0 +1,11 @@
+package com.netmarch.figurecloud.management.system.client;
+
+import com.netmarch.figurecloud.management.system.bean.LoginUser;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@FeignClient("backstage")
+public interface LoginUserClient {
+}

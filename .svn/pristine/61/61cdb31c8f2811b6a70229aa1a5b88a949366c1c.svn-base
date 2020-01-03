@@ -1,0 +1,48 @@
+package com.netmarch.figurecloud.auth.core.security.aspect;
+
+import com.netmarch.figurecloud.auth.core.security.exceptions.GeneralAuthenticationException;
+import lombok.extern.log4j.Log4j2;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
+import util.web.HttpServletUtil;
+
+import javax.annotation.PostConstruct;
+
+/**
+* @Description: EndpointAspect 切面处理
+* @Author: fengxiang
+* @Date: 2019/2/20 10:19
+*/
+@Aspect
+@Component
+@Log4j2
+public class EndpointAspect {
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
+    @Around("execution(* com.netmarch.figurecloud.auth.core.security.endpoint.*Endpoint.*(..))")
+    public Object handlerEndpointMethod(ProceedingJoinPoint pjp) throws Exception {
+        long startTime = System.currentTimeMillis();
+        Object result = null;
+        try {
+            result = pjp.proceed();
+            log.info(pjp.getSignature() + "use time:" + (System.currentTimeMillis() - startTime));
+        } catch (Throwable e) {
+            AuthenticationException authenticationException = null;
+            if (e instanceof  AuthenticationException){
+                authenticationException = (AuthenticationException) e;
+            } else {
+                authenticationException = new GeneralAuthenticationException(pjp.getSignature()+"调用失败",e);
+            }
+            authenticationFailureHandler.onAuthenticationFailure(HttpServletUtil.getRequest(), HttpServletUtil.getRespons(),authenticationException);
+            //没有return会重复调
+            return null;
+        }
+        return result;
+    }
+}

@@ -1,0 +1,101 @@
+<div class="H105_content clear jq_iframeleft" th:fragment="navigationBar" xmlns:th="http://schemas.xmlsoap.org/wsdl/">
+        <div class="H105_leftBody">
+        <div class="H105_menu"  >
+
+            <ul class="I106_navList clear">
+
+                <li>
+                    <div class="I106_navItem  I106_navItemCurrent ">
+                        <span class="I106_navIcon I106_navIcon1"></span>
+                        <span>案件管理</span>
+                        <span class="I106_arrow I106_arrowCurrent"></span>
+                    </div>
+
+                    <ul class="I106_subNavList" style="display: block;">
+
+                        <li>
+                            <span class="I106_subNavItem" onclick="localAjjbqkList()">案件管理</span>
+                            <div class="H105_num">18</div>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="I106_navItem   ">
+                        <span class="I106_navIcon I106_navIcon2"></span>
+                        <span>换押管理</span>
+                        <span class="I106_arrow "></span>
+                    </div>
+                    <ul class="I106_subNavList"  >
+                        <li>
+                            <span class="I106_subNavItem">案件查找 </span>
+                            <div class="H105_num">18</div>
+                        </li>
+                        <li>
+                            <span class="I106_subNavItem">案件查找 </span>
+                            <div class="H105_num">18</div>
+                        </li>
+                        <li>
+                            <span class="I106_subNavItem">报捕案件(1410124)</span>
+                            <div class="H105_num">18</div>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="I106_navItem   ">
+                        <span class="I106_navIcon I106_navIcon3"></span>
+                        <span>文书管理</span>
+                        <span class="I106_arrow "></span>
+                    </div>
+                    <ul class="I106_subNavList" >
+                        <li>
+                            <span class="I106_subNavItem">案件查找 </span>
+                            <div class="H105_num">18</div>
+                        </li>
+                        <li>
+                            <span class="I106_subNavItem">案件查找 </span>
+                            <div class="H105_num">18</div>
+                        </li>
+                        <li>
+                            <span class="I106_subNavItem">报捕案件(1410124)</span>
+                            <div class="H105_num">18</div>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="I106_navItem   ">
+                        <span class="I106_navIcon I106_navIcon4"></span>
+                        <span>系统管理</span>
+                        <span class="I106_arrow "></span>
+                    </div>
+                    <ul class="I106_subNavList"  >
+                        <li>
+                            <span class="I106_subNavItem">科室管理</span>
+                            <div class="H105_num">18</div>
+                        </li>
+                        <li>
+                            <span class="I106_subNavItem">用户管理</span>
+                            <div class="H105_num">18</div>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        </div>
+    <div th:replace="ajjbqk/ajjbqklist::ajjbqklist"></div>
+       <!--<div th:replace="ajjbqk/ajjbqklist::ajjbqklist"></div>-->
+    <script th:inline="javascript">
+        function localAjjbqkList() {
+            if($('#ajjbqkList').is(':hidden')){//如果当前隐藏
+                $('#ajjbqkList').show();//那么就显示div
+            }else{//否则
+                $('#ajjbqkList').hide();//就隐藏div
+            }
+        }
+    </script>
+</div>

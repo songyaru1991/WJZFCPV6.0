@@ -1,0 +1,197 @@
+package com.netmarch.jzzngd.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.jzzngd.common.utils.Redis.HashJedisUtil;
+import com.netmarch.jzzngd.common.utils.Redis.SetJedisUtil;
+import com.netmarch.jzzngd.system.bean.Departments;
+import com.netmarch.jzzngd.system.bean.PagesStatic;
+import com.netmarch.jzzngd.system.bean.StaticObj;
+import com.netmarch.jzzngd.system.mapper.DepartmentsMapper;
+import com.netmarch.jzzngd.system.model.Query;
+import com.netmarch.jzzngd.system.service.DepartmentsService;
+import org.apache.poi.hssf.usermodel.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @Author: songyaru
+ * @Date: 2019/5/17 11:12
+ * @Version 1.0
+ */
+@Service
+public class DepartmentsServiceImpl  implements DepartmentsService {
+    @Autowired
+    private DepartmentsMapper departmentsMapper;
+
+    @Override
+    public Page<Departments> getDepartmentsList(Departments departments, Query departmentsQuery) {
+        PageHelper.startPage(departments.getPageNo() == null ? 1 : departments.getPageNo(), PagesStatic.PAGES_SIZE,true);
+        return departmentsMapper.getDepartmentsList(departments.getBm(),departmentsQuery.getSearchCondition(),departmentsQuery.getSearchContent());
+    }
+    @Override
+    public int addDepartments(Departments departments) {
+        return departmentsMapper.addDepartments(departments);
+    }
+
+    @Override
+    public Departments getDepartmentsById(String id) {
+        return departmentsMapper.getDepartmentsById(id);
+    }
+
+    @Override
+    public  List<Departments> getDepartmentsByBm(String bm) {
+        return departmentsMapper.getDepartmentsByBm(bm);
+    }
+
+    @Override
+    public int checkDepartmentName(Departments departments) {
+        departments.setName(departments.getName().trim());
+        return departmentsMapper.checkDepartmentName(departments);
+    }
+
+    @Override
+    public int editDepartments(Departments departments) {
+        return departmentsMapper.editDepartments(departments);
+    }
+
+    @Override
+    public int delBatch(String ids) {
+        String[] arr = ids.split(",");
+        List<String> list = new ArrayList<>();
+        for (String id : arr) {
+//            String key = StaticObj.PREFIX_CACHE + id;
+//            HashJedisUtil.deleteKey(key);
+//            SetJedisUtil.srem(StaticObj.PREFIX_CACHE_USERID,id);
+            list.add(id);
+        }
+        return departmentsMapper.delBatch(list);
+    }
+
+    @Override
+    public List<Departments> getDepartments(Query departmentsQuery) {
+        return departmentsMapper.getDepartments(departmentsQuery);
+    }
+
+    @Override
+    public String exportDepartments(HttpServletResponse response, List<Departments> departmentsList) {
+        ServletOutputStream out=null;
+        try {
+            // 声明一个工作薄
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            //创建一个Excel表单,参数为sheet的名字
+            HSSFSheet sheet = workbook.createSheet("案件基本信息");
+            //创建表头
+            setTitle(workbook, sheet);
+            // List<Map<String, Object>> ajjbqksList = budgetAdjustService.getOainform(oaId);
+            //新增数据行，并且设置单元格数据
+            String fileName = "科室信息_" + new Date().getTime() + ".xls";
+            //清空response
+            response.reset();
+            //设置response的Header
+            response.addHeader("Content-Disposition", "attachment;filename=\""+ new String(fileName.toString().getBytes("utf-8"),"ISO8859_1") + "\"");
+            //out = new BufferedOutputStream(response.getOutputStream());
+            out=response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            if(departmentsList != null && !departmentsList.isEmpty()) {
+                for (int i = 0; i < departmentsList.size(); i++) {
+                    HSSFRow hssfRow = sheet.createRow(i + 1);
+                    HSSFCell cell0 = hssfRow.createCell(0);
+                    Departments department = departmentsList.get(i);
+                    cell0.setCellValue(i+1);
+
+                    String name = "";
+                    HSSFCell cell1 = hssfRow.createCell(1);
+                    if (!StringUtils.isEmpty(department.getName())) {
+                        name = department.getName();
+                    }
+                    cell1.setCellValue(name);
+
+                    String bm = "";
+                    HSSFCell cell2 = hssfRow.createCell(2);
+                    if (!StringUtils.isEmpty(department.getBm())) {
+                        bm = department.getBm();
+                    }
+                    cell2.setCellValue(bm);
+
+                    String areaCode = "";
+                    HSSFCell cell3 = hssfRow.createCell(3);
+                    if (!StringUtils.isEmpty(department.getAreaCode())) {
+                        areaCode = department.getAreaCode();
+                    }
+                    cell3.setCellValue(areaCode);
+
+                    String edituser = "";
+                    HSSFCell cell4 = hssfRow.createCell(4);
+                    if (!StringUtils.isEmpty(department.getEdituser())) {
+                        edituser = department.getEdituser();
+                    }
+                    cell4.setCellValue(edituser);
+
+                    String edittime = "";
+                    HSSFCell cell5 = hssfRow.createCell(5);
+                    if (!StringUtils.isEmpty(department.getEdittime())) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        edittime = formatter.format(department.getEdittime());
+                    }
+                    cell5.setCellValue(edittime);
+                }
+            }
+            // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+            //将excel写入到输出流中
+            workbook.write(out);
+            out.flush();
+            out.close();
+            return null;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (out != null) {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        return null;
+    }
+
+    // 创建表头
+    private void setTitle(HSSFWorkbook workbook, HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow(0);
+        // 设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
+        sheet.setColumnWidth(8, 60 * 256);
+        // 设置为居中加粗
+        HSSFCellStyle style = workbook.createCellStyle();
+        HSSFFont font = workbook.createFont();
+        font.setBold(true);
+        style.setFont(font);
+        //导出的Excel头部
+        String[] headers = { "序号", "所属科室名称", "部门", "地区代码", "添加人","添加时间"};
+        // 设置表格默认列宽度为15个字节
+        sheet.setDefaultColumnWidth((short) 16);
+        for (short i = 0; i < headers.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            cell.setCellValue(text);
+            cell.setCellStyle(style);
+        }
+    }
+
+}

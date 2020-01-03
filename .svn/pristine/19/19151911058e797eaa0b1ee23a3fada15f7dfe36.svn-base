@@ -1,0 +1,13 @@
+package com.netmarch.lssqyj.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.lssqyj.system.bean.Ajjbxx;
+
+public interface AjjbxxMapper {
+    //    Page<Map<String, Object>> getAllCase();
+    Page<Ajjbxx> getAllCase(String searchField,String searchName);
+
+    Page<Ajjbxx> getCaseByAjbs(String ajbs);
+
+    String getCaseNameByCode(String code);
+}

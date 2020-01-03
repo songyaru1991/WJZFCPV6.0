@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.CzlcjlbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Czlcjlb">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="AJBH" jdbcType="VARCHAR" property="ajbh" />
+    <result column="AJFH" jdbcType="VARCHAR" property="ajfh" />
+    <result column="XYRBH" jdbcType="VARCHAR" property="xyrbh" />
+    <result column="CLJD" jdbcType="VARCHAR" property="cljd" />
+    <result column="CLDW" jdbcType="VARCHAR" property="cldw" />
+    <result column="CLSJ" jdbcType="TIMESTAMP" property="clsj" />
+    <result column="CBR" jdbcType="VARCHAR" property="cbr" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_DW" jdbcType="VARCHAR" property="createDw" />
+    <result column="MSG_STATUS" jdbcType="VARCHAR" property="msgStatus" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AJBH, AJFH, XYRBH, CLJD, CLDW, CLSJ, CBR, AREA_CODE, CREATE_TIME, CREATE_DW, 
+    MSG_STATUS, MSG_OP, MSG_DATE, CREATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xyr_cllc
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from xyr_cllc
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Czlcjlb">
+    insert into xyr_cllc (ID, AJBH, AJFH, 
+      XYRBH, CLJD, CLDW, 
+      CLSJ, CBR, AREA_CODE, 
+      CREATE_TIME, CREATE_DW, MSG_STATUS, 
+      MSG_OP, MSG_DATE, CREATE_USER
+      )
+    values (#{id,jdbcType=VARCHAR}, #{ajbh,jdbcType=VARCHAR}, #{ajfh,jdbcType=VARCHAR}, 
+      #{xyrbh,jdbcType=VARCHAR}, #{cljd,jdbcType=VARCHAR}, #{cldw,jdbcType=VARCHAR}, 
+      #{clsj,jdbcType=TIMESTAMP}, #{cbr,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createDw,jdbcType=VARCHAR}, #{msgStatus,jdbcType=VARCHAR}, 
+      #{msgOp,jdbcType=INTEGER}, #{msgDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Czlcjlb">
+    insert into xyr_cllc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="ajbh != null">
+        AJBH,
+      </if>
+      <if test="ajfh != null">
+        AJFH,
+      </if>
+      <if test="xyrbh != null">
+        XYRBH,
+      </if>
+      <if test="cljd != null">
+        CLJD,
+      </if>
+      <if test="cldw != null">
+        CLDW,
+      </if>
+      <if test="clsj != null">
+        CLSJ,
+      </if>
+      <if test="cbr != null">
+        CBR,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createDw != null">
+        CREATE_DW,
+      </if>
+      <if test="msgStatus != null">
+        MSG_STATUS,
+      </if>
+      <if test="msgOp != null">
+        MSG_OP,
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null">
+        #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ajfh != null">
+        #{ajfh,jdbcType=VARCHAR},
+      </if>
+      <if test="xyrbh != null">
+        #{xyrbh,jdbcType=VARCHAR},
+      </if>
+      <if test="cljd != null">
+        #{cljd,jdbcType=VARCHAR},
+      </if>
+      <if test="cldw != null">
+        #{cldw,jdbcType=VARCHAR},
+      </if>
+      <if test="clsj != null">
+        #{clsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbr != null">
+        #{cbr,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDw != null">
+        #{createDw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatus != null">
+        #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Czlcjlb">
+    update xyr_cllc
+    <set>
+      <if test="ajbh != null">
+        AJBH = #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ajfh != null">
+        AJFH = #{ajfh,jdbcType=VARCHAR},
+      </if>
+      <if test="xyrbh != null">
+        XYRBH = #{xyrbh,jdbcType=VARCHAR},
+      </if>
+      <if test="cljd != null">
+        CLJD = #{cljd,jdbcType=VARCHAR},
+      </if>
+      <if test="cldw != null">
+        CLDW = #{cldw,jdbcType=VARCHAR},
+      </if>
+      <if test="clsj != null">
+        CLSJ = #{clsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbr != null">
+        CBR = #{cbr,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDw != null">
+        CREATE_DW = #{createDw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatus != null">
+        MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        MSG_OP = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Czlcjlb">
+    update xyr_cllc
+    set AJBH = #{ajbh,jdbcType=VARCHAR},
+      AJFH = #{ajfh,jdbcType=VARCHAR},
+      XYRBH = #{xyrbh,jdbcType=VARCHAR},
+      CLJD = #{cljd,jdbcType=VARCHAR},
+      CLDW = #{cldw,jdbcType=VARCHAR},
+      CLSJ = #{clsj,jdbcType=TIMESTAMP},
+      CBR = #{cbr,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_DW = #{createDw,jdbcType=VARCHAR},
+      MSG_STATUS = #{msgStatus,jdbcType=VARCHAR},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

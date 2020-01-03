@@ -1,0 +1,120 @@
+package com.netmarch.figurecloud.management.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.figurecloud.management.system.bean.LoginUser;
+import com.netmarch.figurecloud.management.system.bean.LoginUserRole;
+import com.netmarch.figurecloud.management.system.bean.PagesStatic;
+import com.netmarch.figurecloud.management.system.mapper.LoginUserMapper;
+import com.netmarch.figurecloud.management.system.service.LoginUserService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @program: figurecloud
+ * @description: loginUser Service 实现类
+ * @author: dinggan
+ * @create: 2019-02-14 15:38
+ **/
+@Service
+public class LoginUserServiceImpl implements LoginUserService {
+
+    @Autowired
+    private LoginUserMapper loginUserMapper;
+
+
+    @Override
+    public Page<LoginUser> getUserList(LoginUser user, String keyword) {
+        PageHelper.startPage(user.getPageNo() == null ? 1 : user.getPageNo(), PagesStatic.PAGES_SIZE);
+        return loginUserMapper.getUserList(keyword);
+    }
+
+    @Override
+    public LoginUser getUserById(Integer id) {
+        return loginUserMapper.getUserById(id);
+    }
+
+    @Override
+    public int editLoginUser(LoginUser loginUser) {
+        return loginUserMapper.editLoginUser(loginUser);
+    }
+
+    @Override
+    public int editUserRoleByUser(LoginUser loginUser) {
+        String[] arr = loginUser.getRoleIds().split(",");
+        List<LoginUserRole> list = new ArrayList<>();
+        for (String str:arr) {
+            LoginUserRole bean = new LoginUserRole();
+            bean.setSysLoginUserId(loginUser.getId());
+            bean.setSysRoleId(Integer.parseInt(str));
+            list.add(bean);
+        }
+        List<Integer> ids = new ArrayList<>();
+        ids.add(loginUser.getId());
+        loginUserMapper.delUserRoles(ids);
+        return loginUserMapper.insertUserRole(list);
+    }
+
+    @Override
+    public int insertUserRole(LoginUser loginUser) {
+        String[] arr = loginUser.getRoleIds().split(",");
+        List<LoginUserRole> list = new ArrayList<>();
+        for (String str:arr) {
+            LoginUserRole bean = new LoginUserRole();
+            bean.setSysLoginUserId(loginUser.getId());
+            bean.setSysRoleId(Integer.parseInt(str));
+            list.add(bean);
+        }
+        return loginUserMapper.insertUserRole(list);
+    }
+
+    @Override
+    public int addLoginUser(LoginUser loginUser) {
+
+        return loginUserMapper.addLoginUser(loginUser);
+    }
+
+    @Override
+    public int delBatch(String ids) {
+        String[] arr = ids.split(",");
+        List<Integer> list = new ArrayList<>();
+        for (String str : arr) {
+            list.add(Integer.parseInt(str));
+        }
+        return loginUserMapper.delBatch(list);
+    }
+
+    @Override
+    public int delUserRoles(String ids) {
+        String[] arr = ids.split(",");
+        List<Integer> list = new ArrayList<>();
+        for (String str : arr) {
+            list.add(Integer.parseInt(str));
+        }
+        return loginUserMapper.delUserRoles(list);
+    }
+
+    @Override
+    public int checkRepeatLoginName(LoginUser loginUser) {
+        return loginUserMapper.checkRepeatLoginName(loginUser);
+    }
+
+    @Override
+    public int checkRepeatPoliceNum(LoginUser loginUser) {
+        return loginUserMapper.checkRepeatPoliceNum(loginUser);
+    }
+
+    @Override
+    public String getUserRoleIdsByUserId(Integer id) {
+        List<Integer> list = loginUserMapper.getUserRoleIdsByUserId(id);
+        String str = "";
+        if(list.size()>0){
+            str = StringUtils.join(list.toArray(), ",");
+        }
+        return str;
+    }
+}

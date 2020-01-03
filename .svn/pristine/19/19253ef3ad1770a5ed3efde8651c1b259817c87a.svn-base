@@ -1,0 +1,18 @@
+package com.netmarch.figurecloud.auth.core.security.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+/** 
+* @Description: PasswordEncoderConfig 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 14:04
+*/ 
+@Configuration
+public class PasswordEncoderConfig {
+    @Bean
+    protected BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}

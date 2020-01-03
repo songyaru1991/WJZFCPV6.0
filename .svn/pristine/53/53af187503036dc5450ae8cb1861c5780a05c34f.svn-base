@@ -1,0 +1,419 @@
+package com.netmarch.gaj.common.utils.DompareXml;
+
+import com.netmarch.gaj.system.bean.Ajjbxx;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import util.exception.BaseException;
+import util.exception.ErrorCode;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/24 9:35
+ */
+@Component
+public class DompareImportCaseXml {
+    public static ArrayList<Ajjbxx> getKsryjbxxFromXml(File file) {
+        ArrayList<Ajjbxx> list = new ArrayList<Ajjbxx>();
+        //获取DOM解析器
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc;
+
+            doc = builder.parse(file);
+            //得到一个element根元素,获得根节点
+            Element root = doc.getDocumentElement();
+            System.out.println("根元素：" + root.getNodeName());
+
+            //子节点
+            NodeList ksryjbxxlistNodes = root.getElementsByTagName("AJ_JBXX");
+
+            for (int i = 0; i < ksryjbxxlistNodes.getLength(); i++) {
+                Element personElement = (Element) ksryjbxxlistNodes.item(i);
+                Ajjbxx ajjbxx = new Ajjbxx();
+                NodeList childNodes = personElement.getChildNodes();
+
+                for (int j = 0; j < childNodes.getLength(); j++) {
+                    Node temp = childNodes.item(j);
+                    if (childNodes.item(j).getNodeType() == Node.ELEMENT_NODE) {
+                        String nodeName = childNodes.item(j).getNodeName();
+                        String nodeValue = "";
+                        Node fnNode = childNodes.item(j).getFirstChild();
+                        if( fnNode != null ){
+                            nodeValue = fnNode.getNodeValue();;
+                        }
+
+                        if ("JLBH".equals(nodeName)) {
+                            ajjbxx.setJlbh(nodeValue);
+                        } else if ("AJBH".equals(nodeName)) {
+                            ajjbxx.setAjbh(nodeValue);
+                        } else if ("AJMJ".equals(nodeName)) {
+                            ajjbxx.setAjmj(nodeValue);
+                        } else if ("AJFAB".equals(nodeName)) {
+                            ajjbxx.setAjfab(nodeValue);
+                        } else if ("KFXAJLB".equals(nodeName)) {
+                            ajjbxx.setKfxajlb(nodeValue);
+                        } else if ("QFLB".equals(nodeName)) {
+                            ajjbxx.setQflb(nodeValue);
+                        } else if ("AJMC".equals(nodeName)) {
+                            ajjbxx.setAjmc(nodeValue);
+                        } else if ("AJSX".equals(nodeName)) {
+                            ajjbxx.setAjsx(nodeValue);
+                        } else if ("AJZT".equals(nodeName)) {
+                            ajjbxx.setAjzt(nodeValue);
+                        } else if ("AJXZ".equals(nodeName)) {
+                            ajjbxx.setAjxz(nodeValue);
+                        } else if ("AJLY".equals(nodeName)) {
+                            ajjbxx.setAjly(nodeValue);
+                        } else if ("BARXM".equals(nodeName)) {
+                            ajjbxx.setBarxm(nodeValue);
+                        } else if ("BARXB".equals(nodeName)) {
+                            ajjbxx.setBarxb(nodeValue);
+                        } else if ("BARCSRQ".equals(nodeName)) {
+                            ajjbxx.setBarcsrq(nodeValue);
+                        } else if ("BARDW".equals(nodeName)) {
+                            ajjbxx.setBardw(nodeValue);
+                        } else if ("BARLXFS".equals(nodeName)) {
+                            ajjbxx.setBarlxfs(nodeValue);
+                        } else if ("BARZZ".equals(nodeName)) {
+                            ajjbxx.setBarzz(nodeValue);
+                        } else if ("BARZJZL".equals(nodeName)) {
+                            ajjbxx.setBarzjzl(nodeValue);
+                        } else if ("BARZJHM".equals(nodeName)) {
+                            ajjbxx.setBarzjhm(nodeValue);
+                        } else if ("BARBMJB".equals(nodeName)) {
+                            ajjbxx.setBarbmjb(nodeValue);
+                        } else if ("BASJ".equals(nodeName)) {
+                            ajjbxx.setBasj(nodeValue);
+                        } else if ("FXSJ".equals(nodeName)) {
+                            ajjbxx.setFxsj(nodeValue);
+                        } else if ("FASJSX".equals(nodeName)) {
+                            ajjbxx.setFasjsx(nodeValue);
+                        } else if ("FASJXX".equals(nodeName)) {
+                            ajjbxx.setFasjxx(nodeValue);
+                        } else if ("AJSSXQ".equals(nodeName)) {
+                            ajjbxx.setAjssxq(nodeValue);
+                        } else if ("AJJLX".equals(nodeName)) {
+                            ajjbxx.setAjjlx(nodeValue);
+                        } else if ("AJMLPH".equals(nodeName)) {
+                            ajjbxx.setAjmlph(nodeValue);
+                        } else if ("AJMPHZ".equals(nodeName)) {
+                            ajjbxx.setAjmphz(nodeValue);
+                        } else if ("AJMLXZ".equals(nodeName)) {
+                            ajjbxx.setAjmlxz(nodeValue);
+                        } else if ("AJDZMC".equals(nodeName)) {
+                            ajjbxx.setAjdzmc(nodeValue);
+                        } else if ("AJSSZRQ".equals(nodeName)) {
+                            ajjbxx.setAjsszrq(nodeValue);
+                        } else if ("AJSSZRQMC".equals(nodeName)) {
+                            ajjbxx.setAjsszrqmc(nodeValue);
+                        } else if ("FADY".equals(nodeName)) {
+                            ajjbxx.setFady(nodeValue);
+                        } else if ("FACS".equals(nodeName)) {
+                            ajjbxx.setFacs(nodeValue);
+                        } else if ("FABW".equals(nodeName)) {
+                            ajjbxx.setFabw(nodeValue);
+                        } else if ("SLSJ".equals(nodeName)) {
+                            ajjbxx.setSlsj(nodeValue);
+                        } else if ("SLR".equals(nodeName)) {
+                            ajjbxx.setSlr(nodeValue);
+                        } else if ("SLRXM".equals(nodeName)) {
+                            ajjbxx.setSlrxm(nodeValue);
+                        } else if ("SLDW".equals(nodeName)) {
+                            ajjbxx.setSldw(nodeValue);
+                        } else if ("SLDWMC".equals(nodeName)) {
+                            ajjbxx.setSldwmc(nodeValue);
+                        } else if ("SLFS".equals(nodeName)) {
+                            ajjbxx.setSlfs(nodeValue);
+                        } else if ("JYAQ".equals(nodeName)) {
+                            ajjbxx.setJyaq(nodeValue);
+                        } else if ("ZBDW".equals(nodeName)) {
+                            ajjbxx.setZbdw(nodeValue);
+                        } else if ("ZBDWMC".equals(nodeName)) {
+                            ajjbxx.setZbdwmc(nodeValue);
+                        } else if ("XBDW".equals(nodeName)) {
+                            ajjbxx.setXbdw(nodeValue);
+                        } else if ("ZSBADW".equals(nodeName)) {
+                            ajjbxx.setZsbadw(nodeValue);
+                        } else if ("ZSBADWMC".equals(nodeName)) {
+                            ajjbxx.setZsbadwmc(nodeValue);
+                        } else if ("ZBR".equals(nodeName)) {
+                            ajjbxx.setZbr(nodeValue);
+                        } else if ("ZBRXM".equals(nodeName)) {
+                            ajjbxx.setZbrxm(nodeValue);
+                        } else if ("XBR".equals(nodeName)) {
+                            ajjbxx.setXbr(nodeValue);
+                        } else if ("XBRXM".equals(nodeName)) {
+                            ajjbxx.setXbrxm(nodeValue);
+                        } else if ("LADW".equals(nodeName)) {
+                            ajjbxx.setLadw(nodeValue);
+                        } else if ("LADWMC".equals(nodeName)) {
+                            ajjbxx.setLadwmc(nodeValue);
+                        } else if ("LASJ".equals(nodeName)) {
+                            ajjbxx.setLasj(nodeValue);
+                        } else if ("LAPZR".equals(nodeName)) {
+                            ajjbxx.setLapzr(nodeValue);
+                        } else if ("LAPZRXM".equals(nodeName)) {
+                            ajjbxx.setLapzrxm(nodeValue);
+                        } else if ("ZABJ".equals(nodeName)) {
+                            ajjbxx.setZabj(nodeValue);
+                        } else if ("BLYY".equals(nodeName)) {
+                            ajjbxx.setBlyy(nodeValue);
+                        } else if ("WHCD".equals(nodeName)) {
+                            ajjbxx.setWhcd(nodeValue);
+                        } else if ("DBJB".equals(nodeName)) {
+                            ajjbxx.setDbjb(nodeValue);
+                        } else if ("DBBH".equals(nodeName)) {
+                            ajjbxx.setDbbh(nodeValue);
+                        } else if ("GXFG".equals(nodeName)) {
+                            ajjbxx.setGxfg(nodeValue);
+                        } else if ("FZZTLX".equals(nodeName)) {
+                            ajjbxx.setFzztlx(nodeValue);
+                        } else if ("PARQ".equals(nodeName)) {
+                            ajjbxx.setParq(nodeValue);
+                        } else if ("PAFS".equals(nodeName)) {
+                            ajjbxx.setPafs(nodeValue);
+                        } else if ("PADW".equals(nodeName)) {
+                            ajjbxx.setPadw(nodeValue);
+                        } else if ("PADWMC".equals(nodeName)) {
+                            ajjbxx.setPadwmc(nodeValue);
+                        } else if ("XPDW".equals(nodeName)) {
+                            ajjbxx.setXpdw(nodeValue);
+                        } else if ("PAJK".equals(nodeName)) {
+                            ajjbxx.setPajk(nodeValue);
+                        } else if ("AQZS".equals(nodeName)) {
+                            ajjbxx.setAqzs(nodeValue);
+                        } else if ("JARQ".equals(nodeName)) {
+                            ajjbxx.setJarq(nodeValue);
+                        } else if ("CXRQ".equals(nodeName)) {
+                            ajjbxx.setCxrq(nodeValue);
+                        } else if ("CXYY".equals(nodeName)) {
+                            ajjbxx.setCxyy(nodeValue);
+                        } else if ("GDZT".equals(nodeName)) {
+                            ajjbxx.setGdzt(nodeValue);
+                        } else if ("GDSJ".equals(nodeName)) {
+                            ajjbxx.setGdsj(nodeValue);
+                        } else if ("JSDW".equals(nodeName)) {
+                            ajjbxx.setJsdw(nodeValue);
+                        } else if ("YSSJ".equals(nodeName)) {
+                            ajjbxx.setYssj(nodeValue);
+                        } else if ("YSDW".equals(nodeName)) {
+                            ajjbxx.setYsdw(nodeValue);
+                        } else if ("YSR".equals(nodeName)) {
+                            ajjbxx.setYsr(nodeValue);
+                        } else if ("YSDWLXDH".equals(nodeName)) {
+                            ajjbxx.setYsdwlxdh(nodeValue);
+                        } else if ("YSYY".equals(nodeName)) {
+                            ajjbxx.setYsyy(nodeValue);
+                        } else if ("SAZJZ".equals(nodeName)) {
+                            ajjbxx.setSazjz(Double.parseDouble(nodeValue));
+                        } else if ("JJSS".equals(nodeName)) {
+                            ajjbxx.setJjss(Double.parseDouble(nodeValue));
+                        } else if ("WHZJZ".equals(nodeName)) {
+                            ajjbxx.setWhzjz(Double.parseDouble(nodeValue));
+                        } else if ("PAZJZ".equals(nodeName)) {
+                            ajjbxx.setPazjz(Double.parseDouble(nodeValue));
+                        } else if ("ZARS".equals(nodeName)) {
+                            ajjbxx.setZars(Double.parseDouble(nodeValue));
+                        } else if ("AJJJETS".equals(nodeName)) {
+                            ajjbxx.setAjjjets(Double.parseDouble(nodeValue));
+                        } else if ("AJJJFNS".equals(nodeName)) {
+                            ajjbxx.setAjjjfns(Double.parseDouble(nodeValue));
+                        } else if ("AJJJRZS".equals(nodeName)) {
+                            ajjbxx.setAjjjrzs(Double.parseDouble(nodeValue));
+                        } else if ("AJRYSSS".equals(nodeName)) {
+                            ajjbxx.setAjrysss(Double.parseDouble(nodeValue));
+                        } else if ("AJRYSWS".equals(nodeName)) {
+                            ajjbxx.setAjrysws(Double.parseDouble(nodeValue));
+                        } else if ("SFYXC".equals(nodeName)) {
+                            ajjbxx.setSfyxc(nodeValue);
+                        } else if ("SFKCXC".equals(nodeName)) {
+                            ajjbxx.setSfkcxc(nodeValue);
+                        } else if ("FJCABH".equals(nodeName)) {
+                            ajjbxx.setFjcabh(nodeValue);
+                        } else if ("SJCABH".equals(nodeName)) {
+                            ajjbxx.setSjcabh(nodeValue);
+                        } else if ("XSBH".equals(nodeName)) {
+                            ajjbxx.setXsbh(nodeValue);
+                        } else if ("ZAJBH".equals(nodeName)) {
+                            ajjbxx.setZajbh(nodeValue);
+                        } else if ("DJSJ".equals(nodeName)) {
+                            ajjbxx.setDjsj(nodeValue);
+                        } else if ("DJR".equals(nodeName)) {
+                            ajjbxx.setDjr(nodeValue);
+                        } else if ("DJRXM".equals(nodeName)) {
+                            ajjbxx.setDjrxm(nodeValue);
+                        } else if ("DJDW".equals(nodeName)) {
+                            ajjbxx.setDjdw(nodeValue);
+                        } else if ("DJDWMC".equals(nodeName)) {
+                            ajjbxx.setDjdwmc(nodeValue);
+                        } else if ("XGSJ".equals(nodeName)) {
+                            ajjbxx.setXgsj(nodeValue);
+                        } else if ("XGR".equals(nodeName)) {
+                            ajjbxx.setXgr(nodeValue);
+                        } else if ("XGRXM".equals(nodeName)) {
+                            ajjbxx.setXgrxm(nodeValue);
+                        } else if ("XGDW".equals(nodeName)) {
+                            ajjbxx.setXgdw(nodeValue);
+                        } else if ("XGDWMC".equals(nodeName)) {
+                            ajjbxx.setXgdwmc(nodeValue);
+                        } else if ("JSSJ".equals(nodeName)) {
+                            ajjbxx.setJssj(nodeValue);
+                        } else if ("FLAJBH".equals(nodeName)) {
+                            ajjbxx.setFlajbh(nodeValue);
+                        } else if ("STCABH".equals(nodeName)) {
+                            ajjbxx.setStcabh(nodeValue);
+                        } else if ("CXDW".equals(nodeName)) {
+                            ajjbxx.setCxdw(nodeValue);
+                        } else if ("CXDWMC".equals(nodeName)) {
+                            ajjbxx.setCxdwmc(nodeValue);
+                        } else if ("CXPZR".equals(nodeName)) {
+                            ajjbxx.setCxpzr(nodeValue);
+                        } else if ("CXPZRXM".equals(nodeName)) {
+                            ajjbxx.setCxpzrxm(nodeValue);
+                        } else if ("PAPZSJ".equals(nodeName)) {
+                            ajjbxx.setPapzsj(nodeValue);
+                        } else if ("PAPZR".equals(nodeName)) {
+                            ajjbxx.setPapzr(nodeValue);
+                        } else if ("PAPZDW".equals(nodeName)) {
+                            ajjbxx.setPapzdw(nodeValue);
+                        } else if ("SLDWDH".equals(nodeName)) {
+                            ajjbxx.setSldwdh(nodeValue);
+                        } else if ("ZBRDH".equals(nodeName)) {
+                            ajjbxx.setZbrdh(nodeValue);
+                        } else if ("AJQTSHRS".equals(nodeName)) {
+                            ajjbxx.setAjqtshrs(Double.parseDouble(nodeValue));
+                        } else if ("JSDWMC".equals(nodeName)) {
+                            ajjbxx.setJsdwmc(nodeValue);
+                        } else if ("YSDWMC".equals(nodeName)) {
+                            ajjbxx.setYsdwmc(nodeValue);
+                        } else if ("YSRXM".equals(nodeName)) {
+                            ajjbxx.setYsrxm(nodeValue);
+                        } else if ("JSR".equals(nodeName)) {
+                            ajjbxx.setJsr(nodeValue);
+                        } else if ("JSRXM".equals(nodeName)) {
+                            ajjbxx.setJsrxm(nodeValue);
+                        } else if ("YSJSDWLXDH".equals(nodeName)) {
+                            ajjbxx.setYsjsdwlxdh(nodeValue);
+                        } else if ("ZSAJ".equals(nodeName)) {
+                            ajjbxx.setZsaj(nodeValue);
+                        } else if ("GLBH".equals(nodeName)) {
+                            ajjbxx.setGlbh(nodeValue);
+                        } else if ("WBJSDWMC".equals(nodeName)) {
+                            ajjbxx.setWbjsdwmc(nodeValue);
+                        } else if ("WBJSRXM".equals(nodeName)) {
+                            ajjbxx.setWbjsrxm(nodeValue);
+                        } else if ("FASJD".equals(nodeName)) {
+                            ajjbxx.setFasjd(nodeValue);
+                        } else if ("SJGJDQ".equals(nodeName)) {
+                            ajjbxx.setSjgjdq(nodeValue);
+                        } else if ("NWGJ".equals(nodeName)) {
+                            ajjbxx.setNwgj(nodeValue);
+                        } else if ("NWGJDX".equals(nodeName)) {
+                            ajjbxx.setNwgjdx(nodeValue);
+                        } else if ("SCDQSJ".equals(nodeName)) {
+                            ajjbxx.setScdqsj(nodeValue);
+                        } else if ("SCSJ".equals(nodeName)) {
+                            ajjbxx.setScsj(nodeValue);
+                        } else if ("JZAJSX".equals(nodeName)) {
+                            ajjbxx.setJzajsx(nodeValue);
+                        } else if ("BADWMC".equals(nodeName)) {
+                            ajjbxx.setBadwmc(nodeValue);
+                        } else if ("BADWDZ".equals(nodeName)) {
+                            ajjbxx.setBadwdz(nodeValue);
+                        } else if ("BADWLXR".equals(nodeName)) {
+                            ajjbxx.setBadwlxr(nodeValue);
+                        } else if ("BADWLXFS".equals(nodeName)) {
+                            ajjbxx.setBadwlxfs(nodeValue);
+                        } else if ("PASJD".equals(nodeName)) {
+                            ajjbxx.setPasjd(nodeValue);
+                        } else if ("DYABS".equals(nodeName)) {
+                            ajjbxx.setDyabs(nodeValue);
+                        } else if ("SJ".equals(nodeName)) {
+                            ajjbxx.setSj(nodeValue);
+                        }
+
+                    }
+                }
+                list.add(ajjbxx);
+            }
+            for (Ajjbxx ajjbxx2 : list) {  //为了查看数据是否正确，进行打印结果
+                System.out.println(ajjbxx2.toString());
+            }
+            file.deleteOnExit();
+        } catch (SAXException e) {
+            e.printStackTrace();
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),e.getMessage());
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),e.getMessage());
+        }
+        return list;
+    }
+
+    /***
+     * 读取导入的压缩文件
+     * @param file
+     * @throws Exception
+     */
+    public static  ArrayList<Ajjbxx> readZipFile(File file) throws Exception {
+        ArrayList<Ajjbxx> ajjbxx = new  ArrayList<Ajjbxx>();
+        ZipFile zf = new ZipFile(file, Charset.forName("GBK"));
+        InputStream in = new BufferedInputStream(new FileInputStream(file));
+        ZipInputStream zis = new ZipInputStream(in, Charset.forName("GBK"));
+        ZipEntry ze;
+        while ((ze = zis.getNextEntry()) != null) {
+            if (ze.isDirectory()) {
+            } else {
+                if (ze.getName().endsWith(".xml")) {
+                    System.err.println("file - " + ze.getName() + " : " + ze.getSize() + " bytes");
+                    if (ze.getSize() > 0) {
+                        File new_xml_file = null;
+                        BufferedReader br = new BufferedReader(new InputStreamReader(zf.getInputStream(ze), "UTF-8"));
+                        if ((ze.getName().trim().lastIndexOf("/")) != -1) {
+                            new_xml_file = new File(ze.getName().substring(ze.getName().trim().lastIndexOf("/")+1));
+                            System.out.println(new_xml_file);
+                        } else {
+                            new_xml_file = new File(ze.getName());
+                        }
+                        FileOutputStream out = new FileOutputStream(new_xml_file);
+                        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+//							 System.out.println(line);
+                            bw.write(line);
+                        }
+                        br.close();
+                        bw.close();
+                        ajjbxx = getKsryjbxxFromXml(new_xml_file);
+                    }
+                }
+            }
+        }
+        zis.closeEntry();
+        zis.close();
+        zf.close();
+        return ajjbxx;
+    }
+}

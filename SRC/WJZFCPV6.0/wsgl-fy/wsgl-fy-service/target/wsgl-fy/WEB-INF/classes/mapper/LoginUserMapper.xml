@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wsgl.system.mapper.LoginUserMapper">
+
+    <select id="getUserList" parameterType="String"
+            resultType="com.netmarch.wsgl.system.bean.LoginUser">
+        select a.user_Id,a.loginname,a.password,a.username,a.jh,a.AREA_CODE areaCode,a.area,a.yhlb,
+        GROUP_CONCAT(r.name) as grantroles,a.zhiwei,a.mobilephone,
+        a.yhdw, b.name ssks,a.sfxszjclaj,a.fingertemplate,a.userstate,a.addtime,a.adduser,a.IP_LIMIT ipLimit,a.usertype
+        from users a left join departments b on a.SSKS=b.ID
+        inner join sys_role r  on FIND_IN_SET(r.id,a.grantroles)
+        where  a.yhlb=#{yhlb,jdbcType=VARCHAR}
+        and  a.AREA_CODE=#{areaCode,jdbcType=VARCHAR}
+        <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+            <if test='searchCondition == "searchLoginName"'>
+                and a.loginname like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchUserName"'>
+                and a.username like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+            <if test='searchCondition == "searchSsks"'>
+                and b.name like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+            </if>
+        </if>
+        group by a.user_Id
+    </select>
+
+    <select id="getRoleIdByUserId"
+            parameterType="String"  resultType="com.netmarch.wsgl.system.bean.SysRole">
+        select a.id,a.code,a.name,a.create_User createUser,a.create_Time createTime,a.update_User updateUser,a.update_Time updateTime,
+        a.is_Delete isDelete,a.description
+        from sys_role a join sys_users_role b on a.id=b.sys_role_id where b.sys_users_id = #{user_Id}
+    </select>
+
+    <select id="getUserRoleIdsByUserId" parameterType="String" resultType="Integer">
+        select sys_role_id from sys_users_role where sys_users_id = #{user_Id}
+    </select>
+
+    <insert id="insertUserRole" parameterType="List">
+        insert into sys_users_role (sys_users_id, sys_role_id) VALUES
+        <foreach collection="list" item="bean" index="index" separator=",">
+            (#{bean.sysLoginUserId},#{bean.sysRoleId})
+        </foreach>
+    </insert>
+
+    <select id="getUserTypeByUserId" parameterType="String" resultType="Integer">
+        select usertype from users where user_id = #{user_Id}
+    </select>
+
+    <select id="checkRepeatLoginName" parameterType="com.netmarch.wsgl.system.bean.LoginUser" resultType="int">
+        select count(1) from users where loginName = #{loginname}
+        <if test="user_Id !=null">
+            and user_Id &lt;&gt; #{user_Id}
+        </if>
+    </select>
+
+    <select id="checkLoginByUserId" parameterType="com.netmarch.wsgl.system.bean.LoginUser" resultType="com.netmarch.wsgl.system.bean.LoginUser">
+        select  USER_ID user_Id, LOGINNAME loginname, PASSWORD password, USERNAME username, JH jh, USERSTATE userstate, ADDTIME addtime, ADDUSER adduser, AREA_CODE areaCode,
+    AREA area, IP_LIMIT ipLimit, FINGERTEMPLATE fingertemplate, ZHIWEI zhiwei, MOBILEPHONE mobilephone, SSKS ssks,
+    SFXSZJCLAJ sfxszjclaj, YHLB yhlb,usertype from users where USER_ID = #{user_Id}
+    </select>
+
+    <update id="updateLoginUser" parameterType="com.netmarch.wsgl.system.bean.LoginUser">
+        update users
+        <set>
+            <if test="loginname != null">
+                LOGINNAME = #{loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="jh != null">
+                JH = #{jh,jdbcType=VARCHAR},
+            </if>
+            <if test="userstate != null">
+                USERSTATE = #{userstate,jdbcType=INTEGER},
+            </if>
+            <if test="addtime != null">
+                ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="adduser != null">
+                ADDUSER = #{adduser,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
+                AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                AREA = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="ipLimit != null">
+                IP_LIMIT = #{ipLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="usertype != null">
+                USERTYPE = #{usertype,jdbcType=INTEGER},
+            </if>
+            <if test="grantroles != null">
+                GRANTROLES = #{grantroles,jdbcType=VARCHAR},
+            </if>
+            <if test="fingertemplate != null">
+                FINGERTEMPLATE = #{fingertemplate,jdbcType=VARCHAR},
+            </if>
+            <if test="zhiwei != null">
+                ZHIWEI = #{zhiwei,jdbcType=CHAR},
+            </if>
+            <if test="mobilephone != null">
+                MOBILEPHONE = #{mobilephone,jdbcType=VARCHAR},
+            </if>
+            <if test="yhdw != null">
+                YHDW = #{yhdw,jdbcType=VARCHAR},
+            </if>
+            <if test="ssks != null">
+                SSKS = #{ssks,jdbcType=VARCHAR},
+            </if>
+            <if test="sfxszjclaj != null">
+                SFXSZJCLAJ = #{sfxszjclaj,jdbcType=CHAR},
+            </if>
+            <if test="yhlb != null">
+                YHLB = #{yhlb,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{user_Id}
+    </update>
+
+    <update id="editUserRoleByUser"
+            parameterType="com.netmarch.sso.loginsystem.bean.LoginUser">
+        update sys_users_role set sys_role_id = #{roleId} where sys_users_id = #{id}
+    </update>
+
+    <delete id="delUserRoles" parameterType="List">
+        delete from sys_users_role where sys_users_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addLoginUser"
+            parameterType="com.netmarch.sso.loginsystem.bean.LoginUser">
+       insert into users (user_Id,loginname,password,username,jh,AREA_CODE,area,yhlb,grantroles,zhiwei,mobilephone,
+                yhdw,ssks,sfxszjclaj,fingertemplate,userstate,addtime,adduser,IP_LIMIT,usertype)
+        values
+        (#{user_Id},#{loginname},#{password},#{username},#{jh},#{areaCode},#{area},#{yhlb},#{grantroles},#{zhiwei},#{mobilephone},
+        #{yhdw},#{ssks},#{sfxszjclaj},#{fingertemplate},#{userstate},sysdate(),#{adduser},#{ipLimit},#{usertype})
+    </insert>
+
+    <delete id="delBatch" parameterType="List">
+        delete from users where user_id in
+        <foreach collection="list" item="user_Id" open="(" separator="," close=")">
+            #{user_Id}
+        </foreach>
+    </delete>
+
+    <select id="getUserCountById" parameterType="java.lang.String"
+            resultType="int">
+        select count(*) from users where user_id = #{user_id}
+    </select>
+
+    <select id="getLoginUserByUserId" parameterType="java.lang.String" resultType="com.netmarch.wsgl.system.bean.LoginUser">
+        select  USER_ID user_Id, LOGINNAME loginname, PASSWORD password, USERNAME username, JH jh, USERSTATE userstate, ADDTIME addtime, ADDUSER adduser, AREA_CODE areaCode,
+    AREA area, IP_LIMIT ipLimit, FINGERTEMPLATE fingertemplate, ZHIWEI zhiwei, MOBILEPHONE mobilephone, SSKS ssks,
+    SFXSZJCLAJ sfxszjclaj, YHLB yhlb,usertype from users where USER_ID = #{user_Id}
+    </select>
+</mapper>

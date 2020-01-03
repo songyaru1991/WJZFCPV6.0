@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>检察院--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+</head>
+<body>
+<form action="" class="layui-form I206_form">
+    <div class="I106_page I206_page">
+        <!--头部s-->
+        <div class="I106_topOuter I206_topOuter">
+            <div class="I106_top">
+                <div class="I106_topLeft">
+                    <img th:src="${application.basePath}+'/static/images/logo.png'" alt="">
+                    <span>网上换押管理系统</span>
+                </div>
+                <div class="I106_topRight">
+                    <div class="I106_topButton" th:onclick="toIndex()">首页</div>
+                    <div class="I106_topButton" th:onclick="toLoginOut()">退出</div>
+                    <div class="I106_user">
+                      <span th:text="${loginUser.loginname}"></span>
+                        <img th:src="${application.basePath}+'/static/images/arrowDown.png'" alt="">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="I206_title">
+                    <img th:src="${application.basePath}+'/static/images/I206_icon1.png'" alt="">
+                    <span>平台本版本采用B/S架构开发网站平台</span>
+                    <img th:src="${application.basePath}+'/static/images/I206_icon2.png'" alt="">
+                </div>
+                <div  class="I206_subTitle">
+                    <img th:src="${application.basePath}+'/static/images/I206_icon3.png'" alt="">
+                    <span>布控稽查，实战应用，社区监控，专题应用，学习交流，辅助工具等功能</span>
+                    <img th:src="${application.basePath}+'/static/images/I206_icon3.png'" alt="">
+                </div>
+            </div>
+        </div>
+        <!--头部e-->
+        <div class="I206_navOuter">
+            <ul class="I206_nav clear">
+                <li id="sysManage" th:onclick="|javascript:showChildren(1)|">
+                    <div class="I206_navImg">
+                        <img class="I206_navImgOld" th:src="${application.basePath}+'/static/images/I206_nav5.png'" alt="">
+                        <img class="I206_navImgCur" th:src="${application.basePath}+'/static/images/I206_navCur5.png'" alt="">
+                        <img class="I206_shadow" th:src="${application.basePath}+'/static/images/I206_icon5.png'" alt="">
+                    </div>
+                    <div class="I206_navName" text="系统管理"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="I206_subNavOuter"></div>
+        <div class="I106_footer">技术支持：江苏网进科技股份有限公司</div>
+    </div>
+</form>
+</body>
+<script>
+    var contextPath = getContextPath();
+    function getLoginName() {
+        var loginName=$.cookie('loginName');
+        return loginName;
+    }
+
+    function showChildren(id) {
+        $(".I206_subNavOuter").empty();
+        $("#" + id).addClass("I206_navCur").siblings().removeClass("I206_navCur");
+        var str = '';
+        str = '<div class="I206_subNavTitle">' +
+            '<img th:src="${application.basePath}' + '/static/images/I206_icon4.png" alt="">' +
+            '<span>系统管理</span>' +
+            '<img th:src="${application.basePath}' + '/static/images/I206_icon4.png" alt="">' +
+            '</div>' +
+            '<ul class="I206_subNavList clear">';
+        str += '<li><a href="' + contextPath + '/user/list">' +
+                '<div class="I206_subNavName">用户管理</div>' +
+                '</a></li>';
+        str += '<li><a href="' + contextPath + '/log/list">' +
+            '<div class="I206_subNavName">操作日志</div>' +
+            '</a></li>';
+        str += '<li><a href="' + contextPath + '/log/errorLogList">' +
+            '<div class="I206_subNavName">异常日志</div>' +
+            '</a></li>';
+        str += '</ul>';
+        $(".I206_subNavOuter").append($(str));
+        $(".I206_subNavOuter").attr("display", "block");
+    }
+    function toIndex() {
+        location.href = contextPath + "/index";
+    }
+
+    function toLoginOut(){
+        $.ajax({
+            url:contextPath + "/logout",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                if (data.status == 200) {
+                    location.href =contextPath + "/login";
+                } else {
+                    layer.alert("登出失败，原因是：" + data.msg);
+                }
+            },
+            error:function (data) {
+                console.log(data.msg);
+                layer.alert(data.msg);
+            }
+        })
+        //   location.href = [[${application.basePath}]] + "/index";
+    }
+</script>
+</html>

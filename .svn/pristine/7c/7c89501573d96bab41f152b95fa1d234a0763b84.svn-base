@@ -1,0 +1,50 @@
+package com.netmarch.fdfs.system.bean;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @ClassName Log
+ * @Description TODO
+ * @Author wangdk
+ * @Date 2019/2/1413:49
+ * @Version 1.0
+ **/
+@Data
+public class Log implements Serializable {
+
+    /**
+     * 用户
+     */
+    public String yhm;
+
+    /**
+     * IP地址
+     */
+    public String dlip;
+
+    /**
+     *操作类型
+     *
+     */
+    public String czlx;
+
+    /**
+     *操作内容
+     *
+     */
+    public String cznr;
+
+    /**
+     *关键字
+     *
+     */
+    public String gjz;
+    /**
+     * 操作时间
+     */
+    public Date czsj;
+
+}

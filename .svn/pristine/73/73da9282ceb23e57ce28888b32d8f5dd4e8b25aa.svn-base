@@ -1,0 +1,24 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.Aj_flws_ga;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface Aj_flws_gaMapper {
+    int deleteByPrimaryKey(String jlbh);
+
+    int insert(Aj_flws_ga record);
+
+    int insertSelective(Aj_flws_ga record);
+
+    Aj_flws_ga selectByPrimaryKey(String jlbh);
+
+    int updateByPrimaryKeySelective(Aj_flws_ga record);
+
+    int updateByPrimaryKey(Aj_flws_ga record);
+
+    List<Aj_flws_ga> getWsListByAjbs(@Param("ajbs")String ajbs, @Param("searchCondition")String searchCondition, @Param("searchContent")String searchContent);
+
+    int saveWsys(List<String> list);
+}

@@ -1,0 +1,399 @@
+package com.netmarch.wssacw.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.netmarch.wssacw.common.controller.FrontBaseController;
+import com.netmarch.wssacw.common.thymeleaf.AuthElementTagProcessor;
+import com.netmarch.wssacw.common.utils.HttpClientUtil;
+import com.netmarch.wssacw.common.utils.UsersUtil;
+import com.netmarch.wssacw.common.utils.common.FdfsUtil;
+import com.netmarch.wssacw.system.bean.*;
+import com.netmarch.wssacw.system.bean.LoginUser;
+import com.netmarch.wssacw.system.client.ZwxxClient;
+import com.netmarch.wssacw.system.service.AreaService;
+import com.netmarch.wssacw.system.service.ZwlzService;
+import com.netmarch.wssacw.system.service.ZwxxService;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import util.DateUtil;
+import util.web.JsonResult;
+import util.web.ResultCodes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.*;
+
+@Controller
+@Slf4j
+public class ZwxxController extends FrontBaseController implements ZwxxClient {
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private HttpServletResponse response;
+
+    @Autowired
+    private ZwxxService zwxxService;
+
+    @Autowired
+    private AreaService areaService;
+
+    @Autowired
+    private ZwlzService zwlzService;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @Autowired
+    private UsersUtil usersUtil;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Value("${fdfs.resHost}")
+    private String resHost;
+
+    @Value("${fdfs.storagePort}")
+    private String storagePort;
+
+    @RequestMapping("addZwxx")
+    public String addZwxx(HttpServletRequest request, Zwxxb zwxxb, Model model){
+        String user_Id="";
+        try {
+
+            user_Id=usersUtil.getLoginUser_Id();
+            String ajbs= request.getParameter("ajbs");
+            String ajbh= request.getParameter("ajbh");
+            String ajmc= request.getParameter("ajmc");
+            zwxxb.setAjbs(ajbs);
+            zwxxb.setAjbh(ajbh);
+            zwxxb.setAjmc(ajmc);
+           // Zwxxb zwxx = zwxxService.savEditZwxx(zwxxb);
+            model.addAttribute("zwxxb", zwxxb);
+
+            List<Zwlb> zwlbList = zwxxService.getZwlbList();
+            model.addAttribute("zwlbList", zwlbList);
+            String jwt = usersUtil.getJwtCookie();
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String, String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+            LoginUser user=null;
+            body = HttpClientUtil.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                user = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+            String areaCode=user.getAreaCode();
+            Area area=areaService.getAreaByAreaCode(areaCode);
+            model.addAttribute("area", area);
+
+            List<Zwlz> zwlz=new ArrayList<Zwlz>();
+            model.addAttribute("zwlz", zwlz);
+
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            String pageNo= request.getParameter("pageNo");
+            model.addAttribute("searchCondition", searchCondition);
+            model.addAttribute("searchContent", searchContent);
+            model.addAttribute("pageNo", pageNo);
+
+            log(user_Id,"点击涉案财物新增按钮","打开涉案财物新增页面","涉案财物管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"点击涉案财物新增按钮",e.toString(),"涉案财物管理(涉案财物系统)",true);
+        }
+       return "ajjbqk/editZwxx";
+        //return "ajjbqk/editZwxx::editZwxx";
+    }
+
+    @RequestMapping(value = "/saveAddZwxx", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult saveAddZwxx(Zwxxb zwxxb,@RequestParam(value = "file", required = false) MultipartFile[] files){
+        String user_Id="",userName="";
+        try {
+
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt = usersUtil.getJwtCookie();
+
+            int countName = zwxxService.checkZwmc(zwxxb);
+            if(countName > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_NAME);
+            }
+
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String, String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+            LoginUser user=null;
+            body = HttpClientUtil.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                user = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+            userName=user.getUsername();
+
+            zwxxb.setAdduser(userName);
+            String jlbh=zwxxb.getJlbh();
+            if(jlbh == null || jlbh.equals("")){
+
+                //上传图片到文件服务器
+                if (files.length == 0) {
+                    return new JsonResult(ResultCodes.ERROR, StaticObj.UPLOAD_MSG_ERROR);
+                }
+
+                //涉案财物新增
+                jlbh = UUID.randomUUID().toString();
+                zwxxb.setJlbh(jlbh);
+                //添加到脏物信息表(ZWXXB)当中
+                String jsonResults= JSON.toJSONString(zwxxb);
+                int result = zwxxService.saveAddZwxx(zwxxb);
+                if(result <= 0){
+                    log(user_Id,"涉案财物添加","涉案财物添加失败"+jsonResults,"涉案财物管理(涉案财物系统)",false);
+                    return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+                }
+                log(user_Id,"涉案财物添加",jsonResults,"涉案财物管理(涉案财物系统)",false);
+            }else{
+                //涉案财物编辑
+                int picCount = zwxxService.getPicCountByjlbh(jlbh);
+                if (files.length == 0 && picCount == 0) {
+                    return new JsonResult(ResultCodes.ERROR, StaticObj.UPLOAD_MSG_ERROR);
+                }
+
+                zwxxb.setUpdateUserid(user_Id);
+                String jsonResults= JSON.toJSONString(zwxxb);
+                int result = zwxxService.saveEditZwxx(zwxxb);
+                if(result <= 0){
+                    log(user_Id,"涉案财物编辑","涉案财物编辑失败"+jsonResults,"涉案财物管理(涉案财物系统)",false);
+                    return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+                }
+                log(user_Id,"涉案财物编辑","编辑后涉案财物为:"+ jsonResults,"涉案财物管理(涉案财物系统)",false);
+            }
+
+            //如果选择了流转单位，在流程表中进行添加记录
+            int saveLzdwResult = 0;
+            if(zwxxb.getLzdw()!="" && !zwxxb.getLzdw().equals("")){
+                Zwlz zwlz=new Zwlz();
+                zwlz.setJlbh(UUID.randomUUID().toString());
+                zwlz.setZwbh(zwxxb.getJlbh());
+                zwlz.setOperateUserid(user_Id);
+                zwlz.setOperateUsername(userName);
+                zwlz.setDqlzdw(zwxxb.getLzdw());
+                saveLzdwResult=zwlzService.saveZwlzdw(zwlz);
+                String jsonResults= JSON.toJSONString(zwlz);
+                log(user_Id,"涉案财物流转","增加"+zwxxb.getJlbh()+"的流转单位,流转信息为:"+jsonResults,"涉案财物管理(涉案财物系统)",false);
+            }
+   /*
+            //图片保存到附件表（zwpicture）当中
+            if (files.length == 0) {
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPLOAD_MSG_ERROR);
+            }
+            for (MultipartFile image : files) {
+                if (!image.isEmpty()) {
+                    String oldPicName = image.getOriginalFilename();
+                    String strDate = DateUtil.parseDateToStr(new Date(), DateUtil.DATE_TIME_FORMAT_YYYYMMDDHHMISSSSS);
+                    String picName = strDate + "_" + oldPicName;
+                    //  BASE64Encoder encoder = new BASE64Encoder();
+                    // 通过base64来转化图片
+                    //  String data = encoder.encode(image.getBytes());
+                    InputStream ins = image.getInputStream();
+                    byte[] buffer=new byte[1024];
+                    int len=0;
+                    ByteArrayOutputStream bos=new ByteArrayOutputStream();
+                    while((len=ins.read(buffer))!=-1){
+                        bos.write(buffer,0,len);
+                    }
+                    bos.flush();
+                    byte data[] = bos.toByteArray();
+                    ZwpictureWithBLOBs zwpictureWithBLOBs = new ZwpictureWithBLOBs();
+                    zwpictureWithBLOBs.setJlbh(UUID.randomUUID().toString());
+                    zwpictureWithBLOBs.setZwjlbh(jlbh);
+                    zwpictureWithBLOBs.setOldpicname(oldPicName);
+                    zwpictureWithBLOBs.setPicname(picName);
+                    zwpictureWithBLOBs.setPiccontent(data);
+
+                    int result = zwxxService.saveUploadZwpicture(zwpictureWithBLOBs);
+                    if(result <= 0){
+                        return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+                    }
+                    log(userName,"涉案财物","上传涉案财物图片","涉案财物",false);
+                }
+            }
+            */
+
+
+            for (MultipartFile image : files) {
+                if (!image.isEmpty()) {
+                    String oldPicName = image.getOriginalFilename();
+                    String strDate = DateUtil.parseDateToStr(new Date(), DateUtil.DATE_TIME_FORMAT_YYYYMMDDHHMISSSSS);
+                    String picName = strDate + "_" + oldPicName;
+
+                    String path = fileUtil.uploadFile(image,picName);
+                    ZwpictureWithBLOBs zwpictureWithBLOBs = new ZwpictureWithBLOBs();
+                    zwpictureWithBLOBs.setJlbh(UUID.randomUUID().toString());
+                    zwpictureWithBLOBs.setZwjlbh(jlbh);
+                    zwpictureWithBLOBs.setOldpicname(oldPicName);
+                    zwpictureWithBLOBs.setPicname(path);
+                    int result = zwxxService.saveUploadZwpicture(zwpictureWithBLOBs);
+                }
+            }
+            log(user_Id,"涉案财物","增加/编辑"+jlbh+"的涉案财物，共上传了"+files.length+"张图片","涉案财物管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"涉案财物编辑/增加列表",e.toString(),"涉案财物管理(涉案财物系统)",true);
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS, StaticObj.UPDATE_MSG_SUCCESS, "/wssacwgl/Ajjbqk/sacwDetails");
+    }
+
+    @RequestMapping("editZwxx")
+    public String editZwxx(Model model){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jlbh= request.getParameter("jlbh");
+            List<Zwlb> zwlbList = zwxxService.getZwlbList();
+            model.addAttribute("zwlbList", zwlbList);
+            Zwxxb zwxxb = zwxxService.editZwxx(jlbh);
+            model.addAttribute("zwxxb", zwxxb);
+
+            String jwt = usersUtil.getJwtCookie();
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String, String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+            LoginUser user=null;
+            body = HttpClientUtil.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+            if(body!="" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                user = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+            String areaCode=user.getAreaCode();
+            Area area=areaService.getAreaByAreaCode(areaCode);
+            model.addAttribute("area", area);
+
+            if(zwxxb.getZwbh()!="" && zwxxb.getZwbh()!= null) {
+                List<Zwlz> zwlz = zwlzService.getZwlzByZwbh(zwxxb.getJlbh());
+                model.addAttribute("zwlz", zwlz);
+            }
+          /* //从数据库读取图片
+            //获取跟目录
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            if(!path.exists())
+                path = new File("");
+          //  System.out.println("path:"+path.getAbsolutePath());
+            //如果上传目录为/static/images/upload/，则可以如下获取：
+            File upload = new File(path.getAbsolutePath(),"static/upload/images");
+            if(!upload.exists())
+                upload.mkdirs();
+            System.out.println("upload url:"+upload.getAbsolutePath());
+
+            List<ZwpictureWithBLOBs> zwpictureList= zwxxService.getZwpictureList(jlbh);
+            for(int i = 0;i < zwpictureList.size(); i ++){
+                //String imgFilePath=upload.getAbsolutePath() + "/" + zwpictureList.get(i).getPicname();
+                String imgFilePath = System.getProperty("user.dir") +"\\wssacwgl\\wssacwgl-web\\src\\main\\resources\\static\\upload\\images\\" + zwpictureList.get(i).getPicname();
+                System.out.println("imgFilePath:"+imgFilePath);
+                showPictureFromMysql(zwpictureList.get(i).getPiccontent(),imgFilePath);
+                zwpictureList.get(i).setPiccontentBase64(imgFilePath);
+            }
+            model.addAttribute("zwpictureList", zwpictureList);
+*/
+
+            List<ZwpictureWithBLOBs> zwpictureList= zwxxService.getZwpictureList(jlbh);
+            model.addAttribute("zwpictureList", zwpictureList);
+
+            String jsonResults= JSON.toJSONString(zwxxb);
+            log(user_Id,"点击涉案财物编辑按钮","编辑前涉案财物为:"+jsonResults,"涉案财物管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"点击涉案财物编辑按钮",e.toString(),"涉案财物管理(涉案财物系统)",true);
+        }
+        //return "ajjbqk/editZwxx::editZwxx";
+        return "ajjbqk/editZwxx";
+    }
+
+
+    @RequestMapping(value="showPictureFromMysql",method = RequestMethod.GET)
+    public void showPictureFromMysql(byte[] byteArry,String imgFilePath){
+        try {
+            //生成图片
+            if(byteArry.length!=0) {
+                response.setContentType("image/jpeg");
+                // 生成jpeg图片
+                OutputStream out = new FileOutputStream(imgFilePath);
+                out.write(byteArry);
+                out.flush();
+                out.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        };
+    }
+
+    @RequestMapping("delZwxx")
+    @ResponseBody
+    public JsonResult delZwxx(HttpServletRequest request,String jlbh){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            int resultdelZwxx =zwxxService.delZwxx(jlbh);
+            int resultdelZwlz =zwxxService.delZwlz(jlbh);
+            List<ZwpictureWithBLOBs> zwpictureList= zwxxService.getZwpictureList(jlbh);
+            for(int i = 0;i < zwpictureList.size(); i ++){
+                fileUtil.deleteFile(zwpictureList.get(i).getPicname());
+
+            }
+
+            int resultdelZwpicture =zwxxService.delZwpicture(jlbh);
+
+            if(resultdelZwxx <= 0){
+                log(user_Id,"删除涉案财物","删除记录编号为"+jlbh+"的涉案财物信息失败","涉案财物管理(涉案财物系统)",false);
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+            log(user_Id,"删除涉案财物","删除记录编号为:"+jlbh+"的涉案财物信息，从文件服务器及Mysql上删除相关图片"+zwpictureList.size()+"张,并删除涉案财物流转记录","涉案财物管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            log(user_Id,"删除涉案财物",e.toString(),"涉案财物管理",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS, "/wssacwgl/Ajjbqk/sacwDetails");
+    }
+
+    @RequestMapping("deleteUplodImg")
+    @ResponseBody
+    public JsonResult deleteUplodImg(HttpServletRequest request,String picname){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            int resultdelZwpicture =zwxxService.delZwpictureByPicName(picname);
+
+            if(resultdelZwpicture <= 0){
+                log(user_Id,"单张删除涉案财物图片","删除数据库图片picname为"+picname+"的涉案财物图片信息失败","涉案财物管理(涉案财物系统)",false);
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+            fileUtil.deleteFile(picname);
+
+            log(user_Id,"单张删除涉案财物图片","从数据库和文件服务器中删除picname为"+picname+"的涉案财物图片","涉案财物管理(涉案财物系统)",false);
+        } catch (Exception e) {
+            log(user_Id,"单张删除涉案财物图片",e.toString(),"涉案财物管理(涉案财物系统)",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS, "/wssacwgl/AjjbqksacwDetails");
+    }
+
+}

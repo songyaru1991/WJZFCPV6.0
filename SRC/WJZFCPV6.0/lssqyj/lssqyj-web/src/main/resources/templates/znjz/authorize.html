@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>律师阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+ '/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+ '/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+ '/static/js/jquery.backgroundSize.js'"></script>
+    <style type="text/css">
+        .functionBtn {
+            cursor:pointer;
+            float: left;
+            width: 50px;
+        }
+        .unclickable {
+            color: grey;
+            cursor: not-allowed;
+            pointer-events:none;
+        }
+    </style>
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="P105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img src="../static/images/H105_edit.png" alt="" class="E105_editIco">
+                <p th:text="${ajmc}+'律师授权'"></p>
+            </div>
+        </div>
+
+        <div class="P105_tableCoat">
+            <div class="P105_baseInfo">
+                <div class="E105_info  ">
+                    <p>案件基本信息</p>
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="P105_table">
+                    <tr class="P105_titlebg">
+                        <td class="clear">
+                            <p>案件编号</p>
+                        </td>
+                        <td class="clear">
+                            <p>案件名称</p>
+                        </td>
+                        <td class="clear">
+                            <p>嫌疑人</p>
+                        </td>
+                        <td class="clear">
+                            <p>立案时间</p>
+                        </td>
+                        <td class="clear">
+                            <p>主办单位</p>
+                        </td>
+                        <td class="clear">
+                            <p>案件状态</p>
+                        </td>
+                    </tr>
+                    <tr class="P105_tr">
+                        <td class="clear">
+                            <p th:text="${caseJbxx[0].ajbh}"></p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${caseJbxx[0].ajmc}"></p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${caseJbxx[0].xyrxm}"></p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${caseJbxx[0].lasj}"></p>
+                        </td>
+                        <td class="clear">
+                            <p>滨江区检察院</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${caseJbxx[0].ajzt}"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="P105_baseInfo">
+                <div class="E105_info  ">
+                    <p>律师列表</p>
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="P105_table">
+                    <tr class="P105_titlebg">
+                        <td class="clear">
+                            <p>律师姓名</p>
+                        </td>
+                        <td class="clear">
+                            <p>身份证号</p>
+                        </td>
+                        <td class="clear">
+                            <p>律所</p>
+                        </td>
+                        <td class="clear">
+                            <p>查看日期</p>
+                        </td>
+                        <td class="clear">
+                            <p>介入阶段</p>
+                        </td>
+                        <td class="clear">
+                            <p>授权码</p>
+                        </td>
+                        <td class="clear">
+                            <p>状态</p>
+                        </td>
+                        <td class="clear">
+                            <p>操作</p>
+                        </td>
+                    </tr>
+                    <tr class="P105_tr" th:each="ls,lsStat:${lslist}">
+                        <td class="clear">
+                            <p th:text="${ls.xm}">律师姓名</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${ls.sfzh}">身份证号</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${ls.lssws}">律所</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${ls.ckrq}">查看日期</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${ls.jrjd}">介入阶段</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${ls.sqm}">授权码</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${ls.zt}">状态</p>
+                        </td>
+                        <td style="margin:0 auto; margin: 0 auto; padding: 0; width: 154px;">
+                            <p class="jq_suspect functionBtn" data-content="编辑" th:classappend="${ls.sfzf eq '1'} ? 'unclickable' : ''" th:lay-href="'/lssqyj/znjz/add_lawyer?ajbs='+${ajbs}+'&ajmc='+${ajmc}+'&lssqmid='+${ls.sqmid}+'&type=1'">编辑</p>
+                            <p class="jq_suspect functionBtn" data-content="查看" th:lay-href="'/lssqyj/znjz/add_lawyer?ajbs='+${ajbs}+'&ajmc='+${ajmc}+'&lssqmid='+${ls.sqmid}+'&type=2'">查看</p>
+                            <p class="functionBtn" th:classappend="${ls.sfzf eq '1'} ? 'unclickable' : ''" th:lssqmid="${ls.sqmid}" onclick="annul(this)">作废</p>
+                        </td>
+                    </tr>
+                    <tr class="P105_tr">
+                        <td class="clear">
+                            <p></p>
+                        </td>
+                        <td class="clear">
+                            <p></p>
+                        </td>
+                        <td class="clear">
+                            <p></p>
+                        </td>
+                        <td class="clear">
+                            <p></p>
+                        </td>
+                        <td class="clear">
+                            <p></p>
+                        </td>
+                        <td class="clear">
+                            <p></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="P105_addSuspect">
+                <div class="E105_addCoat  jq_suspect" th:lay-href="'/lssqyj/znjz/add_lawyer?ajbs='+${ajbs}+'&ajmc='+${ajmc}" data-content="新增">
+                    <img src="../static/images/E105_add.png" alt="" class="E105_addSuspectImg cursor">
+                    <p>新增律师</p>
+                </div>
+            </div>
+<!--            <div class="P105_btnCoat ">-->
+<!--                <div class="E105_saveBtnCoat clear">-->
+<!--                    <button class="E105_saveBtn fl cursor"><p>保存</p></button>-->
+<!--                    <button class="E105_saveBtn fl cursor"><p>取消</p></button>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function annul(v) {
+        var lssqmid = $(v).attr('lssqmid');
+        $.post("/lssqyj/znjz/lssqCancel",{lssqmid:lssqmid},function (data) {
+            if(data){
+                $(v).parent().prev().children('p').text('作废');
+                $(v).addClass('unclickable');
+                $(v).prev().prev().addClass('unclickable');
+            }
+        })
+    }
+</script>
+</html>

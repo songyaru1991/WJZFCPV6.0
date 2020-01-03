@@ -1,0 +1,14 @@
+com\netmarch\wsgl\system\client\DepartmentsClient.class
+com\netmarch\wsgl\system\bean\StaticObj.class
+com\netmarch\wsgl\system\bean\PagesStatic.class
+com\netmarch\wsgl\system\client\DictClient.class
+com\netmarch\wsgl\system\bean\Dict.class
+com\netmarch\wsgl\system\bean\ZtreeObj.class
+com\netmarch\wsgl\system\client\ZwxxClient.class
+com\netmarch\wsgl\system\client\AjjbqkClient.class
+com\netmarch\wsgl\system\client\BaseGalleryClient.class
+com\netmarch\wsgl\system\bean\Log.class
+com\netmarch\wsgl\system\enums\IndividulType.class
+com\netmarch\wsgl\system\bean\RequestDataUtils.class
+com\netmarch\wsgl\system\bean\ZtreeNode.class
+com\netmarch\wsgl\system\bean\RequestData.class

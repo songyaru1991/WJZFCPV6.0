@@ -1,0 +1,13 @@
+package com.netmarch.jzzngd.system.mapper;
+
+
+import com.netmarch.jzzngd.system.bean.Area;
+
+import java.util.List;
+
+public interface AreaMapper {
+
+    Area getAreaByAreaCode(String areaCode);
+
+    List<Area> getArea();
+}

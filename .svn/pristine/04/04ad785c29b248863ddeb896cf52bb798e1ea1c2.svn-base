@@ -1,0 +1,7 @@
+package com.netmarch.lssqyj.system.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient("lssqyj")
+public interface LoginUserClient {
+}

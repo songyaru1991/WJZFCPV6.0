@@ -1,0 +1,10 @@
+package com.netmarch.figurecloud.auth.core.mapper;
+
+import com.netmarch.figurecloud.auth.exposure.model.SysRole;
+import org.apache.ibatis.annotations.Select;
+import tk.mybatis.mapper.common.Mapper;
+import java.util.List;
+
+public interface SysRoleMapper extends Mapper<SysRole> {
+    List<SysRole>  selectByUserId(Integer userId);
+}

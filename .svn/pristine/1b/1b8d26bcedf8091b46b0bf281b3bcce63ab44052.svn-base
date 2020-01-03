@@ -1,0 +1,49 @@
+package com.netmarch.figurecloud.gateway.filters;
+
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.exception.ZuulException;
+import com.netmarch.figurecloud.gateway.contants.FilterOrderConstants;
+import com.netmarch.figurecloud.gateway.util.FilterUtils;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+import static com.netmarch.figurecloud.gateway.contants.FilterOrderConstants.RESPONSE_SEND;
+
+@Component
+@Log4j2
+public class ErrorPagePostFilter extends ZuulFilter {
+    @Autowired
+    FilterUtils filterUtils;
+    @Override
+    public String filterType() {
+        return FilterOrderConstants.POST_FILTER_TYPE;
+    }
+
+    @Override
+    public int filterOrder() {
+        return FilterOrderConstants.ERROR_PAGE_POST;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return FilterUtils.isBrowser() && !filterUtils.isSkipRequest() && !FilterUtils.isResponseOk();
+    }
+
+    @Override
+    public Object run() throws ZuulException {
+        int status = FilterUtils.getRequestContext().getResponseStatusCode();
+        try {
+            Object isSendObj = FilterUtils.getRequestContext().get(RESPONSE_SEND);
+            boolean isSend = isSendObj!=null ? Boolean.valueOf(isSendObj.toString()) : false;
+            if (!(FilterUtils.getRequestContext().sendZuulResponse() && isSend)){
+                filterUtils.redirectToErrorPage(status,null);
+            }
+        } catch (IOException e) {
+            log.error(e);
+        }
+        return null;
+    }
+}

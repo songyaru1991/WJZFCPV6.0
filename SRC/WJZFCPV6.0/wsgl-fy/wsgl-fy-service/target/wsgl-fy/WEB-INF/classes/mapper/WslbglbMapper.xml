@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wsgl.system.mapper.WslbglbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wsgl.system.bean.Wslbglb">
+    <id column="jlbh" jdbcType="VARCHAR" property="jlbh" />
+    <result column="wsgnlbid" jdbcType="VARCHAR" property="wsgnlbid" />
+    <result column="ajbs" jdbcType="VARCHAR" property="ajbs" />
+    <result column="ajbh" jdbcType="VARCHAR" property="ajbh" />
+    <result column="wsjlbh" jdbcType="VARCHAR" property="wsjlbh" />
+    <result column="wswh" jdbcType="VARCHAR" property="wswh" />
+    <result column="wsbt" jdbcType="VARCHAR" property="wsbtmc" />
+    <result column="bm" jdbcType="VARCHAR" property="bm" />
+    <result column="addtime" jdbcType="DATE" property="addtime" />
+    <result column="msg_id" jdbcType="INTEGER" property="msgId" />
+    <result column="msg_op" jdbcType="INTEGER" property="msgOp" />
+    <result column="msg_status_ga" jdbcType="VARCHAR" property="msgStatusGa" />
+    <result column="msg_status_jcy" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="msg_status_fy" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="msg_status_sfj" jdbcType="VARCHAR" property="msgStatusSfj" />
+    <result column="msg_status_zfw" jdbcType="VARCHAR" property="msgStatusZfw" />
+    <result column="msg_date" jdbcType="TIMESTAMP" property="msgDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    jlbh, wsgnlbid, ajbs, ajbh, wsjlbh, wswh, wsbtmc, bm, addtime, msg_id, msg_op, msg_status_ga, 
+    msg_status_jcy, msg_status_fy, msg_status_sfj, msg_status_zfw, msg_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wslbglb
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wslbglb
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wsgl.system.bean.Wslbglb">
+    insert into wslbglb (jlbh, wsgnlbid, ajbs, 
+      ajbh, wsjlbh, wswh, 
+      wsbtmc, bm, addtime, msg_id, 
+      msg_op, msg_status_ga, msg_status_jcy, 
+      msg_status_fy, msg_status_sfj, msg_status_zfw, 
+      msg_date)
+    values (#{jlbh,jdbcType=VARCHAR}, #{wsgnlbid,jdbcType=VARCHAR}, #{ajbs,jdbcType=VARCHAR}, 
+      #{ajbh,jdbcType=VARCHAR}, #{wsjlbh,jdbcType=VARCHAR}, #{wswh,jdbcType=VARCHAR}, 
+      #{wsbtmc,jdbcType=VARCHAR}, #{bm,jdbcType=VARCHAR}, #{addtime,jdbcType=DATE}, #{msgId,jdbcType=INTEGER}, 
+      #{msgOp,jdbcType=INTEGER}, #{msgStatusGa,jdbcType=VARCHAR}, #{msgStatusJcy,jdbcType=VARCHAR}, 
+      #{msgStatusFy,jdbcType=VARCHAR}, #{msgStatusSfj,jdbcType=VARCHAR}, #{msgStatusZfw,jdbcType=VARCHAR}, 
+      #{msgDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wsgl.system.bean.Wslbglb">
+    insert into wslbglb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        jlbh,
+      </if>
+      <if test="wsgnlbid != null">
+        wsgnlbid,
+      </if>
+      <if test="ajbs != null">
+        ajbs,
+      </if>
+      <if test="ajbh != null">
+        ajbh,
+      </if>
+      <if test="wsjlbh != null">
+        wsjlbh,
+      </if>
+      <if test="wswh != null">
+        wswh,
+      </if>
+      <if test="wsbtmc != null">
+        wsbtmc,
+      </if>
+      <if test="bm != null">
+        bm,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+      <if test="msgId != null">
+        msg_id,
+      </if>
+      <if test="msgOp != null">
+        msg_op,
+      </if>
+      <if test="msgStatusGa != null">
+        msg_status_ga,
+      </if>
+      <if test="msgStatusJcy != null">
+        msg_status_jcy,
+      </if>
+      <if test="msgStatusFy != null">
+        msg_status_fy,
+      </if>
+      <if test="msgStatusSfj != null">
+        msg_status_sfj,
+      </if>
+      <if test="msgStatusZfw != null">
+        msg_status_zfw,
+      </if>
+      <if test="msgDate != null">
+        msg_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        #{jlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsgnlbid != null">
+        #{wsgnlbid,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbs != null">
+        #{ajbs,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null">
+        #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsjlbh != null">
+        #{wsjlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="wswh != null">
+        #{wswh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsbtmc != null">
+        #{wsbtmc,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null">
+        #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=DATE},
+      </if>
+      <if test="msgId != null">
+        #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatusGa != null">
+        #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wsgl.system.bean.Wslbglb">
+    update wslbglb
+    <set>
+      <if test="wsgnlbid != null">
+        wsgnlbid = #{wsgnlbid,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbs != null">
+        ajbs = #{ajbs,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null">
+        ajbh = #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsjlbh != null">
+        wsjlbh = #{wsjlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="wswh != null">
+        wswh = #{wswh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsbtmc != null">
+        wsbtmc = #{wsbtmc,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null">
+        bm = #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=DATE},
+      </if>
+      <if test="msgId != null">
+        msg_id = #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgOp != null">
+        msg_op = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatusGa != null">
+        msg_status_ga = #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        msg_status_jcy = #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        msg_status_fy = #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        msg_status_sfj = #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        msg_status_zfw = #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDate != null">
+        msg_date = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wsgl.system.bean.Wslbglb">
+    update wslbglb
+    set wsgnlbid = #{wsgnlbid,jdbcType=VARCHAR},
+      ajbs = #{ajbs,jdbcType=VARCHAR},
+      ajbh = #{ajbh,jdbcType=VARCHAR},
+      wsjlbh = #{wsjlbh,jdbcType=VARCHAR},
+      wswh = #{wswh,jdbcType=VARCHAR},
+      wsbtmc = #{wsbtmc,jdbcType=VARCHAR},
+      bm = #{bm,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=DATE},
+      msg_id = #{msgId,jdbcType=INTEGER},
+      msg_op = #{msgOp,jdbcType=INTEGER},
+      msg_status_ga = #{msgStatusGa,jdbcType=VARCHAR},
+      msg_status_jcy = #{msgStatusJcy,jdbcType=VARCHAR},
+      msg_status_fy = #{msgStatusFy,jdbcType=VARCHAR},
+      msg_status_sfj = #{msgStatusSfj,jdbcType=VARCHAR},
+      msg_status_zfw = #{msgStatusZfw,jdbcType=VARCHAR},
+      msg_date = #{msgDate,jdbcType=TIMESTAMP}
+    where jlbh = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getWsgnlbUsedCountInWslbglb" parameterType="java.lang.String"  resultType="Integer">
+    select count(*) from Wslbglb where WSGNLBID = #{wsgnlbid,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

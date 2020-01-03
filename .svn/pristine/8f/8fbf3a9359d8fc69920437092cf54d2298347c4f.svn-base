@@ -1,0 +1,13 @@
+package com.netmarch.lssqyj.system.mapper;
+
+import com.netmarch.lssqyj.system.bean.Sqmydzjzglb;
+
+import java.util.List;
+
+public interface SqmydzjzglbMapper {
+    int insert(Sqmydzjzglb sqmydzjzglb);
+
+    List<Sqmydzjzglb> getListBySqmid(String lssqmid);
+
+    int deleteBySqmid(String lssqmid);
+}

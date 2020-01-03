@@ -1,0 +1,5 @@
+package com.netmarch.figurecloud.auth.core.security.model.token;
+
+public interface JwtToken {
+    String getToken();
+}

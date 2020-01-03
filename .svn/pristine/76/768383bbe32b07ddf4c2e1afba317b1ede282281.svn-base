@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/all.css">
+    <link rel="stylesheet" href="../../css/style05.css">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/main_All.js"></script>
+    <script src="../../js/main_05.js"></script>
+    <script src="../../js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../../js/jquery.backgroundSize.js"></script>
+
+
+</head>
+<body>
+<div class="A405R_pictureCoat">
+    <div class="A205_btn clear">
+        <div class="A305_listBtn  fl ">
+            <p class="A205_btnEmphasis">原图</p>
+            <p>已识别</p>
+        </div>
+        <div class="A305_listBtn1  fl ">
+            <p class="A205_btnEmphasis">识别</p>
+            <p>一键识别</p>
+        </div>
+
+
+    </div>
+
+    <div class="A405_content">
+        <div class="A405_document1 fl">
+            <img src="../../images/A105_presentation.png" alt="" class=" ">
+
+        </div>
+
+        <div class="A405_document2">
+            <div class="A405_edit"  ></div>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

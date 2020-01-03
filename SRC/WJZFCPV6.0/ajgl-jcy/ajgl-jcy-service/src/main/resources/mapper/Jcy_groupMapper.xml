@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Jcy_groupMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Jcy_group">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="GROUPNAME" jdbcType="VARCHAR" property="groupname" />
+    <result column="EDITUSER" jdbcType="VARCHAR" property="edituser" />
+    <result column="EDITTIME" jdbcType="TIMESTAMP" property="edittime" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, GROUPNAME, EDITUSER, EDITTIME, AREA_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jcy_group
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jcy_group
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Jcy_group">
+    insert into jcy_group (ID, GROUPNAME, EDITUSER, 
+      EDITTIME, AREA_CODE)
+    values (#{id,jdbcType=INTEGER}, #{groupname,jdbcType=VARCHAR}, #{edituser,jdbcType=VARCHAR}, 
+      #{edittime,jdbcType=TIMESTAMP}, #{areaCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_group">
+    insert into jcy_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="groupname != null">
+        GROUPNAME,
+      </if>
+      <if test="edituser != null">
+        EDITUSER,
+      </if>
+      <if test="edittime != null">
+        EDITTIME,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupname != null">
+        #{groupname,jdbcType=VARCHAR},
+      </if>
+      <if test="edituser != null">
+        #{edituser,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_group">
+    update jcy_group
+    <set>
+      <if test="groupname != null">
+        GROUPNAME = #{groupname,jdbcType=VARCHAR},
+      </if>
+      <if test="edituser != null">
+        EDITUSER = #{edituser,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Jcy_group">
+    update jcy_group
+    set GROUPNAME = #{groupname,jdbcType=VARCHAR},
+      EDITUSER = #{edituser,jdbcType=VARCHAR},
+      EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getGroupListByAreaCode"  parameterType="String" resultType="com.netmarch.ajgl.system.bean.Jcy_group">
+   select  id, groupname, edituser, edittime, area_code areaCode
+   from Jcy_group  where area_code like CONCAT('%',#{areaCode,jdbcType=VARCHAR},'%')
+    order by edittime desc
+  </select>
+
+
+  <select id="getJcygroupList"  parameterType="com.netmarch.ajgl.system.bean.Query" resultType="com.netmarch.ajgl.system.bean.Jcy_group">
+    select a.id, a.groupname, a.edituser, a.edittime, a.area_code areaCode,b.jcy_area_name areaname
+    from jcy_group a
+    left join area b on a.area_code=b.area_code
+    where 1=1
+    <if test="areaCode != '' and areaCode != null" >
+      and  a.area_code like  CONCAT('%',#{areaCode,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchGroupName"'>
+        and a.groupname like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchAreaName"'>
+        and b.jcy_area_name like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    order by a.edittime desc
+  </select>
+
+  <select id="getJcygroupById" parameterType="java.lang.Integer" resultType="com.netmarch.ajgl.system.bean.Jcy_group">
+  select a.id, a.groupname, a.edituser, a.edittime, a.area_code areaCode,b.jcy_area_name areaname
+    from jcy_group a
+    left join area b on a.area_code=b.area_code
+    where  a.id = #{id,jdbcType=INTEGER}
+ </select>
+
+  <select id="getGroupIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+  select id
+    from jcy_group
+    where groupname= #{groupname,jdbcType=INTEGER}
+ </select>
+
+</mapper>

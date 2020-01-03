@@ -1,0 +1,35 @@
+package com.netmarch.lssqyj.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.lssqyj.system.bean.Log;
+import com.netmarch.lssqyj.system.model.LogQuery;
+import org.springframework.stereotype.Service;
+
+
+/**
+ * @ClassName LogService
+ * @Description 日志管理接口
+ * @Author  songyaru
+ * @Date 2019/4/29
+ * @Version 1.0
+ **/
+@Service
+public interface LogService {
+
+    /**
+     * 条件查询日志
+     * @param logQuery
+     *
+     * @return Page<Log>
+     */
+    Page<Log> listLog(LogQuery logQuery);
+    Page<Log> listExceptionLog(LogQuery logQuery);
+
+    /**
+     * 保存日志
+     * @param yhm,dlip,czlx,cznr,czsj,gjz
+     *
+     */
+    void save(String yhm, String dlip, String czlx, String cznr, String gjz, boolean Exception);
+
+}

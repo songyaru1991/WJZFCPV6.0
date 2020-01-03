@@ -1,0 +1,32 @@
+package com.netmarch.lssqyj.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.lssqyj.system.bean.Dict;
+import org.apache.ibatis.annotations.Param;
+import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+
+/**
+ * @program: figurecloud
+ * @description: dictmapper
+ * @author: dinggan
+ * @create: 2019-02-14 11:17
+ **/
+
+public interface DictMapper extends Mapper<Dict> {
+
+    Page<Dict> queryByCondition(@Param("keyWord") String keyWord, @Param("parentCode") String parentCode);
+
+    List<Dict> findDictsByParentCode(@Param("parentCode") String parentCode);
+
+    Dict queryDictByCode(@Param("code") String code);
+
+    List<Dict> listDictByParentCodeList(List<String> list);
+
+    Dict findDictById(@Param("id") Integer id);
+
+    int deleteByIds(@Param("ids") Integer[] ids);
+
+  //  List<Dict> findAll();
+}

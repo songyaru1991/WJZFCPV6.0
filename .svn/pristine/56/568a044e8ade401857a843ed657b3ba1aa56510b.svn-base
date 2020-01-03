@@ -1,0 +1,60 @@
+package com.netmarch.sso.common.utils;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
+import util.exception.BaseException;
+import util.exception.ErrorCode;
+import util.web.HttpServletUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+public class UserContextUtil {
+    //用户id
+    public final static String USER_IN_HEAD = "X-User";
+
+    //获取登录名
+    public static String getLoginName(){
+        return  getProperty("loginname",String.class);
+    }
+    //获取姓名
+    public static String getName(){ return  getProperty("username",String.class);
+    }
+    public static String getUserId(){
+        return  getProperty("user_id",String.class);
+    }
+    public static String getYhlb(){
+        return  getProperty("yhlb",String.class);
+    }
+/*    public static List<Integer> getRoleIds(){
+        JSONArray roles = getProperty("sysRoles",JSONArray.class);
+        if (CollectionUtils.isEmpty(roles)){
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),"获取用户角色组为空");
+        }
+        return roles.toJavaList(JSONObject.class)
+                .stream()
+                .map(item ->  item.getInteger("id"))
+                .collect(Collectors.toList());
+    }*/
+
+
+    public static <T> T getUser(Class<T> tClass){
+        String json = null;
+        try {
+            json = URLDecoder.decode(HttpServletUtil.getRequestHead(USER_IN_HEAD),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (StringUtils.isEmpty(json)){
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),"获取用户信息为空");
+        }
+        return JSON.parseObject(json,tClass);
+    }
+    public static JSONObject getUser(){
+        return getUser(JSONObject.class);
+    }
+    public static <T> T getProperty(String propertyName, Class<T> tClass){
+        return  getUser().getObject(propertyName,tClass);
+    }
+}

@@ -1,0 +1,212 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<form id="form" method="post">
+    <div class="E105_wripper jq_iframeleft">
+    <div class="E105_case1">
+
+        <div class="E105_tableCoat ">
+
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>延长换押</p>
+                </div>
+
+            </div>
+
+            <div class="P105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>人员编号:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" name="RYBH" id="RYBH" th:value="${bean.RYBH}" readonly="true">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人姓名:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl" name="XM" id="XM" th:value="${bean.XM}" readonly="true">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>性别:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl" name="XB" id="XB" th:value="${bean.XB}"  readonly="true">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>证件号码</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" name="ZJHM" id="ZJHM" th:value="${bean.ZJHM}" readonly="true">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>延长原因</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl" name="YCLY" id="YCLY">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>延长时间</p><span class="E105_star">*</span>
+                            </div>
+                            <input name="YCSJ"
+                                   type="text"
+                                   id="YCSJ" th:value="${ycsj}"
+                                   class="E105_input  fl"
+                                   autocomplete="off" maxlength="10">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <input type="hidden" name="JLBH" id="JLBH" th:value="${jlbh}"/>
+
+            <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+            <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+            <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+            <input type="hidden" name="isShowAll" id="isShowAll" th:value="${isShowAll}"/>
+
+            <div class="S105_btnCoat1 ">
+                <div class="E105_saveBtnCoat clear">
+                    <div class="S105_saveBtn fl cursor"  th:onclick="saveJcyYchy()"><p>保存</p></div>
+                    <div class="S105_saveBtn fl cursor jq_E105_cannel3"><p>返回</p></div>
+                </div>
+            </div>
+
+            <div class="P105_baseInfo">
+                <div class="E105_info  ">
+                    <p>延长记录</p>
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="P105_table" >
+                    <tr class="P105_titlebg">
+                        <td class="clear">
+                            <p>序号</p>
+                        </td>
+                        <td class="clear">
+                            <p>姓名</p>
+
+                        </td>
+                        <td class="clear">
+                            <p>延长日期</p>
+
+                        </td>
+                        <td class="clear">
+                            <p>延长原因</p>
+                        </td>
+                        <td class="clear">
+                            <p>操作时间</p>
+                        </td>
+                    </tr>
+                    <tr class="P105_tr" th:each="yclogsbean,beanStat : ${yclogsList}">
+                        <td class="clear">
+                            <p th:text="${beanStat.count}">序号</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${yclogsbean.XM}">姓名</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${#dates.format(yclogsbean.HYXXB_YCRQ, 'yyyy-MM-dd')}">延长日期</p>
+                        </td>
+
+                        <td class="clear">
+                            <p th:text="${yclogsbean.HYXXB_YCYY}">延长原因</p>
+                        </td>
+
+                        <td class="clear">
+                            <p th:text="${#dates.format(yclogsbean.ADDBYTIME, 'yyyy-MM-dd HH:mm:ss')}">操作时间</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+</form>
+</body>
+<script>
+    var contextPath = getContextPath();
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+// 点我触发
+        var date = new Date();//获取当前时间
+        date.setDate(date.getDate()+14);
+        laydate.render({
+            elem: '#YCSJ',
+            trigger: 'click',
+            format: 'yyyy-MM-dd',
+            //value:date,
+            min:0
+        });
+    });
+
+    saveJcyYchy = function (){
+        var data = {
+            RYBH: "input NotNull", YCLY: "input NotNull", YCSJ: "input NotNull"
+        };
+        var flag = V_CHECK(data);
+        if (!flag) {
+            return;
+        }
+
+        $.ajax({
+            url: contextPath + '/Wshy/saveJcyYchy',
+            type:"post",
+            data:$("#form").serialize(),
+            dataType:"json",
+            success: function (result) {
+                if (result.code == 200) {
+                    layer.alert(result.message, function (index) {
+                        layer.close(layer.index);
+                        parent.$('.src_iframeleft').attr('src', result.nextUrl);
+                    });
+
+                } else {
+                    layer.alert(result.message);
+                    return;
+                }
+            },
+            error: function (result) {
+                alert("error");
+                $('.src_iframeleft').attr('src', result.nextUrl);
+            }
+        })
+        return false;
+    }
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+    })
+</script>
+</html>

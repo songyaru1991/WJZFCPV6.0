@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Maven: com.netmarch.figurecloud:wssacwgl-jcy-exposure:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/netmarch/figurecloud/wssacwgl-jcy-exposure/1.0-SNAPSHOT/wssacwgl-jcy-exposure-1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-exposure/wssacwgl-jcy-exposure-1.0-SNAPSHOT-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/netmarch/figurecloud/wssacwgl-jcy-exposure/1.0-SNAPSHOT/wssacwgl-jcy-exposure-1.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-exposure/wssacwgl-jcy-exposure-1.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/netmarch/figurecloud/wssacwgl-jcy-exposure/1.0-SNAPSHOT/wssacwgl-jcy-exposure-1.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

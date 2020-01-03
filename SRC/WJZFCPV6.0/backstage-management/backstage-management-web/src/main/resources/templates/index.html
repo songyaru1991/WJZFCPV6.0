@@ -1,0 +1,107 @@
+<!--
+ * Author: wsp 
+ * CreatDate: 2019-02-20
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+</head>
+<body>
+<form action="" class="layui-form I206_form">
+    <div class="I106_page I206_page">
+        <!--头部s-->
+        <div class="I106_topOuter I206_topOuter">
+            <div class="I106_top">
+                <div class="I106_topLeft">
+                    <img src="images/logo.png" alt="">
+                    <span>人像平台管理系统</span>
+                </div>
+                <div class="I106_topRight">
+                    <div class="I106_topButton" th:onclick="toIndex()">首页</div>
+                    <div class="I106_user">
+                        <span th:text="${user.loginName}"></span>
+                        <img src="images/arrowDown.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="I206_title">
+                    <img src="images/I206_icon1.png" alt="">
+                    <span>平台本版本采用B/S架构开发网站平台</span>
+                    <img src="images/I206_icon2.png" alt="">
+                </div>
+                <div  class="I206_subTitle">
+                    <img src="images/I206_icon3.png" alt="">
+                    <span>布控稽查，实战应用，社区监控，专题应用，学习交流，辅助工具等功能</span>
+                    <img src="images/I206_icon3.png" alt="">
+                </div>
+            </div>
+        </div>
+        <!--头部e-->
+        <div class="I206_navOuter">
+            <ul class="I206_nav clear">
+                <li th:each="bean,beanStatus:${mainMenuList}" th:id="${bean.id}"
+                    th:onclick="|javascript:showChildren('${bean.id}')|">
+                    <div class="I206_navImg">
+                        <img class="I206_navImgOld" th:src="${bean.imgUrl1}" alt="">
+                        <img class="I206_navImgCur" th:src="${bean.imgUrl2}" alt="">
+                        <img class="I206_shadow" src="images/I206_icon5.png" alt="">
+                    </div>
+                    <div class="I206_navName" th:text="${bean.name}"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="I206_subNavOuter">
+        </div>
+        <div class="I106_footer">技术支持：江苏网进科技股份有限公司</div>
+    </div>
+</form>
+</body>
+<script>
+    var contextPath = getContextPath();
+    function showChildren(id) {
+        $("#"+id).addClass("I206_navCur").siblings().removeClass("I206_navCur");
+        $.ajax({
+            type:"post",
+            url:contextPath+"/showChildren",
+            data:{"id": id},
+            dataType:"json",
+            success:function (result) {
+                $(".I206_subNavOuter").empty();
+                if(result.length < 1){
+                    return;
+                }
+                var str = '';
+                str =   '<div class="I206_subNavTitle">'+
+                            '<img src="images/I206_icon4.png" alt="">'+
+                            '<span>'+result[0].pName+'</span>'+
+                            '<img src="images/I206_icon4.png" alt="">'+
+                        '</div>'+
+                        '<ul class="I206_subNavList clear">';
+                for(var i = 0 ; i < result.length ; i++){
+                    str +=  '<li><a href="'+contextPath+result[i].url+'">'+
+                                '<div class="I206_subNavName">'+result[i].name+'</div>' +
+                            '</a></li>'
+                }
+                str += '</ul>';
+                $(".I206_subNavOuter").append($(str));
+                $(".I206_subNavOuter").attr("display", "block");
+            }
+        })
+    }
+    
+    function toIndex() {
+        location.href = contextPath+"/index";
+    }
+</script>
+</html>

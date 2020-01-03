@@ -1,0 +1,90 @@
+<!--
+ * Author: wsp 
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script  th:src="${application.basePath}+'/web/individualism/integralDetailed/all.js'"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" method="get" th:action="${application.basePath}+'/integralDetailed/list'" >
+    <div class="I106_page">
+        <!--头部s-->
+        <div th:replace="common/top::top"></div>
+        <!--头部e-->
+        <!--内容s-->
+        <div class="I106_content">
+            <div class="I106_container clear">
+                <div class="I106_contentTop clear">
+
+                    <div class="I106_title">
+                        <span>我的积分
+                        </span>
+                        <img th:src="${application.basePath}+'/images/arrowDown2.png'" alt="">
+                    </div>
+                    <div class="I106_searchOuter">
+                        <div class="I106_search clear">
+                            <input class="layui-input" name="startTime" id="startTime" th:value="${params.startTime}" th:placeholder="起始日期"/>
+                            <input class="layui-input" name="stopTime" id="stopTime" th:value="${params.stopTime}" th:placeholder="截止日期"/>
+
+                            <div class="I106_searchRight">
+                                <button class="I106_searchButton" type="submit">搜索</button>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="I106_contentRight">
+                    <div class="I106_tabelOuter">
+                        <table class="layui-table I106_table" lay-data="{id:'tables'}"  lay-skin="line" lay-filter="demo">
+                            <thead>
+                            <tr>
+                                <th lay-data="{field:'count',width: 300}">序号</th>
+                                <th lay-data="{field:'title',width: 350}">类型</th>
+                                <th lay-data="{field:'score',width: 300}">分值</th>
+                                <th lay-data="{field:'integralTime'}">积分时间</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr  th:each="bean,stat : ${list.result}" >
+
+                                <td th:text="${stat.count}">序号</td>
+                                <td th:text="${bean.title}">姓名</td>
+                                <td th:text="${bean.score}">分值</td>
+                                <td th:text="${#dates.format(bean.integralTime, 'yyyy-MM-dd')}">积分时间</td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--分页引用-->
+                    <div th:replace="common/pages::pages"></div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--内容e-->
+        <div th:replace="common/bottom::bottom"></div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

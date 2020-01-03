@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>律师阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+ '/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/editable-select/jquery-editable-select.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/editable-select/jquery-editable-select.css'">
+    <script th:src="${application.basePath}+ '/static/js/input-autocomplete/input-autocomplete.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/input-autocomplete/input-autocomplete.css'">
+    <script th:src="${application.basePath}+ '/static/js/WdatePicker/WdatePicker.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+ '/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+ '/static/js/jquery.backgroundSize.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/ztree/css/zTreeStyle/zTreeStyle.css'">
+    <script th:src="${application.basePath}+ '/static/js/ztree/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/ztree/js/jquery.ztree.exhide.js'"></script>
+
+    <script th:src="${application.basePath}+ '/static/js/ztree/fuzzysearch.js'"></script>
+
+    <style type="text/css">
+        .timeInput {
+            float: left;
+            height: 30px;
+            width: 54%;
+            background: #f6f7f9;
+            font-size: 14px;
+            border: none;
+            padding-left: 1em;
+            margin-left: 1em;
+        }
+        .timeDiv {
+            width: 45%;
+            float: left;
+        }
+        .redStar {
+            color: red;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img src="../static/images/H105_edit.png" alt="" class="E105_editIco">
+                <p th:text="${ajmc}+'律师授权'"></p>
+            </div>
+        </div>
+        <!--律师基本信息-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>律师基本信息</p>
+                </div>
+                <div class="E105_arrowup cursor">
+
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <input type="hidden" id="lsid">
+                            <div class="E105_bianhao fl clear">
+                                <p>律师姓名:</p><span class="E105_star">*</span>
+                            </div>
+<!--                            <select id="xm" name="xm" class="E105_input  fl">-->
+<!--                            </select>-->
+                            <input id="xm" class="input-default E105_input  fl" autocomplete="off"/>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>性别:</p><span class="E105_star">*</span>
+                            </div>
+                            <input id="xb" type="text" readonly="true" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p >身份证号:</p><span class="E105_star">*</span>
+                            </div>
+                            <input id="sfzh" type="text" readonly="true" class="E105_input  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>年龄:</p><span class="E105_star">*</span>
+                            </div>
+                            <input id="nl" type="text" readonly="true" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>律所:</p><span class="E105_star">*</span>
+                            </div>
+<!--                            <select id="lssws" name="lssws" class="E105_input  fl">-->
+<!--                            </select>-->
+                            <input id="lssws" class="input-default E105_input  fl" autocomplete="off"/>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>介入阶段:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input id="jrjd"  readonly="true" type="text" class="E105_input  fl  ">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>联系方式: </p><span class="E105_star">*</span>
+                            </div>
+                            <input id="lxfs" type="text"  readonly="true" class="E105_input  fl  ">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>邮箱: </p><span class="E105_star">*</span>
+                            </div>
+                            <input id="yx" type="text" readonly="true" class="E105_input  fl  ">
+                        </td>
+
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        <!--授权律师案件-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>授权律师案件</p>
+                </div>
+                <div class="E105_arrowup cursor">
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <div class="E205_tree clear ">
+                    <div class="E205_choose fl">
+                        <div class="E205_subtitle">
+                            <p>选择案件:</p>
+                        </div>
+                        <div class="E205_chazhao">
+                            <input type="text" placeholder="请输入" id="jq_key">
+                            <img src="../static/images/A305_search.png" alt="">
+                            <p><span>查找</span></p>
+                        </div>
+                        <div class="E205_please">
+                            <p>请选择案由</p>
+                        </div>
+                        <div class="  A105_ztree E205_ztree">
+                            <ul id="treeDemo" class="ztree"></ul>
+                        </div>
+                    </div>
+                    <div class="E205_choose1">
+                        <div class="E205_btn ">
+                            <p class="E205_click_choose"><span>选择</span></p>
+                            <!--<p class="E205_click_delete"><span>删除</span></p>-->
+                        </div>
+                    </div>
+                    <div class="E205_choose fr">
+                        <div class="E205_subtitle">
+                            <p>已选卷宗:</p>
+                        </div>
+                        <div class="E205_chazhao1">
+                            <p class="selectedNum"></p>
+                        </div>
+                        <div class="E205_please1">
+                            <p class="E205_please_jq">清空</p>
+                        </div>
+                        <div class="  A105_ztree E205_ztree">
+                            <ul id="treeDemo1" class="ztree"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--授权时间段-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>授权时间段</p>
+                </div>
+            </div>
+            <div class="E105_tableCoat2">
+                <div class="timeDiv">
+                    <span class="redStar">*</span>
+                    <p style="float:left;font-size: 0.7em;">起始时间:</p>
+                    <input id="select-start-time"class="Wdate timeInput" />
+                </div>
+                <div class="timeDiv">
+                    <span class="redStar">*</span>
+                    <p style="float:left;font-size: 0.7em;">截止时间:</p>
+                    <input id="select-end-time" class="Wdate timeInput" />
+                </div>
+            </div>
+        </div>
+        <!--生成授权码-->
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>生成授权码</p>
+                </div>
+            </div>
+            <div class="E105_tableCoat2">
+                <div class="E105_accredit">
+                    <p> 授权码：<span id="sqm"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="E105_btnCoat">
+            <div class="E105_saveBtnCoat clear">
+                <div onclick="saveMsg()" id="saveBtn1" class="E105_saveBtn fl cursor"><p>保存</p></div>
+                <div id="cancelBtn" th:ajbs="${ajbs}" th:ajmc="${ajmc}" th:type="${type}" lay-href="/jzznyj/znjz/authorize" data-content="律师授权" class="rgznjz lssq E105_saveBtn fl cursor"><p>取消</p></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script type="text/javascript">
+
+//    layui.use('laydate', function(){
+//        var laydate = layui.laydate;
+//
+//        //执行一个laydate实例
+//        laydate.render({
+//            elem: '#test1', //指定元素
+//            format: 'yyyy-MM-dd', //可任意组合
+//            value: '2018-07-02'
+//        });
+//    });
+    $("#select-start-time").click(function () {
+        WdatePicker({
+            lang: 'auto',
+            dateFmt: 'yyyy-MM-dd HH:mm:ss',
+            maxDate: '#F{$dp.$D(\'select-end-time\')||\'2022-10-01\'}',
+            readOnly: true
+        })
+    })
+    $("#select-end-time").click(function () {
+        WdatePicker({
+            lang: 'auto',
+            dateFmt: 'yyyy-MM-dd HH:mm:ss',
+            minDate: '#F{$dp.$D(\'select-start-time\')}',
+            readOnly: true
+        })
+    })
+    var ajbs = $('<span/>').html('[[${ajbs}]]').text();
+    var ajmc = $('<span/>').html('[[${ajmc}]]').text();
+    var treeList = $('<span/>').html('[[${treeList}]]').text();
+    var lssqmid = $('<span/>').html('[[${lssqmid}]]').text();
+    var sqm = $('<span/>').html('[[${sqm}]]').text();
+    var kssj = $('<span/>').html('[[${kssj}]]').text();
+    var jssj = $('<span/>').html('[[${jssj}]]').text();
+    var lsxm = $('<span/>').html('[[${lsxm}]]').text();
+    var showType = $('<span/>').html('[[${type}]]').text();
+    // zTree
+    var zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {
+        check: {
+            enable: true,
+            chkDisabledInherit: true
+        },
+        view: {
+            nameIsHTML: true, //允许name支持html
+            // 设置是否允许同时选中多个节点。
+            selectedMulti: false
+        },
+        // edit: {
+        //   // 设置 zTree 是否处于编辑状态 开启拖拽
+        //   enable: true,
+        //   // 设置是否显示删除按钮。
+        //   showRemoveBtn: false,
+        //   // 设置是否显示重命名按钮。
+        //   showRenameBtn: false
+        // },
+        data: {
+
+            // keep: {
+            //   // rue / false 分别表示 锁定 / 不锁定 父节点属性
+            //   parent: true,
+            //   // true / false 分别表示 锁定 / 不锁定 叶子节点属性
+            //   leaf: true
+            // },
+            // simpleData: {
+            //   // 简单数据模式 (Array)
+            //   enable: true
+            // }
+        },
+        callback: {
+            // 用于捕获节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作
+            // beforeDrag: beforeDrag,
+            // 用于捕获节点被删除之前的事件回调函数，并且根据返回值确定是否允许删除操作
+            // beforeRemove: beforeRemove,
+            // 用于捕获节点编辑名称结束（Input 失去焦点 或 按下 Enter 键）之后，更新节点名称数据之前的事件回调函数，并且根据返回值确定是否允许更改名称的操作
+            // beforeRename: beforeRename,
+            // 用于捕获删除节点之后的事件回调函数。
+            // onRemove: onRemove,
+            // 用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作
+            // beforeDrop: beforeDrop,
+            // 用于捕获 zTree 上鼠标右键点击之前的事件回调函数，并且根据返回值确定触发 onRightClick 事件回调函数
+            // onRightClick: onRightClick,
+        }
+    };
+    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+
+
+    var zNodes = JSON.parse(treeList); // 原始
+
+    // var zNodes = [
+    //     {
+    //         name: 'baba',
+    //         children: [
+    //             {
+    //                 name: '起诉意见书', children: [
+    //                     {name: '013', wjid: '013'}
+    //                 ]
+    //             },
+    //             {
+    //                 name: '拘留通知书', children: []
+    //             },
+    //             {
+    //                 name: '立案决定书', children: [
+    //                     {name: '007', wjid: '007'},
+    //                     {name: '014', wjid: '014'}
+    //                 ]
+    //             },
+    //             {
+    //                 name: '提请批准逮捕书', children: [
+    //                     {name: '009', wjid: '009'}
+    //                 ]
+    //             },
+    //             {
+    //                 name: '变更羁押期限通知书', children: [
+    //                     {name: '001', wjid: '001'}
+    //                 ]
+    //             },
+    //             {
+    //                 name: '释放通知书', children: [
+    //                     {name: '006', wjid: '006'}
+    //                 ]
+    //             },
+    //             {
+    //                 name: '收取保证金通知书', children: [
+    //                     {name: '003', wjid: '003'}
+    //                 ]
+    //             },
+    //             {
+    //                 name: '不批准逮捕决定书', children: [
+    //                     {name: '012', wjid: '012'}
+    //                 ]
+    //             }
+    //         ]
+    //     }
+    // ];
+
+    // var zNodes1 = [
+    //     {
+    //         name: '已选择 - 折叠',
+    //         children: [
+    //             {name: '叶子节点111'},
+    //             {name: '叶子节点112'},
+    //             {name: '叶子节点113'},
+    //             {name: '叶子节点114'}
+    //         ]
+    //     },
+    //     {id: 1, pId: 0, name: '随意拖拽 1', open: true},
+    //     {id: 11, pId: 1, name: '随意拖拽 1-1'},
+    //     {id: 111, pId: 11, name: '随意勾选 1-1-1'},
+    //     {id: 112, pId: 11, name: '随意勾选 1-1-2'},
+    //     {id: 12, pId: 1, name: '随意拖拽 1-2', open: true},
+    //     {id: 121, pId: 12, name: '随意拖拽 1-2-1'},
+    //     {id: 122, pId: 12, name: '随意拖拽 1-2-2'},
+    //     {id: 123, pId: 12, name: '随意拖拽 1-2-3'},
+    //     {id: 13, pId: 1, name: '禁止拖拽 1-3', open: true, drag: false},
+    //     {id: 131, pId: 13, name: '禁止拖拽 1-3-1', drag: false},
+    //     {id: 132, pId: 13, name: '禁止拖拽 1-3-2', drag: false},
+    //     {id: 133, pId: 13, name: '随意拖拽 1-3-3'},
+    //     {id: 2, pId: 0, name: '随意拖拽 2', open: true},
+    //     {id: 21, pId: 2, name: '随意拖拽 2-1'},
+    //     {id: 22, pId: 2, name: '禁止拖拽到我身上 2-2', open: true, drop: false},
+    //     {id: 221, pId: 22, name: '随意拖拽 2-2-1'},
+    //     {id: 222, pId: 22, name: '随意拖拽 2-2-2'},
+    //     {id: 223, pId: 22, name: '随意拖拽 2-2-3'},
+    //     {id: 23, pId: 2, name: '随意拖拽 2-3'}
+    // ];
+
+
+
+
+
+    var RC_treeNode;
+
+    var newCount = 1;
+
+    $(document).ready(function () {
+        var zTreeObj1;
+        zTreeObj = $.fn.zTree.init($('#treeDemo'), setting, zNodes);
+        fuzzySearch('treeDemo', '#jq_key', null, true); //初始化模糊搜索方法
+        $('.E205_click_choose').click(function () {
+
+            var zTree = $.fn.zTree.getZTreeObj('treeDemo');
+            var nodesOrginal = zTree.getCheckedNodes();
+
+            var nodes = JSON.parse(JSON.stringify(nodesOrginal));
+            // console.log('原数组: ', nodes);
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].level != 0) {
+                    nodes.splice(i, 1);
+                    i--;
+                }
+            }
+            // return;
+            Recursion(nodes);
+            // console.log('元素生成数据:',nodes);
+            zTreeObj1 = $.fn.zTree.init($('#treeDemo1'), setting, nodes);
+            selectedNum();
+        });
+
+        $('.E205_please_jq').click(function () {
+            $.fn.zTree.destroy('treeDemo1');
+            selectedNum();
+        });
+
+        ajaxDirect("/jzznyj/znjz/getLsList",{},function(data) {
+            //简易调用
+            var xms=new Array();
+            var lsswss=new Array();
+            for (var int = 0; int < data.length; int++) {
+                var xm = {};
+                xm.title=data[int].xm;
+                xms[int]=xm;
+                var lssws = {};
+                lssws.title=data[int].lssws;
+                lsswss[int]=lssws;
+            }
+            $('#xm').bigAutocomplete({
+                data:xms
+            });
+            $('#lssws').bigAutocomplete({
+                data:lsswss
+            });
+        });
+        createCode();
+        if(lsxm){
+            autoInsert(lsxm);
+            $('#sqm').text(sqm);
+            $("#select-start-time").val(kssj);
+            $("#select-end-time").val(jssj);
+            $('.E205_click_choose').click();
+        }
+
+        if('2'==showType){ // 查看
+            $('#xm').attr('readonly',true);
+            $('#xm').css('cursor','not-allowed');
+            $('#xm').css('pointer-events','none');
+            $('#lssws').attr('readonly',true);
+            $('#lssws').css('cursor','not-allowed');
+            $('#lssws').css('pointer-events','none');
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");//原始树
+            var nodesSys = treeObj.getNodes(); //可以获取所有的父节点
+            var nodesSysAll = treeObj.transformToArray(nodesSys); //获取树所有节点
+            for (var i = 0; i < nodesSysAll.length; i++) {
+                treeObj.setChkDisabled(nodesSysAll[i], true);
+            }
+            var treeObj1 = $.fn.zTree.getZTreeObj("treeDemo1");//选中树
+            var nodesSys1 = treeObj1.getNodes(); //可以获取所有的父节点
+            var nodesSysAll1 = treeObj1.transformToArray(nodesSys1); //获取树所有节点
+            for (var i = 0; i < nodesSysAll1.length; i++) {
+                treeObj1.setChkDisabled(nodesSysAll1[i], true);
+            }
+            $('#select-start-time').attr('readonly',true);
+            $('#select-start-time').css('cursor','not-allowed');
+            $('#select-start-time').css('pointer-events','none');
+            $('#select-end-time').attr('readonly',true);
+            $('#select-end-time').css('cursor','not-allowed');
+            $('#select-end-time').css('pointer-events','none');
+            $('.E205_click_choose').remove();
+            $('#saveBtn1').remove();
+        }
+    });
+
+    function Recursion (depth) {
+        for (var i = 0; i < depth.length; i++) {
+            if (depth[i].children instanceof Array) {
+                Recursion(depth[i].children);
+                if (depth[i].children.length == 0) {
+                    depth.splice(i, 1);
+                    i--;
+                }
+            } else if (depth[i].checked == undefined || depth[i].checked == false) {
+                depth.splice(i, 1);
+                i--;
+            }
+        }
+
+    }
+
+    function autoInsert(v) {
+        $.post("/jzznyj/znjz/getLsByXm",{xm:v},function (data) {
+            if(data){
+                $('#xm').val(v);
+                $('#lsid').val(data.id);
+                $('#xb').val(data.xb);
+                $('#sfzh').val(data.sfzh);
+                $('#nl').val(data.nl);
+                $('#lssws').val(data.lssws);
+                $('#jrjd').val(data.jrjd);
+                $('#lxfs').val(data.lxfs);
+                $('#yx').val(data.yx);
+            }
+        })
+    }
+
+    function createCode() {
+        var code = "";
+        //授权码的长度
+        var codeLength = 5;
+        //组成授权码码的字符
+        var codeChars = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        for (var i = 0; i < codeLength; i++){
+            var charNum = Math.floor(Math.random() * 52);//设置随机产生
+            code += codeChars[charNum];
+        }
+        $('#sqm').text(code);
+    }
+
+    function selectedNum() {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");// 左
+        var treeObj1 = $.fn.zTree.getZTreeObj("treeDemo1");// 右
+        //返回根节点集合
+        var nodes = treeObj.getNodesByFilter(function (node) { return node.level == 0 });
+        var orgSecondNum = Object.keys(nodes[0].children).length; // 原始二级目录数量
+        var orgNum = 0;
+        for(var s =0;s<orgSecondNum;s++){
+            orgNum += Object.keys(nodes[0].children[s].children).length;
+        }
+        var selectedNum = 0;
+        if(treeObj1){
+            var nodes1 = treeObj1.getNodesByFilter(function (node) { return node.level == 0 });
+            if(nodes1.length>0){
+                var selectedSecondNum = Object.keys(nodes1[0].children).length;
+                for(var x =0;x<selectedSecondNum;x++){
+                    selectedNum += Object.keys(nodes1[0].children[x].children).length;
+                }
+            }
+        }
+        var str = '已选择(' + selectedNum + '/' +  orgNum + ')';
+        $('.selectedNum').text(str);
+    }
+
+    /**
+     * 返回JSON形式的数据
+     * @param url 地址
+     * @param data 参数
+     * @param func 返回函数
+     * @param async 是否异步
+     */
+    function ajaxDirect(url, data, func, async) {
+        if (!async) {
+            async = false;
+        }
+        $.ajax({
+            url: url,
+            type: "post",
+            dataType: "json",
+            async: async,
+            data: data,
+            success: func
+        });
+    }
+
+    function saveMsg() {
+        var xm = $.trim($('#xm').val());
+        if('' == xm){
+            alert('律师姓名不能为空！');
+            return;
+        }
+        var sfzh = $.trim($('#sfzh').val());
+        if('' == sfzh){
+            alert('身份证号不能为空！');
+            return;
+        }
+        var nl = $.trim($('#nl').val());
+        if('' == nl){
+            alert('年龄不能为空！');
+            return;
+        }
+        var lssws = $.trim($('#lssws').val());
+        if('' == lssws){
+            alert('律师事务所不能为空！');
+            return;
+        }
+        var jrjd = $.trim($('#jrjd').val());
+        if('' == jrjd){
+            alert('介入阶段不能为空！');
+            return;
+        }
+        var lxfs = $.trim($('#lxfs').val());
+        if('' == lxfs){
+            alert('联系方式不能为空！');
+            return;
+        }
+        var yx = $.trim($('#yx').val());
+        if('' == yx){
+            alert('邮箱不能为空！');
+            return;
+        }
+        var startDate = $.trim($('#select-start-time').val());
+        if('' == startDate){
+            alert('起始时间不能为空！');
+            return;
+        }
+        var endDate = $.trim($('#select-end-time').val());
+        if('' == endDate){
+            alert('截止时间不能为空！');
+            return;
+        }
+        var ids = new Array();
+        var treeObj1 = $.fn.zTree.getZTreeObj("treeDemo1");
+        if(treeObj1) {
+            var nodes1 = treeObj1.getNodesByFilter(function (node) {
+                return node.level == 0
+            });
+            if (nodes1.length > 0) {
+                var e = 0;
+                var selectedSecondNum = Object.keys(nodes1[0].children).length;
+                for(var x =0;x<selectedSecondNum;x++){
+                    var selectedThirdNum = Object.keys(nodes1[0].children[x].children).length;
+                    for(var y =0;y<selectedThirdNum;y++){
+                        var wj = {};
+                        wj.id = nodes1[0].children[x].children[y].wjid;
+                        ids[e] = wj;
+                        e++;
+                    }
+                }
+            }
+        }
+        if(0 == ids.length){
+            alert('未选择案件卷宗！');
+            return;
+        }
+        jQuery.ajaxSettings.traditional = true;
+        $.post("/jzznyj/znjz/saveLssq",{lssqmid:lssqmid,lsid:$('#lsid').val(),ajbs:ajbs,startDate:startDate,endDate:endDate,sqm:$('#sqm').text(),ids:JSON.stringify(ids)},function (data){
+            if(data){
+                $('#cancelBtn').click();
+            }
+        })
+    }
+
+</script>
+
+</html>

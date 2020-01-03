@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+
+</head>
+<body>
+<form id="form" method="post">
+    <div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                <p>嫌疑人信息</p>
+            </div>
+        </div>
+        <div class="S105_chakan clear">
+            <div class="C105_filled fl">
+                <div class="S105_baseInfo">
+                    <div class="S105_info  ">
+                        <div class="S105_tipIco"></div>
+                        <p>人员基本信息</p>
+                    </div>
+
+                </div>
+                <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table">
+                            <tr>
+                                <td class="C105_odd E105_bianhao2 ">
+                                    <p >人员编号</p><span class="E105_star">*</span>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="RYBH" id="RYBH" class=" E305_input  fl" th:value="${bean.RYBH}" readOnly="true"  maxlength="25">
+                                </td>
+                                <td class=" C105_odd E105_bianhao2">
+                                    <p>嫌疑人姓名</p><span class="E105_star">*</span>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="XM" id="XM" class=" E305_input  fl" th:value="${bean.XM}" readOnly="true"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>编号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="BH" id="BH"  class=" E305_input  fl" th:value="${bean.BH}"  maxlength="25">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>番号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="FH" id="FH" class=" E305_input  fl" th:value="${bean.FH}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>别名</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="BM" id="BM" class=" E305_input  fl" th:value="${bean.BM}" maxlength="15">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>出生日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input th:value="${bean.CSRQ}" name="CSRQ"
+                                           type="text"
+                                           id="CSRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>性别</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="XB" id="XB" class=" E305_input  fl" th:value="${bean.XB}" maxlength="5">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>管教员</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text"  name="GJY" id="GJY" class=" E305_input  fl" th:value="${bean.GJY}" maxlength="15">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>监室编号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="JSBH" id="JSBH" class=" E305_input  fl" th:value="${bean.JSBH}" maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>监室号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="JSH" id="JSH" class=" E305_input  fl" th:value="${bean.JSH}"  maxlength="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>入所时间</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.RSSJ}"  name="RSSJ"
+                                            type="text"
+                                            id="RSSJ"
+                                            class="layui-input E105_date  "
+                                            autocomplete="off" maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>入所原因</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="RSYY" id="RSYY" class=" E305_input  fl" th:value="${bean.RSYY}"  maxlength="50">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>当前诉讼阶段</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text"  name="DQSSJD" id="DQSSJD" class=" E305_input  fl" th:value="${bean.DQSSJD}"  maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>当前办案单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="DQBADW" id="DQBADW" class=" E305_input  fl" th:value="${bean.DQBADW}"  maxlength="50">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>处理结果</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <input type="text"  name="CLJG" id="CLJG" class=" E305_input  fl" th:value="${bean.CLJG}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>刑期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="XQ" id="XQ" class=" E305_input  fl" th:value="${bean.XQ}"  maxlength="25">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>实际关押天数</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text"  name="SJGYTS" id="SJGYTS" class=" E305_input  fl" th:value="${bean.SJGYTS}"  maxlength="5">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>婚姻状况</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="HYZK" id="HYZK" class=" E305_input  fl" th:value="${bean.HYZK}"  maxlength="5">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>专长</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text"  name="ZC" id="ZC" class=" E305_input  fl" th:value="${bean.ZC}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>国籍</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="GJ" id="GJ" class=" E305_input  fl" th:value="${bean.GJ}"  maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>民族</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="MZ" id="MZ" class=" E305_input  fl" th:value="${bean.MZ}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>文化程度</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text"  name="WHCD" id="WHCD" class=" E305_input  fl" th:value="${bean.WHCD}"  maxlength="10">
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="S105_baseInfo">
+                    <div class="S105_info  ">
+                        <div class="S105_tipIco"></div>
+                        <p>嫌疑人补填信息</p>
+                    </div>
+
+                </div>
+                <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table">
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件类别</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="AJLB" id="AJLB" class=" E305_input  fl" th:value="${bean.AJLB}"  maxlength="25">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>当前单位类型</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="DQDWLX" id="DQDWLX" class=" E305_input  fl" th:value="${bean.DQDWLX}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>户籍所在地</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="HJSZD" id="HJSZD" class=" E305_input  fl" th:value="${bean.HJSZD}" maxlength="50">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>户籍详细地址</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="HJXXDZ" id="HJXXDZ" class=" E305_input  fl" th:value="${bean.HJXXDZ}"  maxlength="100">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>职业</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="ZY" id="ZY" class=" E305_input  fl" th:value="${bean.ZY}"  maxlength="25">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>指纹编号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="ZWBH" id="ZWBH" class=" E305_input  fl" th:value="${bean.ZWBH}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>现住址区划</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="XZZQH" id="XZZQH" class=" E305_input  fl" th:value="${bean.XZZQH}"  maxlength="50">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>现居住地详细地址</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="XZZXXDZ" id="XZZXXDZ" class=" E305_input  fl" th:value="${bean.XZZXXDZ}"  maxlength="100">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>工作单位</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="GZDW" id="GZDW" class=" E305_input  fl" th:value="${bean.GZDW}"  maxlength="100">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>政治面貌</p>
+                                </td>
+                                <td class="C105_even">
+                                    <select name="ZZMM" id="ZZMM" class="E305_input  fl">
+                                        <option value="">请选择</option>
+                                        <option th:each="list : ${zzmmList}"  th:value="${list.MC}" th:text="${list.MC}" th:selected="${list.MC==bean.ZZMM}">政治面貌</option>
+                                    </select>
+                                  <!--  <input type="text" name="ZZMM" id="ZZMM" class=" E305_input  fl" th:value="${bean.ZZMM}">-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>证件类型</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="ZJLX" id="ZJLX" class=" E305_input  fl" th:value="${bean.ZJLX}"  maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>证件号码</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="ZJHM" id="ZJHM" class=" E305_input  fl" th:value="${bean.ZJHM}"  maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>籍贯</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="JG" id="JG" class=" E305_input  fl" th:value="${bean.JG}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>身份</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="SF" id="SF" class=" E305_input  fl" th:value="${bean.SF}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>特殊身份</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="TSSF" id="TSSF" class=" E305_input  fl" th:value="${bean.TSSF}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>职务</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="ZW" id="ZW" class=" E305_input  fl" th:value="${bean.ZW}" maxlength="25">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>关押期限</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="GYQX" id="GYQX" class=" E305_input  fl" th:value="${bean.GYQX}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>逮捕日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input th:value="${bean.DBRQ}" name="DBRQ"
+                                           type="text"
+                                           id="DBRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>拘留日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.JLRQ}"  name="JLRQ"
+                                           type="text"
+                                           id="JLRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>羁押日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input th:value="${bean.JYRQ}"  name="JYRQ"
+                                           type="text"
+                                           id="JYRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>收押凭证</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="SYPZ" id="SYPZ" class=" E305_input  fl" th:value="${bean.SYPZ}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>转来单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="ZLDW" id="ZLDW" class=" E305_input  fl" th:value="${bean.ZLDW}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>送押单位</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="SYDW" id="SYDW" class=" E305_input  fl" th:value="${bean.SYDW}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>送押人</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="SYR" id="SYR" class=" E305_input  fl" th:value="${bean.SYR}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>违法犯罪经历</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="WFFZJL" id="WFFZJL" class=" E305_input  fl" th:value="${bean.WFFZJL}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>成员类别</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="CYLB" id="CYLB" class=" E305_input  fl" th:value="${bean.CYLB}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>出所日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.CSSJ}" name="CSSJ"
+                                           type="text"
+                                           id="CSSJ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>出所原因</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="CSYY" id="CSYY" class=" E305_input  fl" th:value="${bean.CSYY}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>出所去向</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="CSQX" id="CSQX" class=" E305_input  fl" th:value="${bean.CSQX}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>收到日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input th:value="${bean.SDRQ}" name="SDRQ"
+                                           type="text"
+                                           id="SDRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>换押日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.HYRQ}" name="HYRQ"
+                                           type="text"
+                                           id="HYRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>处理时间</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.CLSJ}" name="CLSJ"
+                                           type="text"
+                                           id="CLSJ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>办案人</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" id="BAR" name="BAR" class=" E305_input  fl" th:value="${bean.BAR}" maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>办案人电话</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" id="BARDH" name="BARDH" class=" E305_input  fl" th:value="${bean.BARDH}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>刑期开始日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.XQKSRQ}" name="XQKSRQ"
+                                           type="text"
+                                           id="XQKSRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off"  maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>刑期截止日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input th:value="${bean.XQJZRQ}" name="XQJZRQ"
+                                           type="text"
+                                           id="XQJZRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>附加处理</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="FJCL" id="FJCL" class=" E305_input  fl" th:value="${bean.FJCL}" maxlength="25">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>附加刑期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="FJXQ" id="FJXQ" class=" E305_input  fl" th:value="${bean.FJXQ}" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>上诉日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.SSRQ}" name="SSRQ"
+                                           type="text"
+                                           id="SSRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off"  maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>执行日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input th:value="${bean.ZXRQ}" name="ZXRQ"
+                                           type="text"
+                                           id="ZXRQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>缓刑刑期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input th:value="${bean.HXXQ}" name="HXXQ"
+                                           type="text"
+                                           id="HXXQ"
+                                           class="layui-input E105_date  "
+                                           autocomplete="off" maxlength="10">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>罚金金额</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="FJJE" id="FJJE" class=" E305_input  fl" th:value="${bean.FJJE}"  maxlength="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>审判长</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="SPZ" id="SPZ" class=" E305_input  fl" th:value="${bean.SPZ}"  maxlength="25">
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>重刑犯</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="ZXF" id="ZXF" class=" E305_input  fl" th:value="${bean.ZXF}"  maxlength="5">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>档案号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <input type="text" name="DAH" id="DAH" class=" E305_input  fl" th:value="${bean.DAH}" maxlength="25">
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>危险等级</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <input type="text" name="WXDJ" id="WXDJ" class=" E305_input  fl" th:value="${bean.WXDJ}" maxlength="5">
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="C105_notFill fr">
+                <div class="C105_info  ">
+                    <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt="" class="C105_tipIco">
+                    <p>案件基本信息</p>
+                </div>
+                <!--框-->
+                <div class="S105_base">
+                    <table class="S105_caseTable">
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>案件编号</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.AJBH}">CH1564556+4+4+4</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>案件名称</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.AJMC}">李三冬盗窃案</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>涉案人员</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajSary}">张三 、李思、王权、仝仁</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>当前进度阶段</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.AJZT}">公安局-报捕案件</p>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td class="S105_odd1 ">
+                                <p>承办人</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.GACBR}">承办人</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>合计耗时</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p></p>
+                            </td>
+                        </tr>-->
+                    </table>
+                    <div class="S105_caseBtn1"  th:if="${ajjbqk.AJBH !='' && ajjbqk.AJBH !=null}" th:lay-href="'/wshygl-gaj/Ksry/ajjbqklist?ajbh='+${ajjbqk.AJBH}+'&xyrbh='+${bean.RYBH}" data-content="案件详情" data-from="edit">
+                        <p>案件详情</p>
+                    </div>
+
+                </div>
+
+                <div class="S105_info2 ">
+                    <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt="" class="C105_tipIco">
+                    <p>换押记录</p>
+                </div>
+                <!--框-->
+                <div class="S105_base1  " th:each="bean1,beanStat : ${hyxxbList}" >
+                    <!--块-->
+                    <div class="S105_gongan  ">
+                        <div class="S105G_titleCoat">
+                            <div class="S105G_title clear">
+                                <div class="S105_tipIco1  "></div>
+                                <p th:if="${bean1.HYLX =='ga'}" text="公安局">公安局</p>
+                                <p th:if="${bean1.HYLX =='jcy'}" text="检察院">检察院</p>
+                                <p th:if="${bean1.HYLX =='fy'}" text="法院">法院</p>
+                                <span th:text="${bean1.HYBM}">苏州市吴江区检察院</span>
+                            </div>
+                        </div>
+
+                        <div class="S105G_content ">
+                            <div class="S105G_promoter">
+                                <div>
+                                    <p>承办人:</p><span th:text="${bean1.CZR}">王二 </span>
+                                </div>
+                                <div>
+                                    <p>接收时间:</p><span th:text="${#dates.format(bean1.JSRQ, 'yyyy/MM/dd')}">2018/11/21</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+        <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+        <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+
+      <div class="S105_btnCoat1">
+            <div class="E105_saveBtnCoat clear">
+                <div class="S105_saveBtn fl cursor" th:data-rybh="${bean.RYBH}"  th:onclick="saveKsry(this.getAttribute('data-rybh'))"><p>保存</p></div>
+                <div class="S105_saveBtn fl cursor jq_E105_cannel"  ><p>取消</p></div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+</form>
+
+</body>
+<script>
+    $("#BH").focus()
+    var contextPath = getContextPath();
+  layui.use('laydate', function () {
+      var laydate = layui.laydate;
+// 点我触发
+      laydate.render({
+          elem: '#CSRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#RSSJ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#DBRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#JLRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#JYRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#CSSJ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#SDRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#HYRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#CLSJ',
+          trigger: 'click',
+          format: 'yyyy-MM-dd HH:mm:ss'
+      });
+      laydate.render({
+          elem: '#XQKSRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#XQJZRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#SSRQ',
+          trigger: 'click'
+      });
+      laydate.render({
+          elem: '#ZXRQ',
+          trigger: 'click',
+          format: 'yyyy-MM-dd HH:mm:ss'
+      });
+      laydate.render({
+          elem: '#HXXQ',
+          trigger: 'click'
+      });
+  });
+
+    var dataformInit = $("#form").serializeArray();
+    var jsonTextInit = JSON.stringify({ dataform: dataformInit });
+    $('.jq_E105_cannel').on('click', function (event) {
+        var dataform = $("#form").serializeArray();
+        var jsonTextSubmit = JSON.stringify({ dataform: dataform });
+        jq_E105_cannelClickEvent(jsonTextInit,jsonTextSubmit);
+    });
+
+    $('.S105_caseBtn1').on('click', function (event) {
+        <!--查看换押和人员基本信息的查询参数-->
+        var searchCondition = $('#searchCondition').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+
+        <!-- 以下四个参数为换押统计的查询参数-->
+        var czbm = $('#czbm').val();
+        var hybm = $(" #hybm").val();
+        var qsrq = $(" #qsrq").val();
+        var jsrq = $(" #jsrq").val();
+
+        var layContent = $(this).attr('data-content');
+        var layHref = $(this).attr('lay-href');
+        layHref = layHref + '&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo
+            +'&czbm='+czbm+'&hybm='+hybm+'&qsrq='+qsrq+'&jsrq='+jsrq;
+        var layFrom = $(this).attr('data-from');
+
+        var dataform = $("#form").serializeArray();
+        var jsonTextSubmit = JSON.stringify({ dataform: dataform });
+        S105_caseBtn1ClickEvent(layContent,layHref,layFrom,jsonTextInit,jsonTextSubmit);
+    });
+
+  saveKsry = function (rybh){
+      var data = {
+          RYBH: "input NotNull", XM: "input NotNull"
+      };
+      var flag = V_CHECK(data);
+      if (!flag) {
+          return;
+      }
+      $.ajax({
+          url: contextPath + '/Ksry/saveKsry',
+          type:"post",
+          data:$("#form").serialize(),
+          dataType:"json",
+          success: function (result) {
+              if (result.code == 200) {
+                  layer.alert(result.message, function (index) {
+                      layer.close(layer.index);
+                      parent.$('.src_iframeleft').attr('src', result.nextUrl+"&rybh="+rybh);
+                  });
+
+              } else {
+                  layer.alert(result.message);
+                  return;
+              }
+          },
+          error: function () {
+              alert("error");
+              $('.src_iframeleft').attr('src', result.nextUrl+"?rybh="+rybh);
+          }
+      })
+      return false;
+  }
+
+  layui.use(['layer'], function () {
+      var layer = layui.layer;
+  })
+
+
+</script>
+</html>

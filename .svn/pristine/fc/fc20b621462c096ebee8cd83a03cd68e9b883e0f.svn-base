@@ -1,0 +1,157 @@
+package util;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import java.io.*;
+import java.util.Date;
+
+/**
+ * @ClassName ImageUtil
+ * @Description  图片处理工具类
+ * @Author wnagdk
+ * @Date 2018/12/2913:23
+ * @Version 1.0
+ **/
+public class ImageUtil {
+
+    public static long size = 0;
+    //图片转化成base64字符串
+    public static String GetImageStr(String imgFile)
+    {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+        InputStream in = null;
+        byte[] data = null;
+        //读取图片字节数组
+        try
+        {
+            in = new FileInputStream(imgFile);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        //对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encode(data);//返回Base64编码过的字节数组字符串
+    }
+
+    //base64字符串转化成图片
+    public static boolean GenerateImage(String base64str,String savepath)
+    {   //对字节数组字符串进行Base64解码并生成图片
+        if (base64str == null) //图像数据为空
+            return false;
+        // System.out.println("开始解码");
+        BASE64Decoder decoder = new BASE64Decoder();
+        try
+        {
+            //Base64解码
+            byte[] b = decoder.decodeBuffer(base64str);
+            //  System.out.println("解码完成");
+            for(int i=0;i<b.length;++i)
+            {
+                if(b[i]<0)
+                {//调整异常数据
+                    b[i]+=256;
+                }
+            }
+            //System.out.println("开始生成图片");
+            //生成jpeg图片
+            OutputStream out = new FileOutputStream(savepath);
+            out.write(b);
+            out.flush();
+            out.close();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    // 递归方式 计算文件的大小
+    public static long getTotalSizeOfFilesInDir(final File file) {
+        if (file.isFile())
+            return file.length();
+        final File[] children = file.listFiles();
+        long total = 0;
+        if (children != null)
+            for (final File child : children)
+                total += getTotalSizeOfFilesInDir(child);
+        return total;
+    }
+
+
+    public static void main(String[] args) {
+
+//        String content =  GetImageStr("F:/test.jpg");
+//
+//        String baseUrl = "F://";
+//        String tempUrl = "F://temp/";
+//        String zipBaseUrl = "F://zip/";
+//        String fileUrl =  baseUrl + DateUtil.parseDateToStr(new Date(),DateUtil.DATE_FORMAT_YYYY_MM_DD);
+//
+//        System.out.println(">>>>> " + fileUrl);
+//
+//
+//        //创建临时文件夹，计算图片的大小
+//        File fileTemp = new File(tempUrl);
+//        if(!fileTemp.exists()){
+//            fileTemp.mkdirs();
+//        }
+//
+//        GenerateImage(content,tempUrl+ "imageid_big.jpg");
+//        GenerateImage(content,tempUrl+ "imageid_small.jpg");
+//
+//        long picSize = getTotalSizeOfFilesInDir(fileTemp);
+//
+//        System.out.println("需要保存的图片大小>>>> " + picSize);
+//
+//        //清空临时文件
+//        FileUtils.delfile(fileTemp.getPath());
+//
+//        //创建父类文件夹
+//        File fileParent = new File(fileUrl);
+//        if(!fileParent.exists()){
+//            fileParent.mkdirs();
+//        }
+//
+//        if(fileParent.listFiles().length == 0){
+//
+//            Integer fileName = fileParent.listFiles().length+1;
+//            File fileChilden = new File(fileUrl+"/"+ fileName);
+//            if(!fileChilden.exists()){
+//                fileChilden.mkdirs();
+//            }
+//
+//        }else{
+//
+//            //与当前图片合计不超过50M，否则重新生成文件夹
+//            long totalSize = getTotalSizeOfFilesInDir(fileParent.listFiles()[fileParent.listFiles().length-1]) + picSize;
+//            System.out.println("totalSize >>>" + totalSize);
+//
+//            if(totalSize >= (1*1024*1024)){
+//                Integer fileName = fileParent.listFiles().length+1;
+//                File fileChilden = new File(fileUrl+"/"+ fileName);
+//                if(!fileChilden.exists()){
+//                    fileChilden.mkdirs();
+//                }
+//            }
+//        }
+//        System.out.println("文件夹个数 length >>> " +fileParent.listFiles().length);
+//        System.out.println("文件夹个数 length >>> " +(fileParent.listFiles().length-1));
+//        System.out.println("fileParent.getPath() >>> " +fileParent.getPath()+"\\"+fileParent.listFiles().length);
+//
+//        //获取可以存放的文件夹
+//        String path = fileParent.getPath()+"\\"+fileParent.listFiles().length;
+//        GenerateImage(content,path+ "\\test-1281.jpg");
+//        GenerateImage(content,path+ "\\test-1241.jpg");
+//
+    }
+
+
+
+
+}

@@ -1,0 +1,188 @@
+package com.netmarch.fdfs.system.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.Page;
+import com.netmarch.fdfs.common.utils.common.FdfsUtil;
+import com.netmarch.fdfs.system.bean.Ajdzjzml;
+import com.netmarch.fdfs.system.bean.Ajjbxx;
+import com.netmarch.fdfs.system.service.AjdzjzmlService;
+import com.netmarch.fdfs.system.service.AjjbxxService;
+import com.netmarch.fdfs.system.service.SysDictService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.*;
+
+/**
+ * @ClassName: ArchiveController
+ * @Desc:
+ * @Author: gdy
+ * @Date: 2019/5/9
+ */
+@Controller
+@Slf4j
+@RequestMapping("/archive")
+public class ArchiveController {
+
+    @Autowired
+    private SysDictService sysDictService;
+
+    @Autowired
+    private AjdzjzmlService ajdzjzmlService;
+
+    @Autowired
+    private AjjbxxService ajjbxxService;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @RequestMapping("/caseManage")
+    public String caseManage(HttpServletRequest request,Model model){
+        Integer pageNo = null == request.getParameter("pageNo") ? 1 : Integer.valueOf(request.getParameter("pageNo"));
+//        Page<Map<String,Object>> caseList = ajjbxxService.getAllCase(pageNo);
+        Page<Ajjbxx> caseList = ajjbxxService.getAllCase(pageNo);
+        model.addAttribute("list", caseList);
+//        log.info("》》》》》》》》" + caseList);
+        return "/caseManage";
+    }
+
+    @PostMapping("/updateZtree")
+    @ResponseBody
+    public int updateZtree(HttpServletRequest request){
+        int orderby = Integer.parseInt(request.getParameter("orderby"));
+        //String parentid = null == request.getParameter("parentid")?"":request.getParameter("parentid");
+        String filename = request.getParameter("name");
+        return ajdzjzmlService.updateZtree(orderby,filename);
+    }
+
+    @PostMapping("/deleteZtree")
+    @ResponseBody
+    public int deleteZtree(HttpServletRequest request){
+        int orderby = Integer.parseInt(request.getParameter("orderby"));
+//        String parentid = null == request.getParameter("parentid")?"":request.getParameter("parentid");
+        return ajdzjzmlService.deleteZtree(orderby);
+    }
+
+    @RequestMapping("/grandpa")
+    public String grandpa(){
+        return "/grandpa";
+    }
+
+    @RequestMapping("/third_artificial")
+    public String third_artificial(){
+        return "/third_artificial";
+    }
+
+    @RequestMapping("/artificial_left")
+    public String artificial_left(Model model){
+        List<String> dictList = sysDictService.selectDzjzmlByDict(); // 默认目录
+        model.addAttribute("dictList", dictList);
+        model.addAttribute("treeList", getZtree());
+        return "/third_artificial/artificial_left";
+    }
+
+    @PostMapping ("/flushLeft")
+    @ResponseBody
+    public Object flushLeft(){
+        return getZtree();
+    }
+
+    @RequestMapping("/artificial_right")
+    public String artificial_right(){
+        return "/third_artificial/artificial_right";
+    }
+
+    @RequestMapping("/artificial_right1")
+    public String artificial_right1(){
+        return "/third_artificial/artificial_right1";
+    }
+
+    @PostMapping ("/uploadJzFiles")
+    @ResponseBody
+    public Object uploadJzFiles(@RequestParam("file") MultipartFile file, @RequestParam("treeId") String treeId) throws IOException {
+        int wjOrderby = 1;
+        List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent(treeId);
+        if(null != mlList && mlList.size() > 0){
+            wjOrderby = mlList.size() + 1;
+        }
+        wjOrderby = Integer.parseInt(treeId + wjOrderby);
+        List<String> pathList = new ArrayList<>();
+        //判断file数组不能为空并且长度大于0
+//        if(files!=null&&files.length>0){
+//            //循环获取file数组中得文件
+//            for(int i = 0;i<files.length;i++){
+//                MultipartFile file = files[i];
+        //文件初始名称
+        String filename = file.getOriginalFilename();
+        //保存文件
+//        String path = fileUtil.uploadFile(file);
+        String path = "";
+        int count = ajdzjzmlService.insertWj(path,filename,wjOrderby,treeId);
+        log.info(wjOrderby + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + filename);
+        pathList.add(path);
+        log.info(">>>>>>>>>>>>>>>>>>" + path);
+//            }
+//        }
+        return count; //JSONArray.toJSONString(pathList)
+    }
+
+    /**
+     *
+     * @Desc: 获取zTree
+     * @Date: 2019/5/21
+     */
+    private Object getZtree(){
+        List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent("-1");
+        List<Map<String,Object>> treeList = new ArrayList<>();
+        if(mlList.size() > 0){
+            for(int i = 0;i < mlList.size();i++){
+                setZtree(mlList,treeList,i);
+                String lastTree = ajdzjzmlService.selectLastTreeByParent(mlList.get(i).getOrderby().toString());
+                int l = lastTree.length() - 1;
+                String parentid = mlList.get(i).getOrderby().toString();
+                while(l > 0){
+                    parentid = treeChild(treeList,parentid);
+                    l--;
+                }
+            }
+        }
+        return JSONArray.toJSONString(treeList);
+    }
+
+    /**
+     *
+     * @Desc: zTree根据parentid获取下面子集
+     * @param treeList
+     * @param parentid
+     * @return parentid
+     * @Date: 2019/5/21
+     */
+    private String treeChild(List<Map<String,Object>> treeList,String parentid){
+        List<Ajdzjzml> mlList0 = ajdzjzmlService.selectDzjzmlByParent(parentid);
+        if (mlList0.size() > 0) {
+            for(int j = 0;j < mlList0.size();j++){
+                setZtree(mlList0,treeList,j);
+                parentid = mlList0.get(j).getOrderby().toString();
+            }
+        }
+        return parentid;
+    }
+
+    /**
+     * @Desc: zTree赋值
+     * @Date: 2019/5/21
+     */
+    private void setZtree(List<Ajdzjzml> mlList,List<Map<String,Object>> treeList,int n){
+        Map<String,Object> treeMap = new HashMap<>();
+        treeMap.put("id",mlList.get(n).getOrderby());
+        treeMap.put("pId","-1" == mlList.get(n).getParentid() ? 0 : mlList.get(n).getParentid());
+        treeMap.put("name",mlList.get(n).getTypename());
+        treeList.add(treeMap);
+    }
+}

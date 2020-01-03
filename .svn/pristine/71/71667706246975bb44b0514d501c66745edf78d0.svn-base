@@ -1,0 +1,132 @@
+package com.netmarch.wshy.system.controller;
+
+import com.github.pagehelper.Page;
+import com.netmarch.wshy.common.controller.FrontBaseController;
+import com.netmarch.wshy.common.utils.UsersUtil;
+import com.netmarch.wshy.system.bean.Hyxxb;
+import com.netmarch.wshy.system.bean.LoginUser;
+import com.netmarch.wshy.system.service.GjajjbqkService;
+import com.netmarch.wshy.system.service.HytjService;
+import com.netmarch.wshy.system.service.HyxxbService;
+import com.netmarch.wshy.system.service.KsryService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/*
+换押统计
+ */
+@Controller
+@RequestMapping("/Hytj/*")
+@Slf4j
+public class HytjController extends FrontBaseController{
+
+    @Autowired
+    HttpServletRequest request;
+
+    @Autowired
+    HttpServletResponse response;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Autowired
+    UsersUtil usersUtil;
+
+
+    @Autowired
+    private KsryService ksryService;
+
+    @Autowired
+    private HyxxbService hyxxbService;
+
+    @Autowired
+    private GjajjbqkService gjajjbqkService;
+
+    @Autowired
+    private HytjService hytjService;
+
+    /**
+     * 加载左边导航栏及列表
+     */
+    @RequestMapping("/navigationBarHytjList")
+    public String navigationBarHytjList(Model model,String qsrq,String jsrq){
+
+        String user_Id=usersUtil.getLoginUser_Id();
+
+        LoginUser loginUser=usersUtil.getUserById(user_Id);
+        String areaCode=loginUser.getAreaCode();
+        String area=loginUser.getArea();
+        model.addAttribute("area", area);
+        model.addAttribute("areaCode", areaCode);
+        String pageNo= request.getParameter("pageNo");
+
+        if(pageNo==null) {
+            pageNo = "";
+        }
+        if(qsrq==null) {
+            qsrq="";
+        }
+        if(jsrq==null) {
+            jsrq="";
+        }
+
+        //以下参数为换押统计的查询参数
+        model.addAttribute("qsrq", qsrq);
+        model.addAttribute("jsrq", jsrq);
+
+        model.addAttribute("pageNo", pageNo);
+        return "system/navigationBarHytjList";
+    }
+
+    /**
+     *  /ksrylist：人员基本信息列表 ，/tableList:table表刷新
+     */
+    @RequestMapping(value = { "/hytjlist", "/tableList"})
+    public String ksrylist(Hyxxb hyxxb,String qsrq,String jsrq, Model model){
+        String user_Id="",requestURI="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            LoginUser loginUser=usersUtil.getUserById(user_Id);
+            String area_code=loginUser.getAreaCode();
+            hyxxb.setAREA_CODE(area_code);
+            if(qsrq == null || qsrq.equals("")){
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                qsrq=sdf.format(new Date());
+            }
+            if(jsrq == null || jsrq.equals("")){
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                jsrq=sdf.format(new Date());
+            }
+
+            Page<Hyxxb> hytjList = hytjService.getHytjListPage(hyxxb,qsrq,jsrq);
+
+            int hytjCount = hytjService.getHytjCount(area_code,qsrq,jsrq);
+
+            model.addAttribute("list", hytjList);
+            model.addAttribute("hytjCount", hytjCount);
+            model.addAttribute("qsrq", qsrq);
+            model.addAttribute("jsrq", jsrq);
+
+            log(user_Id,"换押统计列表","获取"+ qsrq +"至"+ jsrq +"的换押信息列表","网上换押管理系统(检察院换押管理)",false);
+            requestURI=request.getRequestURI();
+        } catch (Exception e) {
+            log(user_Id,"换押统计列表",e.toString(),"网上换押管理系统(检察院换押管理)",true);
+            e.printStackTrace();
+        }
+        if(requestURI.equals("/wshygl-jcy/Hytj/tableList")){
+            return "hytj/list::table_refresh";
+        }
+        return "hytj/list";
+    }
+
+}

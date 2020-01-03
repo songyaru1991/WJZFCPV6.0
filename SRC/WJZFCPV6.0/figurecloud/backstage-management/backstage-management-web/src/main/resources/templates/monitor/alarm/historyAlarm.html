@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/monitor/alarm/list.js'"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" >
+    <div class="I106_page">
+        <!--头部s-->
+        <div th:replace="common/top::top"></div>
+        <!--头部e-->
+        <!--内容s-->
+        <div class="I106_content">
+            <div class="I106_container clear">
+                <div class="I106_contentTop clear">
+                    <div class="I106_title">
+                        <span>历史报警</span>
+                        <img th:src="${application.basePath}+'/images/arrowDown2.png'" alt="">
+                    </div>
+                    <div class="I106_searchOuter">
+                        <div class="I106_search clear">
+                            <select class="layui-select" name="alarmType">
+                                <option value="">报警类型</option>
+                                <option th:each="dict:${alarm_type}" th:text="${dict.name}" th:value="${dict.code}" th:selected="${alarmModel.alarmType==dict.code}"></option>
+                            </select>
+                            <input class="layui-input" name="startTime" id="startTime" placeholder="开始时间" th:value="${alarmModel.startTime}">
+                            <input class="layui-input" name="stopTime"  id="stopTime" placeholder="结束时间" th:value="${alarmModel.stopTime}">
+                            <input class="layui-input" name="location" placeholder="点位">
+                            <select class="layui-select" name="taskId">
+                                <option value="">布控任务</option>
+                                <option th:each="task:${taskList}" th:text="${task.name}" th:value="${task.id}" th:selected="${task.id==alarmModel.taskId}"></option>
+                            </select>
+                            <input class="layui-input" name="keyword" placeholder="姓名/身份证" th:value="${alarmModel.keyword}">
+                        </div>
+                        <div class="I106_searchRight">
+                            <div class="I106_searchButton" id="listDiv" onclick="javascript:$('#form').submit();">搜索</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="I106_contentRight">
+                    <div class="I106_tabelOuter">
+                        <table class="layui-table I106_table"  lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                            <thead>
+                            <tr>
+
+                                <th lay-data="{field:'1'}">序号</th>
+                                <th lay-data="{field:'2'}">报警类型</th>
+                                <th lay-data="{field:'3'}">人员姓名</th>
+                                <th lay-data="{field:'4',width:200}">人员身份证号</th>
+                                <th lay-data="{field:'5'}">url</th>
+                                <th lay-data="{field:'6'}">报警地点</th>
+                                <th lay-data="{field:'7',width:200}">报警时间</th>
+                                <th lay-data="{field:'8'}">布控任务</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="alarm,alarmStat:${list}">
+                                <td th:text="${alarmStat.count+(list.pageNum-1)*list.pageSize}"></td>
+                                <td th:text="${alarm.alarmTypeName}"></td>
+                                <td th:text="${alarm.personName}"></td>
+                                <td th:text="${alarm.personIdCard}"></td>
+                                <td th:text="${alarm.url}"></td>
+                                <td th:text="${alarm.cameraName}"></td>
+                                <td th:text="${#dates.format(alarm.alarmTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${alarm.taskName}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--分页引用-->
+                    <div th:replace="common/pages::pages"></div>
+
+                </div>
+                <!--listTableEdit_列表内容表编辑 Start-->
+                <div class="I108_listTableEdit">
+
+                </div>
+                <!--listTableEdit_列表内容表编辑 End-->
+            </div>
+        </div>
+        <!--内容e-->
+        <div th:replace="common/bottom::bottom"></div>
+    </div>
+</form>
+
+</body>
+</html>

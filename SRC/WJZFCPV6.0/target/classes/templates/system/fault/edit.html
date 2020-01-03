@@ -1,0 +1,104 @@
+<!--
+ * Author: wsp
+ * CreatDate: 2019-02-18
+ *
+ -->
+<!DOCTYPE html>
+<html id="html" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人像平台管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/css/style.css'">
+    <script th:src="${application.basePath}+'/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/js/main.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/web/system/fault/edit.js'"></script>
+</head>
+<body>
+<div>
+    <form class="layui-form" th:object="${fault}">
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <!--<input type="hidden" name="_method" value="PUT">-->
+                    <input type="hidden" name="id" th:value="${fault.id}">
+                    <tr>
+                        <td class="T106_itemName T106_must">引擎厂商</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-select" name="engineVendor" id="engineVendor"  placeholder="请选择引擎厂商">
+                                <option value="">请选择引擎厂商</option>
+                                <option th:each="vendor : ${engine_vendor}" th:value="${vendor.code}"
+                                        th:selected="${vendor.code == fault.engineVendor}"
+                                        th:text="${vendor.name}">引擎厂商
+                                </option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName T106_must">故障等级</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-select" name="faultLevel" id="faultLevel"  placeholder="请选择故障等级">
+                                <option value="">请选择故障等级</option>
+                                <option th:each="level : ${fault_level}" th:value="${level.code}"
+                                        th:selected="${level.code == fault.faultLevel}"
+                                        th:text="${level.name}">故障等级
+                                </option>
+                            </select>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">故障发生时间</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="faultTime" id="faultTime" placeholder="请选择故障发生时间" th:value="${#dates.format(fault.faultTime,'yyyy-MM-dd hh:mm:ss')}"/>
+                        </td>
+                        <td class="T106_itemName T106_must">故障响应时间</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="faultReplyTime" id="faultReplyTime" th:value="${#dates.format(fault.faultReplyTime,'yyyy-MM-dd hh:mm:ss')}" placeholder="请选择故障响应时间"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">故障处理时间</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="faultSolveTime" id="faultSolveTime" th:value="${#dates.format(fault.faultSolveTime,'yyyy-MM-dd hh:mm:ss')}" placeholder="请输入故障处理时间"/>
+                        </td>
+                        <td class="T106_itemName T106_must">故障恢复时间</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="faultRecoverTime" id="faultRecoverTime" th:value="${#dates.format(fault.faultRecoverTime,'yyyy-MM-dd hh:mm:ss')}" placeholder="请输入故障恢复时间"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName">故障描述</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="faultDescription" th:value="*{faultDescription}" placeholder="请输入故障描述" id="faultDescription" type="text" value="" maxlength="20">
+                        </td>
+                        <td class="T106_itemName">故障处理人</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="faultSolver" th:value="*{faultSolver}" placeholder="请输入故障处理人" id="faultSolver" type="text" value="" maxlength="20">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="T106_itemName">故障处理详情</td>
+                        <td colspan="5">
+                            <textarea class="layui-textarea" name="faultSolveRecord" th:value="*{faultSolveRecord}" placeholder="请输入故障处理详情" id="faultSolveRecord" type="text" maxlength="20"></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="customer.edit()">确定</div>
+            <div class="A106_button A106_button2" onclick="customer.cancel()">取消</div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

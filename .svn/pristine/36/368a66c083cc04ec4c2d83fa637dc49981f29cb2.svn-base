@@ -1,0 +1,24 @@
+package util.web;
+
+import org.apache.commons.lang3.StringUtils;
+
+public class TokenUtil {
+    public static String HEADER_PREFIX = "Bearer ";
+    public static final String ACCESS_TOKEN     = "X-Authorization";
+    public static final String REFRESH_TOKEN     = "X-Refresh-Token";
+    public static final boolean isJwtToken(String token){
+        if (!StringUtils.isEmpty(token)){
+            int index = token.indexOf(".");
+            return  index<token.length()-1 && index>0;
+        }
+        return false;
+    }
+    public static final boolean isJwtTokenWithBearer(String token){
+        return !StringUtils.isEmpty(token)
+                && token.startsWith(HEADER_PREFIX)
+                && token.indexOf(".") != -1;
+    }
+    public static String cutBearer(String token){
+        return token.startsWith(HEADER_PREFIX)?token.replaceFirst(HEADER_PREFIX,""):token;
+    }
+}

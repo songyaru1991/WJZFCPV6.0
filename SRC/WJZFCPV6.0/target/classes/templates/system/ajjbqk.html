@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_All">
+    <!--头部s-->
+    <div class="H105_top">
+        <div class="H105_title fl">
+            <p>涉案财物管理系统</p>
+        </div>
+        <div class="H105_dateCoat fr">
+            <div class="H105_date fl">
+                <span class="H105_dateTime"></span>
+            </div>
+            <img th:src="${application.basePath}+'/static/images/H105_badge.png'" alt="" class="H105_badge fl">
+            <div class="H105_name fl">
+                <span>屈臣元</span>
+            </div>
+            <img th:src="${application.basePath}+'/static/images/H105_setting.png'" alt="" class="H105_setting fl">
+        </div>
+
+        <div class="H105_labelCoat">
+            <img th:src="${application.basePath}+'/static/images/H105_type.png'" alt="" class="H105_type fl">
+            <div class="H105_label  fl">
+                <span>首页</span>
+                <img th:src="${application.basePath}+'/static/images/H105_x1.png'" alt="" class="H105_close">
+            </div>
+            <div class="H105_label H105_label2 fl">
+                <span>案件管理</span>
+                <img th:src="${application.basePath}+'/static/images/H105_x1.png'" alt="" class="H105_close">
+            </div>
+            <div class="H105_label  fl">
+                <span>xxxx</span>
+                <img th:src="${application.basePath}+'/static/images/H105_x1.png'" alt="" class="H105_close">
+            </div>
+        </div>
+    </div>
+    <div th:replace="system/navigationBar::navigationBar"></div>
+ <!--   <div th:replace="ajjbqk/sacwDetails::sacwDetails"></div>-->
+</div>
+</body>
+</html>

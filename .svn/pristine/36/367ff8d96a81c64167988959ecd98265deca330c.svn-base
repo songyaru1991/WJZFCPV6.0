@@ -1,0 +1,25 @@
+package com.netmarch.fdfs.system.service;
+
+import com.netmarch.fdfs.system.bean.Ajdzjzml;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface AjdzjzmlService {
+    int updateZtree(String ajbs,int orderby,String filename,String parentid);
+
+    List<Ajdzjzml> selectDzjzmlByParent(String ajbs,String parentId);
+
+    int deleteZtree(String ajbs,String orderby,String parentid);
+
+    int insertWj(String ajbs,String path, String filename, String treeId);
+
+    int deleteFileByMlid(String wjid,String filePath);
+
+    List<String> selectAllParentids(String ajbs);
+
+    int addZnMl(String ajbs,String typename, int orderby, int pageFrom, int pageTo);
+
+    Ajdzjzml selectIdByOrderby(Integer orderby,String ajbs);
+}

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                <p>嫌疑人信息</p>
+            </div>
+        </div>
+        <div class="S105_chakan clear">
+            <div class="C105_filled fl">
+                <div class="S105_baseInfo">
+                    <div class="S105_info  ">
+                        <div class="S105_tipIco"></div>
+                        <p>人员基本信息</p>
+                    </div>
+
+                </div>
+                <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table">
+                            <tr>
+                                <td class="C105_odd E105_bianhao2 ">
+                                    <p >人员编号</p><span class="E105_star">*</span>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.RYBH}">人员编号 </p>
+                                </td>
+                                <td class=" C105_odd E105_bianhao2">
+                                    <p>嫌疑人姓名</p><span class="E105_star">*</span>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.XM}">人员编号 </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>编号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.BH}">人员编号 </p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>番号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.FH}">盗窃案</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>别名</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.BM}">盗窃案</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>出生日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.CSRQ}">南明区公安局</p>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>性别</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.XB}">性别 </p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>管教员</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.GJY}">管教员 </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>监室编号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.JSBH}">是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>监室号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.JSH}">是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>入所时间</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.RSSJ}">2018-10-28 13:25:02 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>入所原因</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.RSYY}">18</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>当前诉讼阶段</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.DQSSJD}">公安局</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>当前办案单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.DQBADW}">公安局</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>处理结果</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p th:text="${bean.CLJG}">处理结果结果处理结果结果处理结果结果处理结果结果处理结果结果处理结果结果处理结果结果处理结果结果处理结果结果
+                                        处理结果结果</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>刑期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.XQ}">12个月</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>实际关押天数</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.SJGYTS}">实际关押天数 </p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>婚姻状况</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.HYZK}">未婚</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>专长</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.ZC}">专长 </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>国籍</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.GJ}">中国</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>民族</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.MZ}">高中</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>文化程度</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.WHCD}">高中</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="S105_baseInfo">
+                    <div class="S105_info  ">
+                        <div class="S105_tipIco"></div>
+                        <p>嫌疑人补填信息</p>
+                    </div>
+
+                </div>
+                <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table">
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件类别</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.AJLB}">李思+4+4+4</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>当前单位类型</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.DQDWLX}">李思+4+4+4</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>户籍所在地</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.HJSZD}">男</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>户籍详细地址</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.HJXXDZ}">男</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>职业</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.ZY}">李思+4+4+4</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>指纹编号</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.ZWBH}">李思+4+4+4</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>现住址区划</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.XZZQH}">李思+4+4+4</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>现居住地详细地址</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.XZZXXDZ}">李思+4+4+4</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>工作单位</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.GZDW}">李思</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>政治面貌</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZZMM}">李思</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>证件类型</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZJLX}">李思</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>证件号码</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZJHM}">李思</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>籍贯</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.JG}">李思</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>身份</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.SF}">李思</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>特殊身份</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.TSSF}">李思</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>职务</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZW}">李思</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>关押期限</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.GYQX}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>逮捕日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.DBRQ}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>拘留日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.JLRQ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>羁押日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.JYRQ}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>收押凭证</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.SYPZ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>转来单位</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZLDW}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>送押单位</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.SYDW}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>送押人</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.SYR}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>违法犯罪经历</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.WFFZJL}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>成员类别</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.CYLB}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>出所日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.CSRQ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>出所原因</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.CSYY}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>出所去向</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.CSQX}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>收到日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.SDRQ}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>换押日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.HYRQ}">无 </p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>处理时间</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.CLSJ}">无 </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>办案人</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.BAR}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>办案人电话</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.BARDH}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>刑期开始日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.XQKSRQ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>刑期截止日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.XQJZRQ}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>附加处理</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.FJCL}">无</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>附加刑期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.FJXQ}">无 </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>上诉日期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.SSRQ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>执行日期</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZXRQ}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>缓刑刑期</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.HXXQ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>罚金金额</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.FJJE}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>审判长</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.SPZ}">无 </p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>重刑犯</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.ZXF}">无</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=" C105_odd">
+                                    <p>档案号</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${bean.DAH}">李思</p>
+                                </td>
+                                <td class="C105_odd ">
+                                    <p>危险等级</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${bean.WXDJ}">无 </p>
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="C105_notFill fr">
+                <div class="C105_info  ">
+                    <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt="" class="C105_tipIco">
+                    <p>案件基本信息</p>
+                </div>
+                <!--框-->
+                <div class="S105_base">
+                    <table class="S105_caseTable">
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>案件编号</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.AJBH}">CH1564556+4+4+4</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>案件名称</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.AJMC}">李三冬盗窃案</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>涉案人员</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajSary}">张三 、李思、王权、仝仁</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>当前进度阶段</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.AJZT}">公安局-报捕案件</p>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td class="S105_odd1 ">
+                                <p>承办人</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p th:text="${ajjbqk.GACBR}">承办人</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="S105_odd1 ">
+                                <p>合计耗时</p>
+                            </td>
+                            <td class=" C105_even">
+                                <p>15天</p>
+                            </td>
+                        </tr>-->
+                    </table>
+                    <div  th:if="${ajjbqk.AJBH !='' && ajjbqk.AJBH !=null}"  class="S105_caseBtn" th:lay-href="'/wshygl-jcy/Jshy/ajjbqklist?ajbh='+${ajjbqk.AJBH}+'&xyrbh='+${bean.RYBH}" data-content="案件详情" data-from="view">
+                        <p>案件详情</p>
+                    </div>
+                </div>
+
+                <div class="S105_info2 ">
+                    <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt="" class="C105_tipIco">
+                    <p>换押记录</p>
+                </div>
+                <!--框-->
+                <div class="S105_base1  " th:each="bean,beanStat : ${hyxxbList}" >
+                    <!--块-->
+                    <div class="S105_gongan  ">
+                        <div class="S105G_titleCoat">
+                            <div class="S105G_title clear">
+                                <div class="S105_tipIco1  "></div>
+                                <p th:if="${bean.HYLX =='ga'}" text="公安局">公安局</p>
+                                <p th:if="${bean.HYLX =='jcy'}" text="检察院">检察院</p>
+                                <p th:if="${bean.HYLX =='fy'}" text="法院">法院</p>
+                                <span th:text="${bean.HYBM}">苏州市吴江区检察院</span>
+                            </div>
+                        </div>
+
+                        <div class="S105G_content ">
+                            <div class="S105G_promoter">
+                                <div>
+                                    <p>承办人:</p><span th:text="${bean.CZR}">王二 </span>
+                                </div>
+                                <div>
+                                    <p>接收时间:</p><span th:text="${#dates.format(bean.JSRQ, 'yyyy/MM/dd')}">2018/11/21</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--查看换押和人员基本信息的查询参数-->
+        <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+        <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+        <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+
+        <!-- 以下参数为换押统计的查询参数-->
+        <input type="hidden" name="qsrq" id="qsrq" th:value="${qsrq}"/>
+        <input type="hidden" name="jsrq" id="jsrq" th:value="${jsrq}"/>
+        <input type="hidden" name="isShowAll" id="isShowAll" th:value="${isShowAll}"/>
+
+        <div class="S105_btnCoat1">
+            <div class="E105_saveBtnCoat clear">
+                <div class="S105_saveBtn fl cursor jq_E105_cannel2"><p>返回</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+<script>
+
+  layui.use('laydate', function () {
+      var laydate = layui.laydate;
+
+// 点我触发
+      laydate.render({
+          elem: '#Q105P_refereeing1',
+          trigger: 'click'
+      });
+  });
+
+  layui.use(['layer'], function () {
+      var layer = layui.layer;
+  })
+
+
+
+</script>
+</html>

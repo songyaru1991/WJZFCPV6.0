@@ -1,0 +1,36 @@
+package com.netmarch.sso.loginsystem.model;
+
+import com.netmarch.sso.loginsystem.bean.PagesStatic;
+
+import java.io.Serializable;
+
+/**
+ * @ClassName AccessQuery
+ * @Description TODO
+ * @Author ZGD
+ * @Date 2019/2/1414:48
+ * @Version 1.0
+ **/
+public class AccessQuery extends PagesStatic implements Serializable {
+
+
+    public String accessNo;
+
+    public String accessName;
+
+    public String getAccessNo() {
+        return accessNo;
+    }
+
+    public void setAccessNo(String accessNo) {
+        this.accessNo = accessNo;
+    }
+
+    public String getAccessName() {
+        return accessName;
+    }
+
+    public void setAccessName(String accessName) {
+        this.accessName = accessName;
+    }
+}

@@ -1,0 +1,3 @@
+2019-08-28 16:54:26.767 default [pollingConfigurationSource] DEBUG c.n.config.AbstractPollingScheduler - Polling started
+2019-08-28 16:54:27.865 default [Thread-120] DEBUG o.s.boot.devtools.restart.Restarter - Created RestartClassLoader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@402fddd4
+2019-08-28 16:54:27.873 default [Thread-120] DEBUG o.s.boot.devtools.restart.Restarter - Starting application com.netmarch.sso.SsologinsystemApplication with URLs [file:/D:/Project/WJZFCPV6.0/SRC/WJZFCPV6.0/uums/uums-service/target/classes/, file:/D:/Project/WJZFCPV6.0/SRC/WJZFCPV6.0/uums/uums-exposure/target/classes/, file:/D:/Project/WJZFCPV6.0/SRC/WJZFCPV6.0/util/target/classes/, file:/D:/Project/WJZFCPV6.0/SRC/WJZFCPV6.0/uums/uums-web/target/classes/]

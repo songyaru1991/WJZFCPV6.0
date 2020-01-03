@@ -1,0 +1,92 @@
+spring:
+  mvc:
+    static-path-pattern: /statis/**
+  application:
+    name: jzzngd
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: http://172.16.1.144
+      port: 8501
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        hostname: ${spring.cloud.client.ip-address}
+        port: ${server.port}
+        healthCheckPath: /jzzngd/actuator/health
+      config:
+        enabled: true
+        format: YAML
+        profileSeparator: '::'
+        data-key: data
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      maxRequestSize: 500Mb
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+log:
+  level: info
+  path: /logs
+
+  cache:
+    type: redis
+
+#Tomcat
+server:
+  port: 8088
+  servlet:
+    context-path: /jzzngd
+pagehelper:
+  reasonable: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+netmarch:
+  zuul-path: jzzngd
+  application-path: jzzngd
+
+
+redis:
+  host: 172.16.11.251
+  port: 6379
+  password: 123456
+  timeout: 2000
+  pool:
+    max-active: -1
+    max-idle: 10
+    max-wait: 100000
+  database: 0
+
+
+refreshTokenExpireTime: 1800
+
+uums:
+  url: http://172.16.11.251:8088/uums
+
+fdfs:
+  connect-timeout: 600
+  pool:
+    max-total: 200
+  resHost: 172.16.1.169
+  so-timeout: 1500
+  #  storagePort: 82
+  storagePort: 81
+  thumbImage:
+    height: 150
+    width: 150
+  trackerList: 172.16.1.169:22122
+#  trackerList: 192.168.19.128:22122
+
+#  ocrUrl: http://172.17.0.2:9997/

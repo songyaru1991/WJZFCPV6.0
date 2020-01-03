@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wshy.system.mapper.FzxxbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wshy.system.bean.Fzxxb">
+    <result column="FZ_CODE" jdbcType="VARCHAR" property="FZ_CODE" />
+    <result column="FZ_NAME" jdbcType="VARCHAR" property="FZ_NAME" />
+    <result column="AREA_CODES" jdbcType="VARCHAR" property="AREA_CODES" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="MSG_OP" />
+    <result column="MSG_STATUS" jdbcType="VARCHAR" property="MSG_STATUS" />
+  </resultMap>
+  <insert id="insert" parameterType="com.netmarch.wshy.system.bean.Fzxxb">
+    insert into fzxxb (FZ_CODE, FZ_NAME, AREA_CODES, 
+      MSG_OP, MSG_STATUS)
+    values (#{FZ_CODE,jdbcType=VARCHAR}, #{FZ_NAME,jdbcType=VARCHAR}, #{AREA_CODES,jdbcType=VARCHAR}, 
+      #{MSG_OP,jdbcType=INTEGER}, #{MSG_STATUS,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wshy.system.bean.Fzxxb">
+    insert into fzxxb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="FZ_CODE != null">
+        FZ_CODE,
+      </if>
+      <if test="FZ_NAME != null">
+        FZ_NAME,
+      </if>
+      <if test="AREA_CODES != null">
+        AREA_CODES,
+      </if>
+      <if test="MSG_OP != null">
+        MSG_OP,
+      </if>
+      <if test="MSG_STATUS != null">
+        MSG_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="FZ_CODE != null">
+        #{FZ_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="FZ_NAME != null">
+        #{FZ_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="AREA_CODES != null">
+        #{AREA_CODES,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_OP != null">
+        #{MSG_OP,jdbcType=INTEGER},
+      </if>
+      <if test="MSG_STATUS != null">
+        #{MSG_STATUS,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getFzxxByareaCode"  parameterType="String" resultType="com.netmarch.wshy.system.bean.Fzxxb">
+    select  FZ_CODE, FZ_NAME, AREA_CODES,
+      MSG_OP, MSG_STATUS   from fzxxb where area_codes like CONCAT('%',#{areaCode,jdbcType=VARCHAR},'%')
+  </select>
+
+</mapper>

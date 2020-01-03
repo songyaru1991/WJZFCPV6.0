@@ -1,0 +1,14 @@
+package com.netmarch.figurecloud.management.system.service;
+
+import com.netmarch.figurecloud.management.system.bean.SysOrganization;
+
+import java.util.List;
+
+public interface SysOrganizationService {
+    List<SysOrganization> getAllUsedOrg();
+
+    SysOrganization getOrganizationById(Integer id);
+
+    List<SysOrganization> getOrganizationName();
+
+}

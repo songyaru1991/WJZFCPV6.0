@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>公安局--案件管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style_10.css'">
+    <script th:src="${application.basePath}+ '/static/js/jquery.min.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.admin.css'">
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui-select/initials.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui-select/pinyin.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+<style>
+    .layui-this{
+        background-color: #f1f3fa !important;
+        color: #8997ff !important;
+    }
+    .layui-this:after {
+        border-bottom: 2px solid #8997ff !important;
+    }
+    /*.layui-this{*/
+    /*    background-color: #8997ff;*/
+    /*    color: #ffffff !important;*/
+    /*    border-radius: 50px;*/
+    /*    border: none;*/
+    /*}*/
+    /*.layui-this:after {*/
+    /*    border: none;*/
+    /*}*/
+    /*.S505_tab-title>li:after{*/
+    /*    display: none;*/
+    /*}*/
+    /*.S505_tab-title{*/
+    /*    border: none;*/
+    /*    height: 1.6rem;*/
+    /*}*/
+    /*.S505_tab-title>li{*/
+    /*    height: 100%;*/
+    /*    line-height: 1.6rem;*/
+    /*}*/
+    .hide {
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="W105_wripper">
+    <div class="W105_subtitle clear">
+        <div class="W105_local fl">
+            <img src="../ajgl-gaj/static/images/H105_edit.png" alt="" class="W105_caseImg fl">
+            <p>刑事案件：案件信息</p>
+        </div>
+    </div>
+    <div class="S205_sysList" style="height: auto;">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title S505_tab-title">
+                <li class="layui-this">案件受理信息</li>
+                <li>案件分析信息</li>
+                <li>立丶销丶移案信息</li>
+                <li>破案信息</li>
+            </ul>
+            <div class="layui-tab-content"  >
+                <div class="layui-tab-item layui-show">
+                    <form class="layui-form">
+                        <div class="T110_tableFloor">
+                            <table class="E105_table">
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件类别:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="ajlb" name="ajlb" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="ajlb-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="ajlb:${ajlbList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${ajlb.bh}" th:mc="${ajlb.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件名称:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verify="required" lay-verType="tips"
+                                                   placeholder="必填项">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件副案别:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="ajfab" name="ajfab" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="ajfab-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="ajfab:${ajfabList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${ajfab.code}" th:mc="${ajfab.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件来源:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="ajly" name="ajly" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="ajly-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="ajly:${ajlyList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${ajly.code}" th:mc="${ajly.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>直属案件:</p>
+                                        </div>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="zsaj" value="1" title="是">
+                                            <input type="radio" name="zsaj" value="0" title="否">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>督办级别:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="dajb" name="dajb" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="dajb-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="dajb:${dajbList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${dajb.code}" th:mc="${dajb.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件状态:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_gdy fl layui-inline">
+                                            <select id="ajzt" name="ajzt" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                            <!--                                            <input type="text" class="layui-input" lay-verType="tips">-->
+                                        </div>
+                                        <ul id="ajzt-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="ajzt:${ajztList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${ajzt.code}" th:mc="${ajzt.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <div class="E105_bianhao E105_bianhao_gdy_select fl clear">
+                                            <p>密级:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_gdy fl layui-inline">
+                                            <select id="mj" name="mj" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="mj-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="mj:${mjList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${mj.code}" th:mc="${mj.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>是否专案:</p>
+                                        </div>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="sfza" value="1" title="是"  >
+                                            <input type="radio" name="sfza" value="0" title="否">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受理方式:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="slfs" name="slfs" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="slfs-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="slfs:${slfsList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${slfs.code}" th:mc="${slfs.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>姓名:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_gdy fl">
+                                            <input type="text" style="width: 8em;" class="layui-input" lay-verType="tips">
+                                        </div>
+                                        <div class="E105_bianhao E105_bianhao_gdy_select fl clear">
+                                            <p>性别:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_gdy fl layui-inline">
+                                            <select id="xb" name="xb" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="xb-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="xb:${xbList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${xb.code}" th:mc="${xb.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>出生日期:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="csrq" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="csrq1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>证件种类:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="zjzl" name="zjzl" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="zjzl-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="zjzl:${zjzlList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${zjzl.code}" th:mc="${zjzl.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>联系方式:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>住址:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>证件号码:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>保密级别:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="bmjb" name="bmjb" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="bmjb-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="bmjb:${bmjbList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${bmjb.code}" th:mc="${bmjb.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>是否勘察:</p>
+                                        </div>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="sfkc" value="1" title="是"  >
+                                            <input type="radio" name="sfkc" value="0" title="否">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>报案时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="basj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="basj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发案时间上限:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="fasjsx" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="fasjsx1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>是否有现场:</p>
+                                        </div>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="sfyxc" value="1" title="是"  >
+                                            <input type="radio" name="sfyxc" value="0" title="否">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发现时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="fxsj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="fxsj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发案时间下限:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="fasjxx" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="fasjxx1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>涉案总价值:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="number" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发案地址:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>所属责任区:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受伤人数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>死亡人数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>经济损失:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="number">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受理时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="slsj" class="layui-input" autocomplete="off" lay-verify="required" lay-verType="tips"
+                                                   placeholder="必填项">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="slsj1" class="R110_calendar_gdy" >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受理单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受理人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受理单位电话:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verify="phone" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>主办单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>主办人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>协办人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>主办人电话:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verify="phone" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>登记人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>登记时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="djsj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="djsj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>修改人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>修改时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="xgsj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="xgsj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verify="required" lay-verType="tips"
+                                                   placeholder="必填项">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>分类案件编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>转案件编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="E105_bianhao1 fl clear">
+                                            <p>简要案件:</p>
+                                        </div>
+                                        <div class="T110_textarea fl">
+                                            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="S105_btnCoat1 ">
+                            <div class="T110_saveBtnCoat clear">
+                                <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">保存</button>
+                                <button class="layui-btn fl">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form">
+                        <div class="T110_tableFloor">
+                            <table class="E105_table">
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>督办编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>案件性质:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="ajxz" name="ajxz" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="ajxz-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="ajxz:${ajxzList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${ajxz.code}" th:mc="${ajxz.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>可防性案件类别:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="kfxajlb" name="kfxajlb" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="kfxajlb-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="kfxajlb:${kfxajlbList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${kfxajlb.code}" th:mc="${kfxajlb.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>本区串案编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>跨区串案编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>跨市串案编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>涉外案件侵害类别:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="swajqhlb" name="swajqhlb" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="swajqhlb-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="swajqhlb:${swajqhlbList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${swajqhlb.code}" th:mc="${swajqhlb.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>管辖分工:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="gxfg" name="gxfg" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="gxfg-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="gxfg:${gxfgList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${gxfg.code}" th:mc="${gxfg.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>线索编号:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>危害程度:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="whcd" name="whcd" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="whcd-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="whcd:${whcdList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${whcd.code}" th:mc="${whcd.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发案地域:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="fady" name="fady" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="fady-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="fady:${fadyList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${fady.code}" th:mc="${fady.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发案处所:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="facs" name="facs" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="facs-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="facs:${facsList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${facs.code}" th:mc="${facs.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>发案部位:</p>
+                                        </div>
+                                        <div class="T110_input fl layui-inline">
+                                            <select id="fabw" name="fabw" lay-filter="filter" lay-search="">
+
+                                            </select>
+                                        </div>
+                                        <ul id="fabw-menu" class="nav hide">
+                                            <li class="active">
+                                                <ul class="nav nav-second-level collapse in" th:each="fabw:${fabwList}" aria-expanded="true" style="">
+                                                    <li><span th:bh="${fabw.code}" th:mc="${fabw.mc}"></span></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>等级单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>登记人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="S105_btnCoat1 ">
+                            <div class="T110_saveBtnCoat clear">
+                                <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">保存</button>
+                                <button class="layui-btn fl">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form">
+                        <div class="T110_tableFloor">
+                            <table class="E105_table">
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>立案单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>立案时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="lasj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="lasj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>立案批准人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>补立原因:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>撤销单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>撤销日期:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="cxrq" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="cxrq1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>撤销批准人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>撤销原因:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>移送单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>移送时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="yssj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="yssj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>移送人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>移送人电话:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verify="phone" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="E105_bianhao1 E105_bianhao1_gdy fl clear">
+                                            <p>移送原因:</p>
+                                        </div>
+                                        <div class="T110_textarea_gdy fl">
+                                            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>接收单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>接收时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="jssj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="jssj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>接收人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>接收人电话:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verify="phone" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="S105_btnCoat1 ">
+                            <div class="T110_saveBtnCoat clear">
+                                <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">保存</button>
+                                <button class="layui-btn fl">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form">
+                        <div class="T110_tableFloor">
+                            <table class="E105_table">
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>破案日期:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="parq" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="parq1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>破案方式:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>破案单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>破案类型:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>犯罪主体类型:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>协破单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>批准时间:</p>
+                                        </div>
+                                        <div class="T110_input T110_input_time fl">
+                                            <input type="text" id="pzsj" class="layui-input" autocomplete="off">
+                                            <img src="../ajgl-gaj/static/images/E105_date.png" alt="" id="pzsj1" class="R110_calendar_gdy">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>批准人:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>批准单位:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>涉案总价值:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="number" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>经济损失:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="number" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>挽回总价值:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="number" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>缴获总价值:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="number" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>作案人数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>受伤人数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>死亡人数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>解救儿童数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>解救妇女数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                    <td class="clear T110_itemList_gdy">
+                                        <div class="E105_bianhao fl clear">
+                                            <p>解救人质数:</p>
+                                        </div>
+                                        <div class="T110_input fl">
+                                            <input type="text" class="layui-input" value="0" lay-verify="operationCount" lay-verType="tips">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="E105_bianhao1 E105_bianhao1_gdy fl clear">
+                                            <p>破案情况:</p>
+                                        </div>
+                                        <div class="T110_textarea_gdy fl">
+                                            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="S105_btnCoat1 ">
+                            <div class="T110_saveBtnCoat clear">
+                                <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">保存</button>
+                                <button class="layui-btn fl">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    //Demo
+    layui.use(['table','layer','form','laydate','element'], function() {
+        var laydate = layui.laydate;
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+
+// 点我触发
+        laydate.render({
+            elem: '#csrq',
+            eventElem: '#csrq1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#basj',
+            eventElem: '#basj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#fasjsx',
+            eventElem: '#fasjsx1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#fasjxx',
+            eventElem: '#fasjxx1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#fxsj',
+            eventElem: '#fxsj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#slsj',
+            eventElem: '#slsj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#djsj',
+            eventElem: '#djsj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#xgsj',
+            eventElem: '#xgsj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#lasj',
+            eventElem: '#lasj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#cxrq',
+            eventElem: '#cxrq1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#yssj',
+            eventElem: '#yssj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#jssj',
+            eventElem: '#jssj1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#parq',
+            eventElem: '#parq1',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#pzsj',
+            eventElem: '#pzsj1',
+            trigger: 'click'
+        });
+
+    })
+
+    $(function () {
+        ajlbMenu(); // 案件类别
+    })
+
+    // 创建所有菜单元素
+    function ajlbMenu() {
+        var allMenu = $("#ajlb-menu>li>ul>li>span");
+        var html = '';
+        allMenu.each(function(i,n){
+            if(i === 0) html += '<option value="" placeholder="请输入关键词搜索">请输入关键词搜索</option>';
+            html += '<option value="'+$(this).attr('bh')+'">'+$(this).attr('mc')+'</option>';
+        })
+        $("#ajlb").html(html);
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+package com.netmarch.figurecloud.gateway.filters;
+
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.exception.ZuulException;
+import com.netmarch.figurecloud.auth.exposure.feign.AuthClient;
+import com.netmarch.figurecloud.gateway.contants.FilterOrderConstants;
+import com.netmarch.figurecloud.gateway.util.FilterUtils;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import util.web.TokenUtil;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
+/** 
+* @Description: CookiePostFilter 刷新cookie里的access token
+* @Author: fengxiang
+* @Date: 2019/2/21 9:01
+*/ 
+@Component
+@Log4j2
+public class CookiePostFilter  extends ZuulFilter {
+    public static final String GLOBAL_PATH="/";
+    @Autowired
+    AuthClient authClient;
+    @Autowired
+    FilterUtils filterUtils;
+    @Override
+    public String filterType() {
+        return FilterOrderConstants.POST_FILTER_TYPE;
+    }
+
+    @Override
+    public int filterOrder() {
+        return FilterOrderConstants.COOKIE_POST;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return FilterUtils.isBrowser() && !filterUtils.isSkipRequest() && FilterUtils.isResponseOk();
+    }
+
+    @Override
+    public Object run() throws ZuulException {
+            HttpServletResponse response = FilterUtils.getResponse();
+            String refreshToken = FilterUtils.getBearerRefreshToken();
+            Map<String, Object> accessToken = authClient.refreshToken(refreshToken);
+            String token = accessToken.get("token")!=null?accessToken.get("token").toString():"";
+            if (TokenUtil.isJwtToken(token)){
+                Cookie cookie = new Cookie(TokenUtil.ACCESS_TOKEN,token);
+                cookie.setPath(GLOBAL_PATH);
+                cookie.setMaxAge(filterUtils.getExpireSeconds());
+                response.addCookie(cookie);
+                //延长refresh token存储时间
+                Cookie refreshTokenCookie = new Cookie(TokenUtil.REFRESH_TOKEN,TokenUtil.cutBearer(refreshToken));
+                refreshTokenCookie.setPath(GLOBAL_PATH);
+                refreshTokenCookie.setMaxAge(filterUtils.getExpireSeconds());
+                response.addCookie(refreshTokenCookie);
+            }
+        return null;
+    }
+}

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wshy.system.mapper.HyxxbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wshy.system.bean.Hyxxb">
+    <result column="JLBH" jdbcType="VARCHAR" property="JLBH" />
+    <result column="RYBH" jdbcType="VARCHAR" property="RYBH" />
+    <result column="WSWH" jdbcType="VARCHAR" property="WSWH" />
+    <result column="HYBM" jdbcType="VARCHAR" property="HYBM" />
+    <result column="HYRQ" jdbcType="TIMESTAMP" property="HYRQ" />
+    <result column="HYSJ" jdbcType="TIMESTAMP" property="HYSJ" />
+    <result column="HYYY" jdbcType="VARCHAR" property="HYYY" />
+    <result column="HYLX" jdbcType="VARCHAR" property="HYLX" />
+    <result column="HYZT" jdbcType="VARCHAR" property="HYZT" />
+    <result column="JSRQ" jdbcType="TIMESTAMP" property="JSRQ" />
+    <result column="YCLY" jdbcType="VARCHAR" property="YCLY" />
+    <result column="YCSJ" jdbcType="TIMESTAMP" property="YCSJ" />
+    <result column="JSR" jdbcType="VARCHAR" property="JSR" />
+    <result column="CZR" jdbcType="VARCHAR" property="CZR" />
+    <result column="CZBM" jdbcType="VARCHAR" property="CZBM" />
+    <result column="XQ" jdbcType="VARCHAR" property="XQ" />
+    <result column="GYQX" jdbcType="TIMESTAMP" property="GYQX" />
+    <result column="TAR" jdbcType="VARCHAR" property="TAR" />
+    <result column="MSG_ID" jdbcType="INTEGER" property="MSG_ID" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="MSG_STATUS_JCY" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="MSG_OP" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="MSG_DATE" />
+    <result column="MSG_STATUS_KSS" jdbcType="VARCHAR" property="MSG_STATUS_KSS" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="AREA_CODE" />
+    <result column="JSZT" jdbcType="VARCHAR" property="JSZT" />
+    <result column="YCZT" jdbcType="VARCHAR" property="YCZT" />
+    <result column="SBZT" jdbcType="VARCHAR" property="SBZT" />
+    <result column="AJBS" jdbcType="VARCHAR" property="AJBS" />
+    <result column="SFHY" jdbcType="VARCHAR" property="SFHY" />
+    <result column="SFTC" jdbcType="VARCHAR" property="SFTC" />
+  </resultMap>
+  <insert id="InsertHyxx" parameterType="com.netmarch.wshy.system.bean.Hyxxb">
+    insert into hyxxb (JLBH, RYBH, WSWH,
+      HYBM, HYRQ, HYSJ,
+      HYYY, HYLX, HYZT, JSRQ,
+      YCLY, YCSJ, JSR,
+      CZR, CZBM, XQ, GYQX,
+      TAR, MSG_ID, MSG_STATUS_JCY, MSG_STATUS_FY,
+      MSG_OP, MSG_DATE, MSG_STATUS_KSS,MSG_STATUS_GA,
+      AREA_CODE, JSZT, YCZT,
+      SBZT, AJBS,SFHY,SFTC)
+    values (#{JLBH,jdbcType=VARCHAR}, #{RYBH,jdbcType=VARCHAR}, #{WSWH,jdbcType=VARCHAR},
+      #{HYBM,jdbcType=VARCHAR}, #{HYRQ,jdbcType=TIMESTAMP}, sysdate(),
+      #{HYYY,jdbcType=VARCHAR}, #{HYLX,jdbcType=VARCHAR}, #{HYZT,jdbcType=VARCHAR}, #{JSRQ,jdbcType=TIMESTAMP},
+      #{YCLY,jdbcType=VARCHAR}, #{YCSJ,jdbcType=TIMESTAMP}, #{JSR,jdbcType=VARCHAR},
+      #{CZR,jdbcType=VARCHAR}, #{CZBM,jdbcType=VARCHAR}, #{XQ,jdbcType=VARCHAR}, #{GYQX,jdbcType=TIMESTAMP},
+      #{TAR,jdbcType=VARCHAR}, #{MSG_ID,jdbcType=INTEGER}, #{MSG_STATUS_JCY,jdbcType=VARCHAR}, #{MSG_STATUS_FY,jdbcType=VARCHAR},
+      #{MSG_OP,jdbcType=INTEGER}, sysdate(), #{MSG_STATUS_KSS,jdbcType=VARCHAR}, #{MSG_STATUS_GA,jdbcType=VARCHAR},
+      #{AREA_CODE,jdbcType=VARCHAR}, #{JSZT,jdbcType=VARCHAR}, #{YCZT,jdbcType=VARCHAR}, 
+      #{SBZT,jdbcType=VARCHAR}, #{AJBS,jdbcType=VARCHAR}, #{SFHY,jdbcType=VARCHAR}, #{SFTC,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wshy.system.bean.Hyxxb">
+    insert into hyxxb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="JLBH != null">
+        JLBH,
+      </if>
+      <if test="RYBH != null">
+        RYBH,
+      </if>
+      <if test="WSWH != null">
+        WSWH,
+      </if>
+      <if test="HYBM != null">
+        HYBM,
+      </if>
+      <if test="HYRQ != null">
+        HYRQ,
+      </if>
+      <if test="HYSJ != null">
+        HYSJ,
+      </if>
+      <if test="HYYY != null">
+        HYYY,
+      </if>
+      <if test="HYLX != null">
+        HYLX,
+      </if>
+      <if test="HYZT != null">
+        HYZT,
+      </if>
+      <if test="JSRQ != null">
+        JSRQ,
+      </if>
+      <if test="YCLY != null">
+        YCLY,
+      </if>
+      <if test="YCSJ != null">
+        YCSJ,
+      </if>
+      <if test="JSR != null">
+        JSR,
+      </if>
+      <if test="CZR != null">
+        CZR,
+      </if>
+      <if test="CZBM != null">
+        CZBM,
+      </if>
+      <if test="XQ != null">
+        XQ,
+      </if>
+      <if test="GYQX != null">
+        GYQX,
+      </if>
+      <if test="TAR != null">
+        TAR,
+      </if>
+      <if test="MSG_ID != null">
+        MSG_ID,
+      </if>
+      <if test="MSG_STATUS_JCY != null">
+        MSG_STATUS_JCY,
+      </if>
+      <if test="MSG_OP != null">
+        MSG_OP,
+      </if>
+      <if test="MSG_DATE != null">
+        MSG_DATE,
+      </if>
+      <if test="MSG_STATUS_KSS != null">
+        MSG_STATUS_KSS,
+      </if>
+      <if test="AREA_CODE != null">
+        AREA_CODE,
+      </if>
+      <if test="JSZT != null">
+        JSZT,
+      </if>
+      <if test="YCZT != null">
+        YCZT,
+      </if>
+      <if test="SBZT != null">
+        SBZT,
+      </if>
+      <if test="AJBS != null">
+        AJBS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="JLBH != null">
+        #{JLBH,jdbcType=VARCHAR},
+      </if>
+      <if test="RYBH != null">
+        #{RYBH,jdbcType=VARCHAR},
+      </if>
+      <if test="WSWH != null">
+        #{WSWH,jdbcType=VARCHAR},
+      </if>
+      <if test="HYBM != null">
+        #{HYBM,jdbcType=VARCHAR},
+      </if>
+      <if test="HYRQ != null">
+        #{HYRQ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="HYSJ != null">
+        #{HYSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="HYYY != null">
+        #{HYYY,jdbcType=VARCHAR},
+      </if>
+      <if test="HYLX != null">
+        #{HYLX,jdbcType=VARCHAR},
+      </if>
+      <if test="HYZT != null">
+        #{HYZT,jdbcType=VARCHAR},
+      </if>
+      <if test="JSRQ != null">
+        #{JSRQ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="YCLY != null">
+        #{YCLY,jdbcType=VARCHAR},
+      </if>
+      <if test="YCSJ != null">
+        #{YCSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="JSR != null">
+        #{JSR,jdbcType=VARCHAR},
+      </if>
+      <if test="CZR != null">
+        #{CZR,jdbcType=VARCHAR},
+      </if>
+      <if test="CZBM != null">
+        #{CZBM,jdbcType=VARCHAR},
+      </if>
+      <if test="XQ != null">
+        #{XQ,jdbcType=VARCHAR},
+      </if>
+      <if test="GYQX != null">
+        #{GYQX,jdbcType=TIMESTAMP},
+      </if>
+      <if test="TAR != null">
+        #{TAR,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_ID != null">
+        #{MSG_ID,jdbcType=INTEGER},
+      </if>
+      <if test="MSG_STATUS_JCY != null">
+        #{MSG_STATUS_JCY,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_OP != null">
+        #{MSG_OP,jdbcType=INTEGER},
+      </if>
+      <if test="MSG_DATE != null">
+        #{MSG_DATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="MSG_STATUS_KSS != null">
+        #{MSG_STATUS_KSS,jdbcType=VARCHAR},
+      </if>
+      <if test="AREA_CODE != null">
+        #{AREA_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="JSZT != null">
+        #{JSZT,jdbcType=VARCHAR},
+      </if>
+      <if test="YCZT != null">
+        #{YCZT,jdbcType=VARCHAR},
+      </if>
+      <if test="SBZT != null">
+        #{SBZT,jdbcType=VARCHAR},
+      </if>
+      <if test="AJBS != null">
+        #{AJBS,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getWshyListPage" parameterType="com.netmarch.wshy.system.bean.Query" resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select  a.JLBH,a.RYBH,a.XM,a.DQSSJD,a.XQ,a.HYSJ,a.GYQX,DATEDIFF(a.GYQX,now()) DAYNUM,a.YCZT,a.HYZT,a.AJLB,a.AJBS from (
+    select hy.JLBH,ks.RYBH,ks.XM,ks.DQSSJD,
+    case when hy.ycsj is null then hy.GYQX
+    when hy.gyqx>hy.ycsj then hy.gyqx else hy.ycsj end as GYQX,hy.YCZT,hy.HYSJ,hy.XQ,hy.HYZT,ks.AJLB,ks.AJBS from hyxxb hy LEFT JOIN ksryjbxx ks on hy.RYBH=ks.RYBH
+    where   hy.AREA_CODE like CONCAT('%',#{area_code,jdbcType=VARCHAR},'%') and hy.HYLX ='fy' and hy.HYZT='2' and hy.JSZT='Y'
+            and (hy.SFHY  <![CDATA[ <> ]]>  'Y' or hy.SFHY  = '' or hy.SFHY is null)
+    <if test="isSjUser != null and 'true'.toString() == isSjUser.toString()">
+      and hy.SBZT='Y'
+    </if>
+    ) a
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchHyXM"'>
+        where a.XM like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchHyBH"'>
+        where a.RYBH like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    ORDER BY  a.HYSJ DESC
+  </select>
+
+  <select id="getHyxxByRybh" parameterType="String"  resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select hy.JLBH,hy.RYBH,hy.WSWH,hy.HYBM,DATE_FORMAT(hy.HYRQ,'%Y-%m-%d %T') HYRQ,hy.HYSJ,hy.HYYY,hy.HYLX,hy.HYZT,hy.JSRQ,hy.YCLY,hy.YCSJ,hy.JSR,
+            hy.CZR,hy.CZBM,hy.XQ,hy.GYQX,hy.TAR,hy.MSG_ID,hy.MSG_STATUS_JCY,hy.MSG_OP,hy.MSG_DATE,hy.MSG_STATUS_KSS,hy.AREA_CODE,
+            hy.JSZT,hy.YCZT,hy.SBZT,hy.AJBS from
+            HYXXB hy inner join ksryjbxx jb on hy.rybh=jb.rybh where hy.rybh=#{RYBH}
+            and (hy.MSG_OP <![CDATA[ <> ]]> 3 or hy.MSG_OP='' or hy.MSG_OP is null) ORDER BY hy.HYSJ
+  </select>
+
+  <select id="getHyxxInfoByRybh" parameterType="String"  resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select hy.JLBH,hy.RYBH,hy.WSWH,hy.HYBM,DATE_FORMAT(hy.HYRQ,'%Y-%m-%d %T') HYRQ,hy.HYSJ,hy.HYYY,hy.HYLX,hy.HYZT,hy.JSRQ,hy.YCLY,hy.YCSJ,hy.JSR,
+            hy.CZR,hy.CZBM,hy.XQ,hy.GYQX,hy.TAR,hy.MSG_ID,hy.MSG_STATUS_JCY,hy.MSG_OP,hy.MSG_DATE,hy.MSG_STATUS_KSS,hy.AREA_CODE,
+            hy.JSZT,hy.YCZT,hy.SBZT,hy.AJBS from
+            HYXXB hy inner join ksryjbxx jb on hy.rybh=jb.rybh where hy.rybh=#{RYBH} and hy.hyzt=#{HYZT}
+            and (hy.MSG_OP <![CDATA[ <> ]]> 3 or hy.MSG_OP='' or hy.MSG_OP is null)
+  </select>
+
+  <select id="getHyxxByJlbh" parameterType="String"  resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select hy.JLBH,hy.RYBH,hy.WSWH,hy.HYBM,DATE_FORMAT(hy.HYRQ,'%Y-%m-%d %T') HYRQ,hy.HYSJ,hy.HYYY,hy.HYLX,hy.HYZT,hy.JSRQ,hy.YCLY,hy.YCSJ,hy.JSR,
+            hy.CZR,hy.CZBM,hy.XQ,hy.GYQX,hy.TAR,hy.MSG_ID,hy.MSG_STATUS_JCY,hy.MSG_OP,hy.MSG_DATE,hy.MSG_STATUS_KSS,hy.AREA_CODE,
+            hy.JSZT,hy.YCZT,hy.SBZT,hy.AJBS from
+            HYXXB hy where hy.JLBH=#{jlbh}
+  </select>
+
+  <select id="getJshyHyxxbListPage" parameterType="com.netmarch.wshy.system.model.Query" resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select hy.JLBH,hy.RYBH,hy.WSWH,hy.HYBM,hy.HYRQ,hy.HYSJ,hy.HYYY,hy.HYLX,hy.HYZT,hy.JSRQ,hy.YCLY,hy.YCSJ,hy.JSR,
+    hy.CZR,hy.CZBM,hy.XQ,hy.GYQX,hy.TAR,hy.MSG_ID,hy.MSG_STATUS_JCY,hy.MSG_OP,hy.MSG_DATE,hy.MSG_STATUS_KSS,hy.AREA_CODE,
+    hy.JSZT,hy.YCZT,hy.SBZT,hy.AJBS,ks.XM,ks.RSSJ,ks.RSYY,ks.AJLB from hyxxb hy JOIN ksryjbxx ks on hy.RYBH=ks.RYBH
+    where   hy.AREA_CODE=#{area_code,jdbcType=VARCHAR} and hy.HYLX= 'fy' and hy.hyzt='2' and hy.JSZT = 'N'
+            and (hy.MSG_OP <![CDATA[ <> ]]> 3 or hy.MSG_OP='' or hy.MSG_OP is null)
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchJshyXM"'>
+        and ks.XM like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchJshyBH"'>
+        and hy.RYBH like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    ORDER BY  hy.HYSJ DESC
+  </select>
+
+  <update id="saveJsHy" parameterType="com.netmarch.wshy.system.bean.Hyxxb">
+    update Hyxxb set JSRQ = #{JSRQ,jdbcType=DATE}, GYQX = #{GYQX,jdbcType=DATE},JSZT = #{JSZT,jdbcType=VARCHAR},
+            MSG_STATUS_JCY = #{MSG_STATUS_JCY,jdbcType=DATE},MSG_STATUS_KSS = #{MSG_STATUS_KSS,jdbcType=DATE}
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateYcHyxx" parameterType="com.netmarch.wshy.system.bean.Hyxxb">
+    update Hyxxb set YCZT = #{YCZT,jdbcType=VARCHAR}, YCLY = #{YCLY,jdbcType=VARCHAR},YCSJ = #{YCSJ,jdbcType=DATE},
+    MSG_STATUS_KSS = #{MSG_STATUS_KSS,jdbcType=VARCHAR},MSG_STATUS_JCY = #{MSG_STATUS_JCY,jdbcType=VARCHAR},MSG_OP=#{MSG_OP,jdbcType=INTEGER},
+    CZR  = #{CZR ,jdbcType=VARCHAR},CZBM= #{CZBM ,jdbcType=VARCHAR}
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updatePjHyxx" parameterType="com.netmarch.wshy.system.bean.Hyxxb">
+    update Hyxxb set XQ  = #{XQ ,jdbcType=VARCHAR}
+    where RYBH = #{RYBH,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getLshyjlHyxxListPage" parameterType="com.netmarch.wshy.system.bean.Query" resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select hy.JLBH,hy.RYBH,hy.WSWH,hy.HYBM,DATE_FORMAT(hy.HYRQ,'%Y-%m-%d') HYRQ,hy.HYSJ,hy.HYYY,hy.HYLX,hy.HYZT,hy.JSRQ,hy.YCLY,hy.YCSJ,hy.JSR,
+    hy.CZR,hy.CZBM,hy.XQ,hy.GYQX,hy.TAR,hy.MSG_ID,hy.MSG_STATUS_JCY,hy.MSG_OP,hy.MSG_DATE,hy.MSG_STATUS_KSS,hy.AREA_CODE,
+    hy.JSZT,hy.YCZT,hy.SBZT,hy.AJBS,ks.XM,ks.AJLB from hyxxb hy left JOIN ksryjbxx ks on hy.RYBH=ks.RYBH
+    where   hy.AREA_CODE=#{area_code,jdbcType=VARCHAR} and hylx <![CDATA[ <> ]]> 'fy' and hy.hyzt = '4'
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchHyXM"'>
+        and ks.XM like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchHyBH"'>
+        and hy.RYBH like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    ORDER BY  hy.HYSJ DESC
+  </select>
+
+  <select id="getHytjListPage" parameterType="String" resultType="com.netmarch.wshy.system.bean.Hyxxb">
+    select hy.CZBM,hy.HYBM,count(*) TJNUM  from hyxxb hy inner join KSRYJBXX ry on hy.rybh=ry.rybh
+    where  hy.AREA_CODE=#{area_code,jdbcType=VARCHAR} and hy.hylx <![CDATA[ <> ]]> 'fy' and hy.hyzt = '4'
+    and <![CDATA[ hy.HYRQ >=  STR_TO_DATE(#{qsrq,jdbcType=VARCHAR},"%Y-%m-%d") and
+     hy.HYRQ  <= STR_TO_DATE(#{jsrq,jdbcType=VARCHAR},"%Y-%m-%d") ]]>
+    GROUP BY CZBM,HYBM
+  </select>
+
+  <update id="updateHyHyxxb" parameterType="com.netmarch.wshy.system.bean.Hyxxb">
+    update Hyxxb set SFHY  = #{SFHY ,jdbcType=VARCHAR}
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

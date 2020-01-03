@@ -1,0 +1,64 @@
+package com.netmarch.gaj.common.utils;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.net.URLEncoder;
+
+/**
+ * 下载文件工具类：
+ * @Author: songyaru
+ * @Date: 2019/8/30 8:40
+ * @Version 1.0
+ */
+
+@Slf4j
+public class DownloadFileUtil {
+
+    public static final String separator = File.separator;
+
+    /**
+     * 下载样表
+     * @return 响应
+     */
+    public static ResponseEntity<byte[]> download(HttpServletRequest request,File file) {
+        ResponseEntity<byte[]> response = null;
+        try {
+            byte[] body = null;
+            //获取文件
+            InputStream is = new FileInputStream(file);
+            body = new byte[is.available()];
+            is.read(body);
+            HttpHeaders headers = new HttpHeaders();
+            String fileName = file.getName();
+            String finalFileName ="";
+            boolean isMSIE = HttpUtil.isMSBrowser(request);
+            if (isMSIE) {
+                //如果是IE浏览器，则用URLEncode解析
+                finalFileName  = URLEncoder.encode(fileName, "UTF-8");
+            } else {
+                //如果是谷歌、火狐则解析为ISO-8859-1
+                finalFileName  = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+            }
+            //设置文件类型
+            headers.add("Content-Disposition", "attachment; filename=\"" + finalFileName + "\"");//\" 解决Firefox下载英文+中文组合的文件名的问题
+            //设置Http状态码
+            HttpStatus statusCode = HttpStatus.OK;
+            //返回数据
+             response = new ResponseEntity<byte[]>(body, headers, statusCode);
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+            log.error("找不到指定的文件", e1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("获取不到文件流", e);
+        }
+        return response;
+    }
+
+}

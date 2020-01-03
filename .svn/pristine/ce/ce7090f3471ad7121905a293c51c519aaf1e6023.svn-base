@@ -1,0 +1,15 @@
+package com.netmarch.lssqyj.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.lssqyj.system.bean.Ajjbxx;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface AjjbxxService {
+    //    Page<Map<String, Object>> getAllCase(Integer pageNo);
+    Page<Ajjbxx> getAllCase(Integer pageNo,String searchField,String searchName);
+
+    Page<Ajjbxx> getCaseByAjbs(String ajbs);
+
+    String getCaseNameByCode(String code);
+}

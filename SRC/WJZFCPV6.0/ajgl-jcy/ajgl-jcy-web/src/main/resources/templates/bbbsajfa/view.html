@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style_10.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                <p th:text="${ajjbqk.ajmc}+'编辑'">编辑</p>
+            </div>
+
+            <div class="E105_checkCoat fr">
+
+                <div class="E105_check fl cursor E105_checkClick"
+                     data-name="查看"
+                     th:data-url="'../Bbbsajfa/toBbbsfaView?ajbs=' + ${ajjbqk.ajbs} +'&ajlx_bbbs='+${ajlx_bbbs}+'&ajlist='+${ajlist}"
+                     data-type="tabAdd" auth:check="BbbsfaView">
+                    <img th:src="${application.basePath}+'/static/images/H105_checkIco1.png'" alt="" class="E105_checkIco">
+                    <p>查看</p>
+                </div>
+                <div class="E105_check fl cursor" th:if="${ajlist == 'wfaj'}" data-name="编辑"
+                     th:data-url="'../Bbbsajfa/toBbbsfaEdit?ajbs=' + ${ajjbqk.ajbs}+'&ajlx_bbbs='+${ajlx_bbbs}+'&ajlist='+${ajlist}"
+                     data-type="tabAdd" auth:check="BbbsajfaEdit">
+                    <img th:src="${application.basePath}+'/static/images/H105_checkIco2.png'" alt="" class="E105_checkIco2">
+                    <p>编辑</p>
+                </div>
+
+                <div  th:if="${ajlist == 'wfaj'}"
+                     class="E105_check fl cursor" data-name="退回案件"
+                     th:data-url="'../Bbbsajfa/toAjfaThaj?ajbs=' + ${ajjbqk.ajbs}+'&ajlx_bbbs='+${ajlx_bbbs}+'&ajlist='+${ajlist}"
+                      data-type="tabAdd" auth:check="BbbsajfaTh">
+                    <img class="E105_checkIco2" th:src="${application.basePath}+'/static/images/H105_checkIco10.png'" alt="">
+                    <p>退回案件 </p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="C105_chakan clear">
+
+            <div class="C105_filled fl">
+                <div class="E105_baseInfo">
+                    <div class="C105_info  ">
+                        <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt="" class="C105_tipIco">
+                        <p>案件基本信息</p>
+                    </div>
+
+                </div>
+            <!--框-->
+                <div class="C105_tableCoat ">
+                    <div class="C105_tableBorder">
+                        <table class="C105_table">
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件编号：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.ajbh}">案件编号</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>案件名称：</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${ajjbqk.ajmc}">案件名称</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件类型：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.ajlx}">案件类型</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>移送时间：</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${#dates.format(ajjbqk.yssj, 'yyyy-MM-dd HH:mm:ss')}">移送时间</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案件类别：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.ajlb}">案件类别</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>移送单位：</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${ajjbqk.gaysdw}">移送单位</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>是否是重要案件：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfcbaj}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+
+                                <td class=" C105_odd">
+                                    <p>是否认罪轻案案件：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfrzqa}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>嫌疑人是否有未成年人：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.xyrsfwcnr}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>被害人是否有未成年人：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.bhrsfwcnr}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>嫌疑人是否有台湾人：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.xyrsftwr}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>被害人是否有台湾人：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.bhrsftwr}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>是否职务犯罪案件：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfzwfzaj}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>是否立案监督案件：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sflajdaj}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>是否督办案件:</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfdbaj}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>是否关注案件:</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfgzaj}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>是否专项活动：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfzxhd}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>专项活动名称：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.zxhdmc}">专项活动名称</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>是否监督行政执法机关移送案件：</p>
+                                </td>
+                                <td class=" C105_even" th:switch="${ajjbqk.sfjdxzjgysaj}">
+                                    <p th:case='0'>否</p>
+                                    <p th:case='1'>是</p>
+                                    <p th:case='N'>否</p>
+                                    <p th:case='Y'>是</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>移送案件的行政执法机关类别：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.ysajdxzjglb}">移送案件的行政执法机关类别</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>共同犯罪性质：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.gtfzxz}">共同犯罪性质</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>共同犯罪人数：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.gtfzrs}">共同犯罪人数</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>主案由：</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p th:text="${ajjbqk.tqay}">主案由</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>移送其他案由：</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p th:text="${ajjbqk.ysqtay}">移送其他案由</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>案情摘要：</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p th:text="${ajjbqk.aqzy}">案情摘要</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>附注：</p>
+                                </td>
+                                <td class=" C105_even" colspan="3">
+                                    <p th:text="${ajjbqk.fuzhu}">附注</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>公安文书文号：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p></p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>上报卷宗页数：</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${ajjbqk.pages}">上报卷宗页数</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>侦查机关：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.tqdwmc}">侦查机关</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>接收单位：</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${loginUser.area}">接收单位</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="C105_odd ">
+                                    <p>承办人：</p>
+                                </td>
+                                <td class=" C105_even">
+                                    <p th:text="${ajjbqk.cbrname}">承办人</p>
+                                </td>
+                                <td class=" C105_odd">
+                                    <p>办案单位：</p>
+                                </td>
+                                <td class="C105_even">
+                                    <p th:text="${ajjbqk.badwmc}">办案单位</p>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+                <div th:each="gjXyrqk,gjXyrqkStat : ${gjXyrqkList}">
+                    <div class="E105_baseInfo">
+                        <div class="C105_info  ">
+                            <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt=""
+                                 class="C105_tipIco">
+                            <p>嫌疑人基本信息</p>
+                        </div>
+
+                    </div>
+                    <!--框-->
+                    <div class="C105_tableCoat ">
+                        <div class="C105_tableBorder">
+                            <table class="C105_table">
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>嫌疑人姓名：</p>
+                                    </td>
+                                    <td class=" C105_even">
+                                        <p th:text="${gjXyrqk.xyrxm}">嫌疑人姓名</p>
+                                    </td>
+                                    <td class=" C105_odd">
+                                        <p>嫌疑人性别：</p>
+                                    </td>
+                                    <td class="C105_even">
+                                        <p th:text="${gjXyrqk.xyrxb}">嫌疑人性别</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>身份证号码</p>
+                                    </td>
+                                    <td class=" C105_even">
+                                        <p th:text="${gjXyrqk.sfzhm}">身份证号码</p>
+                                    </td>
+                                    <td class=" C105_odd">
+                                        <p>从事职业</p>
+                                    </td>
+                                    <td class="C105_even">
+                                        <p th:text="${gjXyrqk.xyrzy}">从事职业</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>强制措施种类</p>
+                                    </td>
+                                    <td class=" C105_even" th:switch="${gjXyrqk.qzcsdm}">
+                                        <p th:case='1'>拘传</p>
+                                        <p th:case='2'>保证人取保候审</p>
+                                        <p th:case='3'>保证金取保候审</p>
+                                        <p th:case='4'>监视居住</p>
+                                        <p th:case='5'>拘留</p>
+                                        <p th:case='6'>逮捕</p>
+                                    </td>
+                                    <td class=" C105_odd">
+                                        <p>嫌疑人编号</p>
+                                    </td>
+                                    <td class="C105_even">
+                                        <p th:text="${gjXyrqk.xyrbh}">嫌疑人编号</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>嫌疑人年龄</p>
+                                    </td>
+                                    <td class=" C105_even">
+                                        <p th:text="${gjXyrqk.nl}">嫌疑人年龄</p>
+                                    </td>
+                                    <td class=" C105_odd">
+                                        <p>当前住址</p>
+                                    </td>
+                                    <td class="C105_even">
+                                        <p th:text="${gjXyrqk.dqzz}">当前住址</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>政治面貌</p>
+                                    </td>
+                                    <td class=" C105_even">
+                                        <p th:text="${gjXyrqk.zzmm}">政治面貌</p>
+                                    </td>
+                                    <td class=" C105_odd">
+                                        <p>文化程度</p>
+                                    </td>
+                                    <td class="C105_even">
+                                        <p th:text="${gjXyrqk.whdm}">文化程度</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>户籍地：</p>
+                                    </td>
+                                    <td class=" C105_even" colspan="3">
+                                        <p th:text="${gjXyrqk.xyrhjd}">户籍地</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="C105_odd ">
+                                        <p>提请案由：</p>
+                                    </td>
+                                    <td class=" C105_even" colspan="3">
+                                        <p th:text="${gjXyrqk.xyrtqay}">提请案由</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="C105_notFill fr">
+
+                <div class="C105_info  ">
+                    <img th:src="${application.basePath}+'/static/images/E105_biaoqian.png'" alt="" class="C105_tipIco">
+                    <p>未填写部分</p>
+                </div>
+<!--框-->
+                <div class="C105_caseCoat">
+                        <div class="C105_base">
+
+                            <div class="C105_baseInfo">
+                                <div class="C105_subtitle clear">
+                                   <p>案件基本信息</p>
+                                    <div class="C105_arrowDown  "></div>
+                                </div>
+                                <ul class="C105_transfer" >
+                                    <li th:if="${ajjbqk.ajbh==null || ajjbqk.ajbh==''}">案件编号</li>
+                                    <li th:if="${ajjbqk.ajmc==null || ajjbqk.ajmc==''}">案件名称</li>
+                                    <li th:if="${ajjbqk.ajlx==null || ajjbqk.ajlx==''}">案件类型</li>
+                                    <li th:if="${ajjbqk.yssj==null || ajjbqk.yssj==''}">移送时间</li>
+                                    <li th:if="${ajjbqk.ajlb==null || ajjbqk.ajlb==''}">案件类别</li>
+                                    <li th:if="${ajjbqk.gaysdw==null || ajjbqk.gaysdw==''}">移送单位</li>
+                                    <li th:if="${ajjbqk.sfcbaj==null || ajjbqk.sfcbaj==''}">是否是重要案件</li>
+                                    <li th:if="${ajjbqk.sfrzqa==null || ajjbqk.sfrzqa==''}">是否认罪轻案案件</li>
+                                    <li th:if="${ajjbqk.xyrsfwcnr==null || ajjbqk.xyrsfwcnr==''}">嫌疑人是否有未成年人</li>
+                                    <li th:if="${ajjbqk.bhrsfwcnr==null || ajjbqk.bhrsfwcnr==''}">被害人是否有未成年人</li>
+                                    <li th:if="${ajjbqk.xyrsftwr==null || ajjbqk.xyrsftwr==''}">嫌疑人是否有台湾人</li>
+                                    <li th:if="${ajjbqk.bhrsftwr==null || ajjbqk.bhrsftwr==''}">被害人是否有台湾人</li>
+                                    <li th:if="${ajjbqk.sfzwfzaj==null || ajjbqk.sfzwfzaj==''}">是否职务犯罪案件</li>
+                                    <li th:if="${ajjbqk.sflajdaj==null || ajjbqk.sflajdaj==''}">是否立案监督案件</li>
+                                    <li th:if="${ajjbqk.sfdbaj==null || ajjbqk.sfdbaj==''}">是否督办案件</li>
+                                    <li th:if="${ajjbqk.sfgzaj==null || ajjbqk.sfgzaj==''}">是否关注案件</li>
+                                    <li th:if="${ajjbqk.sfzxhd==null || ajjbqk.sfzxhd==''}">是否专项活动</li>
+                                    <li th:if="${ajjbqk.zxhdmc==null || ajjbqk.zxhdmc==''}">专项活动名称</li>
+                                    <li th:if="${ajjbqk.sfjdxzjgysaj==null || ajjbqk.sfjdxzjgysaj==''}">是否监督行政执法机关移送案件</li>
+                                    <li th:if="${ajjbqk.ysajdxzjglb==null || ajjbqk.ysajdxzjglb==''}">移送案件的行政执法机关类别</li>
+                                    <li th:if="${ajjbqk.gtfzxz==null || ajjbqk.gtfzxz==''}">共同犯罪性质</li>
+                                    <li th:if="${ajjbqk.gtfzrs==null || ajjbqk.gtfzrs==''}">共同犯罪人数</li>
+                                    <li th:if="${ajjbqk.tqay==null || ajjbqk.tqay==''}">主案由</li>
+                                    <li th:if="${ajjbqk.ysqtay==null || ajjbqk.ysqtay==''}">移送其他案由</li>
+                                    <li th:if="${ajjbqk.aqzy==null || ajjbqk.aqzy==''}">案情摘要</li>
+                                    <li th:if="${ajjbqk.fuzhu==null || ajjbqk.fuzhu==''}">附注</li>
+                                    <li>公安文书文号</li>
+                                    <li th:if="${ajjbqk.pages==null || ajjbqk.pages==''}">上报卷宗页数</li>
+                                    <li th:if="${ajjbqk.tqdwmc==null || ajjbqk.tqdwmc==''}">侦查机关</li>
+                                    <li th:if="${loginUser.area==null || loginUser.area==''}">接收单位</li>
+                                    <li th:if="${ajjbqk.cbrname==null || ajjbqk.cbrname==''}">承办人</li>
+                                    <li th:if="${ajjbqk.badwmc==null || ajjbqk.badwmc==''}">办案单位</li>
+                                </ul>
+                            </div>
+                            <div class="C105_baseInfo" th:each="gjXyrqk,gjXyrqkStat : ${gjXyrqkList}">
+                                <div class="C105_subtitle clear">
+                                    <p>嫌疑人基本信息</p>
+                                    <div class="C105_arrowDown  "></div>
+
+                                </div>
+                                <ul class="C105_transfer" >
+                                    <li th:if="${gjXyrqk.xyrxm==null || gjXyrqk.xyrxm==''}">嫌疑人姓名</li>
+                                    <li th:if="${gjXyrqk.xyrxb==null || gjXyrqk.xyrxb==''}">嫌疑人性别</li>
+                                    <li th:if="${gjXyrqk.sfzhm==null || gjXyrqk.sfzhm==''}">身份证号码</li>
+                                    <li th:if="${gjXyrqk.xyrzy==null || gjXyrqk.xyrzy==''}">从事职业</li>
+                                    <li th:if="${gjXyrqk.qzcsdm==null || gjXyrqk.qzcsdm==''}">强制措施种类</li>
+                                    <li th:if="${gjXyrqk.xyrbh==null || gjXyrqk.xyrbh==''}">嫌疑人编号</li>
+                                    <li th:if="${gjXyrqk.nl==null || gjXyrqk.nl==''}">嫌疑人年龄</li>
+                                    <li th:if="${gjXyrqk.dqzz==null || gjXyrqk.dqzz==''}">当前住址</li>
+                                    <li th:if="${gjXyrqk.zzmm==null || gjXyrqk.zzmm==''}">政治面貌</li>
+                                    <li th:if="${gjXyrqk.whdm==null || gjXyrqk.whdm==''}">文化程度</li>
+                                    <li th:if="${gjXyrqk.xyrhjd==null || gjXyrqk.xyrhjd==''}">户籍地</li>
+                                    <li th:if="${gjXyrqk.xyrtqay==null || gjXyrqk.xyrtqay==''}">提请案由</li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+<script>
+  layui.use('laydate', function () {
+    var laydate = layui.laydate;
+// 点我触发
+    laydate.render({
+      elem: '#Q105P_refereeing1',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+  });
+</script>
+</html>

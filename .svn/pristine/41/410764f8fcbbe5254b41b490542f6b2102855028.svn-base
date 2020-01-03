@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-server-core/auth-server-core.iml" filepath="$PROJECT_DIR$/auth-server/auth-server-core/auth-server-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-server-exposure/auth-server-exposure.iml" filepath="$PROJECT_DIR$/auth-server/auth-server-exposure/auth-server-exposure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-server-parent.iml" filepath="$PROJECT_DIR$/auth-server/auth-server-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-server-web/auth-server-web.iml" filepath="$PROJECT_DIR$/auth-server/auth-server-web/auth-server-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth-server/auth-server-web/authserverweb.iml" filepath="$PROJECT_DIR$/auth-server/auth-server-web/authserverweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backstage-management/backstage-management.iml" filepath="$PROJECT_DIR$/backstage-management/backstage-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backstage-management/backstage-management-exposure/backstage-management-exposure.iml" filepath="$PROJECT_DIR$/backstage-management/backstage-management-exposure/backstage-management-exposure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backstage-management/backstage-management-service/backstage-management-service.iml" filepath="$PROJECT_DIR$/backstage-management/backstage-management-service/backstage-management-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uums-sso/uums-sso-service/backstage-management-service (1).iml" filepath="$PROJECT_DIR$/uums-sso/uums-sso-service/backstage-management-service (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/backstage-management/backstage-management-web/backstage-management-web.iml" filepath="$PROJECT_DIR$/backstage-management/backstage-management-web/backstage-management-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/figurecloud-parent.iml" filepath="$PROJECT_DIR$/figurecloud-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/starter-exposure/starter-exposure.iml" filepath="$PROJECT_DIR$/starter-exposure/starter-exposure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/starter-microservice/starter-microservice.iml" filepath="$PROJECT_DIR$/starter-microservice/starter-microservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/turbine/turbine.iml" filepath="$PROJECT_DIR$/turbine/turbine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uums/uums.iml" filepath="$PROJECT_DIR$/uums/uums.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uums/uums-exposure/uums-exposure.iml" filepath="$PROJECT_DIR$/uums/uums-exposure/uums-exposure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uums/uums-service/uums-service.iml" filepath="$PROJECT_DIR$/uums/uums-service/uums-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uums/uums-web/uums-web.iml" filepath="$PROJECT_DIR$/uums/uums-web/uums-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zuul/zuul.iml" filepath="$PROJECT_DIR$/zuul/zuul.iml" />
+    </modules>
+  </component>
+</project>

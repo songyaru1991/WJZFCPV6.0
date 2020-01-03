@@ -1,0 +1,28 @@
+package com.netmarch.jzzngd.common.utils;
+
+import java.util.ResourceBundle;
+
+public class PropertiesUtil {
+    public static String getUrl(){
+        ResourceBundle resource = ResourceBundle.getBundle("url");
+        return resource.getString("url");
+    }
+
+
+    public static String getPicPath(){
+        ResourceBundle resource = ResourceBundle.getBundle("url");
+        return resource.getString("picpath");
+    }
+
+
+    public static String getKeyPath(String name){
+        ResourceBundle resource = ResourceBundle.getBundle("url");
+        return resource.getString(name);
+    }
+
+//    public static void main(String[] args) {
+//        ResourceBundle resource = ResourceBundle.getBundle("url");//test为属性文件名，放在包com.mmq下，如果是放在src下，直接用test即可
+//        String key = resource.getString("apiKey");
+//        System.out.println(key);
+//    }
+}

@@ -1,0 +1,27 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.gaj.system.bean.Gj_xyrqk;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface Gj_xyrqkMapper {
+    int deleteByPrimaryKey(String XYRBS);
+
+    int insert(Gj_xyrqk record);
+
+    int insertSelective(Gj_xyrqk record);
+
+    Gj_xyrqk selectByPrimaryKey(String XYRBS);
+
+    int updateByPrimaryKeySelective(Gj_xyrqk record);
+
+    int updateByPrimaryKey(Gj_xyrqk record);
+
+    Page<Gj_xyrqk> getXyrqkList(@Param("areaCode") String areaCode,@Param("keyword")  String keyword);
+
+    Gj_xyrqk getXyrqkByXyrbh(String XYRBS);
+
+    List<String > getAjSaryByXyrbh(String xyrbh);
+}

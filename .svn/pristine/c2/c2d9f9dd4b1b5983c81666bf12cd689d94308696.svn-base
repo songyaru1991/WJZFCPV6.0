@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="auth-server-core" />
+        <module name="auth-server-exposure" />
+        <module name="auth-server-web" />
+        <module name="backstage-management-exposure" />
+        <module name="backstage-management-service" />
+        <module name="backstage-management-service (1)" />
+        <module name="backstage-management-web" />
+        <module name="turbine" />
+        <module name="util" />
+        <module name="uums-exposure" />
+        <module name="uums-service" />
+        <module name="uums-web" />
+        <module name="zuul" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="auth-server-core" target="1.8" />
+      <module name="auth-server-exposure" target="1.8" />
+      <module name="auth-server-parent" target="1.8" />
+      <module name="auth-server-web" target="1.8" />
+      <module name="backstage-management" target="1.8" />
+      <module name="backstage-management-exposure" target="1.8" />
+      <module name="backstage-management-service" target="1.8" />
+      <module name="backstage-management-web" target="1.8" />
+      <module name="figurecloud-parent" target="1.8" />
+      <module name="starter-exposure" target="1.8" />
+      <module name="starter-microservice" target="1.8" />
+      <module name="turbine" target="1.8" />
+      <module name="util" target="1.8" />
+      <module name="uums" target="1.8" />
+      <module name="uums-exposure" target="1.8" />
+      <module name="uums-service" target="1.8" />
+      <module name="uums-web" target="1.8" />
+      <module name="zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

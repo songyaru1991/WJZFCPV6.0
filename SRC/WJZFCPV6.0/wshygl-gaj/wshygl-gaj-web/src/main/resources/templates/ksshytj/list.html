@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+   <title>公安局--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>看守所换押管理：换押信息统计</p>
+            </div>
+
+            <div class="H105_searchCoat fr clear">
+                <div class="H305_send fl">
+                    <p>发送部门:</p>
+                </div>
+
+                <select id="czbm" name="czbm" class="H105_select fl">
+                    <option value="">所有部门</option>
+                    <option value="公安局" th:selected="${czbm=='公安局'}">公安局</option>
+                    <option value="法院" th:selected="${czbcm=='法院'}">法院</option>
+                    <option value="检察院" th:selected="${czbm=='检察院'}">检察院</option>
+                </select>
+
+                <div class="H305_send fl">
+                    <p>接收部门:</p>
+                </div>
+
+                <select id="hybm" name="hybm" class="H105_select fl">
+                    <option value="">所有部门</option>
+                    <option value="公安局" th:selected="${hybm=='公安局'}">公安局</option>
+                    <option value="法院" th:selected="${hybm=='法院'}">法院</option>
+                    <option value="检察院" th:selected="${hybm=='检察院'}">检察院</option>
+                </select>
+                <div class="H305_send fl">
+                    <p>起始日期:</p>
+                </div>
+                <div class="H305_searchCoat fl">
+                    <input  name="qsrq"
+                            type="text"
+                            id="qsrq"
+                            class="layui-input H305_search  "
+                            autocomplete="off" th:value="${qsrq}">
+                </div>
+
+                <div class="H305_send fl">
+                    <p>结束日期:</p>
+                </div>
+                <div class="H305_searchCoat fl" style="margin-right: 0.5em;">
+                    <input  name="jsrq"
+                            type="text"
+                            id="jsrq"
+                            class="layui-input H305_search  "
+                            autocomplete="off"  th:value="${jsrq}">
+                </div>
+
+               <!-- <input type="text" id="searchContent" name="searchContent" class="H105_search fl" th:value="${ksshyQuery.searchContent}">-->
+                <div class="H105_searchBtn fl " onclick="localRefresh()"  auth:check="kssHytj">统计</div>
+            </div>
+        </div>
+        <div id="table_refresh" th:fragment="table_refresh">
+            <div class="H105_sysList H105_sysList1">
+                <span class="font033">统计结果：</span><span class="font033"  th:text="${qsrq}"></span>
+                <span class="font033">至：</span><span  class="font033" th:text="${jsrq}"></span>
+                <span class="font033">，共换押</span><span class="font033" th:text="${kssHytjCount}"></span>
+                <span class="font033">次</span>
+            <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'1',width:70}">序号</th>
+                    <th lay-data="{field:'2'}">姓名</th>
+                    <th lay-data="{field:'3'}">发送部门</th>
+                    <th lay-data="{field:'4'}">换押日期</th>
+                    <th lay-data="{field:'5',width:200}">换押时间</th>
+                    <th lay-data="{field:'6'}">接收部门</th>
+                    <th lay-data="{field:'7'}">换押原因</th>
+                    <th lay-data="{field:'8'}">换押状态</th>
+                    <th lay-data="{field:'9',width:180}">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean,beanStat : ${list}">
+                    <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}" >
+                        序号
+                    </td>
+                    <td th:text="${bean.XM}">姓名</td>
+                    <td th:text="${bean.CZBM}">发送部门</td>
+                    <td th:text="${#dates.format(bean.HYRQ, 'yyyy-MM-dd')}">换押日期</td>
+                    <td th:text="${#dates.format(bean.HYSJ, 'yyyy-MM-dd HH:mm:ss')}">换押时间</td>
+                    <td th:text="${bean.HYBM}">接收部门</td>
+                    <td th:text="${bean.HYYY}">换押原因</td>
+                    <td>
+                        <div th:switch="${bean.HYZT}">
+                            <p th:case="1">公安局换押</p>
+                            <p th:case="2">检察院换押</p>
+                            <p th:case="3">检察院退查</p>
+                            <p th:case="4">法院换押</p>
+                    </div>
+                    </td>
+                    <td>
+                        <a th:href="${'javascript:toView('''+bean.RYBH+''')'}"  auth:check="kssHytjView">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/H105_checkIco1.png'"
+                                 alt="">
+                            <span>查看</span>
+                        </a>
+                        <a th:href="${'javascript:toHyWs('''+bean.AJBS+''')'}"  auth:check="hyWenshu">
+                            <img class="I108_imgNormal"
+                                 th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                 alt="">
+                            <span>换押文书</span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--分页引用-->
+            <div class="H105_pageCoat clear">
+                <div class="H105_first clear fl">
+                    本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                </div>
+                <div th:replace="common/pages::pages"></div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        function localRefresh() {
+            // 装载局部刷新返回的页面
+            var czbm = $('#czbm option:selected').val();
+            var hybm = $('#hybm option:selected').val();
+            var qsrq = $(" #qsrq").val();
+            var jsrq = $(" #jsrq").val();
+            var pageNo = $(" #pageNo").val();
+            var param = {"czbm": czbm, "hybm": hybm,"qsrq": qsrq,"jsrq": jsrq ,"pageNo": pageNo};
+            $("#table_refresh").load("../KssHytj/tableList", param, function () {
+                layui.use('table', function () {
+                    layui.table.init('demo', {
+                        limit: 12
+                    });
+                });
+            });
+        }
+        var contextPath = getContextPath();
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#qsrq',
+                trigger: 'click',
+                //value: new Date()
+            });
+            laydate.render({
+                elem: '#jsrq',
+                trigger: 'click',
+               // value: new Date()
+            });
+        });
+
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 12
+            });
+
+            table = layui.table;
+        })
+
+        function toView(rybh) {
+            var czbm = $('#czbm option:selected').val();
+            var hybm = $('#hybm option:selected').val();
+            var qsrq = $(" #qsrq").val();
+            var jsrq = $(" #jsrq").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '查看';
+            var layHref ='/wshygl-gaj/Ksry/toView?rybh=' + rybh+'&czbm='+czbm+'&hybm='+hybm+'&qsrq='+qsrq+'&jsrq='+jsrq+'&pageNo='+pageNo+'&modelType=ksshytj';
+            hyViewClickEvent(layContent,layHref);
+        }
+
+        var hywsPath=  [[${application.hywsPath}]];
+        function toHyWs(ajbs) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '换押文书';
+            ajbs = ajbs + 'abc'
+            var layHref = hywsPath +'&ajbs='+ajbs;
+            hyViewClickEvent(layContent,layHref);
+        }
+
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+package com.netmarch.fdfs.system.mapper;
+
+public interface GjxyrqkMapper {
+}

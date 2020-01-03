@@ -1,0 +1,29 @@
+package com.netmarch.figurecloud.management.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.figurecloud.management.system.bean.LoginUser;
+
+public interface LoginUserService {
+
+    Page<LoginUser> getUserList(LoginUser user, String keyword);
+
+    LoginUser getUserById(Integer id);
+
+    int editLoginUser(LoginUser loginUser);
+
+    int editUserRoleByUser(LoginUser loginUser);
+
+    int insertUserRole(LoginUser loginUser);
+
+    int addLoginUser(LoginUser loginUser);
+
+    int delBatch(String ids);
+
+    int delUserRoles(String ids);
+
+    int checkRepeatLoginName(LoginUser loginUser);
+
+    int checkRepeatPoliceNum(LoginUser loginUser);
+
+    String getUserRoleIdsByUserId(Integer id);
+}

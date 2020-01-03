@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+   <title>公安局--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/web/system/access/access.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" method="put"
+      th:action="${application.basePath}+'/resource/add'" >
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent">
+            <div class="T106_detailsTop">
+                <fieldset class="layui-elem-field layui-field-title" >
+                    <legend>基本信息</legend>
+                </fieldset>
+            </div>
+
+            <div class="T106_tableOuter">
+                <table class="T106_table T206_table">
+                    <tr>
+                        <input type="hidden" id="parentId" name="parentId" th:value="${pId}">
+                        <td class="T106_itemName T106_must">父节点</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" type="text" name="pName" id="pName"
+                                   th:value="${pName}" readonly>
+                        </td>
+                        <td class="T106_itemName T106_must">资源名称</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" type="text" name="name" id="name" >
+                        </td>
+                        <td class="T106_itemName T106_must">资源编码</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="code" id="code" type="text" >
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="T106_itemName T106_must">资源链接</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="url" id="url" type="text">
+                        </td>
+                        <td class="T106_itemName T106_must">资源类型</td>
+                        <td class="T106_itemValue">
+                            <select class="layui-input" name="type" id="type">
+                                <option value="0">请选择</option>
+                                <option value="1">主菜单</option>
+                                <option value="2">子菜单</option>
+                                <option value="3">按钮</option>
+                            </select>
+                        </td>
+                        <td class="T106_itemName">排序</td>
+                        <td class="T106_itemValue">
+                            <input class="layui-input" name="sortIndex" id="sortIndex" type="text">
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        <div class="A106_buttonOuter">
+            <div class="A106_button A106_button1" onclick="submit();">确定</div>
+            <div class="A106_button A106_button2" onclick="javascript:window.parent.layerclose();">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+<script th:inline="javascript">
+    var basePath = [[${application.basePath}]];
+    function submit() {
+        var data = {name:"input NotNull", code:"input NotNull", url:"input NotNull", type:"select NotNull"};
+        var flag = V_CHECK(data);
+        if(!flag){
+            return;
+        }
+        $.ajax({
+            url:basePath+"/resource/add",
+            type:"post",
+            data:$("#form").serialize(),
+            dataType:"json",
+            success:function(result){
+                if(result.code == 200){
+                    layer.alert(result.message,function () {
+                        parent.parent.$('.H105_iframeright').attr('src', basePath+result.nextUrl);
+                    });
+                }else{
+                    layer.alert(result.message);
+                    return;
+                }
+            }
+        })
+    }
+
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+    })
+</script>
+</html>

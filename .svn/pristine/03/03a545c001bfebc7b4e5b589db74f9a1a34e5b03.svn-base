@@ -1,0 +1,86 @@
+package util.excel.annotation.entity;
+
+
+public class ImportTableParams {
+
+	/**
+	 * 当前sheet
+	 */
+	private int currSheetIndex;
+	
+	/**
+	 * 从第几行开始读取
+	 */
+	private int startLine;
+	
+	/**
+	 * 最后几行不读
+	 */
+	private int endLine;
+	
+	/**
+	 * 标题行数 告诉标题行数，意味着就可以判断模板了。
+	 */
+	private Integer titleLine;
+
+	public int getCurrSheetIndex() {
+		return currSheetIndex;
+	}
+
+	public void setCurrSheetIndex(int currSheetIndex) {
+		this.currSheetIndex = currSheetIndex;
+	}
+
+	public int getStartLine() {
+		return startLine;
+	}
+
+	public void setStartLine(int startLine) {
+		this.startLine = startLine;
+	}
+
+	public int getEndLine() {
+		return endLine;
+	}
+
+	public void setEndLine(int endLine) {
+		this.endLine = endLine;
+	}
+
+	public Integer getTitleLine() {
+		return titleLine;
+	}
+
+	public void setTitleLine(Integer titleLine) {
+		this.titleLine = titleLine;
+	}
+
+	/**
+	 * 需要校验模板
+	 * @param currSheetIndex
+	 * @param startLine
+	 * @param endLine
+	 * @param titleLine
+	 */
+	public ImportTableParams(int currSheetIndex, int startLine, int endLine, Integer titleLine) {
+		this.currSheetIndex = currSheetIndex;
+		this.startLine = startLine;
+		this.endLine = endLine;
+		this.titleLine = titleLine;
+	}
+
+	/**
+	 * 无需校验模板
+	 * @param currSheetIndex
+	 * @param startLine
+	 * @param endLine
+	 */
+	public ImportTableParams(int currSheetIndex, int startLine, int endLine) {
+		this.currSheetIndex = currSheetIndex;
+		this.startLine = startLine;
+		this.endLine = endLine;
+	}
+	
+	
+	
+}

@@ -1,0 +1,16 @@
+package com.netmarch.jzznyj.system.service;
+
+import com.netmarch.jzznyj.system.bean.Ls;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface LsService {
+
+    List<Ls> getLsList();
+
+    Ls getLsByXm(String xm);
+
+    Ls getInfoById(String lsid);
+}

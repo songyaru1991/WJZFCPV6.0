@@ -1,0 +1,22 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.github.pagehelper.Page;
+import com.netmarch.gaj.system.bean.Ajjbxx;
+import org.apache.ibatis.annotations.Param;
+
+public interface AjjbxxMapper {
+    //    Page<Map<String, Object>> getAllCase();
+    Page<Ajjbxx> getAllCase(String searchField,String searchName);
+
+    Page<Ajjbxx> getCaseByAjbs(String ajbs);
+
+    String getCaseNameByCode(String code);
+
+    Page<Ajjbxx> getAllCaseQuery(String searchField, String searchName, String areaCode);
+
+    int checkRepeatByAjbh(@Param(value="ajbh") String ajbh);
+
+    int insertSelective(Ajjbxx ajjbxx);
+
+    int updateByPrimaryKeySelective(Ajjbxx ajjbxx);
+}

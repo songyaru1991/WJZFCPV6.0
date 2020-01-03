@@ -1,0 +1,97 @@
+package com.netmarch.sso.common.thymeleaf;
+
+import org.springframework.util.CollectionUtils;
+import org.thymeleaf.IEngineConfiguration;
+import org.thymeleaf.context.ITemplateContext;
+import org.thymeleaf.engine.AttributeName;
+import org.thymeleaf.model.IProcessableElementTag;
+import org.thymeleaf.processor.element.AbstractAttributeTagProcessor;
+import org.thymeleaf.processor.element.IElementTagStructureHandler;
+import org.thymeleaf.standard.expression.IStandardExpression;
+import org.thymeleaf.standard.expression.IStandardExpressionParser;
+import org.thymeleaf.standard.expression.StandardExpressions;
+import org.thymeleaf.templatemode.TemplateMode;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AuthElementTagProcessor extends AbstractAttributeTagProcessor {
+
+    private static final String TAG_NAME = "check";
+    private static final int PRECEDENCE = 1000;
+   // private static SysResourcesService sysResourcesService = SpringUtils.getBean(SysResourcesService.class);
+
+    private static Map<String,String> authMap = new HashMap<String,String>();
+
+    public static void initAuthMap(){
+        authMap.clear();
+    }
+    public AuthElementTagProcessor(final String dialectPrefix) {
+        super(
+                TemplateMode.HTML,
+                dialectPrefix,
+                null,
+                false,
+                TAG_NAME,
+                true,
+                PRECEDENCE,
+                true);
+
+    }
+
+    @Override
+    protected void doProcess(
+            final ITemplateContext context,
+            final IProcessableElementTag tag,
+            final AttributeName attributeName,
+            final String attributeValue,
+            final IElementTagStructureHandler structureHandler) {
+
+        final IEngineConfiguration configuration = context.getConfiguration();
+
+        final IStandardExpressionParser parser =
+                StandardExpressions.getExpressionParser(configuration);
+
+        final IStandardExpression expression = parser.parseExpression(context, attributeValue);
+        //获取auth:check 属性里面的值
+/*        final String value = (String) expression.execute(context);
+        String roleKey =StringUtils.join(UserContextUtil.getRoleIds().toArray(),",");
+
+        boolean flag = true;
+
+        if(StringUtils.isNotEmpty(roleKey) && StringUtils.isNotEmpty(authMap.get(roleKey))){
+            flag = checkAuth(authMap.get(roleKey), value);
+        }else{
+            //工具类获取用户拥有的角色ids
+            List<Integer> roleIds = UserContextUtil.getRoleIds();
+            //没有角色关联
+            if(StringUtils.isEmpty(roleKey)){
+                structureHandler.removeElement();
+                flag = false;
+            }else{
+                //获取用户拥有的资源codes
+              *//*  List<String> codes = sysResourcesService.getResourceCodesByIds(roleIds);
+                String codesStr = StringUtils.join(codes.toArray(), ",");
+                authMap.put(roleKey,codesStr);
+                flag = checkAuth(codesStr, value);*//*
+            }
+
+        }
+
+        //逻辑比对有权限不执行任何操作没有权限移除元素
+        if(!flag) {
+            //无权限,移除元素
+            structureHandler.removeElement();
+        }
+        /**
+         * html标签内引用 新标签属性 xmlns:auth="http://www.thymeleaf.org"（可以不引用）
+         * 页面用法在标签内加上 auth:check="accp"
+         */
+
+    }
+
+    protected static boolean checkAuth(String codesStr, String value){
+        String[] arr = codesStr.split(",");
+        boolean flag = CollectionUtils.arrayToList(arr).contains(value);
+        return flag;
+    }
+}

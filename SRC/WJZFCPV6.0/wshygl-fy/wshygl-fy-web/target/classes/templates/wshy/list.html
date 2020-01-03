@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+   <title>法院--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright" auth:check="wshyManage">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>法院换押管理：网上换押</p>
+            </div>
+            <div class="H105_searchCoat fr clear">
+                <select id="searchCondition" name="searchCondition" class="H105_select fl">
+                    <option value="searchHyBH" th:selected="${hyQuery.searchCondition=='searchHyBH'}">人员编号</option>
+                    <option value="searchHyXM" th:selected="${hyQuery.searchCondition=='searchHyXM'}">姓名</option>
+                </select>
+                <input type="text" id="searchContent" name="searchContent" class="H105_search fl" th:value="${hyQuery.searchContent}">
+                <div class="H105_searchBtn fl " onclick="localRefresh()">搜索</div>
+            </div>
+        </div>
+        <div id="table_refresh" th:fragment="table_refresh">
+            <div class="H105_sysList H105_sysList1">
+            <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'1',width:70}">序号</th>
+                    <th lay-data="{field:'2'}">预警</th>
+                    <th lay-data="{field:'3'}">姓名</th>
+                    <th lay-data="{field:'4', width:200}">换押时间</th>
+                    <th lay-data="{field:'5'}">关押期限</th>
+                    <th lay-data="{field:'6'}">诉讼阶段</th>
+                    <th lay-data="{field:'7'}">换押状态</th>
+                    <th lay-data="{field:'8'}">延长状态</th>
+                    <th lay-data="{field:'9'}">判决状态</th>
+                    <th lay-data="{field:'10', width:350}"    >操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean,beanStat : ${list}">
+                    <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}" >
+                        <!--序号-->
+                    </td>
+                    <td th:if="${bean.DAYNUM} < 0"><img th:src="${application.basePath}+'/static/images/jjzt1.jpg'" th:title="'超期'+${#strings.substringAfter(bean.DAYNUM,'-')}+'天'"  th:alt="'超期'+${bean.DAYNUM}+'天'" /></td>
+                    <td th:if="${bean.DAYNUM} == 0"><img th:src="${application.basePath}+'/static/images/jjzt1.jpg'" th:title="'超期'+${bean.DAYNUM}+'天'"  th:alt="'超期'+${bean.DAYNUM}+'天'" /></td>
+                    <td th:if="${bean.DAYNUM >0 && bean.DAYNUM <= 3}"><img th:src="${application.basePath}+'/static/images/jjzt3.jpg'" alt="" /></td>
+                    <td th:if="${bean.DAYNUM >3 &&  bean.DAYNUM <= 7} "><img th:src="${application.basePath}+'/static/images/jjzt4.jpg'" alt="" /></td>
+                    <td th:if="${bean.DAYNUM > 7 || bean.DAYNUM == '未超期'}"><img th:src="${application.basePath}+'/static/images/jjzt2.jpg'" alt="" /></td>
+
+                    <td th:text="${bean.XM}">姓名</td>
+                    <td th:text="${#dates.format(bean.HYSJ,'yyyy-MM-dd HH:mm:ss')}">换押时间</td>
+                    <td th:text="${#dates.format(bean.GYQX,'yyyy-MM-dd')}">关押期限</td>
+                    <td th:text="${bean.DQSSJD}">诉讼阶段</td>
+                    <td>
+                        <div th:switch="${bean.HYZT}">
+                            <p th:case="1">公安局换押</p>
+                            <p th:case="2">检察院换押</p>
+                            <p th:case="3">检察院退查</p>
+                            <p th:case="4">法院换押</p>
+                        </div>
+                    </td>
+                    <td th:text="${bean.YCZT == 'Y' ? '已延长' : '未延长'}">延长状态</td>
+                    <td th:if="${bean.XQ ==null || bean.XQ == ''} ">未判决</td>
+                    <td th:if="${bean.XQ !=null && bean.XQ != ''} ">已判决</td>
+
+                    <td class="A505_td">
+                      <div class="A505_td">
+                          <a th:href="${'javascript:toFyHy('''+bean.RYBH+''','''+bean.JLBH+''')'}"  auth:check="toFyHy"  th:if="${bean.XQ ==null || bean.XQ == ''} ">
+                              <img class="I108_imgNormal"
+                                   th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                   alt="">
+                              <span>换押</span>
+                          </a>
+
+                          <a th:href="${'javascript:toFyYchy('''+bean.RYBH+''','''+bean.JLBH+''')'}"  auth:check="toFyYchy"  th:if="${bean.XQ ==null || bean.XQ == ''} ">
+                              <img class="I108_imgNormal"
+                                   th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                   alt="">
+                              <span>延长关押</span>
+                          </a>
+                          <a th:href="${'javascript:toFyPj('''+bean.RYBH+''','''+bean.JLBH+''')'}"  auth:check="toFyPj">
+                              <img class="I108_imgNormal"
+                                   th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                   alt="">
+                              <span>判决</span>
+                          </a>
+
+                          <a th:href="${'javascript:toHyWs('''+bean.AJBS+''')'}"  auth:check="fyJshyws" >
+                              <img class="I108_imgNormal"
+                                   th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                   alt="">
+                              <span>换押文书</span>
+                          </a>
+
+                          <a th:href="${'javascript:toView('''+bean.RYBH+''','''+bean.AJBS+''')'}"  auth:check="toFyHyView">
+                              <img class="I108_imgNormal"
+                                   th:src="${application.basePath}+'/static/images/H105_checkIco1.png'"
+                                   alt="">
+                              <span>查看</span>
+                          </a>
+                      </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--分页引用-->
+            <div class="H105_pageCoat clear">
+                <div class="H105_first clear fl">
+                    本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                </div>
+                <div th:replace="common/pages::pages"></div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        function localRefresh() {
+            // 装载局部刷新返回的页面
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var url = "";
+            var param = {"searchContent": searchContent, "searchCondition": searchCondition, "pageNo": pageNo};
+            $("#table_refresh").load('../Wshy/tableList', param, function () {
+                layui.use('table', function () {
+                    layui.table.init('demo', {
+                        limit: 12
+                    });
+                });
+            });
+        }
+
+        var contextPath = getContextPath();
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 12
+            });
+
+            table = layui.table;
+        })
+
+
+        function layerclose() {
+            layer.close(layIndex);
+        }
+
+        function toView(rybh,ajbs) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '查看';
+            var layHref ='/wshygl-fy/Ksry/toView?rybh=' + rybh+'&ajbs='+ajbs+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo+'&modelType=wshy';
+            viewClickEvent(layContent,layHref);
+        }
+
+        function toFyHy(rybh,jlbh) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '换押';
+            var layHref ='/wshygl-fy/Wshy/toFyHy?rybh=' + rybh+'&jlbh='+jlbh+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+            viewClickEvent(layContent,layHref);
+        }
+
+        function toFyYchy(rybh,jlbh) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+
+            var layContent = '延长换押';
+            var layHref ='/wshygl-fy/Wshy/toFyYchy?rybh=' + rybh+'&jlbh='+jlbh+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+            viewClickEvent(layContent,layHref);
+        }
+
+        function toFyPj(rybh,jlbh) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+
+            var layContent = '判决';
+            var layHref ='/wshygl-fy/Wshy/toFyPj?rybh=' + rybh+'&jlbh='+jlbh+'&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+            viewClickEvent(layContent,layHref);
+        }
+
+        var hywsPath=  [[${application.hywsPath}]];
+        function toHyWs(ajbs) {
+            var searchCondition = $('#searchCondition option:selected').val();
+            var searchContent = $(" #searchContent").val();
+            var pageNo = $(" #pageNo").val();
+            var layContent = '换押文书';
+            ajbs = ajbs + 'abc'
+            var layHref = hywsPath +'&ajbs='+ajbs;
+            viewClickEvent(layContent,layHref);
+        }
+
+    </script>
+</div>
+</body>
+</html>

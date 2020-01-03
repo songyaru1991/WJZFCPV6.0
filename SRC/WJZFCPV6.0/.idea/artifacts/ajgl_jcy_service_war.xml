@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ajgl-jcy-service:war">
+    <output-path>$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service/target</output-path>
+    <root id="archive" name="ajgl-jcy.war">
+      <element id="artifact" artifact-name="ajgl-jcy-service:war exploded" />
+    </root>
+  </artifact>
+</component>

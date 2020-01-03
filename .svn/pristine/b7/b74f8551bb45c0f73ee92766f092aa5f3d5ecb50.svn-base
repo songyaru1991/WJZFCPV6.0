@@ -1,0 +1,43 @@
+package com.netmarch.gaj.common.utils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateUtil {
+    public static int compare_date(String date1, String date2) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            Date dt1 = df.parse(date1);
+            Date dt2 = df.parse(date2);
+            if (dt1.getTime() > dt2.getTime()) {
+                System.out.println("dt1在dt2前");
+                return 1; // dt1 在dt2前
+            } else if (dt1.getTime() < dt2.getTime()) {
+                System.out.println("dt1在dt2后");
+                return -1; //dt1 在dt2后
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+    * 得到二个日期间的间隔天数
+    */
+    public static int getTwoDay(String sj1, String sj2){
+        SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        long day = 0;
+        try {
+            Date date = myFormatter.parse(sj1);
+            Date mydate = myFormatter.parse(sj2);
+            day = (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return (int)day;
+    }
+}

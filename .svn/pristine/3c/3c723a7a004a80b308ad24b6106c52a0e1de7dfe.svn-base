@@ -1,0 +1,20 @@
+package com.netmarch.jzznyj.system.bean;
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+public class Lssqmyj implements Serializable {
+    private String xm;
+    private String sfzh;
+    private String lssws;
+    private String kssj;
+    private String jssj;
+    private String ckrq; // 查看日期
+    private String zt; // 状态
+    private String jrjd;
+    private String sqm;
+    private String sfzf;
+    private String sqmid;
+}

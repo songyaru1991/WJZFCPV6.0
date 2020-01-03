@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.Gj_ajjbqkMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wssacw.system.bean.Gj_ajjbqk">
+    <id column="AJBS" jdbcType="VARCHAR" property="ajbs" />
+    <result column="GLBH" jdbcType="VARCHAR" property="glbh" />
+    <result column="AJBH" jdbcType="VARCHAR" property="ajbh" />
+    <result column="AJLX" jdbcType="VARCHAR" property="ajlx" />
+    <result column="AJZT" jdbcType="VARCHAR" property="ajzt" />
+    <result column="TQDWMC" jdbcType="VARCHAR" property="tqdwmc" />
+    <result column="TQDWDM" jdbcType="VARCHAR" property="tqdwdm" />
+    <result column="YSSJ" jdbcType="TIMESTAMP" property="yssj" />
+    <result column="FSSJ" jdbcType="TIMESTAMP" property="fssj" />
+    <result column="NM090D5CB6C0DFAE21" jdbcType="VARCHAR" property="nm090d5cb6c0dfae21" />
+    <result column="NM5053FD8BD598DD8C" jdbcType="VARCHAR" property="nm5053fd8bd598dd8c" />
+    <result column="NM594AB7C3BDFD644B" jdbcType="VARCHAR" property="nm594ab7c3bdfd644b" />
+    <result column="TQAYDM" jdbcType="VARCHAR" property="tqaydm" />
+    <result column="SFCBAJ" jdbcType="VARCHAR" property="sfcbaj" />
+    <result column="SFRZQA" jdbcType="VARCHAR" property="sfrzqa" />
+    <result column="XYRSFWCNR" jdbcType="VARCHAR" property="xyrsfwcnr" />
+    <result column="BHRSFWCNR" jdbcType="VARCHAR" property="bhrsfwcnr" />
+    <result column="XYRSFTWR" jdbcType="VARCHAR" property="xyrsftwr" />
+    <result column="BHRSFTWR" jdbcType="VARCHAR" property="bhrsftwr" />
+    <result column="SLRQ" jdbcType="TIMESTAMP" property="slrq" />
+    <result column="SDSJ" jdbcType="TIMESTAMP" property="sdsj" />
+    <result column="PAGES" jdbcType="INTEGER" property="pages" />
+    <result column="MSG_ID" jdbcType="INTEGER" property="msgId" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="MSG_STATUS_FY" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="ISSH" jdbcType="VARCHAR" property="issh" />
+    <result column="ADDTIME" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="SHR" jdbcType="VARCHAR" property="shr" />
+    <result column="SHSJ" jdbcType="TIMESTAMP" property="shsj" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="GACBR" jdbcType="VARCHAR" property="gacbr" />
+    <result column="GAYSDW" jdbcType="VARCHAR" property="gaysdw" />
+    <result column="AREA_CODE_GA" jdbcType="VARCHAR" property="areaCodeGa" />
+    <result column="ISHANDADD" jdbcType="DOUBLE" property="ishandadd" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+    <result column="SETTIME" jdbcType="TIMESTAMP" property="settime" />
+    <result column="AJLB" jdbcType="VARCHAR" property="ajlb" />
+    <result column="BADWID" jdbcType="VARCHAR" property="badwid" />
+    <result column="BADWMC" jdbcType="VARCHAR" property="badwmc" />
+    <result column="SFRJ" jdbcType="VARCHAR" property="sfrj" />
+    <result column="RJSJ" jdbcType="TIMESTAMP" property="rjsj" />
+    <result column="NEWDZJZ" jdbcType="INTEGER" property="newdzjz" />
+    <result column="YSQTAY" jdbcType="VARCHAR" property="ysqtay" />
+    <result column="SFZWFZAJ" jdbcType="VARCHAR" property="sfzwfzaj" />
+    <result column="SFLAJDAJ" jdbcType="VARCHAR" property="sflajdaj" />
+    <result column="SFJDXZJGYSAJ" jdbcType="VARCHAR" property="sfjdxzjgysaj" />
+    <result column="YSAJDXZJGLB" jdbcType="VARCHAR" property="ysajdxzjglb" />
+    <result column="GTFZXZ" jdbcType="VARCHAR" property="gtfzxz" />
+    <result column="GTFZRS" jdbcType="VARCHAR" property="gtfzrs" />
+    <result column="SFDBAJ" jdbcType="VARCHAR" property="sfdbaj" />
+    <result column="SFGZAJ" jdbcType="VARCHAR" property="sfgzaj" />
+    <result column="SFZXHD" jdbcType="VARCHAR" property="sfzxhd" />
+    <result column="ZXHDMC" jdbcType="VARCHAR" property="zxhdmc" />
+    <result column="AQZY" jdbcType="VARCHAR" property="aqzy" />
+    <result column="FUZHU" jdbcType="VARCHAR" property="fuzhu" />
+    <result column="YSRJDH" jdbcType="VARCHAR" property="ysrjdh" />
+    <result column="ZXHD" jdbcType="VARCHAR" property="zxhd" />
+    <result column="YSYJ" jdbcType="VARCHAR" property="ysyj" />
+    <result column="SFSWAJ" jdbcType="VARCHAR" property="sfswaj" />
+    <result column="SFDWFZ" jdbcType="VARCHAR" property="sfdwfz" />
+    <result column="SFSTAJ" jdbcType="VARCHAR" property="sfstaj" />
+    <result column="SFZDZRSGSSZWFZAJ" jdbcType="VARCHAR" property="sfzdzrsgsszwfzaj" />
+    <result column="ZWFZAJSALY" jdbcType="VARCHAR" property="zwfzajsaly" />
+    <result column="ZWFZAJSAQTLY" jdbcType="VARCHAR" property="zwfzajsaqtly" />
+    <result column="JRZCRQ" jdbcType="VARCHAR" property="jrzcrq" />
+    <result column="TQJRLB" jdbcType="VARCHAR" property="tqjrlb" />
+    <result column="TQJRFS" jdbcType="VARCHAR" property="tqjrfs" />
+    <result column="ZTFZXYRXMHZCH" jdbcType="VARCHAR" property="ztfzxyrxmhzch" />
+    <result column="ZTXYRRS" jdbcType="VARCHAR" property="ztxyrrs" />
+    <result column="TIPFLAG" jdbcType="INTEGER" property="tipflag" />
+  </resultMap>
+
+  <select id="getAjjbqkListPage"  parameterType="java.lang.String" resultType="com.netmarch.wssacw.system.bean.Gj_ajjbqk">
+    select a.AJBS,a.AJBH,b.AJMC,DATE_FORMAT(b.LASJ,'%Y-%m-%d %T') LASJ,b.ZBDWMC, e.mc AJZT from GJ_AJJBQK a
+    left JOIN aj_jbxx b on a.AJBH=b.AJBH
+    left join (select c.* from dict_ga c LEFT JOIN dict_ga_sm d on c.DICT_SM_ID=d.id  where d.ID=5) e
+    on a.AJZT=e.code
+    where a.AREA_CODE=#{areaCode,jdbcType=VARCHAR}
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchAjmc"'>
+      and b.AJMC like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchAjbh"'>
+        and a.AJBH like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+  </select>
+
+  <select id="getAjjbqkList"  parameterType="java.lang.String" resultType="com.netmarch.wssacw.system.bean.Gj_ajjbqk">
+    select a.AJBS,a.AJBH,b.AJMC,DATE_FORMAT(b.LASJ,'%Y-%m-%d %T') LASJ,b.ZBDWMC,e.mc AJZT from GJ_AJJBQK a left JOIN aj_jbxx b on a.AJBH=b.AJBH
+    left join (select c.* from dict_ga c LEFT JOIN dict_ga_sm d on c.DICT_SM_ID=d.id  where d.ID=5) e
+    on a.AJZT=e.code
+    where a.AREA_CODE=#{areaCode,jdbcType=VARCHAR}
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchAjmc"'>
+        and b.AJMC like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchAjbh"'>
+        and b.AJBH like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+  </select>
+
+  <select id="getSacwDetails"  parameterType="string" resultType="com.netmarch.wssacw.system.bean.Gj_ajjbqk">
+    select a.AJBS,a.AJBH,b.AJMC,DATE_FORMAT(b.LASJ,'%Y-%m-%d %T') LASJ,b.ZBDWMC,e.mc AJZT from GJ_AJJBQK a
+    LEFT JOIN aj_jbxx b on a.AJBH=b.AJBH
+    left join (select c.* from dict_ga c LEFT JOIN dict_ga_sm d on c.DICT_SM_ID=d.id  where d.ID=5) e
+    on a.AJZT=e.code
+    where 1=1
+    <if test="_parameter != '' and _parameter!=null">
+        and a.ajbs=#{ajbs,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+</mapper>

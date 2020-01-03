@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wshy.system.mapper.YclogsMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wshy.system.bean.Yclogs">
+    <id column="JLBH" jdbcType="VARCHAR" property="JLBH" />
+    <result column="RYBH" jdbcType="VARCHAR" property="RYBH" />
+    <result column="XM" jdbcType="VARCHAR" property="XM" />
+    <result column="HYXXB_JLBH" jdbcType="VARCHAR" property="HYXXB_JLBH" />
+    <result column="HYXXB_YCRQ" jdbcType="TIMESTAMP" property="HYXXB_YCRQ" />
+    <result column="HYXXB_YCYY" jdbcType="VARCHAR" property="HYXXB_YCYY" />
+    <result column="ADDBYID" jdbcType="VARCHAR" property="ADDBYID" />
+    <result column="ADDBYNAME" jdbcType="VARCHAR" property="ADDBYNAME" />
+    <result column="ADDBYTIME" jdbcType="TIMESTAMP" property="ADDBYTIME" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    JLBH, RYBH, XM, HYXXB_JLBH, HYXXB_YCRQ, HYXXB_YCYY, ADDBYID, ADDBYNAME, ADDBYTIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yclogs
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from yclogs
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wshy.system.bean.Yclogs">
+    insert into yclogs (JLBH, RYBH, XM, 
+      HYXXB_JLBH, HYXXB_YCRQ, HYXXB_YCYY, 
+      ADDBYID, ADDBYNAME, ADDBYTIME
+      )
+    values (#{JLBH,jdbcType=VARCHAR}, #{RYBH,jdbcType=VARCHAR}, #{XM,jdbcType=VARCHAR}, 
+      #{HYXXB_JLBH,jdbcType=VARCHAR}, #{HYXXB_YCRQ,jdbcType=TIMESTAMP}, #{HYXXB_YCYY,jdbcType=VARCHAR}, 
+      #{ADDBYID,jdbcType=INTEGER}, #{ADDBYNAME,jdbcType=VARCHAR}, sysdate()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wshy.system.bean.Yclogs">
+    insert into yclogs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="JLBH != null">
+        JLBH,
+      </if>
+      <if test="RYBH != null">
+        RYBH,
+      </if>
+      <if test="XM != null">
+        XM,
+      </if>
+      <if test="HYXXB_JLBH != null">
+        HYXXB_JLBH,
+      </if>
+      <if test="HYXXB_YCRQ != null">
+        HYXXB_YCRQ,
+      </if>
+      <if test="HYXXB_YCYY != null">
+        HYXXB_YCYY,
+      </if>
+      <if test="ADDBYID != null">
+        ADDBYID,
+      </if>
+      <if test="ADDBYNAME != null">
+        ADDBYNAME,
+      </if>
+      <if test="ADDBYTIME != null">
+        ADDBYTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="JLBH != null">
+        #{JLBH,jdbcType=VARCHAR},
+      </if>
+      <if test="RYBH != null">
+        #{RYBH,jdbcType=VARCHAR},
+      </if>
+      <if test="XM != null">
+        #{XM,jdbcType=VARCHAR},
+      </if>
+      <if test="HYXXB_JLBH != null">
+        #{HYXXB_JLBH,jdbcType=VARCHAR},
+      </if>
+      <if test="HYXXB_YCRQ != null">
+        #{HYXXB_YCRQ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="HYXXB_YCYY != null">
+        #{HYXXB_YCYY,jdbcType=VARCHAR},
+      </if>
+      <if test="ADDBYID != null">
+        #{ADDBYID,jdbcType=INTEGER},
+      </if>
+      <if test="ADDBYNAME != null">
+        #{ADDBYNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ADDBYTIME != null">
+        #{ADDBYTIME,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wshy.system.bean.Yclogs">
+    update yclogs
+    <set>
+      <if test="RYBH != null">
+        RYBH = #{RYBH,jdbcType=VARCHAR},
+      </if>
+      <if test="XM != null">
+        XM = #{XM,jdbcType=VARCHAR},
+      </if>
+      <if test="HYXXB_JLBH != null">
+        HYXXB_JLBH = #{HYXXB_JLBH,jdbcType=VARCHAR},
+      </if>
+      <if test="HYXXB_YCRQ != null">
+        HYXXB_YCRQ = #{HYXXB_YCRQ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="HYXXB_YCYY != null">
+        HYXXB_YCYY = #{HYXXB_YCYY,jdbcType=VARCHAR},
+      </if>
+      <if test="ADDBYID != null">
+        ADDBYID = #{ADDBYID,jdbcType=INTEGER},
+      </if>
+      <if test="ADDBYNAME != null">
+        ADDBYNAME = #{ADDBYNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ADDBYTIME != null">
+        ADDBYTIME = #{ADDBYTIME,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wshy.system.bean.Yclogs">
+    update yclogs
+    set RYBH = #{RYBH,jdbcType=VARCHAR},
+      XM = #{XM,jdbcType=VARCHAR},
+      HYXXB_JLBH = #{HYXXB_JLBH,jdbcType=VARCHAR},
+      HYXXB_YCRQ = #{HYXXB_YCRQ,jdbcType=TIMESTAMP},
+      HYXXB_YCYY = #{HYXXB_YCYY,jdbcType=VARCHAR},
+      ADDBYID = #{ADDBYID,jdbcType=INTEGER},
+      ADDBYNAME = #{ADDBYNAME,jdbcType=VARCHAR},
+      ADDBYTIME = #{ADDBYTIME,jdbcType=TIMESTAMP}
+    where JLBH = #{JLBH,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getYclogsListByHyxxjlbh" parameterType="java.lang.String" resultType="com.netmarch.wshy.system.bean.Yclogs">
+    select
+    <include refid="Base_Column_List" />
+    from yclogs
+    where HYXXB_JLBH = #{hyxxJlbh,jdbcType=VARCHAR} order by ADDBYTIME DESC
+  </select>
+
+  <select id="getMaxYcrqByHyxxjlbh" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    DATE_FORMAT(max(HYXXB_YCRQ),'%Y-%m-%d')  YCRQ
+    from yclogs
+    where HYXXB_JLBH = #{hyxxJlbh,jdbcType=VARCHAR}
+  </select>
+</mapper>

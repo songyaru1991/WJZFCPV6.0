@@ -1,0 +1,37 @@
+package com.netmarch.fdfs.system.enums;
+
+import util.IEnum;
+
+/**
+ * @ClassName IndividulType
+ * @Description 个人中心类型枚举
+ * @Author wangdk
+ * @Date 2019/2/2718:33
+ * @Version 1.0
+ **/
+public enum IndividulType implements IEnum {
+
+    VICTORY(0,"我的战果"),
+    CASE(1,"我的案例"),
+    VIDEO(2,"我的视频"),
+    FEEDBACK(3,"我的反馈"),
+    ;
+
+
+    IndividulType(Integer value, String description) {
+        this.value = value;
+        this.description = description;
+    }
+    private Integer value;
+    private String description;
+
+    @Override
+    public Integer getValue() {
+        return value;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+}

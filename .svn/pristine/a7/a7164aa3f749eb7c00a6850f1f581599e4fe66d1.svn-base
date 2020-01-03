@@ -1,0 +1,535 @@
+package com.netmarch.wshy.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.netmarch.sso.loginsystem.bean.LoginUser;
+import com.netmarch.sso.loginsystem.client.LoginUserClient;
+import com.netmarch.wshy.common.controller.FrontBaseController;
+import com.netmarch.wshy.common.thymeleaf.AuthElementTagProcessor;
+import com.netmarch.wshy.common.utils.DompareXml.DompareImportKsryXml;
+import com.netmarch.wshy.common.utils.UsersUtil;
+import com.netmarch.wshy.common.utils.common.FdfsUtil;
+import com.netmarch.wshy.system.bean.*;
+import com.netmarch.wshy.system.model.Query;
+import com.netmarch.wshy.system.service.KsryService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import util.web.JsonResult;
+import util.web.ResultCodes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Controller
+@RequestMapping("/Ksry/*")
+@Slf4j
+public class KsryController extends FrontBaseController{
+
+    @Autowired
+    HttpServletRequest request;
+
+    @Autowired
+    HttpServletResponse response;
+
+    @Autowired
+    private KsryService ksryService;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Autowired
+    UsersUtil usersUtil;
+
+    @Autowired
+    LoginUserClient loginUserClient;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @Autowired
+    private DompareImportKsryXml dompareXml;
+
+    /**
+     * 加载左边导航栏及列表
+     */
+    @RequestMapping("/navigationBarKsryList")
+    public String navigationBarKsryList(Model model){
+
+        String user_Id=usersUtil.getLoginUser_Id();
+
+        LoginUser loginUser = loginUserClient.getUserById(user_Id);
+        String areaCode=loginUser.getAreaCode();
+        String area=loginUser.getArea();
+        model.addAttribute("area", area);
+        model.addAttribute("areaCode", areaCode);
+        return "system/navigationBarKsryList";
+    }
+
+    /**
+     *  /ksrylist：人员基本信息列表 ，/tableList:table表刷新
+     */
+    @RequestMapping(value = { "/ksrylist", "/tableList"})
+    public String ksrylist(Ksryjbxx ksryjbxx,Query ksryQuery, Model model){
+        String user_Id="",requestURI="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String searchCondition= request.getParameter("searchCondition");
+            String searchContent= request.getParameter("searchContent");
+            ksryQuery.setSearchCondition(searchCondition);
+            ksryQuery.setSearchContent(searchContent);
+
+            LoginUser loginUser = loginUserClient.getUserById(user_Id);
+            String area_code=loginUser.getAreaCode();
+            ksryjbxx.setAREA_CODE(area_code);
+            Page<Ksryjbxx> ksryjbxxList = ksryService.getKsryListPage(ksryjbxx,ksryQuery);
+            model.addAttribute("list", ksryjbxxList);
+            model.addAttribute("ksryQuery", ksryQuery);
+            if(searchContent==null || searchContent.equals("")){
+                log(user_Id,"人员基本信息列表","获取所有的人员基本信息","看守所换押管理(网上换押管理系统)",false);
+            }
+            else{
+                log(user_Id,"人员基本信息列表","获取人员基本信息列表,搜索条件为:" + JSON.toJSONString(ksryQuery),"看守所换押管理(网上换押管理系统)",false);
+            }
+
+            requestURI=request.getRequestURI();
+        } catch (Exception e) {
+            log(user_Id,"人员基本信息列表",e.toString(),"看守所换押管理(网上换押管理系统)",true);
+            e.printStackTrace();
+        }
+        if(requestURI.equals("/wshygl/Ksry/tableList")){
+            return "ksry/list::table_refresh";
+        }
+        return "ksry/list";
+    }
+    /**
+     *  人员基本信息列表及左边导航栏
+     */
+    @RequestMapping("/ksryjbxx")
+    public String ksryjbxx(Ksryjbxx ksryjbxx,Query ksryQuery, Model model){
+        String userName="",user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            LoginUser loginUser = loginUserClient.getUserById(user_Id);
+            userName=loginUser.getUsername();
+            model.addAttribute("userName", userName);
+            log(user_Id,"看守人员基本信息列表","看守人员基本信息列表","看守所换押管理(网上换押管理系统)",false);
+        }catch (Exception e) {
+            log(user_Id,"看守人员基本信息列表",e.toString(),"看守所换押管理(网上换押管理系统)",true);
+            e.printStackTrace();
+        }
+        return "system/wshygl";
+    }
+
+    /*
+     * 添加页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toAdd")
+    public String toAdd(Gj_xyrqk xyrqk,Model model){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            model.addAttribute("bean", user);
+
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+            String keyword="";
+            Page<Gj_xyrqk> xyrqkList=ksryService.getXyrqkList(xyrqk,areaCode,keyword);
+            model.addAttribute("list", xyrqkList);
+            log(user_Id, "点击换押管理新增按钮", "打开换押管理新增页面", "看守所换押管理(网上换押管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击换押管理新增按钮", e.toString(), "看守所换押管理(网上换押管理系统)", true);
+            e.printStackTrace();
+        }
+        return "ksry/add";
+    }
+
+    /*
+     * 新增看守人员信息时嫌疑人列表
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/xyrSearch" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    public String xyrSearch(Gj_xyrqk xyrqk,Model model,String keyword){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            model.addAttribute("bean", user);
+
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+
+            Page<Gj_xyrqk> xyrqkList=ksryService.getXyrqkList(xyrqk,areaCode,keyword);
+            model.addAttribute("list", xyrqkList);
+            log(user_Id, "点击新增按钮", "打开换押管理新增页面", "看守所换押管理(网上换押管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击新增按钮", e.toString(), "看守所换押管理(网上换押管理系统)", true);
+            e.printStackTrace();
+        }
+        return "ksry/add::table_refresh";
+    }
+
+
+    /**
+     * 编辑页面
+     * @param model
+     * @return
+     */
+    @GetMapping("toEdit")
+    public String toEdit(Model model, String rybh,String xyrbh){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+            Ksryjbxx ksryjbxx = new Ksryjbxx();
+            Gj_ajjbqk ajjbqk = new Gj_ajjbqk();
+            List<Hyxxb> hyxxbList = null;
+
+            List<Dict_ga> zzmmList = ksryService.getZzmmListFromDict();
+            //取得案件基本信息中涉案人员
+            String ajSary ="";
+
+            if(rybh!=null && !rybh.equals("")) {
+                //编辑
+                ksryjbxx = ksryService.getksryjbxxByRybh(rybh);
+                hyxxbList = ksryService.getHyxxByRybh(rybh);
+                ajjbqk = ksryService.getAjjbqkByXyrbh(rybh);
+                ajSary = ksryService.getAjSaryByXyrbh(rybh);
+                String jsonResults = JSON.toJSONString(ksryjbxx);
+                log(user_Id, "点击编辑按钮","编辑前看守人员信息为:" + jsonResults, "看守所换押管理(网上换押管理系统)", false);
+            }
+            if(xyrbh!=null && !xyrbh.equals("")){
+                //从嫌疑人列表中新增
+                Gj_xyrqk xyrqk = ksryService.getXyrqkByXyrbh(xyrbh);
+                ksryjbxx.setRYBH(xyrqk.getXYRBH());
+                ksryjbxx.setXM(xyrqk.getXYRXM());
+                String xbdm = xyrqk.getXYRXBDM();
+                String xb="";
+                if(xbdm=="0") {
+                    xb="未知的性别";
+                }else if(xbdm=="1"){
+                    xb="男性";
+                }else if(xbdm=="2"){
+                    xb="女性";
+                }else if(xbdm=="9"){
+                    xb="未说明的性别";
+                }
+                ksryjbxx.setXB(xb);
+                ksryjbxx.setZJLX(xyrqk.getZJLX());
+                ksryjbxx.setZJHM(xyrqk.getSFZHM());
+                ksryjbxx.setGJ(xyrqk.getGJ());
+                ksryjbxx.setMZ(xyrqk.getMZ());
+                ksryjbxx.setZW(xyrqk.getZW());
+                ksryjbxx.setZY(xyrqk.getZY());
+                ksryjbxx.setSF(xyrqk.getSF());
+                ksryjbxx.setXZZQH(xyrqk.getDQZZ());
+                ksryjbxx.setHJXXDZ(xyrqk.getXYRHJD());
+
+                ajSary= ksryService.getAjSaryByXyrbh(xyrbh);
+                ajjbqk = ksryService.getAjjbqkByXyrbh(xyrbh);
+
+                log(user_Id, "点击新增确定按钮","新增嫌疑人标识为:" + xyrbh, "看守所换押管理(网上换押管理系统)", false);
+            }
+            if(ksryjbxx==null || ksryjbxx.equals("")){
+                ksryjbxx = new Ksryjbxx();
+            }
+            if(ajjbqk==null || ajjbqk.equals("")){
+                ajjbqk = new Gj_ajjbqk();
+            }
+            model.addAttribute("bean", ksryjbxx);
+            model.addAttribute("ajjbqk", ajjbqk);
+            model.addAttribute("hyxxbList", hyxxbList);
+            model.addAttribute("zzmmList", zzmmList);
+            model.addAttribute("ajSary", ajSary);
+        } catch (Exception e) {
+            log(user_Id, "点击编辑按钮", e.toString(), "看守所换押管理(网上换押管理系统)", true);
+            e.printStackTrace();
+        }
+        return "ksry/edit";
+    }
+
+
+    /**
+     * 查看页面
+     * @param model
+     * @return
+     */
+    @GetMapping("toView")
+    public String toView(Model model, String rybh){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+            Ksryjbxx ksryjbxx = new Ksryjbxx();
+            Gj_ajjbqk ajjbqk = new Gj_ajjbqk();
+            List<Hyxxb> hyxxbList = null;
+
+            //取得案件基本信息中涉案人员
+            String ajSary ="";
+            if(rybh!=null && !rybh.equals("")) {
+                //查看
+                ksryjbxx = ksryService.getksryjbxxByRybh(rybh);
+                ajjbqk = ksryService.getAjjbqkByXyrbh(rybh);
+                hyxxbList = ksryService.getHyxxByRybh(rybh);
+                ajSary = ksryService.getAjSaryByXyrbh(rybh);
+                String jsonResults = JSON.toJSONString(ksryjbxx);
+                log(user_Id, "点击编辑按钮","编辑前看守人员信息为:" + jsonResults, "看守所换押管理(网上换押管理系统)", false);
+            }
+            if(ksryjbxx==null || ksryjbxx.equals("")){
+                ksryjbxx = new Ksryjbxx();
+            }
+            if(ajjbqk==null || ajjbqk.equals("")){
+                ajjbqk = new Gj_ajjbqk();
+            }
+            model.addAttribute("bean", ksryjbxx);
+            model.addAttribute("ajjbqk", ajjbqk);
+            model.addAttribute("hyxxbList", hyxxbList);
+            model.addAttribute("ajSary", ajSary);
+        } catch (Exception e) {
+            log(user_Id, "点击编辑按钮", e.toString(), "看守所换押管理(网上换押管理系统)", true);
+            e.printStackTrace();
+        }
+        return "ksry/view";
+    }
+
+
+    /**
+     *  /ajjbqklist：案件基本信息列表 ，/tableList:table表刷新
+     */
+    @RequestMapping(value = { "/ajjbqklist"})
+    public String ajjbqklist(String ajbh,String xyrbh, Model model){
+        String user_Id="",requestURI="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+           Gj_ajjbqk gj_ajjbqk = ksryService.getAjjbqkListByAjbh(ajbh);
+
+            Gj_xyrqk  xyrqk  = ksryService.getXyrqkByXyrbh(xyrbh);
+
+            if(gj_ajjbqk==null || gj_ajjbqk.equals("")){
+                gj_ajjbqk = new Gj_ajjbqk();
+            }
+            if(xyrqk==null || xyrqk.equals("")){
+                xyrqk = new Gj_xyrqk();
+            }
+            model.addAttribute("ajjbqk", gj_ajjbqk);
+            model.addAttribute("xyrqk", xyrqk);
+                log(user_Id,"案件基本信息列表","获取基本案件信息","看守所换押管理(网上换押管理系统)",false);
+
+
+            requestURI=request.getRequestURI();
+        } catch (Exception e) {
+            log(user_Id,"案件基本信息列表",e.toString(),"案件管理(涉案财物系统)",true);
+            e.printStackTrace();
+        }
+        return "ksry/ajjbqk";
+    }
+
+
+    @RequestMapping(value = "/saveKsry", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult saveKsry(Ksryjbxx ksryjbxx){
+        String user_Id="",userName="";
+        try {
+
+            user_Id=usersUtil.getLoginUser_Id();
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+            ksryjbxx.setAREA_CODE(areaCode);
+
+            String jsonResults= JSON.toJSONString(ksryjbxx);
+                    String rybh=ksryjbxx.getRYBH();
+                    String xm=ksryjbxx.getXM();
+                    if(rybh!="" && !rybh.equals("") && xm!="" &&!xm.equals("")){
+                        int count = ksryService.checkRepeatKsrybh(rybh);
+                        if(count>0){
+                            int result = ksryService.updateImportKsryjbxx(ksryjbxx);
+                            if(result <= 0){
+                                log(user_Id,"看守人员编辑","看守人员编辑失败"+jsonResults,"看守所换押管理(网上换押管理系统)",false);
+                                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+                            }
+                        }else {
+                            int result = ksryService.insertImportKsryjbxx(ksryjbxx);
+                            if(result <= 0){
+                                log(user_Id,"看守人员新增","看守人员新增失败"+jsonResults,"看守所换押管理(网上换押管理系统)",false);
+                                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+                            }
+                            log(user_Id,"科室编辑","编辑后科室信息为:"+jsonResults,"看守所换押管理(网上换押管理系统)",false);
+                        }
+
+                    }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"看守人员编辑/新增信息失败",e.toString(),"看守所换押管理(网上换押管理系统)",true);
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS, StaticObj.UPDATE_MSG_SUCCESS, "");
+    }
+
+    @RequestMapping("toDelete")
+    @ResponseBody
+    public JsonResult toDelete(String rybh,String searchCondition,String searchContent,String pageNo){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            int result =ksryService.toDelete(rybh);
+            if(result <= 0){
+                log(user_Id,"删除看守人员信息","删除rybh为"+rybh+"的用户信息失败","看守所换押管理(网上换押管理系统)",false);
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+            log(user_Id,"删除看守人员信息","删除rybh为:"+rybh+"的涉案财物信息","看守所换押管理(网上换押管理系统)",false);
+        } catch (Exception e) {
+            log(user_Id,"删除看守人员信息",e.toString(),"看守所换押管理(网上换押管理系统)",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS, "/departments/tableList");
+    }
+
+    /*
+     * 导入看守人员基本信息页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("importKsry")
+    public String importKsry(){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            log(user_Id, "点击导入按钮", "打开导入页面", "看守所换押管理(网上换押管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击导入按钮", e.toString(), "看守所换押管理(网上换押管理系统)", true);
+            e.printStackTrace();
+        }
+        return "ksry/importKsry";
+    }
+
+    @RequestMapping(value = "/saveImportKsry", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult saveImportKsry(@RequestParam("file") MultipartFile multipartFile){
+        String user_Id="",userName="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            LoginUser user = loginUserClient.getUserById(user_Id);
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+
+            //上传图片到文件服务器
+            int insertCount=0;
+            if (multipartFile.isEmpty()) {
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPLOAD_MSG_ERROR);
+            }
+            else{
+
+                String fileName = multipartFile.getOriginalFilename();
+                String fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+                ArrayList<Ksryjbxx> list = new  ArrayList<Ksryjbxx>();
+                //MultipartFile转为File
+                File file = File.createTempFile("tmp", null);
+                multipartFile.transferTo(file);
+                //解析上传的xml文件或zip文件
+
+                if(fileSuffix.equals("xml")) {
+                    list = dompareXml.getKsryjbxxFromXml(file);
+                } else if (fileSuffix.equals("zip")){
+                    list = dompareXml.readZipFile(file);
+                }
+
+                Ksryjbxx ksryjbxx=new Ksryjbxx();
+                for(int i=0;i<list.size();i++)
+                {
+                    if (list.get(i)!=null)
+                        ksryjbxx=list.get(i);
+                    String rybh=ksryjbxx.getRYBH();
+                    String xm=ksryjbxx.getXM();
+                    if(rybh!="" && !rybh.equals("") && xm!="" &&!xm.equals("")){
+                        int count = ksryService.checkRepeatKsrybh(rybh);
+                        ksryjbxx.setAREA_CODE(areaCode);
+                        if(count>0){
+                            int result = ksryService.updateImportKsryjbxx(ksryjbxx);
+                            if (result > 0) {
+                                insertCount++;
+                            }
+                        }else {
+                            int result = ksryService.insertImportKsryjbxx(ksryjbxx);
+                            if (result > 0) {
+                                insertCount++;
+                            }
+                        }
+
+                    }
+                    else{
+                        return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR + "导入看守人员信息的编号或姓名不能为空！");
+                    }
+
+                }
+                //上传入所人员照片到数据库和文件服务器
+                 /*    String oldPicName = file.getOriginalFilename();
+                    String strDate = DateUtil.parseDateToStr(new Date(), DateUtil.DATE_TIME_FORMAT_YYYYMMDDHHMISSSSS);
+                    String picName = strDate + "_" + oldPicName;
+
+                    String path = fileUtil.uploadFile(file,picName);
+                   ZwpictureWithBLOBs zwpictureWithBLOBs = new ZwpictureWithBLOBs();
+                    zwpictureWithBLOBs.setJlbh(UUID.randomUUID().toString());
+                    zwpictureWithBLOBs.setZwjlbh(jlbh);
+                    zwpictureWithBLOBs.setOldpicname(oldPicName);
+                    zwpictureWithBLOBs.setPicname(path);
+                    int result = zwxxService.saveUploadZwpicture(zwpictureWithBLOBs);*/
+
+            }
+            log(user_Id,"看守人员信息导入","共导入看守人员信息"+insertCount+"条","看守所换押管理(网上换押管理系统)",false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"看守人员信息导入",e.toString(),"看守所换押管理(网上换押管理系统)",true);
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS, StaticObj.UPDATE_MSG_SUCCESS, "");
+    }
+
+    /*
+    *导出
+    */
+    @RequestMapping(value="/exportKsry")
+    @ResponseBody
+    public String exportKsry(Query ksryQuery){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            List<Ksryjbxx> ksryjbxxList = ksryService.getKsryList(ksryQuery);
+            ksryService.exportKsry(response,ksryjbxxList);
+            log(user_Id,"导出看守人员信息","批量导出看守人员信息成功","看守所换押管理(网上换押管理系统)",false);
+        }catch (Exception e){
+            log(user_Id,"导出看守人员信息",e.toString(),"看守所换押管理(网上换押管理系统)",true);
+            e.printStackTrace();
+        }
+        return  null;
+    }
+
+
+}

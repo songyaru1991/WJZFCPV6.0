@@ -1,0 +1,66 @@
+package com.netmarch.jzzngd.system.service.impl;
+
+import com.netmarch.jzzngd.system.bean.Lssqm;
+import com.netmarch.jzzngd.system.bean.Lssqmyj;
+import com.netmarch.jzzngd.system.bean.Sqmydzjzglb;
+import com.netmarch.jzzngd.system.mapper.LssqmMapper;
+import com.netmarch.jzzngd.system.mapper.SqmydzjzglbMapper;
+import com.netmarch.jzzngd.system.service.LssqmService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+@Service
+public class LssqmServiceImpl implements LssqmService {
+
+    @Autowired
+    private LssqmMapper lssqmMapper;
+
+    @Autowired
+    private SqmydzjzglbMapper sqmydzjzglbMapper;
+
+    @Override
+    public List<Lssqmyj> getLslistByAjbs(String ajbs) {
+        return lssqmMapper.getLslistByAjbs(ajbs);
+    }
+
+    @Override
+    public Object saveLssqInfo(Lssqm lssqm, List<Map> ids) {
+        int count = 0;
+        String id = UUID.randomUUID().toString();
+        if(null == lssqm.getId()||"".equals(lssqm.getId())){
+            lssqm.setId(id);
+            count = lssqmMapper.insert(lssqm);
+        }else{
+            count = lssqmMapper.updateSelective(lssqm);
+            id = lssqm.getId();
+            sqmydzjzglbMapper.deleteBySqmid(id);
+        }
+        for(Map m : ids){
+            Sqmydzjzglb sqmydzjzglb = new Sqmydzjzglb();
+            sqmydzjzglb.setId(UUID.randomUUID().toString());
+            sqmydzjzglb.setLssqmid(id);
+            sqmydzjzglb.setAjdzjzwjid(m.get("id").toString());
+            sqmydzjzglbMapper.insert(sqmydzjzglb);
+        }
+        return count;
+    }
+
+    @Override
+    public Lssqm getInfoById(String lssqmid) {
+        return lssqmMapper.getInfoById(lssqmid);
+    }
+
+    @Override
+    public int lssqCancel (String lssqmid){
+        return lssqmMapper.lssqCancel(lssqmid);
+    }
+
+    @Override
+    public Lssqm getInfoBySqm(String sqm){
+        return lssqmMapper.getInfoBySqm(sqm);
+    }
+}

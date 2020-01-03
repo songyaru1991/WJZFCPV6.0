@@ -1,0 +1,25 @@
+<div th:fragment="top" xmlns:th="http://schemas.xmlsoap.org/wsdl/" >
+    <!--头部s-->
+    <div class="I106_topOuter">
+        <div class="I106_top">
+            <div class="I106_topLeft">
+                <img th:src="${application.basePath}+'/static/images/logo.png'" alt="">
+                <span>人像平台管理系统</span>
+            </div>
+            <div class="I106_topRight">
+                <div class="I106_topButton" th:onclick="toIndex()">首页</div>
+                <div class="I106_topButton" th:onclick="javascript :history.back(-1);">返回</div>
+                <div class="I106_user">
+                  <!-- <show:pub type="USERNAME"/>-->
+                    <img th:src="${application.basePath}+'/static/images/arrowDown.png'" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--头部e-->
+    <script th:inline="javascript">
+        function toIndex(){
+            location.href = [[${application.basePath}]] + "/index";
+        }
+    </script>
+</div>

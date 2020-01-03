@@ -1,0 +1,100 @@
+package com.netmarch.figurecloud.management.system.controller;
+
+import com.netmarch.figurecloud.management.system.bean.Log;
+import com.netmarch.figurecloud.management.system.bean.LoginUser;
+import com.netmarch.figurecloud.management.system.bean.SysResource;
+import com.netmarch.figurecloud.management.system.service.SysResourcesService;
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import util.web.UserContextUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+/** 
+* @Description: AuthController 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/20 14:07
+*/ 
+@Controller
+@Log4j
+public class    AuthController {
+    @Autowired
+    private SysResourcesService sysResourcesService;
+
+
+    @GetMapping("login")
+    public String toLogin(){
+        return "login";
+    }
+
+    @GetMapping("error-page")
+    public ModelAndView toError(ModelAndView modelAndView, HttpServletRequest request){
+        String status = request.getParameter("no");
+        String message = request.getParameter("msg");
+        HashMap<String,String> param = new HashMap<>();
+        param.put("status",status);
+        param.put("message",message);
+        modelAndView.addObject("data",param);
+        modelAndView.setViewName("/common/error-page");
+        return modelAndView;
+    }
+    @GetMapping("index")
+    public String toIndex(Model model){
+        List<Integer> roleIds = UserContextUtil.getRoleIds();
+        LoginUser user = new LoginUser();
+        user.setId(UserContextUtil.getUserId());
+        user.setLoginName(UserContextUtil.getUserName());
+        List<SysResource> mainMenuList = new ArrayList<>();
+        List<SysResource> childMenuList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(roleIds)){
+            List<SysResource> resourceList = sysResourcesService.getResourcesListByRoleIds(roleIds);
+            for (SysResource bean : resourceList) {
+                if(bean.getType() == 1){
+                    mainMenuList.add(bean);
+                }
+                if(bean.getType() == 2){
+                    childMenuList.add(bean);
+                }
+            }
+
+        }
+        model.addAttribute("mainMenuList", mainMenuList);
+        model.addAttribute("childMenuList", childMenuList);
+        model.addAttribute("user", user);
+        return "index";
+    }
+
+    @RequestMapping("showChildren")
+    @ResponseBody
+    public List<SysResource> showChildren(Integer id){
+        List<SysResource> list = new ArrayList<>();
+        String pName = "";
+        List<Integer> roleIds = UserContextUtil.getRoleIds();
+        if(!CollectionUtils.isEmpty(roleIds)){
+            List<SysResource> resourceList = sysResourcesService.getResourcesListByRoleIds(roleIds);
+            for (SysResource bean : resourceList) {
+                if(bean.getId() == id){
+                    pName = bean.getName();
+                    break;
+                }
+            }
+            for (SysResource bean : resourceList) {
+                if(bean.getType() == 2 && bean.getParentId() == id){
+                    bean.setpName(pName);
+                    list.add(bean);
+                }
+            }
+        }
+        return list;
+    }
+}

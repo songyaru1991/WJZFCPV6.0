@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Jcy_xgszMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+    <result column="EDITUSERID" jdbcType="VARCHAR" property="edituserid" />
+    <result column="EDITTIME" jdbcType="TIMESTAMP" property="edittime" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, STATE, EDITUSERID, EDITTIME, AREA_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jcy_xgsz
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jcy_xgsz
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+    insert into jcy_xgsz (ID, NAME, STATE, 
+      EDITUSERID, EDITTIME, AREA_CODE
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{edituserid,jdbcType=VARCHAR}, #{edittime,jdbcType=TIMESTAMP}, #{areaCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+    insert into jcy_xgsz
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="edituserid != null">
+        EDITUSERID,
+      </if>
+      <if test="edittime != null">
+        EDITTIME,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="edituserid != null">
+        #{edituserid,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+    update jcy_xgsz
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="edituserid != null">
+        EDITUSERID = #{edituserid,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+    update jcy_xgsz
+    set NAME = #{name,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=INTEGER},
+      EDITUSERID = #{edituserid,jdbcType=VARCHAR},
+      EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectJcyXgszByAreaCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from jcy_xgsz
+    where  name = 'sa' and area_code = #{areaCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getjcyXgszList"  parameterType="java.lang.String" resultType="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+    select a.id, a.name, a.state, a.edituserid, a.edittime, a.area_code areaCode,b.jcy_area_name areaname
+    from jcy_xgsz a
+    left join area b on a.area_code=b.area_code
+    where a.area_code like CONCAT('%',#{areaCode,jdbcType=VARCHAR},'%')
+    order by a.edittime desc
+  </select>
+
+  <select id="getjcyXgszById" parameterType="java.lang.Integer" resultType="com.netmarch.ajgl.system.bean.Jcy_xgsz">
+  select a.id, a.name, a.state, a.edituserid, a.edittime, a.area_code areaCode,b.jcy_area_name areaname
+    from jcy_xgsz a
+    left join area b on a.area_code=b.area_code
+    where  a.id = #{id,jdbcType=INTEGER}
+ </select>
+
+</mapper>

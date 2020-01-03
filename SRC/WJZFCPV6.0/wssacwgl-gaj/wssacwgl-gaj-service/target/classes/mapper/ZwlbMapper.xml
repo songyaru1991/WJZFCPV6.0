@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wssacw.system.mapper.ZwlbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wssacw.system.bean.Zwlb">
+    <id column="JLBH" jdbcType="VARCHAR" property="jlbh" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="MSG_STATUS_GA" jdbcType="VARCHAR" property="msgStatusGa" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="MSG_STATUS_FY" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="MSG_STATUS_ZFW" jdbcType="VARCHAR" property="msgStatusZfw" />
+    <result column="MSG_STATUS_SFJ" jdbcType="VARCHAR" property="msgStatusSfj" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+    <result column="BM" jdbcType="VARCHAR" property="bm" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    JLBH, CODE, MC, MSG_STATUS_GA, MSG_STATUS_JCY, MSG_STATUS_FY, MSG_STATUS_ZFW, MSG_STATUS_SFJ, 
+    MSG_OP, MSG_DATE, BM
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zwlb
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from zwlb
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wssacw.system.bean.Zwlb">
+    insert into zwlb (JLBH, CODE, MC, 
+      MSG_STATUS_GA, MSG_STATUS_JCY, MSG_STATUS_FY, 
+      MSG_STATUS_ZFW, MSG_STATUS_SFJ, MSG_OP, 
+      MSG_DATE, BM)
+    values (#{jlbh,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR}, 
+      #{msgStatusGa,jdbcType=VARCHAR}, #{msgStatusJcy,jdbcType=VARCHAR}, #{msgStatusFy,jdbcType=VARCHAR}, 
+      #{msgStatusZfw,jdbcType=VARCHAR}, #{msgStatusSfj,jdbcType=VARCHAR}, #{msgOp,jdbcType=INTEGER}, 
+      #{msgDate,jdbcType=TIMESTAMP}, #{bm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wssacw.system.bean.Zwlb">
+    insert into zwlb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        JLBH,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+      <if test="msgStatusGa != null">
+        MSG_STATUS_GA,
+      </if>
+      <if test="msgStatusJcy != null">
+        MSG_STATUS_JCY,
+      </if>
+      <if test="msgStatusFy != null">
+        MSG_STATUS_FY,
+      </if>
+      <if test="msgStatusZfw != null">
+        MSG_STATUS_ZFW,
+      </if>
+      <if test="msgStatusSfj != null">
+        MSG_STATUS_SFJ,
+      </if>
+      <if test="msgOp != null">
+        MSG_OP,
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE,
+      </if>
+      <if test="bm != null">
+        BM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        #{jlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusGa != null">
+        #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bm != null">
+        #{bm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wssacw.system.bean.Zwlb">
+    update zwlb
+    <set>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusGa != null">
+        MSG_STATUS_GA = #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        MSG_STATUS_JCY = #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        MSG_STATUS_FY = #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusZfw != null">
+        MSG_STATUS_ZFW = #{msgStatusZfw,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusSfj != null">
+        MSG_STATUS_SFJ = #{msgStatusSfj,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        MSG_OP = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bm != null">
+        BM = #{bm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wssacw.system.bean.Zwlb">
+    update zwlb
+    set CODE = #{code,jdbcType=VARCHAR},
+      MC = #{mc,jdbcType=VARCHAR},
+      MSG_STATUS_GA = #{msgStatusGa,jdbcType=VARCHAR},
+      MSG_STATUS_JCY = #{msgStatusJcy,jdbcType=VARCHAR},
+      MSG_STATUS_FY = #{msgStatusFy,jdbcType=VARCHAR},
+      MSG_STATUS_ZFW = #{msgStatusZfw,jdbcType=VARCHAR},
+      MSG_STATUS_SFJ = #{msgStatusSfj,jdbcType=VARCHAR},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      BM = #{bm,jdbcType=VARCHAR}
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getZwlbList" resultType="com.netmarch.wssacw.system.bean.Zwlb">
+    select jlbh,bm,code,mc from zwlb
+  </select>
+</mapper>

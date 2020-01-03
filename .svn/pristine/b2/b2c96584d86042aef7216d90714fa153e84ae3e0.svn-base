@@ -1,0 +1,68 @@
+package util.excel.test;/*package cn.com.flaginfo.biz.excel.test;
+
+public class Test {
+
+	
+	
+	1.导出
+	Workbook wb = FlagInfoExcelUtils.getInstance().exportByObj( Class clz, List list, boolean isXssf,TableParams tableparams) 
+	注意：
+	   1）ExamUserExcel对象是：
+	
+		@Data
+		public class ExamUserExcel  implements Serializable{
+			@ExcelField(title = "序号",order=1,columnWidth=20)
+			private Integer num;
+			
+			@ExcelField(title = "姓名",order=1,columnWidth=50,color=HSSFColor.BLUE_GREY.index)
+			private String name;
+			
+			@ExcelField(title = "所属组织",order=1,columnWidth=50,align="left")
+			private String groupName;
+			
+			@ExcelField(title = "联系方式",order=1,columnWidth=30,align="right")
+			private String phone;
+			
+			@ExcelField(title = "回收状态",order=1,columnWidth=30,color=HSSFColor.RED.index,align="center")
+			private String  status;
+		}
+	
+	2）results 导出结果集
+	3）tableparams 表头设置
+	
+	
+	2.导入
+	 FlagInfoExcelUtils.getInstance().importDataByFileInputStream(targetFile.getInputStream(), ExamBankQuestionExcel.class, new ImportTableParams(0, 2, 0, 1));
+	注意：
+	
+	1）ExamBankQuestionExcel是：
+
+		@Data
+		public class ExamBankQuestionExcel  implements Serializable{
+			
+			private static final long serialVersionUID = 2164704913290185679L;
+		
+			@ExcelImportField(order=1)
+			private String classifyName;
+			
+			@ExcelImportField(order=2)
+			@NotNull
+			private String name;
+			
+			@ExcelImportField(order=3)
+			@NotNull
+			private String typeName;
+			
+			@ExcelImportField(order=4)
+			private String options;
+			
+			@ExcelImportField(order=5)
+			@NotNull
+			private String  correctAnswers;
+		}
+   2）ImportTableParams导入表头设置
+	
+	
+	
+}
+*/

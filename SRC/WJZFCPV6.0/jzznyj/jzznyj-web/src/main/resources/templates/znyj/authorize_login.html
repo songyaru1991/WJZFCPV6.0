@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>律师阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style.css'">
+    <script th:src="${application.basePath}+ '/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+ '/static/js/main_05.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.admin.css'">
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+</head>
+<body>
+<form action="" class="layui-form I206_form" >
+    <div class="L106_page" >
+        <img src="../static/images/L105_bg.png" alt="" class="L105_pageImg">
+        <div class="L106_title1">
+            <img src="../static/images/L105_title.png" alt="">
+        </div>
+        <div class="L106_logo1">
+            <img src="../static/images/L105_logo.png" alt="">
+        </div>
+        <div class="L106_login">
+            <div class="L106_loginTitle"><p>律师登录</p></div>
+            <div class="L106_loginInput">
+                <input class="layui-input" id="loginname" required lay-verify="required"  name="loginname" type="text" placeholder="请输入授权码...">
+            </div>
+            <div id="login_btn" onclick="lslogin()" class="L106_loginBtn" lay-submit lay-filter="login" ><p>登 录</p></div>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    function lslogin() {
+        var sqm = $('#loginname').val();
+        if(sqm){
+            $.post("/jzznyj/znyj/verifyLsyjLogin",{sqm:sqm},function (data) {
+                if(data){
+                    location.href = './lsyj?sqm='+sqm
+                }else{
+                    layer.msg('授权码有误，请重试！');
+                }
+            })
+        }
+    }
+</script>
+</html>

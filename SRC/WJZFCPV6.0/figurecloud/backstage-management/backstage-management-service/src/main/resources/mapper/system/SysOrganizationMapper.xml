@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.figurecloud.management.system.mapper.SysOrganizationMapper">
+    <select id="getAllUsedOrg"
+            resultType="com.netmarch.figurecloud.management.system.bean.SysOrganization">
+        select * from sys_organization where is_delete = 0
+    </select>
+
+    <select id="getOrganizationById" resultType="com.netmarch.figurecloud.management.system.bean.SysOrganization">
+        select * from sys_organization
+        where id =#{id}
+    </select>
+
+
+    <select id="getOrganizationName" resultType="com.netmarch.figurecloud.management.system.bean.SysOrganization">
+        select * from sys_organization
+        where  is_delete=0
+    </select>
+</mapper>

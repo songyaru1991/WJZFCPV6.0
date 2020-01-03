@@ -1,0 +1,234 @@
+package com.netmarch.fdfs.system.controller;
+
+import com.github.pagehelper.Page;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.netmarch.fdfs.common.controller.FrontBaseController;
+import com.netmarch.fdfs.common.thymeleaf.AuthElementTagProcessor;
+import com.netmarch.fdfs.common.utils.JedisUtil;
+import com.netmarch.fdfs.common.utils.JwtUtil;
+import com.netmarch.fdfs.system.bean.LoginUser;
+import com.netmarch.fdfs.system.bean.StaticObj;
+import com.netmarch.fdfs.system.client.LoginUserClient;
+import com.netmarch.fdfs.system.service.LoginUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import util.web.JsonResult;
+import util.web.ResultCodes;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
+
+/**
+ * @program: figurecloud
+ * @description: loginuser controller
+ * @author: dinggan
+ * @create: 2019-02-14 15:40
+ **/
+@Controller
+@RequestMapping("/user/*")
+@Slf4j
+public class LoginUserController extends FrontBaseController implements LoginUserClient {
+
+    @Autowired
+    private LoginUserService loginUserService;
+   // @Autowired
+   // private SysRoleService sysRoleService;
+
+    @RequestMapping("list")
+    public String list(HttpServletRequest request,LoginUser user, String keyword, Model model){
+        String loginname="";
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("loginName")) {
+                        loginname = c.getValue();
+                        break;
+                    }
+                }
+            }
+            /**
+             * 判断key是否存在
+             * if 命中 取缓存 else 取DB , 然后放入缓存
+             */
+            Page<LoginUser> loginUsers=null;
+            String key = StaticObj.PREFIX_CACHE;
+            boolean hasKey = JedisUtil.exists(key);
+            if(hasKey) {
+                loginUsers = (Page<LoginUser>) JedisUtil.getObject(key);
+               System.out.println("取缓存中的集合");
+            }else{
+                loginUsers = loginUserService.getUserList(user, keyword);
+                JedisUtil.setObject(key, loginUsers);
+                System.out.println("取DB中的值，并存入缓存，key:{}"+key);
+            }
+
+            model.addAttribute("list", loginUsers);
+            model.addAttribute("keyword", keyword);
+            log(loginname,"查询列表","获取用户信息列表","用户管理",false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(loginname,"查询列表",e.toString(),"用户管理",true);
+        }
+        return "user/list";
+    }
+
+    /**
+     * 添加页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toAdd")
+    public String toAdd(Model model){
+        return "user/add";
+    }
+
+    /**
+     * 编辑页面
+     * @param model
+     * @return
+     */
+    @GetMapping("toEdit")
+    public String toEdit(HttpServletRequest request,Model model, String user_Id){
+        String loginname = "";
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("loginName")) {
+                        loginname = c.getValue();
+                    }
+                }
+            }
+            LoginUser user = loginUserService.getUserById(user_Id);
+            model.addAttribute("bean", user);
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            String jsonResults = gson.toJson(user);
+            log(loginname, "修改用户", jsonResults, "用户管理", false);
+        } catch (Exception e) {
+            log(loginname, "修改用户", e.toString(), "用户管理", true);
+            e.printStackTrace();
+        }
+        return "user/edit";
+    }
+
+    /**
+     * 保存用户
+     * @param loginUser
+     * @return
+     */
+    @RequestMapping("/add")
+    @ResponseBody
+    public JsonResult save(HttpServletRequest request, LoginUser loginUser){
+        String user_Id="",loginname="";
+        try {
+            int countName = loginUserService.checkRepeatLoginName(loginUser);
+            if(countName > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_NAME);
+            }
+            BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("sid")) {
+                        user_Id = JwtUtil.getClaim(c.getValue(), StaticObj.USERID);
+                        loginUser.setAdduser(user_Id);
+                    }else if (c.getName().equals("loginName")) {
+                        loginname = c.getValue();
+                    }
+                }
+            }
+            loginUser.setUser_Id(UUID.randomUUID().toString().replace("-", ""));
+            loginUser.setPassword(encoder.encode(loginUser.getPassword()));
+
+            int result = loginUserService.addLoginUser(loginUser);
+            if(result <= 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+            }
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            String jsonResults=gson.toJson(loginUser);
+            log(loginname,"新增用户",jsonResults,"用户管理",false);
+        } catch (Exception e) {
+            log(loginname,"新增用户",e.toString(),"用户管理",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR, StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS, StaticObj.UPDATE_MSG_SUCCESS, "/user/list");
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public JsonResult edit(HttpServletRequest request,LoginUser loginUser){
+        String user_Id="",loginname="";
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("sid")) {
+                        user_Id = JwtUtil.getClaim(c.getValue(), StaticObj.USERID);
+                    }
+                    else if (c.getName().equals("loginName")) {
+                        loginname = c.getValue();
+                    }
+                }
+            }
+
+            int countName = loginUserService.checkRepeatLoginName(loginUser);
+            if(countName > 0){
+                return new JsonResult(ResultCodes.ERROR, StaticObj.REPEAT_MSG_NAME);
+            }
+            loginUser.setAdduser(user_Id);
+            int result = loginUserService.editLoginUser(loginUser);
+            if(result <= 0){
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+        } catch (Exception e) {
+            log(loginname,"修改用户",e.toString(),"用户管理",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS, "/user/list");
+    }
+
+    @RequestMapping("delBatch")
+    @ResponseBody
+    public JsonResult delBatch(HttpServletRequest request,String ids){
+        String user_Id="",loginname="";
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("sid")) {
+                        user_Id = JwtUtil.getClaim(c.getValue(), StaticObj.USERID);
+                    }
+                    else if (c.getName().equals("loginName")) {
+                        loginname = c.getValue();
+                    }
+                }
+            }
+            int result = loginUserService.delBatch(ids);
+            if(result <= 0){
+                return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+            }
+            log(loginname,"删除用户",ids,"用户管理",false);
+        } catch (Exception e) {
+            log(loginname,"删除用户",e.toString(),"用户管理",true);
+            e.printStackTrace();
+            return new JsonResult(ResultCodes.ERROR,StaticObj.UPDATE_MSG_ERROR);
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS,StaticObj.UPDATE_MSG_SUCCESS, "/user/list");
+    }
+
+
+}

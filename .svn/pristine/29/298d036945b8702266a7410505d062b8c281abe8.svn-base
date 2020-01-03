@@ -1,0 +1,16 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.ADwdmBak;
+
+import java.util.List;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/30 14:00
+ */
+public interface ADwdmBakMapper {
+    List<ADwdmBak> getAll();
+}

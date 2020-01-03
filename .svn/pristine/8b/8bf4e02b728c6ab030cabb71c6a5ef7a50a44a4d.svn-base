@@ -1,0 +1,27 @@
+package com.netmarch.wssacw.system.mapper;
+
+
+import com.netmarch.wssacw.system.bean.Zwxxb;
+
+import java.util.List;
+
+public interface ZwxxbMapper {
+    List<Zwxxb> getZwxxList(String ajbs);
+
+    int saveAddZwxx(Zwxxb zwxxb);
+
+    int saveEditZwxx(Zwxxb zwxxb);
+
+    Zwxxb editZwxx(String jlbh);
+
+    int delZwxx(String jlbh);
+
+    int delZwlz(String zwbh);
+
+    int delZwpicture(String zwjlbh);
+
+    int delZwpictureByPicName(String picname);
+
+    int checkZwmc(Zwxxb zwxxb);
+
+}

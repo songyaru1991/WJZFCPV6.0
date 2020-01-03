@@ -1,0 +1,110 @@
+package com.netmarch.jzznyj.common.utils;
+
+import com.netmarch.jzznyj.system.bean.StaticObj;
+import com.netmarch.jzznyj.system.bean.SysRole;
+import com.netmarch.jzznyj.system.service.LoginUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import util.exception.BaseException;
+import util.exception.ErrorCode;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @Author: songyaru
+ * @Date: 2019/6/10 8:24
+ * @Version 1.0
+ */
+@Component
+public class UsersUtil {
+    @Autowired
+    private LoginUserService loginUserService;
+    @Autowired
+    HttpServletRequest request;
+    public  static UsersUtil usersUtil ;
+    @PostConstruct //通过@PostConstruct实现初始化bean之前进行的操作
+    public void init() {
+        usersUtil = this;
+        //初使化时将已静态化的request实例化
+        usersUtil.request = this.request;
+        usersUtil.loginUserService=this.loginUserService;
+    }
+
+    public String getLoginUser_Id() {
+        String user_Id = "";
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("jwt")) {
+                        user_Id = JwtUtil.getClaim(c.getValue(), StaticObj.USERID);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user_Id;
+    }
+
+    public List<Integer> getRoleIdByUserId() {
+        String user_Id = "";
+        List<SysRole> sysRole = new ArrayList<SysRole>();
+        List<Integer> roleIds = new ArrayList<Integer>();
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            if(user_Id!="" ||  !user_Id.equals("")) {
+                sysRole = usersUtil.loginUserService.getRoleIdByUserId(user_Id);
+            }
+            for(int i=0;i<sysRole.size();i++){
+                int a=sysRole.get(i).getId();
+                roleIds.add(a);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),"获取用户信息为空");
+        }
+        return roleIds;
+    }
+
+    public int getUserTypeByUserId() {
+        String user_Id = "";
+        int usertype = -1;
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            if(user_Id!="" ||  !user_Id.equals("")) {
+                usertype = usersUtil.loginUserService.getUserTypeByUserId(user_Id);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BaseException(ErrorCode.SERVER_ERROR.value(),"获取用户信息为空");
+        }
+        return usertype;
+    }
+
+    public String getJwtCookie() {
+        String jwt = "";
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("jwt")) {
+                        jwt =c.getValue();
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jwt;
+    }
+
+}

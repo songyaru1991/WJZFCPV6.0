@@ -1,0 +1,6 @@
+com\netmarch\figurecloud\management\system\bean\BasePerson.class
+com\netmarch\figurecloud\management\system\bean\BaseRepository.class
+com\netmarch\figurecloud\management\system\bean\BaseGallery.class
+com\netmarch\figurecloud\management\system\client\DictClient.class
+com\netmarch\figurecloud\management\system\client\LoginUserClient.class
+com\netmarch\figurecloud\management\system\client\BaseGalleryClient.class

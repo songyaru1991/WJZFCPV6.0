@@ -1,0 +1,23 @@
+package com.netmarch.fdfs.system.mapper;
+
+import com.netmarch.fdfs.system.bean.Ajdzjzml;
+
+import java.util.List;
+
+public interface AjdzjzmlMapper {
+    List<Ajdzjzml> selectDzjzmlByParent(String parentid);
+
+    String selectLastTreeByParent(String parentid);
+
+    int getMlByOrderby(int orderby);
+
+    int updateMl(int orderby,String filename);
+
+    int addMl(String id,String filename,int orderby,String parentid);
+
+    int selectMlMaxId();
+
+    int deleteZtree(int orderby, String parentid);
+
+    Ajdzjzml selectMlByOrder(int orderby);
+}

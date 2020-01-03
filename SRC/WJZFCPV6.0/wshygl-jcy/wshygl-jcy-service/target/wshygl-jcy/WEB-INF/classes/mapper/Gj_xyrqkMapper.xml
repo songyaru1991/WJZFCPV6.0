@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wshy.system.mapper.Gj_xyrqkMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wshy.system.bean.Gj_xyrqk">
+    <id column="XYRBS" jdbcType="VARCHAR" property="XYRBS" />
+    <result column="XYRBH" jdbcType="VARCHAR" property="XYRBH" />
+    <result column="AJBS" jdbcType="VARCHAR" property="AJBS" />
+    <result column="XYRXM" jdbcType="VARCHAR" property="XYRXM" />
+    <result column="XYRXBDM" jdbcType="VARCHAR" property="XYRXBDM" />
+    <result column="SFZHM" jdbcType="VARCHAR" property="SFZHM" />
+    <result column="XYRZY" jdbcType="VARCHAR" property="XYRZY" />
+    <result column="DQZZ" jdbcType="VARCHAR" property="DQZZ" />
+    <result column="XYRHJD" jdbcType="VARCHAR" property="XYRHJD" />
+    <result column="QZCSDM" jdbcType="VARCHAR" property="QZCSDM" />
+    <result column="XYRTQAY" jdbcType="VARCHAR" property="XYRTQAY" />
+    <result column="XYRTQAYDM" jdbcType="VARCHAR" property="XYRTQAYDM" />
+    <result column="XYRXXTQAY" jdbcType="VARCHAR" property="XYRXXTQAY" />
+    <result column="XYRZT" jdbcType="VARCHAR" property="XYRZT" />
+    <result column="MSG_ID" jdbcType="INTEGER" property="MSG_ID" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="MSG_STATUS_JCY" />
+    <result column="MSG_STATUS_FY" jdbcType="VARCHAR" property="MSG_STATUS_FY" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="MSG_OP" />
+    <result column="ISSH" jdbcType="VARCHAR" property="ISSH" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="AREA_CODE" />
+    <result column="WHDM" jdbcType="VARCHAR" property="WHDM" />
+    <result column="NL" jdbcType="VARCHAR" property="NL" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="MSG_DATE" />
+    <result column="ZZMMDM" jdbcType="VARCHAR" property="ZZMMDM" />
+    <result column="ZZMM" jdbcType="VARCHAR" property="ZZMM" />
+    <result column="CYM" jdbcType="VARCHAR" property="CYM" />
+    <result column="CH" jdbcType="VARCHAR" property="CH" />
+    <result column="ZJLX" jdbcType="VARCHAR" property="ZJLX" />
+    <result column="MZ" jdbcType="VARCHAR" property="MZ" />
+    <result column="CSRQ" jdbcType="VARCHAR" property="CSRQ" />
+    <result column="ZASNL" jdbcType="VARCHAR" property="ZASNL" />
+    <result column="GJ" jdbcType="VARCHAR" property="GJ" />
+    <result column="GZDWSZXX" jdbcType="VARCHAR" property="GZDWSZXX" />
+    <result column="DWXXSZD" jdbcType="VARCHAR" property="DWXXSZD" />
+    <result column="ZJ" jdbcType="VARCHAR" property="ZJ" />
+    <result column="ZW" jdbcType="VARCHAR" property="ZW" />
+    <result column="ZY" jdbcType="VARCHAR" property="ZY" />
+    <result column="SF" jdbcType="VARCHAR" property="SF" />
+    <result column="ATGZSF" jdbcType="VARCHAR" property="ATGZSF" />
+    <result column="SFDWZYLD" jdbcType="VARCHAR" property="SFDWZYLD" />
+    <result column="SFDRSZ" jdbcType="VARCHAR" property="SFDRSZ" />
+    <result column="RDDB" jdbcType="VARCHAR" property="RDDB" />
+    <result column="ZXWY" jdbcType="VARCHAR" property="ZXWY" />
+    <result column="SFNCJCZZRY" jdbcType="VARCHAR" property="SFNCJCZZRY" />
+    <result column="SFCJZZRY" jdbcType="VARCHAR" property="SFCJZZRY" />
+    <result column="SFCJR" jdbcType="VARCHAR" property="SFCJR" />
+    <result column="FDDLR" jdbcType="VARCHAR" property="FDDLR" />
+    <result column="WNFZXYRJTQK" jdbcType="VARCHAR" property="WNFZXYRJTQK" />
+    <result column="YSYJ" jdbcType="VARCHAR" property="YSYJ" />
+    <result column="SXQTAY" jdbcType="VARCHAR" property="SXQTAY" />
+    <result column="ZYZAD" jdbcType="VARCHAR" property="ZYZAD" />
+    <result column="QK" jdbcType="VARCHAR" property="QK" />
+    <result column="SFWZBDX" jdbcType="VARCHAR" property="SFWZBDX" />
+    <result column="SFZT" jdbcType="VARCHAR" property="SFZT" />
+    <result column="SFTJ" jdbcType="VARCHAR" property="SFTJ" />
+    <result column="SFLAJDDX" jdbcType="VARCHAR" property="SFLAJDDX" />
+    <result column="SFJDXZZFJGYSAJ" jdbcType="VARCHAR" property="SFJDXZZFJGYSAJ" />
+    <result column="YSAJDXZZFJGLB" jdbcType="VARCHAR" property="YSAJDXZZFJGLB" />
+    <result column="ZWFZLARQ" jdbcType="VARCHAR" property="ZWFZLARQ" />
+    <result column="SFSLHQT" jdbcType="VARCHAR" property="SFSLHQT" />
+    <result column="QZCSCQRQ" jdbcType="VARCHAR" property="QZCSCQRQ" />
+    <result column="PZJDJG" jdbcType="VARCHAR" property="PZJDJG" />
+    <result column="QZCSBGLY" jdbcType="VARCHAR" property="QZCSBGLY" />
+    <result column="ZXRQ" jdbcType="VARCHAR" property="ZXRQ" />
+    <result column="ZXHZRQ" jdbcType="VARCHAR" property="ZXHZRQ" />
+    <result column="QZCSDD" jdbcType="VARCHAR" property="QZCSDD" />
+    <result column="ZXJG" jdbcType="VARCHAR" property="ZXJG" />
+    <result column="BZRXM" jdbcType="VARCHAR" property="BZRXM" />
+    <result column="BZJ" jdbcType="VARCHAR" property="BZJ" />
+    <result column="QZCSJCRQ" jdbcType="VARCHAR" property="QZCSJCRQ" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    XYRBS, XYRBH, AJBS, XYRXM, XYRXBDM, SFZHM, XYRZY, DQZZ, XYRHJD, QZCSDM, XYRTQAY, 
+    XYRTQAYDM, XYRXXTQAY, XYRZT, MSG_ID, MSG_STATUS_JCY, MSG_STATUS_FY, MSG_OP, ISSH, 
+    AREA_CODE, WHDM, NL, MSG_DATE, ZZMMDM, ZZMM, CYM, CH, ZJLX, MZ, CSRQ, ZASNL, GJ, 
+    GZDWSZXX, DWXXSZD, ZJ, ZW, ZY, SF, ATGZSF, SFDWZYLD, SFDRSZ, RDDB, ZXWY, SFNCJCZZRY, 
+    SFCJZZRY, SFCJR, FDDLR, WNFZXYRJTQK, YSYJ, SXQTAY, ZYZAD, QK, SFWZBDX, SFZT, SFTJ, 
+    SFLAJDDX, SFJDXZZFJGYSAJ, YSAJDXZZFJGLB, ZWFZLARQ, SFSLHQT, QZCSCQRQ, PZJDJG, QZCSBGLY, 
+    ZXRQ, ZXHZRQ, QZCSDD, ZXJG, BZRXM, BZJ, QZCSJCRQ
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select DISTINCT
+    <include refid="Base_Column_List" />
+    from gj_xyrqk
+    where XYRBS = #{XYRBS,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getXyrqkByXyrbh" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select DISTINCT
+    <include refid="Base_Column_List" />
+    from gj_xyrqk
+    where XYRBH = #{xyrbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from gj_xyrqk
+    where XYRBS = #{XYRBS,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wshy.system.bean.Gj_xyrqk">
+    insert into gj_xyrqk (XYRBS, XYRBH, AJBS, 
+      XYRXM, XYRXBDM, SFZHM, 
+      XYRZY, DQZZ, XYRHJD, 
+      QZCSDM, XYRTQAY, XYRTQAYDM, 
+      XYRXXTQAY, XYRZT, MSG_ID, 
+      MSG_STATUS_JCY, MSG_STATUS_FY, MSG_OP, 
+      ISSH, AREA_CODE, WHDM, 
+      NL, MSG_DATE, ZZMMDM, 
+      ZZMM, CYM, CH, ZJLX, 
+      MZ, CSRQ, ZASNL, GJ, 
+      GZDWSZXX, DWXXSZD, ZJ, 
+      ZW, ZY, SF, ATGZSF, 
+      SFDWZYLD, SFDRSZ, RDDB, 
+      ZXWY, SFNCJCZZRY, SFCJZZRY, 
+      SFCJR, FDDLR, WNFZXYRJTQK, 
+      YSYJ, SXQTAY, ZYZAD, 
+      QK, SFWZBDX, SFZT, 
+      SFTJ, SFLAJDDX, SFJDXZZFJGYSAJ, 
+      YSAJDXZZFJGLB, ZWFZLARQ, SFSLHQT, 
+      QZCSCQRQ, PZJDJG, QZCSBGLY, 
+      ZXRQ, ZXHZRQ, QZCSDD, 
+      ZXJG, BZRXM, BZJ, QZCSJCRQ
+      )
+    values (#{XYRBS,jdbcType=VARCHAR}, #{XYRBH,jdbcType=VARCHAR}, #{AJBS,jdbcType=VARCHAR}, 
+      #{XYRXM,jdbcType=VARCHAR}, #{XYRXBDM,jdbcType=VARCHAR}, #{SFZHM,jdbcType=VARCHAR}, 
+      #{XYRZY,jdbcType=VARCHAR}, #{DQZZ,jdbcType=VARCHAR}, #{XYRHJD,jdbcType=VARCHAR}, 
+      #{QZCSDM,jdbcType=VARCHAR}, #{XYRTQAY,jdbcType=VARCHAR}, #{XYRTQAYDM,jdbcType=VARCHAR}, 
+      #{XYRXXTQAY,jdbcType=VARCHAR}, #{XYRZT,jdbcType=VARCHAR}, #{MSG_ID,jdbcType=INTEGER}, 
+      #{MSG_STATUS_JCY,jdbcType=VARCHAR}, #{MSG_STATUS_FY,jdbcType=VARCHAR}, #{MSG_OP,jdbcType=INTEGER}, 
+      #{ISSH,jdbcType=VARCHAR}, #{AREA_CODE,jdbcType=VARCHAR}, #{WHDM,jdbcType=VARCHAR}, 
+      #{NL,jdbcType=VARCHAR}, #{MSG_DATE,jdbcType=TIMESTAMP}, #{ZZMMDM,jdbcType=VARCHAR}, 
+      #{ZZMM,jdbcType=VARCHAR}, #{CYM,jdbcType=VARCHAR}, #{CH,jdbcType=VARCHAR}, #{ZJLX,jdbcType=VARCHAR}, 
+      #{MZ,jdbcType=VARCHAR}, #{CSRQ,jdbcType=VARCHAR}, #{ZASNL,jdbcType=VARCHAR}, #{GJ,jdbcType=VARCHAR}, 
+      #{GZDWSZXX,jdbcType=VARCHAR}, #{DWXXSZD,jdbcType=VARCHAR}, #{ZJ,jdbcType=VARCHAR}, 
+      #{ZW,jdbcType=VARCHAR}, #{ZY,jdbcType=VARCHAR}, #{SF,jdbcType=VARCHAR}, #{ATGZSF,jdbcType=VARCHAR}, 
+      #{SFDWZYLD,jdbcType=VARCHAR}, #{SFDRSZ,jdbcType=VARCHAR}, #{RDDB,jdbcType=VARCHAR}, 
+      #{ZXWY,jdbcType=VARCHAR}, #{SFNCJCZZRY,jdbcType=VARCHAR}, #{SFCJZZRY,jdbcType=VARCHAR}, 
+      #{SFCJR,jdbcType=VARCHAR}, #{FDDLR,jdbcType=VARCHAR}, #{WNFZXYRJTQK,jdbcType=VARCHAR}, 
+      #{YSYJ,jdbcType=VARCHAR}, #{SXQTAY,jdbcType=VARCHAR}, #{ZYZAD,jdbcType=VARCHAR}, 
+      #{QK,jdbcType=VARCHAR}, #{SFWZBDX,jdbcType=VARCHAR}, #{SFZT,jdbcType=VARCHAR}, 
+      #{SFTJ,jdbcType=VARCHAR}, #{SFLAJDDX,jdbcType=VARCHAR}, #{SFJDXZZFJGYSAJ,jdbcType=VARCHAR}, 
+      #{YSAJDXZZFJGLB,jdbcType=VARCHAR}, #{ZWFZLARQ,jdbcType=VARCHAR}, #{SFSLHQT,jdbcType=VARCHAR}, 
+      #{QZCSCQRQ,jdbcType=VARCHAR}, #{PZJDJG,jdbcType=VARCHAR}, #{QZCSBGLY,jdbcType=VARCHAR}, 
+      #{ZXRQ,jdbcType=VARCHAR}, #{ZXHZRQ,jdbcType=VARCHAR}, #{QZCSDD,jdbcType=VARCHAR}, 
+      #{ZXJG,jdbcType=VARCHAR}, #{BZRXM,jdbcType=VARCHAR}, #{BZJ,jdbcType=VARCHAR}, #{QZCSJCRQ,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wshy.system.bean.Gj_xyrqk">
+    insert into gj_xyrqk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="XYRBS != null">
+        XYRBS,
+      </if>
+      <if test="XYRBH != null">
+        XYRBH,
+      </if>
+      <if test="AJBS != null">
+        AJBS,
+      </if>
+      <if test="XYRXM != null">
+        XYRXM,
+      </if>
+      <if test="XYRXBDM != null">
+        XYRXBDM,
+      </if>
+      <if test="SFZHM != null">
+        SFZHM,
+      </if>
+      <if test="XYRZY != null">
+        XYRZY,
+      </if>
+      <if test="DQZZ != null">
+        DQZZ,
+      </if>
+      <if test="XYRHJD != null">
+        XYRHJD,
+      </if>
+      <if test="QZCSDM != null">
+        QZCSDM,
+      </if>
+      <if test="XYRTQAY != null">
+        XYRTQAY,
+      </if>
+      <if test="XYRTQAYDM != null">
+        XYRTQAYDM,
+      </if>
+      <if test="XYRXXTQAY != null">
+        XYRXXTQAY,
+      </if>
+      <if test="XYRZT != null">
+        XYRZT,
+      </if>
+      <if test="MSG_ID != null">
+        MSG_ID,
+      </if>
+      <if test="MSG_STATUS_JCY != null">
+        MSG_STATUS_JCY,
+      </if>
+      <if test="MSG_STATUS_FY != null">
+        MSG_STATUS_FY,
+      </if>
+      <if test="MSG_OP != null">
+        MSG_OP,
+      </if>
+      <if test="ISSH != null">
+        ISSH,
+      </if>
+      <if test="AREA_CODE != null">
+        AREA_CODE,
+      </if>
+      <if test="WHDM != null">
+        WHDM,
+      </if>
+      <if test="NL != null">
+        NL,
+      </if>
+      <if test="MSG_DATE != null">
+        MSG_DATE,
+      </if>
+      <if test="ZZMMDM != null">
+        ZZMMDM,
+      </if>
+      <if test="ZZMM != null">
+        ZZMM,
+      </if>
+      <if test="CYM != null">
+        CYM,
+      </if>
+      <if test="CH != null">
+        CH,
+      </if>
+      <if test="ZJLX != null">
+        ZJLX,
+      </if>
+      <if test="MZ != null">
+        MZ,
+      </if>
+      <if test="CSRQ != null">
+        CSRQ,
+      </if>
+      <if test="ZASNL != null">
+        ZASNL,
+      </if>
+      <if test="GJ != null">
+        GJ,
+      </if>
+      <if test="GZDWSZXX != null">
+        GZDWSZXX,
+      </if>
+      <if test="DWXXSZD != null">
+        DWXXSZD,
+      </if>
+      <if test="ZJ != null">
+        ZJ,
+      </if>
+      <if test="ZW != null">
+        ZW,
+      </if>
+      <if test="ZY != null">
+        ZY,
+      </if>
+      <if test="SF != null">
+        SF,
+      </if>
+      <if test="ATGZSF != null">
+        ATGZSF,
+      </if>
+      <if test="SFDWZYLD != null">
+        SFDWZYLD,
+      </if>
+      <if test="SFDRSZ != null">
+        SFDRSZ,
+      </if>
+      <if test="RDDB != null">
+        RDDB,
+      </if>
+      <if test="ZXWY != null">
+        ZXWY,
+      </if>
+      <if test="SFNCJCZZRY != null">
+        SFNCJCZZRY,
+      </if>
+      <if test="SFCJZZRY != null">
+        SFCJZZRY,
+      </if>
+      <if test="SFCJR != null">
+        SFCJR,
+      </if>
+      <if test="FDDLR != null">
+        FDDLR,
+      </if>
+      <if test="WNFZXYRJTQK != null">
+        WNFZXYRJTQK,
+      </if>
+      <if test="YSYJ != null">
+        YSYJ,
+      </if>
+      <if test="SXQTAY != null">
+        SXQTAY,
+      </if>
+      <if test="ZYZAD != null">
+        ZYZAD,
+      </if>
+      <if test="QK != null">
+        QK,
+      </if>
+      <if test="SFWZBDX != null">
+        SFWZBDX,
+      </if>
+      <if test="SFZT != null">
+        SFZT,
+      </if>
+      <if test="SFTJ != null">
+        SFTJ,
+      </if>
+      <if test="SFLAJDDX != null">
+        SFLAJDDX,
+      </if>
+      <if test="SFJDXZZFJGYSAJ != null">
+        SFJDXZZFJGYSAJ,
+      </if>
+      <if test="YSAJDXZZFJGLB != null">
+        YSAJDXZZFJGLB,
+      </if>
+      <if test="ZWFZLARQ != null">
+        ZWFZLARQ,
+      </if>
+      <if test="SFSLHQT != null">
+        SFSLHQT,
+      </if>
+      <if test="QZCSCQRQ != null">
+        QZCSCQRQ,
+      </if>
+      <if test="PZJDJG != null">
+        PZJDJG,
+      </if>
+      <if test="QZCSBGLY != null">
+        QZCSBGLY,
+      </if>
+      <if test="ZXRQ != null">
+        ZXRQ,
+      </if>
+      <if test="ZXHZRQ != null">
+        ZXHZRQ,
+      </if>
+      <if test="QZCSDD != null">
+        QZCSDD,
+      </if>
+      <if test="ZXJG != null">
+        ZXJG,
+      </if>
+      <if test="BZRXM != null">
+        BZRXM,
+      </if>
+      <if test="BZJ != null">
+        BZJ,
+      </if>
+      <if test="QZCSJCRQ != null">
+        QZCSJCRQ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="XYRBS != null">
+        #{XYRBS,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRBH != null">
+        #{XYRBH,jdbcType=VARCHAR},
+      </if>
+      <if test="AJBS != null">
+        #{AJBS,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRXM != null">
+        #{XYRXM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRXBDM != null">
+        #{XYRXBDM,jdbcType=VARCHAR},
+      </if>
+      <if test="SFZHM != null">
+        #{SFZHM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRZY != null">
+        #{XYRZY,jdbcType=VARCHAR},
+      </if>
+      <if test="DQZZ != null">
+        #{DQZZ,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRHJD != null">
+        #{XYRHJD,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSDM != null">
+        #{QZCSDM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRTQAY != null">
+        #{XYRTQAY,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRTQAYDM != null">
+        #{XYRTQAYDM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRXXTQAY != null">
+        #{XYRXXTQAY,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRZT != null">
+        #{XYRZT,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_ID != null">
+        #{MSG_ID,jdbcType=INTEGER},
+      </if>
+      <if test="MSG_STATUS_JCY != null">
+        #{MSG_STATUS_JCY,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_STATUS_FY != null">
+        #{MSG_STATUS_FY,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_OP != null">
+        #{MSG_OP,jdbcType=INTEGER},
+      </if>
+      <if test="ISSH != null">
+        #{ISSH,jdbcType=VARCHAR},
+      </if>
+      <if test="AREA_CODE != null">
+        #{AREA_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="WHDM != null">
+        #{WHDM,jdbcType=VARCHAR},
+      </if>
+      <if test="NL != null">
+        #{NL,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_DATE != null">
+        #{MSG_DATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ZZMMDM != null">
+        #{ZZMMDM,jdbcType=VARCHAR},
+      </if>
+      <if test="ZZMM != null">
+        #{ZZMM,jdbcType=VARCHAR},
+      </if>
+      <if test="CYM != null">
+        #{CYM,jdbcType=VARCHAR},
+      </if>
+      <if test="CH != null">
+        #{CH,jdbcType=VARCHAR},
+      </if>
+      <if test="ZJLX != null">
+        #{ZJLX,jdbcType=VARCHAR},
+      </if>
+      <if test="MZ != null">
+        #{MZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSRQ != null">
+        #{CSRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZASNL != null">
+        #{ZASNL,jdbcType=VARCHAR},
+      </if>
+      <if test="GJ != null">
+        #{GJ,jdbcType=VARCHAR},
+      </if>
+      <if test="GZDWSZXX != null">
+        #{GZDWSZXX,jdbcType=VARCHAR},
+      </if>
+      <if test="DWXXSZD != null">
+        #{DWXXSZD,jdbcType=VARCHAR},
+      </if>
+      <if test="ZJ != null">
+        #{ZJ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZW != null">
+        #{ZW,jdbcType=VARCHAR},
+      </if>
+      <if test="ZY != null">
+        #{ZY,jdbcType=VARCHAR},
+      </if>
+      <if test="SF != null">
+        #{SF,jdbcType=VARCHAR},
+      </if>
+      <if test="ATGZSF != null">
+        #{ATGZSF,jdbcType=VARCHAR},
+      </if>
+      <if test="SFDWZYLD != null">
+        #{SFDWZYLD,jdbcType=VARCHAR},
+      </if>
+      <if test="SFDRSZ != null">
+        #{SFDRSZ,jdbcType=VARCHAR},
+      </if>
+      <if test="RDDB != null">
+        #{RDDB,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXWY != null">
+        #{ZXWY,jdbcType=VARCHAR},
+      </if>
+      <if test="SFNCJCZZRY != null">
+        #{SFNCJCZZRY,jdbcType=VARCHAR},
+      </if>
+      <if test="SFCJZZRY != null">
+        #{SFCJZZRY,jdbcType=VARCHAR},
+      </if>
+      <if test="SFCJR != null">
+        #{SFCJR,jdbcType=VARCHAR},
+      </if>
+      <if test="FDDLR != null">
+        #{FDDLR,jdbcType=VARCHAR},
+      </if>
+      <if test="WNFZXYRJTQK != null">
+        #{WNFZXYRJTQK,jdbcType=VARCHAR},
+      </if>
+      <if test="YSYJ != null">
+        #{YSYJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SXQTAY != null">
+        #{SXQTAY,jdbcType=VARCHAR},
+      </if>
+      <if test="ZYZAD != null">
+        #{ZYZAD,jdbcType=VARCHAR},
+      </if>
+      <if test="QK != null">
+        #{QK,jdbcType=VARCHAR},
+      </if>
+      <if test="SFWZBDX != null">
+        #{SFWZBDX,jdbcType=VARCHAR},
+      </if>
+      <if test="SFZT != null">
+        #{SFZT,jdbcType=VARCHAR},
+      </if>
+      <if test="SFTJ != null">
+        #{SFTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SFLAJDDX != null">
+        #{SFLAJDDX,jdbcType=VARCHAR},
+      </if>
+      <if test="SFJDXZZFJGYSAJ != null">
+        #{SFJDXZZFJGYSAJ,jdbcType=VARCHAR},
+      </if>
+      <if test="YSAJDXZZFJGLB != null">
+        #{YSAJDXZZFJGLB,jdbcType=VARCHAR},
+      </if>
+      <if test="ZWFZLARQ != null">
+        #{ZWFZLARQ,jdbcType=VARCHAR},
+      </if>
+      <if test="SFSLHQT != null">
+        #{SFSLHQT,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSCQRQ != null">
+        #{QZCSCQRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="PZJDJG != null">
+        #{PZJDJG,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSBGLY != null">
+        #{QZCSBGLY,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXRQ != null">
+        #{ZXRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXHZRQ != null">
+        #{ZXHZRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSDD != null">
+        #{QZCSDD,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXJG != null">
+        #{ZXJG,jdbcType=VARCHAR},
+      </if>
+      <if test="BZRXM != null">
+        #{BZRXM,jdbcType=VARCHAR},
+      </if>
+      <if test="BZJ != null">
+        #{BZJ,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSJCRQ != null">
+        #{QZCSJCRQ,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wshy.system.bean.Gj_xyrqk">
+    update gj_xyrqk
+    <set>
+      <if test="XYRBH != null">
+        XYRBH = #{XYRBH,jdbcType=VARCHAR},
+      </if>
+      <if test="AJBS != null">
+        AJBS = #{AJBS,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRXM != null">
+        XYRXM = #{XYRXM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRXBDM != null">
+        XYRXBDM = #{XYRXBDM,jdbcType=VARCHAR},
+      </if>
+      <if test="SFZHM != null">
+        SFZHM = #{SFZHM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRZY != null">
+        XYRZY = #{XYRZY,jdbcType=VARCHAR},
+      </if>
+      <if test="DQZZ != null">
+        DQZZ = #{DQZZ,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRHJD != null">
+        XYRHJD = #{XYRHJD,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSDM != null">
+        QZCSDM = #{QZCSDM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRTQAY != null">
+        XYRTQAY = #{XYRTQAY,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRTQAYDM != null">
+        XYRTQAYDM = #{XYRTQAYDM,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRXXTQAY != null">
+        XYRXXTQAY = #{XYRXXTQAY,jdbcType=VARCHAR},
+      </if>
+      <if test="XYRZT != null">
+        XYRZT = #{XYRZT,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_ID != null">
+        MSG_ID = #{MSG_ID,jdbcType=INTEGER},
+      </if>
+      <if test="MSG_STATUS_JCY != null">
+        MSG_STATUS_JCY = #{MSG_STATUS_JCY,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_STATUS_FY != null">
+        MSG_STATUS_FY = #{MSG_STATUS_FY,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_OP != null">
+        MSG_OP = #{MSG_OP,jdbcType=INTEGER},
+      </if>
+      <if test="ISSH != null">
+        ISSH = #{ISSH,jdbcType=VARCHAR},
+      </if>
+      <if test="AREA_CODE != null">
+        AREA_CODE = #{AREA_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="WHDM != null">
+        WHDM = #{WHDM,jdbcType=VARCHAR},
+      </if>
+      <if test="NL != null">
+        NL = #{NL,jdbcType=VARCHAR},
+      </if>
+      <if test="MSG_DATE != null">
+        MSG_DATE = #{MSG_DATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ZZMMDM != null">
+        ZZMMDM = #{ZZMMDM,jdbcType=VARCHAR},
+      </if>
+      <if test="ZZMM != null">
+        ZZMM = #{ZZMM,jdbcType=VARCHAR},
+      </if>
+      <if test="CYM != null">
+        CYM = #{CYM,jdbcType=VARCHAR},
+      </if>
+      <if test="CH != null">
+        CH = #{CH,jdbcType=VARCHAR},
+      </if>
+      <if test="ZJLX != null">
+        ZJLX = #{ZJLX,jdbcType=VARCHAR},
+      </if>
+      <if test="MZ != null">
+        MZ = #{MZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSRQ != null">
+        CSRQ = #{CSRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZASNL != null">
+        ZASNL = #{ZASNL,jdbcType=VARCHAR},
+      </if>
+      <if test="GJ != null">
+        GJ = #{GJ,jdbcType=VARCHAR},
+      </if>
+      <if test="GZDWSZXX != null">
+        GZDWSZXX = #{GZDWSZXX,jdbcType=VARCHAR},
+      </if>
+      <if test="DWXXSZD != null">
+        DWXXSZD = #{DWXXSZD,jdbcType=VARCHAR},
+      </if>
+      <if test="ZJ != null">
+        ZJ = #{ZJ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZW != null">
+        ZW = #{ZW,jdbcType=VARCHAR},
+      </if>
+      <if test="ZY != null">
+        ZY = #{ZY,jdbcType=VARCHAR},
+      </if>
+      <if test="SF != null">
+        SF = #{SF,jdbcType=VARCHAR},
+      </if>
+      <if test="ATGZSF != null">
+        ATGZSF = #{ATGZSF,jdbcType=VARCHAR},
+      </if>
+      <if test="SFDWZYLD != null">
+        SFDWZYLD = #{SFDWZYLD,jdbcType=VARCHAR},
+      </if>
+      <if test="SFDRSZ != null">
+        SFDRSZ = #{SFDRSZ,jdbcType=VARCHAR},
+      </if>
+      <if test="RDDB != null">
+        RDDB = #{RDDB,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXWY != null">
+        ZXWY = #{ZXWY,jdbcType=VARCHAR},
+      </if>
+      <if test="SFNCJCZZRY != null">
+        SFNCJCZZRY = #{SFNCJCZZRY,jdbcType=VARCHAR},
+      </if>
+      <if test="SFCJZZRY != null">
+        SFCJZZRY = #{SFCJZZRY,jdbcType=VARCHAR},
+      </if>
+      <if test="SFCJR != null">
+        SFCJR = #{SFCJR,jdbcType=VARCHAR},
+      </if>
+      <if test="FDDLR != null">
+        FDDLR = #{FDDLR,jdbcType=VARCHAR},
+      </if>
+      <if test="WNFZXYRJTQK != null">
+        WNFZXYRJTQK = #{WNFZXYRJTQK,jdbcType=VARCHAR},
+      </if>
+      <if test="YSYJ != null">
+        YSYJ = #{YSYJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SXQTAY != null">
+        SXQTAY = #{SXQTAY,jdbcType=VARCHAR},
+      </if>
+      <if test="ZYZAD != null">
+        ZYZAD = #{ZYZAD,jdbcType=VARCHAR},
+      </if>
+      <if test="QK != null">
+        QK = #{QK,jdbcType=VARCHAR},
+      </if>
+      <if test="SFWZBDX != null">
+        SFWZBDX = #{SFWZBDX,jdbcType=VARCHAR},
+      </if>
+      <if test="SFZT != null">
+        SFZT = #{SFZT,jdbcType=VARCHAR},
+      </if>
+      <if test="SFTJ != null">
+        SFTJ = #{SFTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SFLAJDDX != null">
+        SFLAJDDX = #{SFLAJDDX,jdbcType=VARCHAR},
+      </if>
+      <if test="SFJDXZZFJGYSAJ != null">
+        SFJDXZZFJGYSAJ = #{SFJDXZZFJGYSAJ,jdbcType=VARCHAR},
+      </if>
+      <if test="YSAJDXZZFJGLB != null">
+        YSAJDXZZFJGLB = #{YSAJDXZZFJGLB,jdbcType=VARCHAR},
+      </if>
+      <if test="ZWFZLARQ != null">
+        ZWFZLARQ = #{ZWFZLARQ,jdbcType=VARCHAR},
+      </if>
+      <if test="SFSLHQT != null">
+        SFSLHQT = #{SFSLHQT,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSCQRQ != null">
+        QZCSCQRQ = #{QZCSCQRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="PZJDJG != null">
+        PZJDJG = #{PZJDJG,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSBGLY != null">
+        QZCSBGLY = #{QZCSBGLY,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXRQ != null">
+        ZXRQ = #{ZXRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXHZRQ != null">
+        ZXHZRQ = #{ZXHZRQ,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSDD != null">
+        QZCSDD = #{QZCSDD,jdbcType=VARCHAR},
+      </if>
+      <if test="ZXJG != null">
+        ZXJG = #{ZXJG,jdbcType=VARCHAR},
+      </if>
+      <if test="BZRXM != null">
+        BZRXM = #{BZRXM,jdbcType=VARCHAR},
+      </if>
+      <if test="BZJ != null">
+        BZJ = #{BZJ,jdbcType=VARCHAR},
+      </if>
+      <if test="QZCSJCRQ != null">
+        QZCSJCRQ = #{QZCSJCRQ,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where XYRBS = #{XYRBS,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wshy.system.bean.Gj_xyrqk">
+    update gj_xyrqk
+    set XYRBH = #{XYRBH,jdbcType=VARCHAR},
+      AJBS = #{AJBS,jdbcType=VARCHAR},
+      XYRXM = #{XYRXM,jdbcType=VARCHAR},
+      XYRXBDM = #{XYRXBDM,jdbcType=VARCHAR},
+      SFZHM = #{SFZHM,jdbcType=VARCHAR},
+      XYRZY = #{XYRZY,jdbcType=VARCHAR},
+      DQZZ = #{DQZZ,jdbcType=VARCHAR},
+      XYRHJD = #{XYRHJD,jdbcType=VARCHAR},
+      QZCSDM = #{QZCSDM,jdbcType=VARCHAR},
+      XYRTQAY = #{XYRTQAY,jdbcType=VARCHAR},
+      XYRTQAYDM = #{XYRTQAYDM,jdbcType=VARCHAR},
+      XYRXXTQAY = #{XYRXXTQAY,jdbcType=VARCHAR},
+      XYRZT = #{XYRZT,jdbcType=VARCHAR},
+      MSG_ID = #{MSG_ID,jdbcType=INTEGER},
+      MSG_STATUS_JCY = #{MSG_STATUS_JCY,jdbcType=VARCHAR},
+      MSG_STATUS_FY = #{MSG_STATUS_FY,jdbcType=VARCHAR},
+      MSG_OP = #{MSG_OP,jdbcType=INTEGER},
+      ISSH = #{ISSH,jdbcType=VARCHAR},
+      AREA_CODE = #{AREA_CODE,jdbcType=VARCHAR},
+      WHDM = #{WHDM,jdbcType=VARCHAR},
+      NL = #{NL,jdbcType=VARCHAR},
+      MSG_DATE = #{MSG_DATE,jdbcType=TIMESTAMP},
+      ZZMMDM = #{ZZMMDM,jdbcType=VARCHAR},
+      ZZMM = #{ZZMM,jdbcType=VARCHAR},
+      CYM = #{CYM,jdbcType=VARCHAR},
+      CH = #{CH,jdbcType=VARCHAR},
+      ZJLX = #{ZJLX,jdbcType=VARCHAR},
+      MZ = #{MZ,jdbcType=VARCHAR},
+      CSRQ = #{CSRQ,jdbcType=VARCHAR},
+      ZASNL = #{ZASNL,jdbcType=VARCHAR},
+      GJ = #{GJ,jdbcType=VARCHAR},
+      GZDWSZXX = #{GZDWSZXX,jdbcType=VARCHAR},
+      DWXXSZD = #{DWXXSZD,jdbcType=VARCHAR},
+      ZJ = #{ZJ,jdbcType=VARCHAR},
+      ZW = #{ZW,jdbcType=VARCHAR},
+      ZY = #{ZY,jdbcType=VARCHAR},
+      SF = #{SF,jdbcType=VARCHAR},
+      ATGZSF = #{ATGZSF,jdbcType=VARCHAR},
+      SFDWZYLD = #{SFDWZYLD,jdbcType=VARCHAR},
+      SFDRSZ = #{SFDRSZ,jdbcType=VARCHAR},
+      RDDB = #{RDDB,jdbcType=VARCHAR},
+      ZXWY = #{ZXWY,jdbcType=VARCHAR},
+      SFNCJCZZRY = #{SFNCJCZZRY,jdbcType=VARCHAR},
+      SFCJZZRY = #{SFCJZZRY,jdbcType=VARCHAR},
+      SFCJR = #{SFCJR,jdbcType=VARCHAR},
+      FDDLR = #{FDDLR,jdbcType=VARCHAR},
+      WNFZXYRJTQK = #{WNFZXYRJTQK,jdbcType=VARCHAR},
+      YSYJ = #{YSYJ,jdbcType=VARCHAR},
+      SXQTAY = #{SXQTAY,jdbcType=VARCHAR},
+      ZYZAD = #{ZYZAD,jdbcType=VARCHAR},
+      QK = #{QK,jdbcType=VARCHAR},
+      SFWZBDX = #{SFWZBDX,jdbcType=VARCHAR},
+      SFZT = #{SFZT,jdbcType=VARCHAR},
+      SFTJ = #{SFTJ,jdbcType=VARCHAR},
+      SFLAJDDX = #{SFLAJDDX,jdbcType=VARCHAR},
+      SFJDXZZFJGYSAJ = #{SFJDXZZFJGYSAJ,jdbcType=VARCHAR},
+      YSAJDXZZFJGLB = #{YSAJDXZZFJGLB,jdbcType=VARCHAR},
+      ZWFZLARQ = #{ZWFZLARQ,jdbcType=VARCHAR},
+      SFSLHQT = #{SFSLHQT,jdbcType=VARCHAR},
+      QZCSCQRQ = #{QZCSCQRQ,jdbcType=VARCHAR},
+      PZJDJG = #{PZJDJG,jdbcType=VARCHAR},
+      QZCSBGLY = #{QZCSBGLY,jdbcType=VARCHAR},
+      ZXRQ = #{ZXRQ,jdbcType=VARCHAR},
+      ZXHZRQ = #{ZXHZRQ,jdbcType=VARCHAR},
+      QZCSDD = #{QZCSDD,jdbcType=VARCHAR},
+      ZXJG = #{ZXJG,jdbcType=VARCHAR},
+      BZRXM = #{BZRXM,jdbcType=VARCHAR},
+      BZJ = #{BZJ,jdbcType=VARCHAR},
+      QZCSJCRQ = #{QZCSJCRQ,jdbcType=VARCHAR}
+    where XYRBS = #{XYRBS,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getXyrqkList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from gj_xyrqk where AREA_CODE =  #{areaCode,jdbcType=VARCHAR}
+    <if test="keyword != '' and keyword != null" >
+      and
+      (XYRBH  like CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')  or XYRXM like CONCAT('%',#{keyword,jdbcType=VARCHAR},'%'))
+    </if>
+  </select>
+
+
+</mapper>

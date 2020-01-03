@@ -1,0 +1,20 @@
+package com.netmarch.gaj.common.utils;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/23 13:08
+ */
+public class AreaCodeUtil {
+    public static String handle(String areaCode) {
+        if(areaCode.endsWith("000")){
+            return areaCode.substring(0,3);
+        }else if(areaCode.endsWith("00")){
+            return areaCode.substring(0,4);
+        }else{
+            return areaCode;
+        }
+    }
+}

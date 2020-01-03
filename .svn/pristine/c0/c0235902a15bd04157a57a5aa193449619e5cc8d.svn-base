@@ -1,0 +1,200 @@
+package com.netmarch.lssqyj.system.timeTask;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.netmarch.lssqyj.common.utils.HttpClientUtil;
+import com.netmarch.lssqyj.common.utils.ImgUtil;
+import com.netmarch.lssqyj.common.utils.PropertiesUtil;
+import com.netmarch.lssqyj.common.utils.common.FdfsUtil;
+import com.netmarch.lssqyj.system.bean.Ajdzjzml;
+import com.netmarch.lssqyj.system.bean.Ajdzjzwj;
+import com.netmarch.lssqyj.system.service.AjdzjzmlService;
+import com.netmarch.lssqyj.system.service.AjdzjzwjService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import sun.misc.BASE64Encoder;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
+
+
+/**
+ * @author gdy
+ * @Title: GettingScanFileTask
+ * @Package timeTask
+ * @Description: 定时任务，获取5.0上传的文件目录以及文件夹
+ * @date 2019/8/30 8:54
+ */
+@Component
+@Slf4j
+public class GettingScanFileTask {
+//    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+//
+//    @Autowired
+//    private AjdzjzwjService ajdzjzwjService;
+//
+//    @Autowired
+//    private AjdzjzmlService ajdzjzmlService;
+//
+//    @Autowired
+//    private FdfsUtil fileUtil;
+//
+//    //每隔10秒执行一次
+////    @Scheduled(fixedRate = 10000)
+////    public void testTasks() {
+////        log.info("定时任务执行时间：" + dateFormat.format(new Date()));
+////    }
+//
+//    //定时任务
+//    @Scheduled(fixedRate = 5000)
+//    public void getScanFile() {
+//        // MySQL 8.0 以下版本 - JDBC 驱动名及数据库 URL
+//        String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+//        String DB_URL = "jdbc:mysql://172.16.0.31:3306/zfpt5_cpgaj";
+//
+//        // MySQL 8.0 以上版本 - JDBC 驱动名及数据库 URL
+//        //String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+//        //String DB_URL = "jdbc:mysql://localhost:3306/RUNOOB?useSSL=false&serverTimezone=UTC";
+//
+//        // 数据库的用户名与密码，需要根据自己的设置
+//        String USER = "root";
+//        String PASS = "netmarch";
+//
+//        Connection conn = null;
+//        Statement stmt = null;
+//        try{
+//            // 注册 JDBC 驱动
+//            Class.forName(JDBC_DRIVER);
+//
+//            // 打开链接
+////            System.out.println("连接数据库...");
+//            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+//
+//            // 执行查询
+////            System.out.println(" 实例化Statement对象...");
+//            stmt = conn.createStatement();
+//
+//            String selectmlsql = "select s1.id as id,s1.orderby, s1.typename as typename,s2.ajbs as ajbs from scantype s1 left join scantypeajlinks s2 on s2.scantypeid = s1.id where s1.msg_op <> 3 and s1.parentid = '0' and s1.task_flag = '1' and s2.ajbs is not null";
+//            ResultSet mlrs = stmt.executeQuery(selectmlsql);
+//            List<String> mlids = new ArrayList<>();
+//            // 展开结果集数据库
+//            while(mlrs.next()){
+//                // 通过字段检索
+//                String id  = mlrs.getString("id");
+//                mlids.add(id);
+//                int orderby = mlrs.getInt("orderby");
+//                String typename = mlrs.getString("typename");
+//                String ajbs = mlrs.getString("ajbs");
+//                ajdzjzmlService.insert2(id,orderby,typename,ajbs);
+////                String updatesql = "update scantype set task_flag = '0' where id = '"+id+"'";
+////                stmt.executeUpdate(updatesql);
+//
+//            }
+//            mlrs.close();
+//            if(null != mlids && mlids.size() >0){
+//                for(int i=0;i<mlids.size();i++){
+//                    String updatemlsql = "update scantype set task_flag = '0' where id = '"+mlids.get(i)+"'";
+//                    stmt.execute(updatemlsql);
+//                }
+//            }
+//
+//
+//            // rich 同步数据
+//            List<String> ajbsList = ajdzjzmlService.selectAjbsList();
+//            if(null != ajbsList && ajbsList.size() > 0){
+//                for(int j=0;j<ajbsList.size();j++){
+//                    List<Ajdzjzml> mlList = ajdzjzmlService.selectDzjzmlByParent(ajbsList.get(j),"-1");
+//                    if(null != mlList && mlList.size() > 0){
+//                        for(int i=0;i<mlList.size();i++){
+//                            ajdzjzmlService.resetOrderby(mlList.get(i).getId(),i+1);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            String selectwjsql = "select s1.id as id,s2.id as mlid,s1.picsort as picsort,s1.picname as picname,s1.piccontent as piccontent from scanfilesub1 s1 left join scantype s2 on s2.id = s1.scantypeid where s1.msg_op <> 3 and s2.parentid = '0' and s1.task_flag = '1' and upload_time > '2019-09-01'";
+//            ResultSet wjrs = stmt.executeQuery(selectwjsql);
+//
+//            List<String> ids = new ArrayList<>();
+//            int rownum = 0;
+//            // 展开结果集数据库
+//            while(wjrs.next()){
+//                // 通过字段检索
+//                String id  = wjrs.getString("id");
+//                ids.add(id);
+//                String mlid  = wjrs.getString("mlid");
+//                int picsort = wjrs.getInt("picsort");
+//                String picname = wjrs.getString("picname");
+//                byte[] b = wjrs.getBytes("piccontent");
+//                ByteArrayInputStream in = new ByteArrayInputStream(b);
+//                BufferedImage image = ImageIO.read(in);// 格式转换
+//
+//                //bufferedimage 转换成 inputstream
+//                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+//                ImageOutputStream imOut = ImageIO.createImageOutputStream(bs);
+//                ImageIO.write(image, "jpg", imOut);
+//                InputStream is = new ByteArrayInputStream(bs.toByteArray());
+//
+//                OutputStream os = null;
+//                File file = new File("d:/taskFoldor/"+picname);
+//                try {
+//                    os = new FileOutputStream(file);
+//                    int len = 0;
+//                    byte[] buffer = new byte[8192];
+//
+//                    while ((len = is.read(buffer)) != -1) {
+//                        os.write(buffer, 0, len);
+//                    }
+//                } finally {
+//                    os.close();
+//                    is.close();
+//                }
+//                String path = fileUtil.uploadFile(file);
+//                ajdzjzwjService.insert2(id,mlid,path,picname,picsort,new Date());
+//                rownum++;
+//            }
+//            wjrs.close();
+////            log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + rownum);
+//            if(null != ids && ids.size() >0){
+//                for(int i=0;i<ids.size();i++){
+//                    String updatewjsql = "update scanfilesub1 set task_flag = '0' where id = '"+ids.get(i)+"'";
+//                    stmt.execute(updatewjsql);
+//                }
+//            }
+//            // 输出数据
+////                System.out.print("ID: " + id);
+////                System.out.print(", 图片名称: " + name);
+////                System.out.print("\n");
+//            // 完成后关闭
+//            mlrs.close();
+//            stmt.close();
+//            conn.close();
+//        }catch(SQLException se){
+//            // 处理 JDBC 错误
+//            se.printStackTrace();
+//        }catch(Exception e){
+//            // 处理 Class.forName 错误
+//            e.printStackTrace();
+//        }finally{
+//            // 关闭资源
+//            try{
+//                if(stmt!=null) stmt.close();
+//            }catch(SQLException se2){
+//            }// 什么都不做
+//            try{
+//                if(conn!=null) conn.close();
+//            }catch(SQLException se){
+//                se.printStackTrace();
+//            }
+//        }
+////        System.out.println("数据更新完毕!");
+//    }
+}

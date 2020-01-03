@@ -1,0 +1,38 @@
+package com.netmarch.wshy.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.wshy.system.bean.Hyxxb_kss;
+import com.netmarch.wshy.system.bean.PagesStatic;
+import com.netmarch.wshy.system.mapper.Hyxxb_kssMapper;
+import com.netmarch.wshy.system.model.Query;
+import com.netmarch.wshy.system.service.KsshyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * @program: wshy
+ * @description: KsshyService 实现类
+ * @author: songyaru
+ * @create: 2019-05-06
+ **/
+@Service
+public class KsshyServiceImpl implements KsshyService {
+
+    @Autowired
+    private Hyxxb_kssMapper ksshyMapper;
+
+
+    @Override
+    public Page<Hyxxb_kss> getKsshyListPage(Hyxxb_kss ksshy, Query ksshyQuery) {
+        PageHelper.startPage(ksshy.getPageNo() == null ? 1 : ksshy.getPageNo(), PagesStatic.PAGES_SIZE,true);
+        return ksshyMapper.getKsshyListPage(ksshy.getAREA_CODE(),ksshyQuery.getSearchCondition(),ksshyQuery.getSearchContent());
+    }
+
+    @Override
+    public Page<Hyxxb_kss> getHytjListPage(Hyxxb_kss ksshy,String czbm,String hybm,String qsrq,String jsrq) {
+        PageHelper.startPage(ksshy.getPageNo() == null ? 1 : ksshy.getPageNo(), PagesStatic.PAGES_SIZE,true);
+        return ksshyMapper.getHytjListPage(ksshy.getAREA_CODE(),czbm,hybm,qsrq,jsrq);
+    }
+
+}

@@ -1,0 +1,37 @@
+package com.netmarch.wsgl.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.wsgl.system.bean.BookMarks;
+import com.netmarch.wsgl.system.bean.Query;
+import com.netmarch.wsgl.system.bean.Template_bookMarks;
+
+import java.util.List;
+
+
+public interface BqglService {
+
+
+    Page<BookMarks> getBqListPage(BookMarks bookMarks, Query bqglQuery);
+
+    BookMarks getBookMarkById(String id);
+
+    int checkRepeatName(BookMarks bookMarks);
+
+    int insert(BookMarks bookMarks);
+
+    int updateByPrimaryKey(BookMarks bookMarks);
+
+    int delBookMarks(String id);
+
+    List<BookMarks> getBookMarksList();
+
+    int deleteTemplateBookMarksByWsdm(String wsdm);
+
+    int insertTemplateBookMarks(Template_bookMarks templateBookMarks);
+
+    List<Template_bookMarks> getTemplateBookmarksByWsdm(String wsdm);
+
+    BookMarks getBookMarkByName(String bookMarkName);
+
+    String getBookMarkValue(BookMarks bookMarks,String bookMarkKeyValue);
+}

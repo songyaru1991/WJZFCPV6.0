@@ -1,0 +1,18 @@
+package com.netmarch.gaj.system.service;
+
+import com.netmarch.gaj.system.bean.AjClcsJgzxb;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/23 14:04
+ */
+@Service
+public interface AjClcsJgzxbService {
+    List<AjClcsJgzxb> getListByAjbh(String ajbh);
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.admin.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+
+</head>
+<body>
+<div class="S310_chooses" th:switch="${ajlx_bbbs}">
+    <form class="layui-form clear" action="">
+        <div class="S310_chooses_itemList" th:case="101">
+            <div class="S310_chooses_title">
+                <span>侦监</span>
+            </div>
+            <div class="S310_chooses_content">
+                <div class="layui-form clear" action="" style="100%">
+                    <div class="S310_chooses_Checkbox fl clear" th:each="bean,beanStat : ${zjcbrlist}">
+                        <div class="layui-input-block fl">
+                            <input type="radio" name=""  lay-skin="primary" th:title="${bean.username}"
+                                   th:value="${bean.username}" th:id="${bean.id}" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="S310_chooses_itemList" th:case="113">
+            <div class="S310_chooses_title">
+                <span>公诉</span>
+            </div>
+            <div class="S310_chooses_content">
+                <div class="layui-form clear" action="">
+                    <div class="S310_chooses_Checkbox fl clear" th:each="bean,beanStat : ${gscbrlist}">
+                        <div class="layui-input-block fl">
+                            <input type="radio" name="" lay-skin="primary" th:title="${bean.username}"
+                                   th:value="${bean.username}" th:id="${bean.id}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="S310_chooses_itemList">
+            <div class="S310_chooses_title">
+                <span>未检</span>
+            </div>
+            <div class="S310_chooses_content">
+                <div class="layui-form clear" action="">
+                    <div class="S310_chooses_Checkbox fl clear" th:each="bean,beanStat : ${wjcbrlist}">
+                        <div class="layui-input-block fl">
+                            <input type="radio" name="" lay-skin="primary" th:title="${bean.username}"
+                                   th:value="${bean.username}" th:id="${bean.id}" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+
+    var choosesData="",choosesCbrId=""; // 选中结果
+  layui.use('form', function() {
+    var form = layui.form;
+  });
+
+  //取复选框的值
+  function callbackCheckData() {
+    var data = [];
+    $(':checked').each(function() {
+      data.push($(this).attr('title'));
+    });
+    choosesData = data.join(';');
+    return choosesData;
+  };
+
+    //取单选框的值
+    function callbackRadioData() {
+        choosesData = $("input[type='radio']:checked").val();
+        if(choosesData===undefined)
+            choosesData='';
+        return choosesData;
+    };
+    function callbackRadioId() {
+        var choosesCbrId = $("input[type='radio']:checked").attr('id');
+        if(choosesCbrId===undefined)
+            choosesCbrId="";
+        return choosesCbrId;
+    };
+</script>
+
+</body>
+</html>

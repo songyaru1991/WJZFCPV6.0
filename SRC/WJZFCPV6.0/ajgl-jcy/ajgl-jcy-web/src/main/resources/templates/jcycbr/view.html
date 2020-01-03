@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style_10.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+    <div class="E105_wripper">
+        <div class="E105_case1 layui-form">
+            <div class="E105_subtitle clear">
+                <div class="E105_biaoti fl">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p>承办人信息查看</p>
+                </div>
+            </div>
+
+            <div class="E105_tableCoat">
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>承办人信息</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor3">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>所属县区:</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.areaCode}">所属县区</span>
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>所属小组:</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.groupname}">所属小组</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>职位:</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.zhiwei == '1' ? '组长' : '组员'}">职位</span>
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>是否办案:</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.isba == '1' ? '是' : '否'}">职位</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>承办人姓名:</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.username}">承办人姓名</span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="S105_btnCoat1 ">
+                <div class="T110_saveBtnCoat clear">
+                    <button class="layui-btn fl site-demo-active2" data-type="tabDelete" >取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

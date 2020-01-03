@@ -1,0 +1,11 @@
+package com.netmarch.figurecloud.auth.core.security.authenticate.jwt.extractor;
+
+/** 
+* @Description: TokenExtractor 这个接口的实现应该总是返回经过编码的原始base-64
+* JWT令牌的截取
+* @Author: fengxiang
+* @Date: 2019/2/15 9:59
+*/ 
+public interface TokenExtractor {
+    public String extract(String payload);
+}

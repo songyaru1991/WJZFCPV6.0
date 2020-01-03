@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>卷宗智能归档系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+ '/static/js/jquery.min.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.admin.css'">
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+
+
+</head>
+<body>
+<form id="form" action="/lssqyj/znjz/caseList" th:object="${param}" class="  layui-form-pane">
+    <!--    <div class="H105_page">-->
+    <!--iframe2-->
+    <div class="H105_iframeright">
+        <div class="H105_wripper H105_wripper_gdy">
+            <div class="H105_subtitle clear">
+                <div class="H105_local fl">
+                    <img src="../static/images/H105_local.png" alt="" class="H105_caseImg fl">
+                    <p>案件管理：在办案件</p>
+                </div>
+
+                <div class="H105_searchCoat fr clear">
+                    <select name="searchField" id="searchField" th:value="${searchField}" class="H105_select fl">
+                        <option value="ajmc" th:selected="${searchField=='ajmc'}">案件名称</option>
+                        <option value="xyrxm" th:selected="${searchField=='xyrxm'}">嫌疑人名称</option>
+                        <option value="ajbh" th:selected="${searchField=='ajbh'}">案件编号</option>
+                    </select>
+                    <input type="text" name="searchName" id="searchName" th:value="${searchName}"
+                           class="H105_search3 fl">
+                    <div class="H105_searchBtn fl " onclick="searchList()">搜索</div>
+                    <!--<div class="H105_search1 fl">新增</div>-->
+                </div>
+            </div>
+            <div class="H105_sysList H105_sysList1">
+                <input type="text" name="listType" id="listType" th:value="${listType}" style="display: none;"/>
+                <table class=" H105_table">
+                    <thead>
+                    <tr>
+                        <!--                            <th lay-data="{type:'checkbox', width:50}">-->
+                        <!--                            </th>-->
+                        <th lay-data="{field:'1'}">案件编号</th>
+                        <th lay-data="{field:'2'}">案件名称</th>
+                        <th lay-data="{field:'3'}">嫌疑人</th>
+                        <th lay-data="{field:'4'}">案件状态</th>
+                        <th lay-data="{field:'5'}">立案时间</th>
+                        <th lay-data="{field:'6'}">传输时间</th>
+                        <th lay-data="{field:'7'}">卷宗状态</th>
+                        <th lay-data="field:'6'">操作</th>
+                        <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="case,caseStat:${list}">
+                        <td th:text="${case.ajbh}">案件编号</td>
+                        <td th:text="${case.ajmc}">案件名称</td>
+                        <td th:text="${case.xyrxm}">嫌疑人</td>
+                        <td th:text="${case.ajzt}">案件状态</td>
+                        <td th:text="${case.lasj}">立案时间</td>
+                        <td th:text="${case.msgDate}">传输时间</td>
+                        <td th:text="${case.jzzt}">卷宗状态</td>
+                        <td th:ajbs="${case.ajbs}" th:ajmc="${case.ajmc}" th:type="${type}" style="cursor:pointer;display: none;"
+                            class="rgznjz znbm" data-content="智能编目" lay-href="/lssqyj/znjz/znbm">编辑
+                        </td>
+                        <td th:ajbs="${case.ajbs}" th:ajmc="${case.ajmc}" style="cursor:pointer;display: none;"
+                            class="rgznjz lssq" data-content="律师授权" lay-href="/lssqyj/znjz/authorize">律师授权
+                        </td>
+                        <td th:ajbs="${case.ajbs}" th:ajmc="${case.ajmc}" th:type="${type}" style="cursor:pointer;display: none;"
+                            class="rgznjz znyj" data-content="人工智能阅卷" lay-href="/lssqyj/znjz/rgznyj">智能阅卷
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="H105_pageCoat clear">
+                    <div class="H105_show clear fl">
+                        <p> 本页显示:<span
+                                th:text="${#numbers.formatInteger(list.pageNum == 0 ? 1 : list.pageNum,0)}*15-14"></span>-<span
+                                th:text="${list.endRow >list.total ? list.total : list.endRow }"></span> 总记录数： <span
+                                th:text="${list.total}"></span></p>
+<!--                        <img src="../static/images/H105_refresh.png" alt="" class="H105_refreshImg fl">-->
+<!--                        <img src="../static/images/H105_refresh2.png" alt="" class="H105_refreshImg fl">-->
+<!--                        <img src="../static/images/H105_refresh3.png" alt="" class="H105_refreshImg fl">-->
+                    </div>
+
+
+                    <div class="H105_page fr    clear">
+                        <img id="pages_start" title="首页" style="cursor:pointer;"
+                             src="../static/images/H105_lasePage1.png" alt="" class="H105_lastPage fl">
+                        <img id="pages_before" title="上一页" style="cursor:pointer;"
+                             src="../static/images/H105_lasePage2.png" alt="" class="H105_lastPage fl">
+                        <div class="H105_first fl">
+                            第 <input type="text"
+                                     th:value="${#numbers.formatInteger(list.pageNum == 0 ? 1 : list.pageNum,0)}"
+                                     th:onchange="'pages_change(this.value,'+${list.pages}+')'"> 页，共<span
+                                th:text="${list.pages}"></span>页
+                        </div>
+                        <img id="pages_after" title="下一页" style="cursor:pointer;"
+                             src="../static/images/H105_lasePage3.png" alt="" class="H105_lastPage fl">
+                        <img id="pages_end" title="尾页" style="cursor:pointer;" src="../static/images/H105_lasePage4.png"
+                             alt="" class="H105_lastPage fl">
+
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="pageSize" th:value="${list.pageSize}"/>
+            <input type="hidden" id="pageNum" th:value="${list.pageNum == 0 ? 1 : list.pageNum}"/>
+            <input type="hidden" id="total" th:value="${list.total}"/>
+            <input type="hidden" id="pageNo" name="pageNo" th:value="${list.pageNum == 0 ? 1 : list.pageNum}"/>
+        </div>
+    </div>
+    <!--iframe2-->
+    <!--    </div>-->
+</form>
+</body>
+<script>
+
+    $(function () {
+        var listType = $('<span/>').html('[[${listType}]]').text();
+        if ('bm' == listType) {
+            $('.znbm').css('display', '');
+        } else if ('sq' == listType) {
+            $('.lssq').css('display', '');
+        } else if ('yj' == listType) {
+            $('.znyj').css('display', '');
+        }
+    })
+
+    function searchList() {
+        $("#form").submit();
+    }
+
+    $("#pages_start").click(function () {
+        if ($("#pageNo").val() == 1) {
+            layer.msg('已经是首页');
+            return;
+        }
+        $("#pageNo").val(1);
+        $("#form").submit();
+    });
+    $("#pages_end").click(function () {
+        if ($("#pageNo").val() == ([[${list.pages}]])) {
+            layer.msg('已经是尾页');
+            return;
+        }
+        $("#pageNo").val([[${list.pages}]]);
+        $("#form").submit();
+    });
+    $("#pages_after").click(function () {
+        var p = $("#pageNo").val() * 1;
+        if ((p + 1) > ([[${list.pages}]])) {
+            layer.msg('已经是尾页');
+            return;
+        }
+        $("#pageNo").val(p + 1);
+        $("#form").submit();
+    });
+    $("#pages_before").click(function () {
+        if (($("#pageNo").val()) == 1) {
+            layer.msg('已经是首页');
+            return;
+        }
+        $("#pageNo").val($("#pageNo").val() - 1);
+        $("#form").submit();
+    });
+
+    function pages_change(pageNo, pages) {
+        if (!isNaN(pageNo) && pageNo % 1 === 0) {
+            if (pageNo < 1) {
+                layer.msg('不能小于1');
+                return;
+            }
+
+            if (pageNo > pages) {
+                layer.msg('不能大于总页数');
+                return;
+            }
+
+            $("#pageNo").val(pageNo);
+            $("#form").submit();
+
+        } else {
+            layer.msg('请输入整数');
+            return;
+        }
+    }
+</script>
+</html>

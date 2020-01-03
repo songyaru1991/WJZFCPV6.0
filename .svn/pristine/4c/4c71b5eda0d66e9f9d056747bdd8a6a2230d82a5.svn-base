@@ -1,0 +1,33 @@
+package com.netmarch.jzznyj.system.service.impl;
+
+import com.netmarch.jzznyj.system.bean.Area;
+import com.netmarch.jzznyj.system.mapper.AreaMapper;
+import com.netmarch.jzznyj.system.service.AreaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @program: wssacw
+ * @description: AreaService 实现类
+ * @author: songyaru
+ * @create: 2019-05-13
+ **/
+@Service
+public class AreaServiceImpl implements AreaService {
+
+    @Autowired
+    private AreaMapper areaMapper;
+
+    @Override
+    public Area getAreaByAreaCode(String areaCode){
+        return areaMapper.getAreaByAreaCode(areaCode);
+    }
+
+    @Override
+    public List<Area> getArea(){
+        return areaMapper.getArea();
+    }
+
+}

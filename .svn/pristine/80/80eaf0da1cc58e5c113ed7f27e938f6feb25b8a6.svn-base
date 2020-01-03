@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>政法部门协同办案系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/js/layui/css/layui.admin.css'">
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/assets/stylesheets/bootstrap/bootstrap.min.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/assets/stylesheets/bootstrap/fileinput.css'">
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/bootstrap.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/fileinput.js'"></script>
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/fileinput_locale_fr.js'"></script>
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/fileinput_locale_zh.js'"></script>
+
+
+
+</head>
+<body>
+<div class="H105_page">
+    <div class="H105_top">
+        <div class="H105_title fl">
+            <p>南明区政法部门协同办案（刑事）系统</p>
+        </div>
+        <div class="H105_dateCoat fr">
+            <div class="H105_date fl">
+                <span class="H105_dateTime"></span>
+            </div>
+            <img src="../static/images/H105_badge.png" alt="" class="H105_badge fl">
+            <div class="H105_name fl">
+                <span>屈臣元</span>
+            </div>
+            <img src="../static/images/H105_setting.png" alt="" class="H105_setting fl">
+        </div>
+
+        <div class="H105_labelCoat">
+            <img src="../static/images/H105_type.png" alt="" class="H105_type fl">
+            <div class="H105_label H105_label2 fl">
+                <span>智能阅卷</span>
+                <img src="../static/images/H105_x1.png" alt="" class="H105_close">
+            </div>
+        </div>
+
+    </div>
+    <!--三级-->
+    <iframe class="H105_conIframe jq_iframeleft src_iframeleft" frameborder="0" src="third_rgznyj"></iframe>
+
+
+</div>
+<script>
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+package com.netmarch.jzznyj.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.netmarch.jzznyj.common.controller.FrontBaseController;
+import com.netmarch.jzznyj.common.utils.HttpClientUtils;
+import com.netmarch.jzznyj.common.utils.JwtUtil;
+import com.netmarch.jzznyj.common.utils.UsersUtil;
+import com.netmarch.jzznyj.system.bean.LoginUser;
+import com.netmarch.jzznyj.system.bean.ResultCodes;
+import com.netmarch.jzznyj.system.bean.StaticObj;
+import com.netmarch.jzznyj.system.model.LoginResult;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @program:
+ * @description: loginuser controller
+ * @author: songyaru
+ * @create: 2019-05-02
+ **/
+@Controller
+@Slf4j
+public class LoginController extends FrontBaseController{
+
+    @Autowired
+    HttpServletRequest request;
+
+    @Autowired
+    private HttpServletResponse response;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Value("${serverUrl}")
+    private String serverUrl;
+
+    @Value("${userBm.name}")
+    private String userBmName;
+
+    @Autowired
+    private UsersUtil usersUtil;
+    /**
+     * 退出
+     * @param
+     * @return
+     */
+    @RequestMapping(value="/logout" ,produces={ MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
+    public LoginResult logout(){
+        ///  return loginClient.logout();
+        String user_Id = "";
+        LoginResult loginResult = new LoginResult();
+        try {
+            user_Id = usersUtil.getLoginUser_Id();
+
+            String jwt = usersUtil.getJwtCookie();
+            String url = uumsUrl + "/logout";
+            String body = "";
+            if(jwt!="" || !jwt.equals("")) {
+                body = HttpClientUtils.sendPostDataByJson(url, "", jwt);
+                if (body != "" && !body.equals("")) {
+                    JSONObject jsonobject = JSONObject.fromObject(body);
+                    loginResult = (LoginResult) JSONObject.toBean(jsonobject, LoginResult.class);
+                }
+                if (loginResult.getStatus() == 200) {//退出成功
+                    Cookie[] cookies = request.getCookies();
+                    if (cookies != null) {
+                        for (Cookie cookie : cookies) {
+                            if (cookie.getName().equals("jwt")) {
+                                cookie.setPath("/");  // 相同路径
+                                cookie.setValue(null);
+                                cookie.setMaxAge(0);
+                                response.addCookie(cookie);
+                            }
+                        }
+                    }
+                }
+//                log(user_Id, "点击退出按钮", "点击退出按钮", "文书管理系统(公安局文书管理)", false);
+            }else{
+                loginResult.setStatus(ResultCodes.SUCCESS);
+                loginResult.setMsg(StaticObj.R_LOGINOUT_SUCCESS_MSG);
+            }
+        } catch (Exception e) {
+            log(user_Id, "点击退出按钮", e.toString(), "文书管理系统(公安局文书管理)", true);
+            e.printStackTrace();
+        }
+
+        return loginResult;
+    }
+    /*
+     **根据url的jwt参数取得CAS签发的jwt，并跟CAS服务验证jwt是否有效，若有效则设置到本系统的cookie中，后续请求直接从cookie中取jwt
+     */
+    @RequestMapping(value = { "/*", "/loginVerify"},produces={ MediaType.APPLICATION_JSON_VALUE })
+    public String loginVerify(Model model) {
+        String userName = "", user_Id = "";
+        String loginVerifyURL = serverUrl + "/jzznyj/loginVerify";
+        String redirectUrl = uumsUrl + "/loginVerify?userBmName="+"&callbackURL=" + loginVerifyURL;
+        try {
+            redirectUrl = uumsUrl + "/loginVerify?userBmName=" + URLEncoder.encode(userBmName, "UTF-8") + "&callbackURL=" + loginVerifyURL;
+            //取sso传来的jwt
+            String jwt = request.getParameter("jwt");
+            //产生jwt的cookie
+            if (jwt != null && !jwt.equals("")) {
+                String url = uumsUrl + "/loginVerifyJwt";
+                String body = "";
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("jwt", jwt);
+                body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(map), jwt);
+                if (body != "" && !body.equals("")) {
+                    JSONObject jsonobject = JSONObject.fromObject(body);
+                    LoginResult loginResult = (LoginResult) JSONObject.toBean(jsonobject, LoginResult.class);
+                    if (loginResult.getStatus() == 200) {//cas验证jwt成功
+                        Cookie jwtCookie = new Cookie("jwt", jwt);
+                        //  jwtCookie.setPath("/");
+                        jwtCookie.setMaxAge(24 * 60 * 60); //设置有效时间1天
+                        response.addCookie(jwtCookie);
+                        user_Id = JwtUtil.getClaim(jwt, StaticObj.USERID);
+                    } else {
+                        return "redirect:" + redirectUrl;
+                    }
+                }
+            }else{
+                return "redirect:" + redirectUrl;
+            }
+
+            if (user_Id != "" && !user_Id.equals("")) {
+                String url = uumsUrl + "/userClient/getUserById";
+                String body = "";
+                Map<String, String> user_IdMap = new HashMap<String, String>();
+                user_IdMap.put("user_Id", user_Id);
+                body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+                if (body != "" && !body.equals("")) {
+                    JSONObject userJsonobject = JSONObject.fromObject(body);
+                    LoginUser loginUser = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+                    userName = loginUser.getUsername();
+                    model.addAttribute("userName", userName);
+                }
+            }else{
+                return "redirect:" + redirectUrl;
+            }
+            //  log(user_Id, "jwt验证", "根据url的jwt参数取得CAS签发的jwt，并跟CAS服务验证jwt是否有效", "JWT验证(文书管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "jwt验证", e.toString(), "文书管理系统(公安局文书管理)", true);
+            e.printStackTrace();
+            return "redirect:" + redirectUrl;
+        }
+        return "system/jzznyj";
+    }
+}

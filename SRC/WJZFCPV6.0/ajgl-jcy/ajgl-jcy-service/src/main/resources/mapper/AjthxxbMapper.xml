@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.AjthxxbMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Ajthxxb">
+    <id column="JLBH" jdbcType="VARCHAR" property="jlbh" />
+    <result column="AJBS" jdbcType="VARCHAR" property="ajbs" />
+    <result column="AJTHYY" jdbcType="VARCHAR" property="ajthyy" />
+    <result column="AJTHSJ" jdbcType="TIMESTAMP" property="ajthsj" />
+    <result column="FLAG" jdbcType="INTEGER" property="flag" />
+    <result column="MSG_ID" jdbcType="INTEGER" property="msgId" />
+    <result column="MSG_STATUS_GA" jdbcType="VARCHAR" property="msgStatusGa" />
+    <result column="MSG_STATUS_JCY" jdbcType="VARCHAR" property="msgStatusJcy" />
+    <result column="MSG_STATUS_FY" jdbcType="VARCHAR" property="msgStatusFy" />
+    <result column="MSG_OP" jdbcType="INTEGER" property="msgOp" />
+    <result column="MSG_DATE" jdbcType="TIMESTAMP" property="msgDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    JLBH, AJBS, AJTHYY, AJTHSJ, FLAG, MSG_ID, MSG_STATUS_GA, MSG_STATUS_JCY, MSG_STATUS_FY, 
+    MSG_OP, MSG_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ajthxxb
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ajthxxb
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Ajthxxb">
+    insert into ajthxxb (JLBH, AJBS, AJTHYY, 
+      AJTHSJ, FLAG, MSG_ID, 
+      MSG_STATUS_GA, MSG_STATUS_JCY, MSG_STATUS_FY, 
+      MSG_OP, MSG_DATE)
+    values (#{jlbh,jdbcType=VARCHAR}, #{ajbs,jdbcType=VARCHAR}, #{ajthyy,jdbcType=VARCHAR}, 
+      #{ajthsj,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}, #{msgId,jdbcType=INTEGER}, 
+      #{msgStatusGa,jdbcType=VARCHAR}, #{msgStatusJcy,jdbcType=VARCHAR}, #{msgStatusFy,jdbcType=VARCHAR}, 
+      #{msgOp,jdbcType=INTEGER}, #{msgDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Ajthxxb">
+    insert into ajthxxb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        JLBH,
+      </if>
+      <if test="ajbs != null">
+        AJBS,
+      </if>
+      <if test="ajthyy != null">
+        AJTHYY,
+      </if>
+      <if test="ajthsj != null">
+        AJTHSJ,
+      </if>
+      <if test="flag != null">
+        FLAG,
+      </if>
+      <if test="msgId != null">
+        MSG_ID,
+      </if>
+      <if test="msgStatusGa != null">
+        MSG_STATUS_GA,
+      </if>
+      <if test="msgStatusJcy != null">
+        MSG_STATUS_JCY,
+      </if>
+      <if test="msgStatusFy != null">
+        MSG_STATUS_FY,
+      </if>
+      <if test="msgOp != null">
+        MSG_OP,
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        #{jlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbs != null">
+        #{ajbs,jdbcType=VARCHAR},
+      </if>
+      <if test="ajthyy != null">
+        #{ajthyy,jdbcType=VARCHAR},
+      </if>
+      <if test="ajthsj != null">
+        #{ajthsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="msgId != null">
+        #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatusGa != null">
+        #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Ajthxxb">
+    update ajthxxb
+    <set>
+      <if test="ajbs != null">
+        AJBS = #{ajbs,jdbcType=VARCHAR},
+      </if>
+      <if test="ajthyy != null">
+        AJTHYY = #{ajthyy,jdbcType=VARCHAR},
+      </if>
+      <if test="ajthsj != null">
+        AJTHSJ = #{ajthsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        FLAG = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="msgId != null">
+        MSG_ID = #{msgId,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatusGa != null">
+        MSG_STATUS_GA = #{msgStatusGa,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusJcy != null">
+        MSG_STATUS_JCY = #{msgStatusJcy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStatusFy != null">
+        MSG_STATUS_FY = #{msgStatusFy,jdbcType=VARCHAR},
+      </if>
+      <if test="msgOp != null">
+        MSG_OP = #{msgOp,jdbcType=INTEGER},
+      </if>
+      <if test="msgDate != null">
+        MSG_DATE = #{msgDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Ajthxxb">
+    update ajthxxb
+    set AJBS = #{ajbs,jdbcType=VARCHAR},
+      AJTHYY = #{ajthyy,jdbcType=VARCHAR},
+      AJTHSJ = #{ajthsj,jdbcType=TIMESTAMP},
+      FLAG = #{flag,jdbcType=INTEGER},
+      MSG_ID = #{msgId,jdbcType=INTEGER},
+      MSG_STATUS_GA = #{msgStatusGa,jdbcType=VARCHAR},
+      MSG_STATUS_JCY = #{msgStatusJcy,jdbcType=VARCHAR},
+      MSG_STATUS_FY = #{msgStatusFy,jdbcType=VARCHAR},
+      MSG_OP = #{msgOp,jdbcType=INTEGER},
+      MSG_DATE = #{msgDate,jdbcType=TIMESTAMP}
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+</mapper>

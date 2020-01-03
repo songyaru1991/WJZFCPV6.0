@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_content clear">
+    <div class=" H105_leftBody">
+        <div class="H105_menu">
+            <div th:replace="/system/navigationBar::navigationBar"></div>
+        </div>
+    </div>
+  <iframe class="H105_iframeright" frameborder="0" th:src="'/wshygl-jcy/Wshy/wshylist?searchCondition='+${hyQuery.searchCondition}+'&searchContent='+${hyQuery.searchContent}+'&pageNo='+${pageNo}+'&isShowAll='+${isShowAll}" sandbox="allow-forms
+                                                                            allow-modals
+                                                                            allow-orientation-lock
+                                                                            allow-pointer-lock
+                                                                            allow-popups
+                                                                            allow-popups-to-escape-sandbox
+                                                                            allow-same-origin
+                                                                            allow-scripts
+                                                                            allow-top-navigation"></iframe>
+  <!--  sandbox="allow-scripts allow-top-navigation allow-same-origin allow-forms"-->
+</div>
+</body>
+</html>
+

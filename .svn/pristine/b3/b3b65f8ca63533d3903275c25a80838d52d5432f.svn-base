@@ -1,0 +1,62 @@
+package com.netmarch.jzznyj.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+/**
+ * @Author:xieqiang
+ * @Date:2019/2/25
+ */
+@ConfigurationProperties
+public class PathProperties {
+    @Value("${netmarch.zuul-path}")
+    private String zuulPath;
+
+    @Value("${spring.application.name}")
+    private String applicationPath;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Value("${serverUrl}")
+    private String serverUrl;
+
+    @Value("${userBm.name}")
+    private String userBmName;
+
+    public String getZuulPath() {
+        return zuulPath;
+    }
+
+    public void setZuulPath(String zuulPath) {
+        this.zuulPath = zuulPath;
+    }
+
+    public String getApplicationPath() {
+        return applicationPath;
+    }
+
+    public void setApplicationPath(String applicationPath) {
+        this.applicationPath = applicationPath;
+    }
+
+    public String getServerUrl() { return serverUrl; }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
+    public String getUumsUrl() { return uumsUrl; }
+
+    public void setUumsUrl(String uumsUrl) {
+        this.uumsUrl = uumsUrl;
+    }
+
+    public String getUserBmName() {
+        return userBmName;
+    }
+
+    public void setUserBmName(String userBmName) {
+        this.userBmName = userBmName;
+    }
+}

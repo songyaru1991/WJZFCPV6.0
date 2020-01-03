@@ -1,0 +1,133 @@
+package com.netmarch.lssqyj.system.controller;
+
+import com.netmarch.lssqyj.common.utils.HttpUtil;
+import com.netmarch.lssqyj.common.utils.PingYinUtil;
+import com.netmarch.lssqyj.common.utils.WordUtil;
+import com.netmarch.lssqyj.common.utils.ZipUtil;
+import com.netmarch.lssqyj.system.bean.Ajdzjzml;
+import com.netmarch.lssqyj.system.bean.Ajdzjzwj;
+import com.netmarch.lssqyj.system.service.AjdzjzmlService;
+import com.netmarch.lssqyj.system.service.AjdzjzwjService;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.apache.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @ClassName: ScanController
+ * @Author: gdy
+ * @Date: 2019/5/7
+ */
+@Controller
+@Slf4j
+@RequestMapping("/scan")
+public class ScanController {
+
+    @Autowired
+    private HttpUtil httpUtil;
+
+    @Autowired
+    private AjdzjzmlService ajdzjzmlService;
+
+    @Autowired
+    private AjdzjzwjService ajdzjzwjService;
+
+    @RequestMapping("/index")
+    public String goIndex(){
+        log.info("进入主页面");
+        return "/damingsoft/scanTest";
+    }
+
+    /**
+     * @Desc: 上传文件
+     * @Date: 2019/7/8
+     */
+    @PostMapping("/testUploadScan")
+    @ResponseBody
+    public Object testUploadScan(@RequestPart(value = "RemoteFile", required = false) MultipartFile photoFile, HttpServletRequest request){
+        return 0;
+    }
+
+    @RequestMapping("/testWordToHtml")
+    @ResponseBody
+    public Object testWordToHtml() throws Exception {
+        String ajbs = "12";
+        // 2.卷宗上传
+        String url1 = "http://172.16.1.195:8080/autoinvest/submittask";
+        String url2 = "http://172.16.1.195:8080/autoinvest/getresult?taskid=";
+        File[] list = new File("D:\\znbm\\" + ajbs).listFiles();
+        String zipPath = "";
+        String zipName = "";
+        for(File file : list){
+            if(file.isFile()){
+                if (file.getName().endsWith(".zip")) {
+                    // 就输出该文件的绝对路径
+                    zipPath = file.getAbsolutePath();
+                    zipName = file.getName();
+                }
+            }
+        }
+        String result = httpUtil.uploadFileToServer(zipPath, zipName, url1); // post 上传压缩文件
+        JSONObject jsonObject = JSONObject.fromObject(result);
+        String taskid = jsonObject.get("taskid").toString();
+        log.info("----------------------------------------------任务id：" + taskid);
+        String statecode = jsonObject.get("statecode").toString();
+        String message = jsonObject.get("message").toString();
+        long startTime = System.currentTimeMillis();
+        while (true) {
+            long endTime = System.currentTimeMillis();
+            if (endTime - startTime > 60 * 1000) {
+                return null;
+            } else {
+                if ("20".contains(statecode)) { // 上传成功
+                    // 3.状态查询
+                    String getResult = httpUtil.doGet(url2 + taskid); // get 处理结果
+//                    JSONObject finalObject = new JSONObject(getResult);
+                    JSONObject finalObject = JSONObject.fromObject(getResult);
+                    String statecode2 = finalObject.get("statecode").toString();
+                    String message2 = finalObject.get("message").toString();
+                    if ("11".contains(statecode2)) {
+                        log.info(message2); // 查询任务不存在
+                        return null;
+                    } else if ("20".contains(statecode2)) {
+                        log.info(message2); // 等待处理
+                    } else if ("21".contains(statecode2)) {
+                        log.info(message2); // 正在处理
+                    } else if ("22".contains(statecode2)) {
+                        log.info(message2); // 处理出错
+                        return null;
+                    } else if ("23".contains(statecode2)) { // 处理完成
+                        log.info(message2);
+                        String znyj = "D:\\znyj";
+                        File f = new File(znyj);
+                        if (!f.exists()) {//如果文件夹不存在
+                            f.mkdir();//创建文件夹
+                        }
+                        String ajbsFolder = znyj + "\\" + ajbs;
+                        File f2 = new File(ajbsFolder);
+                        if (!f2.exists()) {//如果文件夹不存在
+                            f2.mkdir();//创建文件夹
+                        }
+                        String wordUrl = "http://172.16.1.195:8080/autoinvest/tasks/"+taskid+"/testpeiwensheng/shenchabaogao.docx";
+                        String wordOutUrl = ajbsFolder + "\\shenchabaogao.docx";
+                        WordUtil.downloadFile(wordUrl,wordOutUrl);
+                        log.info(WordUtil.docxToHtml(ajbsFolder + "\\shenchabaogao.docx"));
+                        return "xiyue";
+                    } else if ("10".contains(statecode)) {
+                        log.info(message);
+                        return null;
+                    }
+                }
+            }
+        }
+    }
+}

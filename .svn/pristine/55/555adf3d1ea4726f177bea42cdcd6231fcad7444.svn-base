@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.fdfs.system.mapper.LoginUserMapper">
+
+    <select id="getUserList" parameterType="String"
+            resultType="com.netmarch.fdfs.system.bean.LoginUser">
+        select u.user_id,u.loginName,u.userName,u.yhlb,u.userState
+        from users u
+        where 1=1
+        <if test="keyword != '' and keyword != null">
+          and(  a.loginName like '%${keyword}%' or a.yhlb like '%${keyword}%' )
+        </if>
+    </select>
+
+    <select id="getUserById" parameterType="String"
+            resultType="com.netmarch.fdfs.system.bean.LoginUser">
+        select a.*
+        from users a
+        where a.user_id = #{user_Id}
+    </select>
+    
+    <insert id="addLoginUser"
+            parameterType="com.netmarch.fdfs.system.bean.LoginUser">
+       insert into users (User_ID,loginName, password, userName,yhlb, userstate, addtime, adduser)
+        values
+        (#{user_Id},#{loginname},#{password},#{username},#{yhlb},'1',sysdate(),#{adduser})
+</insert>
+
+    <update id="editLoginUser"
+            parameterType="com.netmarch.fdfs.system.bean.LoginUser">
+        update users set loginName = #{loginname}, userName = #{username},yhlb=#{yhlb}, userstate = #{userstate},
+         addtime = sysdate(), adduser = #{adduser}
+        where user_id = #{user_Id}
+    </update>
+
+    <delete id="delBatch" parameterType="List">
+        delete from users where user_id in
+        <foreach collection="list" item="user_Id" open="(" separator="," close=")">
+            #{user_Id}
+        </foreach>
+    </delete>
+
+    <select id="checkRepeatLoginName"
+            parameterType="com.netmarch.fdfs.system.bean.LoginUser"
+            resultType="int">
+        select count(1) from users where loginName = #{loginname}
+        <if test="user_Id !=null">
+            and user_Id &lt;&gt; #{user_Id}
+        </if>
+    </select>
+
+
+    <select id="checkLoginByLoginName" parameterType="com.netmarch.fdfs.system.bean.LoginUser" resultType="com.netmarch.fdfs.system.bean.LoginUser">
+        select * from users where LoginName = #{loginname} and UserState='1'
+    </select>
+
+</mapper>

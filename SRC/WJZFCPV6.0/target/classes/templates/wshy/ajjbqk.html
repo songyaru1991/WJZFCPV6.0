@@ -1,0 +1,314 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>网上换押管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="E105_wripper jq_iframeleft">
+    <div class="E105_case1">
+
+        <div class="E105_tableCoat ">
+
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>案件基本信息</p>
+                </div>
+
+            </div>
+
+            <div class="P105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件名称:</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" th:value="${ajjbqk.AJMC}">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件类型:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl" th:value="${ajjbqk.AJLX}">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件状态:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl" th:value="${ajjbqk.AJZT}">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件编号</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl" th:value="${ajjbqk.AJBH}">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>分案编号</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  ">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>关联编号</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  ">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>侦查机关</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:value="${ajjbqk.TQDWMC}">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>公安文书文号</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  ">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>主办单位</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:value="${ajjbqk.BADWMC}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>侦查机关类别</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.TQDWDM =='21'}" th:value="公安机关">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>移送时间</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  "
+                                   th:value="${#dates.format(ajjbqk.YSSJ, 'yyyy-MM-dd HH:mm:ss')}">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>实际发送时间</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  "
+                                   th:value="${#dates.format(ajjbqk.FSSJ, 'yyyy-MM-dd HH:mm:ss')}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案由代码</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:value="${ajjbqk.TQAYDM}">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>是否是重报案件</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.SFCBAJ =='0'}" th:value="否">
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.SFCBAJ =='1'}" th:value="是">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>是否认罪轻案案件</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.SFRZQA =='0'}" th:value="否">
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.SFRZQA =='1'}" th:value="是">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人是否有未成年人</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.XYRSFWCNR =='0'}" th:value="否">
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.XYRSFWCNR =='1'}" th:value="是">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>被害人是否有未成年人</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.BHRSFWCNR =='0'}" th:value="否">
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.BHRSFWCNR =='1'}" th:value="是">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人是否有台湾人</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.XYRSFTWR =='0'}" th:value="否">
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.XYRSFTWR =='1'}" th:value="是">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>被害人是否有台湾人</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.BHRSFTWR =='0'}" th:value="否">
+                            <input type="text" class="E105_input  fl  " th:if="${ajjbqk.BHRSFTWR =='1'}" th:value="是">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>检察院的受理时间</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  "
+                                   th:value="${#dates.format(ajjbqk.SLRQ, 'yyyy-MM-dd HH:mm:ss')}">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>实际收到时间</p>
+                            </div>
+                            <input type="text" class="E105_input  fl  "
+                                   th:value="${#dates.format(ajjbqk.SDSJ, 'yyyy-MM-dd HH:mm:ss')}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <div class="E105_bianhao1 fl clear">
+                                <p>主案由</p>
+                            </div>
+                            <input type="text" class="E105_input1  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="E105_bianhao1 fl clear">
+                                <p>扫描件页数:</p>
+                            </div>
+                            <input type="text" class="E105_input1  fl" th:value="${ajjbqk.PAGES}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="P105_baseInfo">
+                <div class="E105_info  ">
+                    <p>嫌疑人信息</p>
+                </div>
+
+            </div>
+            <div class="E105_tableFloor">
+
+                <table class="P105_table">
+                    <tr class="P105_titlebg">
+                        <td class="clear">
+                            <p>嫌疑人姓名</p>
+                        </td>
+                        <td class="clear">
+                            <p>身份证号 </p>
+
+                        </td>
+                        <td class="clear">
+                            <p>性别 </p>
+
+                        </td>
+                        <td class="clear">
+                            <p>出生日期 </p>
+                        </td>
+                        <td class="clear">
+                            <p>户籍地 </p>
+
+                        </td>
+                        <td class="clear">
+                            <p>强制种类措施</p>
+
+                    </tr>
+                    <tr class="P105_tr">
+                        <td class="clear">
+                            <p th:text="${xyrqk.XYRXM}">嫌疑人姓名 </p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${xyrqk.SFZHM}">身份证号 </p>
+
+                        </td>
+                        <td class="clear" th:switch="${xyrqk.XYRXBDM}">
+                            <p th:case="0">未知的性别</p>
+                            <p th:case="1">男性</p>
+                            <p th:case="2">女性</p>
+                            <p th:case="9">未说明的性别</p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${xyrqk.CSRQ}">出生日期 </p>
+                        </td>
+                        <td class="clear">
+                            <p th:text="${xyrqk.XYRHJD}">户籍地 </p>
+
+                        </td>
+                        <td class="clear" th:switch="${xyrqk.QZCSDM}">
+                            <p th:case="1">拘传</p>
+                            <p th:case="2">保证人取保候审</p>
+                            <p th:case="3">保证金取保候审</p>
+                            <p th:case="4">监视居住</p>
+                            <p th:case="5">拘留</p>
+                            <p th:case="6">逮捕</p>
+                        </td>
+
+                        </td>
+                        <!-- <td class="clear C205_handle" >
+                             <p>查看</p>
+                             <p>文书管理</p>
+                         </td>-->
+                    </tr>
+                </table>
+
+            </div>
+            <!--查看换押和人员基本信息的查询参数-->
+            <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+            <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+            <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+
+            <!-- 以下参数为换押统计的查询参数-->
+            <input type="hidden" name="qsrq" id="qsrq" th:value="${qsrq}"/>
+            <input type="hidden" name="jsrq" id="jsrq" th:value="${jsrq}"/>
+
+            <div class="S105_btnCoat1 ">
+                <div class="E105_saveBtnCoat clear">
+
+                    <div class="S105_saveBtn fl cursor jq_E105_cannel1" lay-Content="查看"
+                         th:lay-Href="'/wshygl-fy/Wshy/toView?rybh=' + ${xyrqk.XYRBH} + '&ajbs='+${ajjbqk.AJBS}"><p>返回</p></div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+</body>
+<script>
+
+</script>
+</html>

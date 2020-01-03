@@ -1,0 +1,49 @@
+<div th:fragment="comment(id,type,baseURL)" xmlns:th="http://schemas.xmlsoap.org/wsdl/">
+    <input type="hidden" id="commentId" th:value="${id}"/>
+    <input type="hidden" id="commentType" th:value="${type}"/>
+    <input type="hidden" id="baseURL" th:value="${baseURL}"/>
+    <fieldset class="layui-elem-field">
+        <legend>评论区域<span class="layui-badge" id="count"></span></legend>
+        <div class="layui-field-box" id="show">
+
+        </div>
+    </fieldset>
+    <script>
+        $(document).ready(function(){
+          var id = $("#commentId").val();
+          var type = $("#commentType").val();
+          var baseURL = $("#baseURL").val();
+          var url = baseURL + "/comment/show/"+id+"/"+type;
+            $.ajax({
+                type:'POST',
+                data:null,
+                url:url,
+                cache:false,
+                dataType:'json',
+                success:function (data) {
+                    var html = "";
+                    if(data.code == 200){
+                        if(data.data.length == 0){
+                            $("#show").html("暂无评论");
+                            $("#count").html(data.data.length);
+                        }else{
+                            $.each(data.data, function(){
+                                html +="<blockquote class=\"layui-elem-quote layui-quote-nm\">\n" +
+                                    "        <span class=\"layui-badge layui-bg-green\">"+this.createrName+"</span>\n" +
+                                    "        <br>"+this.content+"\n" +
+                                    "        <br><i class=\"layui-icon layui-icon-date\" style=\"position: absolute;right: 146px;\"></i><em style=\"position: absolute;right: 30px;\">"+this.createTime+"</em><br>\n" +
+                                    "    </blockquote>";
+                            });
+                            $("#show").html(html);
+                            $("#count").html(data.data.length);
+                        }
+                    }else{
+                        layer.alert(data.message);
+                    }
+
+                }
+            })
+
+        })
+    </script>
+</div>

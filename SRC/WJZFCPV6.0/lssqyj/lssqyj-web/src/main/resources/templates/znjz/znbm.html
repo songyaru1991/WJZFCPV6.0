@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>卷宗智能归档系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/assets/stylesheets/bootstrap/bootstrap.min.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/assets/stylesheets/bootstrap/fileinput.css'">
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/bootstrap.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/fileinput.js'"></script>
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/fileinput_locale_fr.js'"></script>
+    <script th:src="${application.basePath}+'/static/assets/javascripts/bootstrap/fileinput_locale_zh.js'"></script>
+<!--    <script th:src="${application.basePath}+'/static/js/dynamsoft/Resources/dynamsoft.webtwain.initiate.js'"></script>-->
+<!--    <script th:src="${application.basePath}+'/static/js/dynamsoft/Resources/dynamsoft.webtwain.config.js'"></script>-->
+
+</head>
+<body>
+<div class="A105_wripper">
+    <!-- 上传 -->
+    <div class="modal fade" id="uploadModal" tabindex="0" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="clearFile()" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="uploadModalLabel">
+                        卷宗上传
+                    </h4>
+                </div>
+                <div class="modal-body A405_pop">
+                    <input id="input-701" name="file" type="file" multiple=true class="file-loading">
+                </div>
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" onclick="clearFile()" class="btn btn-default" data-dismiss="modal">关闭-->
+<!--                    </button>-->
+<!--                    &lt;!&ndash;<button type="button" class="btn btn-primary" data-dismiss="modal">-->
+<!--                        提交更改-->
+<!--                    </button>&ndash;&gt;-->
+<!--                </div>-->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <p style="display:none;" id="uploadDialog" treeId="" ajbs="" data-toggle="modal" data-target="#uploadModal"></p>
+
+    <div class="A105_body  ">
+        <iframe class="A105_catalogue  A105_catalogue_jq  fl " frameborder="0" th:src="'./znbm_left?ajbs='+${ajbs}+'&ajmc='+${ajmc}+'&type='+${type}"></iframe>
+        <iframe class="A105_pictureIframe  A105_pictureIframe_jq  fl " frameborder="0" src="./znbm_right"></iframe>
+    </div>
+
+
+</div>
+</body>
+<script>
+    var contextPath = getContextPath();
+    var layer ;
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+
+    var postData;
+    $(function(){
+        window.addEventListener('message',function(e){
+            postData = e.data;
+            // console.log('postData1',postData);
+            if (postData.herf == 'upload'){
+                $('#uploadDialog').click();
+                // $('#uploadFiles').click();
+                uploadFiles();
+                $('.fileinput-remove').css('display','none');
+            }
+            if (postData.herf == 'scan'){
+                $('#scanDialog').click();
+            }
+        },false);
+        $('.fileinput-remove').css('display','none');
+    });
+
+    // 扫描上传
+    // var console = window['console'] ? window['console'] : { 'log': function () { } };
+    // Dynamsoft.WebTwainEnv.RegisterEvent('OnWebTwainReady', Dynamsoft_OnReady); // Register OnWebTwainReady event. This event fires as soon as Dynamic Web TWAIN is initialized and ready to be used
+    //
+    // var DWObject;
+    //
+    // function Dynamsoft_OnReady() {
+    //     DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); // Get the Dynamic Web TWAIN object that is embeded in the div with id 'dwtcontrolContainer'
+    //     if (DWObject) {
+    //         var count = DWObject.SourceCount; // Populate how many sources are installed in the system
+    //
+    //         for (var i = 0; i < count; i++)
+    //             document.getElementById("source").options.add(new Option(DWObject.GetSourceNameItems(i), i));  // Add the sources in a drop-down list
+    //     }
+    // }
+    //
+    // function AcquireImage() {
+    //     if (DWObject) {
+    //         var OnAcquireImageSuccess, OnAcquireImageFailure;
+    //         OnAcquireImageSuccess = OnAcquireImageFailure = function () {
+    //             DWObject.CloseSource();
+    //         };
+    //
+    //         DWObject.SelectSourceByIndex(document.getElementById("source").selectedIndex);
+    //         DWObject.OpenSource();
+    //         DWObject.IfDisableSourceAfterAcquire = true;	// Scanner source will be disabled/closed automatically after the scan.
+    //         DWObject.AcquireImage(OnAcquireImageSuccess, OnAcquireImageFailure);
+    //     }
+    // }
+    //
+    // //Callback functions for async APIs
+    // function OnSuccess() {
+    //     console.log('successful');
+    // }
+    //
+    // function OnFailure(errorCode, errorString) {
+    //     alert(errorString);
+    // }
+    //
+    // function LoadImage() {
+    //     if (DWObject) {
+    //         DWObject.IfShowFileDialog = true; // Open the system's file dialog to load image
+    //         DWObject.LoadImageEx("", EnumDWT_ImageType.IT_ALL, OnSuccess, OnFailure); // Load images in all supported formats (.bmp, .jpg, .tif, .png, .pdf). OnSuccess or OnFailure will be called after the operation
+    //     }
+    // }
+    //
+    // // OnHttpUploadSuccess and OnHttpUploadFailure are callback functions.
+    // // OnHttpUploadSuccess is the callback function for successful uploads while OnHttpUploadFailure is for failed ones.
+    // function OnHttpUploadSuccess() {
+    //     console.log('successful');
+    // }
+    //
+    // function OnHttpUploadFailure(errorCode, errorString, sHttpResponse) {
+    //     // alert(sHttpResponse);
+    //     DWObject.RemoveAllImages();
+    // }
+    //
+    // function UploadImage() {
+    //     if (DWObject) {
+    //         // If no image in buffer, return the function
+    //         if (DWObject.HowManyImagesInBuffer == 0)
+    //             return;
+    //
+    //         var strHTTPServer = location.hostname; //The name of the HTTP server. For example: "www.dynamsoft.com";
+    //         var CurrentPathName = unescape(location.pathname);
+    //         var CurrentPath = CurrentPathName.substring(0, CurrentPathName.lastIndexOf("/") + 1);
+    //         var strActionPage = CurrentPath + "scanUpload";
+    //         DWObject.IfSSL = false; // Set whether SSL is used
+    //         DWObject.HTTPPort = location.port == "" ? 80 : location.port;
+    //
+    //         var Digital = new Date();
+    //         var uploadfilename = Digital.getMilliseconds(); // Uses milliseconds according to local time as the file name
+    //
+    //         /*// Set extra info as HTTP form fields to be sent to the server together with the images
+    //         DWObject.ClearAllHTTPFormField();
+    //         // DWObject.SetHTTPFormField('extraInfo', document.getElementById("infoToSend").value);
+    //         DWObject.SetHTTPFormField('wjid', postData.wjid);
+    //         DWObject.SetHTTPFormField('treeId', postData.treeId);
+    //         DWObject.SetHTTPFormField('ajbs', postData.ajbs);
+    //         // Upload the image(s) to the server asynchronously
+    //         // DWObject.HTTPUploadAllThroughPostAsPDF(strHTTPServer, strActionPage, uploadfilename + ".pdf", OnHttpUploadSuccess, OnHttpUploadFailure);
+    //         if (DWObject.GetImageBitDepth(DWObject.CurrentImageIndexInBuffer) == 1)
+    //         //If so, convert the image to Gray
+    //             DWObject.ConvertToGrayScale(DWObject.CurrentImageIndexInBuffer);
+    //         //Upload image in JPEG
+    //         DWObject.HTTPUploadThroughPost(strHTTPServer, DWObject.CurrentImageIndexInBuffer, strActionPage, uploadfilename + ".jpg", OnHttpUploadSuccess, OnHttpUploadFailure);*/
+    //         var i = 0;
+    //         DWObject.ClearAllHTTPFormField();
+    //         DWObject.SetHTTPFormField('wjid', postData.wjid);
+    //         DWObject.SetHTTPFormField('treeId', postData.treeId);
+    //         DWObject.SetHTTPFormField('ajbs', postData.ajbs);
+    //         function asyncFailureFunc(errorCode, errorString) {
+    //             alert("ErrorCode: " + errorCode + "\r" + "ErrorString:" + errorString);
+    //         }
+    //         var convertImage = function (_index) {
+    //             DWObject.ConvertToBlob([_index], EnumDWT_ImageType.IT_JPG,
+    //                 function (result) {
+    //                     DWObject.SetHTTPFormField('image_' + _index, result, 'JPG_image_' + _index);
+    //                     i++;
+    //                     if (i < DWObject.HowManyImagesInBuffer) {
+    //                         convertImage(i);
+    //                     }
+    //                     else {
+    //                         DWObject.HTTPUpload("[[${application.serverPath}]]/lssqyj/znjz/scanUpload", OnHttpUploadSuccess, OnHttpUploadFailure);
+    //                     }
+    //                 }, asyncFailureFunc);
+    //         }
+    //         convertImage(0);
+    //     }
+    // }
+
+    // 上传文件
+    function uploadFiles(){
+        initFileInput("input-701", "/lssqyj/znjz/uploadJzFiles");//这个#的地方填你的上传文件的后台方法
+        $("#input-701").on("fileuploaded", function(event, data, previewId, index) {
+            var wjid = postData.wjid;
+            if(wjid.length>0){
+                var newPath = data.response;
+                $('.jq_iframeleft').contents().find('.A105_pictureIframe_jq').contents().find('#'+wjid).children('.A305_listPic').attr('src','[[${application.fdfsPath}]]'+newPath);
+                $('.jq_iframeleft').contents().find('.A105_pictureIframe_jq').contents().find('#imgContent').children('.'+wjid+':nth-child(1)').children('.A105_presentation').attr('src','[[${application.fdfsPath}]]'+newPath);
+            }
+        });
+    }
+
+    function initFileInput(ctrlName, uploadUrl) {
+        // var control = $('#' + ctrlName);
+        var control = $('#input-701');
+
+        control.fileinput({
+            enctype: 'multipart/form-data',
+            maxFileCount: 100,
+            uploadAsync: false,
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            //allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: true,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            /* previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",  */
+            // uploadExtraData: {
+            //     // "treeId": $('#showDialog').attr('treeId'),
+            //     // "ajbs": $('#showDialog').attr('ajbs')
+            //     "treeId": postData.treeId,
+            //     "ajbs":  postData['ajbs']
+            // },
+            uploadExtraData: function(){
+                return {
+                    "wjid": postData.wjid,
+                    "treeId": postData.treeId,
+                    "ajbs":  postData.ajbs,
+                    "type": postData.type
+                };
+            }
+
+        });
+    }
+
+    function clearFile() {
+        $('.fileinput-remove').click();
+    }
+
+    function toLoginOut(){
+        $.ajax({
+            url:contextPath + "/logout",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                if (data.status == 200) {
+                    location.href ="[[${application.uumsPath}]]/login?userBmName=[[${application.userBmName}]]&callbackURL=[[${application.serverPath}]]/lssqyj/znjz/casejbxx";
+                } else {
+                    layer.alert("登出失败，原因是：" + data.msg);
+                }
+            },
+            error:function (data) {
+                console.log(data.msg);
+                layer.alert(data.msg);
+            }
+        })
+    }
+   // initPage();
+    function initPage() {
+        //如果是在ifream中子页面，刷新最外层页面
+        if (window.top != window.self ){
+            var jwt = GetQueryString("jwt");
+            window.top.location.href = "[[${application.serverPath}]]/lssqyj/loginVerify?jwt="+jwt;
+        }
+    }
+
+
+
+
+</script>
+</html>

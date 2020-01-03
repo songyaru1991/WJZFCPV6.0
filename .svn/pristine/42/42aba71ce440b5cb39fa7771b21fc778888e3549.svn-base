@@ -1,0 +1,17 @@
+package com.netmarch.figurecloud.auth.core.security.exceptions;
+
+import org.springframework.security.core.AuthenticationException;
+
+/** 
+* @Description: IllegalArgumentException 错误的参数
+* @Author: fengxiang
+* @Date: 2019/2/27 9:01
+*/ 
+public class IllegalArgumentException extends AuthenticationException {
+    public IllegalArgumentException(String msg) {
+        super(msg);
+    }
+    public IllegalArgumentException(String msg, Throwable t) {
+        super(msg, t);
+    }
+}

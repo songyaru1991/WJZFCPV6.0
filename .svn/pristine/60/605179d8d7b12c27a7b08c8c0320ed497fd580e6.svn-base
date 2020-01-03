@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/all.css">
+    <link rel="stylesheet" href="../static/css/style05.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/main_All.js"></script>
+    <script src="../static/js/main_05.js"></script>
+    <script src="../static/js/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../static/js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../static/js/jquery.backgroundSize.js"></script>
+
+</head>
+<body>
+<div class="E105_wripper">
+    <div class="E105_case">
+        <div class="E105_subtitle clear">
+            <div class="E105_biaoti fl">
+                <img src="../images/H105_edit.png" alt="" class="E105_editIco">
+                <p>王宝田，柳姚天案件编辑</p>
+            </div>
+
+            <div class="E105_checkCoat fr    ">
+                <div class="E105_check fl cursor E105_checkClick">
+                    <img src="../images/H105_checkIco1.png" alt="" class="E105_checkIco">
+                    <p>查看</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco2.png" alt="" class="E105_checkIco2">
+                    <p>编辑</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco3.png" alt="" class="E105_checkIco2">
+                    <p>社会调查 </p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco4.png" alt="" class="E105_checkIco2">
+                    <p>文书管理</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco5.png" alt="" class="E105_checkIco2">
+                    <p>资料补充</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco6.png" alt="" class="E105_checkIco2">
+                    <p>涉案财物</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco7.png" alt="" class="E105_checkIco3">
+                    <p>案件追踪</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_checkIco8.png" alt="" class="E105_checkIco3">
+                    <p>会见申请</p>
+                </div>
+                <div class="E105_check fl cursor">
+                    <img src="../images/H105_x1.png" alt="" class="E105_checkIco">
+                    <p>关闭标签</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>案件基本信息</p>
+                </div>
+                <div class="E105_arrowup cursor">
+
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件编号:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件名称:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件类型:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <select name="" id="" class="E105_input  fl">
+                                <option value="aaaa">报诉</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>移送时间:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <div class="E105_input_layer fl">
+                                <input
+                                        type="text"
+                                        id="Q105P_refereeing1"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar1"></div>
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件类别:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  ">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>移送单位:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  ">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>是否是重要案件:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>是否认罪轻案案件:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>嫌疑人是否有未成年人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>被害人是否有未成年人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p> 嫌疑人是否有台湾人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p> 被害人是否有台湾人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="E105_bianhao1 fl clear">
+                                <p>主案由:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input1  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>公安文书文号:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>上报卷宗页数:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>接收单位:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <select name="" class="E105_input  fl">
+                                <option value="aaaa">区公安局</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>侦查机关:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>承办人:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>办案单位::</p><span class="E105_star">*</span>
+                            </div>
+
+                            <select name="" class="E105_input  fl">
+                                <option value="aaaa">区公安局</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="E105_tableCoat ">
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>嫌疑人基本信息</p>
+                </div>
+                <div class="E105_arrowup cursor">
+
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人姓名:</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人性别:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>身份证号:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>从事职业:</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>强制措施种类:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人编号:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>嫌疑人年龄:</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>当前住址:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>政治面貌:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>文化程度:</p>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>户籍地:</p>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+
+        <div class="E105_tableCoat1 "    >
+            <div class="E105_baseInfo">
+                <div class="E105_info  ">
+                    <p>案件基本信息</p>
+                </div>
+                <div class="E105_delete cursor">
+
+                </div>
+            </div>
+            <div class="E105_tableFloor">
+                <table class="E105_table">
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件编号:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件名称:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件类型:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <select name="" id="" class="E105_input  fl">
+                                <option value="aaaa">报诉</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>移送时间:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <div class="E105_input_layer fl">
+                                <input
+                                        type="text"
+                                        id="Q105P_refereeing1"
+                                        class="layui-input   "
+                                        autocomplete="off">
+                                <img src="../images/E105_date.png" alt="" class="Q105_calendar Q105_calendar1"></div>
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>案件类别:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  ">
+
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>移送单位:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl  ">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>是否是重要案件:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>是否认罪轻案案件:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>嫌疑人是否有未成年人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear ">
+                                <p>被害人是否有未成年人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p> 嫌疑人是否有台湾人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p> 被害人是否有台湾人:</p>
+                            </div>
+                            <div class="E105_input_coat fl clear">
+                                <input type="radio" name="">
+                                <p>是</p>
+                                <input type="radio" name="" checked="checked">
+                                <p>否</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="E105_bianhao1 fl clear">
+                                <p>主案由:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input1  fl">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>公安文书文号:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>上报卷宗页数:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>接收单位:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <select name="" class="E105_input  fl">
+                                <option value="aaaa">区公安局</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>侦查机关:</p><span class="E105_star">*</span>
+                            </div>
+
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>承办人:</p><span class="E105_star">*</span>
+                            </div>
+                            <input type="text" class="E105_input  fl">
+                        </td>
+                        <td class="clear">
+                            <div class="E105_bianhao fl clear">
+                                <p>办案单位::</p><span class="E105_star">*</span>
+                            </div>
+
+                            <select name="" class="E105_input  fl">
+                                <option value="aaaa">区公安局</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
+
+        <div class="E105_addSuspect">
+            <div class="E105_addCoat">
+                <img src="../images/E105_add.png" alt="" class="E105_addSuspectImg cursor">
+                <p>新增嫌疑人</p>
+            </div>
+        </div>
+
+        <div class="E105_btnCoat">
+            <div class="E105_saveBtnCoat clear">
+
+                <button class="E105_saveBtn fl cursor"><p>保存</p></button>
+                <button class="E105_saveBtn fl cursor"><p>取消</p></button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+<script>
+  layui.use('laydate', function () {
+    var laydate = layui.laydate;
+// 点我触发
+    laydate.render({
+      elem: '#Q105P_refereeing1',
+      eventElem: '.Q105_calendar1',
+      trigger: 'click'
+    });
+  });
+</script>
+</html>

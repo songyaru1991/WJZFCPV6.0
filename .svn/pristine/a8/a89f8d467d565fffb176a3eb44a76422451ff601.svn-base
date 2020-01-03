@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+
+    <div class="E105_wripper jq_iframeleft">
+        <div class="E105_case">
+            <div class="P105_subtitle clear">
+                <div class="E105_biaoti fl">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p th:text="${ajjbqk.ajmc}"></p>
+                </div>
+            </div>
+
+            <div class="P105_tableCoat">
+                <div class="P105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>案件基本信息</p>
+                    </div>
+
+                </div>
+                <div class="E105_tableFloor">
+
+                    <table class="P105_table">
+                        <tr class="P105_titlebg">
+                            <td class="clear">
+                                <p>案件编号</p>
+                            </td>
+                            <td class="clear">
+                                <p>案件名称   </p>
+
+                            </td>
+                            </td>
+                            <td class="clear">
+                                <p>立案时间    </p>
+                            </td>
+                            <td class="clear">
+                                <p>主办单位        </p>
+
+                            </td>
+                            <td class="clear">
+                                <p>案件状态</p>
+
+                            </td>
+                        </tr>
+                        <tr class="P105_tr">
+                            <td class="clear">
+                                <p th:text="${ajjbqk.ajbh}">案件编号</p>
+                            </td>
+                            <td class="clear">
+                                <p th:text="${ajjbqk.ajmc}">案件名称</p>
+
+                            </td>
+                            <td class="clear">
+                                <p th:text="${ajjbqk.lasj}">立案时间</p>
+                            </td>
+                            <td class="clear">
+                                <p th:text="${ajjbqk.zbdwmc}">主办单位</p>
+
+                            </td>
+                            <td class="clear">
+                                <p th:text="${ajjbqk.ajzt}">案件状态</p>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="P105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>涉案财物</p>
+                    </div>
+
+                </div>
+                <div class="E105_tableFloor">
+                    <table class="P105_table"  id="table_refresh" th:fragment="table_refresh">
+                        <tr class="P105_titlebg">
+                            <td class="clear">
+                                <p>序号   </p>
+                            </td>
+                            <td class="clear">
+                                <p>物品类别   </p>
+
+                            </td>
+                            <td class="clear" lay-data="{field:'jlbh'}">
+                                <p>物品名称</p>
+
+                            </td>
+                            <td class="clear">
+                                <p>当前阶段      </p>
+                            </td>
+                            <td class="clear">
+                                <p>估值     </p>
+
+                            </td>
+                            <td class="clear">
+                                <p>状态</p>
+                            </td>
+                            <td class="clear">
+                                <p>操作</p>
+                            </td>
+                        </tr>
+                        <tr class="P105_tr" th:each="zwxxbean,beanStat : ${zwxxlist}">
+                            <td class="clear">
+                            <p th:text="${beanStat.count}">序号</p>
+                            </td>
+                            <td class="clear">
+                                <p th:text="${zwxxbean.zwlb}">物品类别   </p>
+                            </td>
+                            <td class="clear">
+                                <p th:text="${zwxxbean.zwmc}">物品名称</p>
+                            </td>
+
+                            <td class="clear">
+                                <p th:if="${zwxxbean.dqlzdw =='' || zwxxbean.dqlzdw== null}" th:text="${area}">当前阶段</p>
+                                <p th:if="${zwxxbean.dqlzdw !='' && zwxxbean.dqlzdw!= null}" th:text="${zwxxbean.dqlzdw}">当前阶段</p>
+                            </td>
+
+                            <td class="clear">
+                                <p th:text="${zwxxbean.zwje}">估值</p>
+                            </td>
+                            <td class="clear">
+                                <p th:text="${zwxxbean.zwzt}">状态</p>
+                            </td>
+                            <td class="clear">
+                                <p>
+                                <a auth:check="userEdit" class="H105_clickEvent"  th:lay-href="'/wssacwgl/editZwxx?jlbh='+${zwxxbean.jlbh}" th:data-content="涉案财物编辑">
+                                    <img class="I108_imgNormal"
+                                         th:src="${application.basePath}+'/static/images/I108_icon_list_to_edit.png'"
+                                         alt="">
+                                    <span>编辑</span>
+                                </a>
+
+                               <!-- <a  th:href="${'javascript:delBatch('''+zwxxbean.jlbh+''')'}" auth:check="userDel">-->
+                                    <a th:href="${'javascript:delBatch('''+zwxxbean.jlbh+''','''+zwxxbean.ajbs+''')'}" auth:check="userDel">
+                                    <img class="I108_imgHover"
+                                         th:src="${application.basePath}+'/static/images/I108_icon_list_to_del_hover.png'"
+                                         alt="">
+                                    <span>删除</span>
+                                </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+                <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+                <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+
+                <div class="P105_addSuspect">
+                    <div class="E105_addCoat jq_suspect" th:lay-href="'/wssacwgl/addZwxx?ajbs='+ ${ajjbqk.ajbs}+'&ajbh='+${ajjbqk.ajbh}+'&ajmc='+${ajjbqk.ajmc}" th:data-content="涉案财物增加">
+                       <img th:src="${application.basePath}+'/static/images/E105_add.png'" alt="" class="E105_addSuspectImg cursor">
+                        <p>新增物品</p>
+                    </div>
+                </div>
+
+                <div class="P105_btnCoat ">
+                    <div class="E105_saveBtnCoat clear">
+                        <button class="E105_saveBtn fl cursor jq_E105_cannel2"  lay-href="/wssacwgl/Ajjbqk/ajjbqk"
+                                data-content="案件管理"   style="margin-left: 100px"><p>返回</p></button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+    <script th:inline="javascript">
+
+        var contextPath = getContextPath();
+        var layIndex;
+        var table = null;
+        layui.use('table', function () {
+            layui.table.init('demo', {
+                limit: 15
+            });
+
+            table = layui.table;
+
+        })
+
+        function delBatch(jlbh,ajbs) {
+            layer.confirm('确定删除吗？', {btn: ['确定', '取消']}, function (index) {
+                layer.close(index);
+                $.ajax({
+                    url: contextPath + "/delZwxx",
+                    type: "post",
+                    data: {"jlbh": jlbh},
+                    dataType: "json",
+                    success: function (result) {
+                        if (200 == result.code) {
+                            layer.alert(result.message, function () {
+                                //window.location.reload();
+                                layer.close(layer.index);
+                                var param = {
+                                    ajbs: ajbs,
+                                };
+                                $("#table_refresh").load("/wssacwgl/Ajjbqk/zwxxTableList",param, function () {
+                                    layui.use('table', function () {
+                                        var table = layui.table;
+                                        table.init();
+                                    });
+                                });
+                            });
+                        } else {
+                            layer.alert(result.message);
+                            return;
+                        }
+                    }
+                })
+            })
+        }
+
+        function layerclose() {
+            layer.close(layIndex);
+        }
+
+    </script>
+
+</html>

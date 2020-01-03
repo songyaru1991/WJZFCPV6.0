@@ -1,0 +1,44 @@
+package com.netmarch.lssqyj.system.service;
+
+import com.netmarch.lssqyj.system.bean.Ajdzjzml;
+import com.netmarch.lssqyj.system.bean.Ajdzjzwj;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface AjdzjzmlService {
+    int updateZtree(String mlid,String ajbs,int orderby,String filename,String parentid,String mlType); // u
+
+    List<Ajdzjzml> selectDzjzmlByParent(String ajbs,String parentId,String mlType);
+
+//    int deleteZtree(String ajbs,String orderby,String parentid,String mlType); // u
+
+    int insertWj(String ajbs,String path, String filename, String treeId,String mlType);
+
+//    int deleteFileByMlid(String wjid,String filePath);
+
+    List<String> selectAllParentids(String ajbs,String mlType);
+
+    int addZnMl(String ajbs,String typename, String mlid, String pageFrom, String pageTo,String mlType);
+
+    Ajdzjzml selectIdByOrderby(Integer orderby,String ajbs,String mlType);
+
+    List<String> selectAllWjCountByMlid(int orderby, String ajbs,String mlType);
+
+    List<Ajdzjzwj> selectWjByMlid(String mlid);
+
+    int deleteZtree1(String mlid, String wjid,String mlType);
+
+    Ajdzjzml selectMlByWjid(String wjid,String mlType);
+
+    Ajdzjzml selectById(String mlid);
+
+//    int insert2(String id, int orderby, String typename, String ajbs,String mlType);
+//
+//    int resetOrderby(String mlid, int orderby,String mlType);
+//
+//    List<String> selectAjbsList(String mlType);
+
+    List<Ajdzjzml> findZnmlByAjbs(String ajbs,String mlType);
+}

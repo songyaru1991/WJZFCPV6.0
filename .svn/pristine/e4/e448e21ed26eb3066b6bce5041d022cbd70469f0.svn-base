@@ -1,0 +1,214 @@
+package com.netmarch.lssqyj.system.service.impl;
+
+import com.netmarch.lssqyj.common.utils.common.FdfsUtil;
+import com.netmarch.lssqyj.system.bean.Ajdzjzml;
+import com.netmarch.lssqyj.system.bean.Ajdzjzwj;
+import com.netmarch.lssqyj.system.mapper.AjdzjzmlMapper;
+import com.netmarch.lssqyj.system.mapper.AjdzjzwjMapper;
+import com.netmarch.lssqyj.system.service.AjdzjzmlService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.annotation.Obsolete;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@Slf4j
+public class AjdzjzmlServiceImpl implements AjdzjzmlService {
+
+    @Autowired
+    private AjdzjzmlMapper ajdzjzmlMapper;
+
+    @Autowired
+    private AjdzjzwjMapper ajdzjzwjMapper;
+
+    @Autowired
+    private FdfsUtil fileUtil;
+
+    @Override
+    public int updateZtree(String mlid,String ajbs,int orderby,String filename,String parentid,String mlType) { // u
+        if("".equals(mlid)){ // 一级目录
+            int maxOrderby = 0;
+            int addOrderby = 1;
+            List<Ajdzjzml> ajdzjzmls = ajdzjzmlMapper.selectDzjzmlByParent(ajbs, parentid ,mlType);
+            if (null != ajdzjzmls && ajdzjzmls.size() > 0) {
+                for (Ajdzjzml ajdzjzml : ajdzjzmls) {
+                    maxOrderby = ajdzjzml.getOrderby() > maxOrderby ? ajdzjzml.getOrderby() : maxOrderby;
+                }
+                addOrderby = maxOrderby + 1;
+            }
+            return ajdzjzmlMapper.addParentMl(ajbs, UUID.randomUUID().toString(), filename, addOrderby, parentid, new Date(),mlType);
+        }else{
+            return ajdzjzmlMapper.updateNameByMlid(mlid,filename);
+        }
+    }
+
+    @Override
+    public List<Ajdzjzml> selectDzjzmlByParent(String ajbs,String parentId,String mlType) {
+        return ajdzjzmlMapper.selectDzjzmlByParent(ajbs,parentId,mlType);
+    }
+
+//    @Override
+//    public int deleteZtree(String ajbs,String orderby,String parentid,String mlType) { // u
+//        if(parentid.length()>0){
+//            int oldsort =Integer.parseInt(orderby.substring(1,orderby.length()));
+//            int pid = Integer.parseInt(parentid);
+//            String wjid = ajdzjzwjMapper.selectWjid(ajbs,oldsort,pid,mlType);
+//            return ajdzjzwjMapper.deleteFileById(wjid);
+//        }else{
+//            Ajdzjzml ajdzjzml = ajdzjzmlMapper.selectMlByOrder(ajbs,Integer.parseInt(orderby),mlType);
+//            String id = ajdzjzml.getId();
+//            List<Ajdzjzwj> wjList = ajdzjzwjMapper.selectWjByMlid(id);
+//            for(Ajdzjzwj a : wjList){
+//                fileUtil.deleteFile(a.getFilename()); // 删除fdfs文件
+//            }
+//            ajdzjzwjMapper.deleteFileByMlid(id); // 删除目录下的文件
+//            return ajdzjzmlMapper.deleteFileById(id); // 删除目录
+//        }
+//    }
+
+    @Override
+    public int insertWj(String ajbs, String path, String filename, String parentid,String mlType){
+        String id = UUID.randomUUID().toString();
+        int orderby = Integer.parseInt(parentid);
+        Ajdzjzml ajdzjzml = ajdzjzmlMapper.selectMlByOrder(ajbs,orderby,mlType);
+        return ajdzjzwjMapper.addWj(id,ajdzjzml.getId(),path,filename,new Date());
+    }
+
+//    @Override
+//    public int deleteFileByMlid(String wjid,String filePath){
+//        fileUtil.deleteFile(filePath);
+//        return ajdzjzwjMapper.deleteFileById(wjid);
+//    }
+
+    @Override
+    public List<String> selectAllParentids(String ajbs,String mlType){
+        return ajdzjzmlMapper.selectAllParentids(ajbs,mlType);
+    }
+
+    @Override
+    public int addZnMl(String ajbs, String typename, String mlid, String pageFrom, String pageTo,String mlType){
+        String id = UUID.randomUUID().toString();
+        Ajdzjzml pml = ajdzjzmlMapper.selectMlById(mlid);
+        String parentid = pml.getOrderby()+"";
+        Ajdzjzml ml = ajdzjzmlMapper.selectMlByName(ajbs,typename,parentid,mlType);
+        int maxNewsort = 0;
+        int neworderby = 0;
+        if(null != ml){
+            id = ml.getId();
+            maxNewsort = null == ajdzjzwjMapper.selectMaxNewsort(ajbs,typename,mlType)?0:ajdzjzwjMapper.selectMaxNewsort(ajbs,typename,mlType);
+        }else{
+            List<Ajdzjzml> ajdzjzmls = ajdzjzmlMapper.selectDzjzmlByParent(ajbs,parentid,mlType);
+            int maxOrderby = 0;
+            int addOrderby = 1;
+            if(null != ajdzjzmls&&ajdzjzmls.size()>0){
+                for(Ajdzjzml ajdzjzml : ajdzjzmls){
+                    maxOrderby = ajdzjzml.getOrderby()>maxOrderby?ajdzjzml.getOrderby():maxOrderby;
+                }
+                String str = maxOrderby+"";
+                String f = str.substring(0,str.length()-1);
+                String h = str.substring(str.length()-1);
+                neworderby = Integer.parseInt(f + (Integer.parseInt(h)+1));
+//                neworderby = maxOrderby + 1;
+            }else{
+                neworderby = Integer.parseInt(parentid + addOrderby);
+            }
+            ajdzjzmlMapper.addParentMl(ajbs,id,typename,neworderby,parentid, new Date(),mlType);
+        }
+        List<Ajdzjzwj> ajdzjzwjs = new ArrayList<>();
+        if("A".equals(pageFrom)||"A1".equals(pageFrom)||"B".equals(pageFrom)){
+            ajdzjzwjs = ajdzjzwjMapper.selectExtraByPage(ajbs,mlid,pageFrom,pageTo,mlType);
+            log.info(typename+"------------------------------特殊"+pageFrom);
+        }else{
+            ajdzjzwjs = ajdzjzwjMapper.selectWjByPage(ajbs,mlid,Integer.parseInt(pageFrom),Integer.parseInt(pageTo),mlType);
+        }
+
+        if(null != ajdzjzwjs&&ajdzjzwjs.size()>0){
+            for(int i=0;i<ajdzjzwjs.size();i++){
+//                if(null != ml){
+//                    if(!id.equals(pml.getId())){
+                Ajdzjzml aa = ajdzjzmlMapper.selectMlById(id);
+                if(!"-1".equals(aa.getParentid())){
+                    ajdzjzwjMapper.updateNewsort(ajdzjzwjs.get(i).getId(),id,maxNewsort+i+1);
+                }
+//                    }
+//                }
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public Ajdzjzml selectIdByOrderby(Integer orderby,String ajbs,String mlType) {
+        return ajdzjzmlMapper.selectIdByOrderby(orderby,ajbs,mlType);
+    }
+
+    @Override
+    public List<String> selectAllWjCountByMlid(int orderby,String ajbs,String mlType){
+        return ajdzjzmlMapper.selectAllMlIdListByOrderby(ajbs,orderby,mlType);
+    }
+
+    @Override
+    public List<Ajdzjzwj> selectWjByMlid(String mlid) {
+        return ajdzjzwjMapper.selectWjByMlid(mlid);
+    }
+
+    @Override
+    public int deleteZtree1(String mlid, String wjid,String mlType) {
+        int count = 0;
+        if("".equals(mlid)){
+            Ajdzjzwj ajdzjzwj = ajdzjzwjMapper.selectWjById(wjid);
+//            log.info("被删除的文件url是：" + ajdzjzwj.getFilename());
+            fileUtil.deleteFile(ajdzjzwj.getFilename());
+            count = ajdzjzwjMapper.deleteFileById(wjid);
+//            log.info("被删除的文件id是：" + wjid);
+        }else{
+            Ajdzjzml ajdzjzml = ajdzjzmlMapper.selectMlById(mlid);
+            List<String> mlids = ajdzjzmlMapper.selectAllMlIdListByOrderby(ajdzjzml.getAjbs(),ajdzjzml.getOrderby(),mlType);
+            List<Ajdzjzwj> ajdzjzwjs = ajdzjzwjMapper.selectWjByMlids(mlids);
+            if(null != ajdzjzwjs&&ajdzjzwjs.size() > 0){
+                for(Ajdzjzwj wj : ajdzjzwjs){
+                    fileUtil.deleteFile(wj.getFilename());
+                    count = ajdzjzwjMapper.deleteFileById(wj.getId());
+//                    log.info("被删除的文件id是：" + wj.getId());
+                }
+            }
+            ajdzjzmlMapper.deleteZtreeMl(mlids);
+//            log.info("被删除的文件id是：" + mlids);
+        }
+        return count;
+    }
+
+    @Override
+    public Ajdzjzml selectMlByWjid(String wjid,String mlType){
+        return ajdzjzmlMapper.selectMlByWjid(wjid,mlType);
+    }
+
+    @Override
+    public Ajdzjzml selectById(String mlid) {
+        return ajdzjzmlMapper.selectById(mlid);
+    }
+//    @Override
+//    public int insert2(String id, int orderby, String typename, String ajbs,String mlType){
+//        return ajdzjzmlMapper.insert2(id,orderby,typename,ajbs,mlType);
+//    }
+//
+//    @Override
+//    public int resetOrderby(String mlid, int orderby,String mlType) {
+//        return ajdzjzmlMapper.resetOrderby(mlid,orderby);
+//    }
+//
+//    @Override
+//    public List<String> selectAjbsList(String mlType){
+//        return ajdzjzmlMapper.selectAjbsList(mlType);
+//    }
+
+    @Override
+    public List<Ajdzjzml> findZnmlByAjbs(String ajbs,String mlType) {
+        return ajdzjzmlMapper.findZnmlByAjbs(ajbs,mlType);
+    }
+}

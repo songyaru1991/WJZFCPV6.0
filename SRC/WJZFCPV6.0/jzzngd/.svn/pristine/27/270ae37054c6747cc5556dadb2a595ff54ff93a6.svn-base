@@ -1,0 +1,11 @@
+package com.netmarch.jzzngd.system.service;
+
+import com.netmarch.jzzngd.system.bean.Sqmydzjzglb;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface SqmydzjzglbService {
+    List<Sqmydzjzglb> getListBySqmid(String lssqmid);
+}

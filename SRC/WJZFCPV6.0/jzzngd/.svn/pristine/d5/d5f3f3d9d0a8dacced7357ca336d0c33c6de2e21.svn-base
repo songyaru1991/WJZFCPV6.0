@@ -1,0 +1,21 @@
+package com.netmarch.jzzngd.system.service;
+
+import com.netmarch.jzzngd.system.bean.Lssqm;
+import com.netmarch.jzzngd.system.bean.Lssqmyj;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+public interface LssqmService {
+    List<Lssqmyj> getLslistByAjbs(String ajbs);
+
+    Object saveLssqInfo(Lssqm lssqm, List<Map> ids);
+
+    Lssqm getInfoById(String lssqmid);
+
+    int lssqCancel(String lssqmid);
+
+    Lssqm getInfoBySqm(String sqm);
+}

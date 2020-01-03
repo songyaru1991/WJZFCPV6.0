@@ -1,0 +1,49 @@
+package com.netmarch.jzzngd.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.jzzngd.system.bean.Log;
+import com.netmarch.jzzngd.system.bean.PagesStatic;
+import com.netmarch.jzzngd.system.mapper.LogMapper;
+import com.netmarch.jzzngd.system.model.LogQuery;
+import com.netmarch.jzzngd.system.service.LogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+
+/**
+ * @ClassName LogServiceImpl
+ * @Description TODO
+ * @Author  songyaru
+ * @Date 2019/4/29
+ * @Version 1.0
+ **/
+@Service
+public class LogServiceImpl implements LogService {
+
+    @Autowired
+    public LogMapper logMapper;
+
+    @Override
+    public Page<Log> listLog(LogQuery logQuery) {
+        PageHelper.startPage(logQuery.getPageNo() == null ? 1 : logQuery.getPageNo(), PagesStatic.PAGES_SIZE);
+        return logMapper.listLog(logQuery);
+    }
+
+    @Override
+    public Page<Log> listExceptionLog(LogQuery logQuery) {
+        PageHelper.startPage(logQuery.getPageNo() == null ? 1 : logQuery.getPageNo(), PagesStatic.PAGES_SIZE);
+        return logMapper.listLogException(logQuery);
+    }
+
+    @Override
+    public void save(String yhm, String dlip,String czlx, String cznr,String gjz,boolean isException) {
+        if(isException){
+            logMapper.saveLogException(yhm,dlip,czlx,cznr,gjz,new Date());
+        }else{
+            logMapper.saveLog(yhm,dlip,czlx,cznr,gjz,new Date());
+        }
+
+    }
+}

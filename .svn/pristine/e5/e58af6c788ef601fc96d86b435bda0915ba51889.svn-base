@@ -1,0 +1,8 @@
+package com.netmarch.gaj.system.bean;
+
+public class ResultCodes {
+    public static final int SUCCESS = 200;//成功
+    public static final int ERROR = 300;//失败
+    public  static  final  int NOT_LOGIN =403;//未登录
+
+}

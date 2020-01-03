@@ -1,0 +1,23 @@
+package com.netmarch.fdfs.system.mapper;
+
+import com.netmarch.fdfs.system.bean.Ajdzjzwj;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+public interface AjdzjzwjMapper {
+    int addWj(String id, String ajdzjzmlid, String path, int oldsort, Date uploadTime);
+
+    List<Ajdzjzwj> isWjml(List<String> mlIdList);
+
+    int deleteZtreeWj(List<String> mlIdList);
+
+    List<Ajdzjzwj> selectWjByFlag(int flag);
+
+    int deleteFileByMlid(String mlid);
+
+    int getWjCountByMlid(String mlid);
+
+    List<Map<String, Object>> getCountByFlag();
+}

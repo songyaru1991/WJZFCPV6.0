@@ -1,0 +1,71 @@
+package com.netmarch.figurecloud.auth.core.security.authenticate.login;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netmarch.figurecloud.auth.core.security.exceptions.AccountExpiredBadCredentialsException;
+import com.netmarch.figurecloud.auth.core.security.exceptions.JwtExpiredTokenException;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
+import util.exception.ErrorCode;
+import util.exception.ExceptionUtils;
+import util.exception.http.ErrorResponse;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/** 
+* @Description: LoginAwareAuthenticationFailureHandler 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 13:54
+*/ 
+@Component
+@Log4j2
+public class LoginAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    private final ObjectMapper mapper;
+    @Autowired
+    public LoginAwareAuthenticationFailureHandler(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
+	/**
+	 * 错误返回
+	 * @param request
+	 * @param response
+	 * @param e
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Override
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                        AuthenticationException e) throws IOException {
+		String error = null;
+		if (e.getCause()!=null){
+			log.error(e);
+			error = e.getCause().getMessage();
+		}else {
+			error = e.getClass().getName();
+			log.info(e.getMessage());
+		}
+		int status = HttpStatus.UNAUTHORIZED.value();
+		Integer code = null;
+		if(e instanceof AccountExpiredBadCredentialsException){
+			code = ErrorCode.ACCOUNT_EXPIRED.value();
+		}else  if (e instanceof BadCredentialsException) {
+			code = ErrorCode.AUTHENTICATION.value();
+		} else if (e instanceof JwtExpiredTokenException) {
+			code = ErrorCode.JWT_TOKEN_EXPIRED.value();
+		} else {
+			code = ErrorCode.AUTHENTICATION.value();
+		}
+		// 未获得权限
+		response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+		mapper.writeValue(response.getWriter(), ErrorResponse.valueOf(e.getMessage(),error,code,status));
+	}
+}

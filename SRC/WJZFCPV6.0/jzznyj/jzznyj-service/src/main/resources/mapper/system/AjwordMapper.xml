@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.jzznyj.system.mapper.AjwordMapper">
+    <resultMap id="BaseResultMap" type="com.netmarch.jzznyj.system.bean.Ajword">
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="AJBS" jdbcType="VARCHAR" property="ajbs" />
+        <result column="WORDCONTENT" jdbcType="VARCHAR" property="wordcontent" />
+    </resultMap>
+    <insert id="insert" parameterType="com.netmarch.jzznyj.system.bean.Ajword">
+        insert into ajword (ID, AJBS, WORDCONTENT)
+        values (#{id,jdbcType=VARCHAR}, #{ajbs,jdbcType=VARCHAR}, #{wordcontent,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- gdy begin -->
+    <select id="selectByAjbs" parameterType="string" resultType="com.netmarch.jzznyj.system.bean.Ajword">
+        select ID, AJBS, WORDCONTENT from ajword where AJBS = #{ajbs}
+    </select>
+    <update id="updateByAjbs" parameterType="string">
+        update ajword set WORDCONTENT = #{wordcontent,jdbcType=VARCHAR} where AJBS = #{ajbs,jdbcType=VARCHAR}
+    </update>
+    <select id="getOrg" resultType="com.netmarch.jzznyj.system.bean.Ajword">
+        select ID, AJBS, WORDCONTENT from ajword where ID = 'b53e89a3-cbab-400e-8d37-c4fd877c9c06'
+    </select>
+    <!-- gdy end -->
+</mapper>

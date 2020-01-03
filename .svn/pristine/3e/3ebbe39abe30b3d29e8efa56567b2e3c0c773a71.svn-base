@@ -1,0 +1,26 @@
+package com.netmarch.figurecloud.auth.core.security.model.token;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.jsonwebtoken.Claims;
+
+/** 
+* @Description: AccessJwtToken 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 14:22
+*/ 
+public final class AccessJwtToken implements JwtToken {
+    private final String rawToken;
+    @JsonIgnore
+    private Claims claims;
+    protected AccessJwtToken(final String token, Claims claims) {
+        this.rawToken = token;
+        this.claims = claims;
+    }
+    @Override
+    public String getToken() {
+        return this.rawToken;
+    }
+    public Claims getClaims() {
+        return claims;
+    }
+}

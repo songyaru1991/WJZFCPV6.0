@@ -1,0 +1,80 @@
+<div th:fragment="pages" xmlns:th="http://schemas.xmlsoap.org/wsdl/">
+
+        <div class="H105_page fr    clear">
+            <!-- <div th:replace="common/pages::pages"></div>-->
+            <img th:src="${application.basePath}+'/static/images/H105_lasePage1.png'" alt="" class="H105_lastPage fl'"  onclick="pages_start()" style="cursor:pointer;">
+            <img th:src="${application.basePath}+'/static/images/H105_lasePage2.png'" alt="" class="H105_lastPage fl'" onclick="pages_down()" style="cursor:pointer;">
+            <div class="H105_first fl">
+                第  <input type="text" style="text-align: center" th:value="${#numbers.formatInteger(list.pageNum == 0 ? 1 : list.pageNum,0)}" th:onchange="pages_change(this.value,'+${list.pages}+')">页，
+                共<span th:text="${list.pages}"></span>页
+            </div>
+            <img th:src="${application.basePath}+'/static/images/H105_lasePage3.png'" alt="" class="H105_lastPage fl'"  th:onclick="'pages_up('+${list.pages}+')'" style="cursor:pointer;">
+            <img th:src="${application.basePath}+'/static/images/H105_lasePage4.png'" alt="" class="H105_lastPage fl'" th:onclick="'pages_end('+${list.pages}+');'" style="cursor:pointer;">
+        </div>
+
+    <input type="hidden" id="pageSize" th:value="${list.pageSize}"/>
+    <input type="hidden" id="pageNum" th:value="${list.pageNum == 0 ? 1 : list.pageNum}"/>
+    <input type="hidden" id="total" th:value="${list.total}"/>
+    <input type="hidden" id="pageNo" name="pageNo" th:value="${list.pageNum == 0 ? 1 : list.pageNum}"/>
+    <script>
+        function pages_start(){
+            if($("#pageNo").val() == 1){
+                layer.msg('已经是首页');
+                return;
+            }
+            $("#pageNo").val(1);
+            localRefresh();
+            //$("#form").submit();
+        }
+        function pages_end(pages){
+            if($("#pageNo").val() == (pages)){
+                layer.msg('已经是尾页');
+                return;
+            }
+            $("#pageNo").val(pages);
+            localRefresh();
+            //$("#form").submit();
+        }
+        function pages_up(pages){
+            var p = $("#pageNo").val()*1;
+            if((p+1) > (pages)){
+                layer.msg('已经是尾页');
+                return;
+            }
+            $("#pageNo").val(p+1);
+            localRefresh();
+            //$("#form").submit();
+        }
+        function pages_down(){
+            if(($("#pageNo").val()) == 1){
+                layer.msg('已经是首页');
+                return;
+            }
+            $("#pageNo").val($("#pageNo").val()-1);
+            localRefresh();
+            //$("#form").submit();
+        }
+        function pages_change(pageNo,pages){
+            if (!isNaN(pageNo) && pageNo % 1 === 0) {
+                if(pageNo < 1){
+                    layer.msg('不能小于1');
+                    return;
+                }
+
+                if(pageNo > pages){
+                    layer.msg('不能大于总页数');
+                    return;
+                }
+
+                $("#pageNo").val(pageNo);
+                localRefresh();
+                //$("#form").submit();
+
+            } else {
+                layer.msg('请输入整数');
+                return;
+            }
+        }
+
+    </script>
+</div>

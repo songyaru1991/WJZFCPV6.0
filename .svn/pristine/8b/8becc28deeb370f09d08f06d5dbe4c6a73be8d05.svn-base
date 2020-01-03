@@ -1,0 +1,404 @@
+package com.netmarch.wshy.system.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Hyxxb implements Serializable {
+    private String JLBH;
+
+    private String RYBH;
+
+    private String WSWH;
+
+    private String HYBM;
+
+    private Date HYRQ;
+
+    private Date HYSJ;
+
+    private String HYYY;
+
+    private String HYLX;
+
+    private String HYZT;
+
+    private Date JSRQ;
+
+    private String YCLY;
+
+    private Date YCSJ;
+
+    private String JSR;
+
+    private String CZR;
+
+    private String CZBM;
+
+    private String XQ;
+
+    private Date GYQX;
+
+    private String TAR;
+
+    private Integer MSG_ID;
+
+    private String MSG_STATUS_JCY;
+
+    private Integer MSG_OP;
+
+    private Date MSG_DATE;
+
+    private String MSG_STATUS_KSS;
+
+    private String AREA_CODE;
+
+    private String JSZT;
+
+    private String YCZT;
+
+    private String SBZT;
+
+    private String AJBS;
+
+    private static final long serialVersionUID = 1L;
+
+    public String getJLBH() {
+        return JLBH;
+    }
+
+    public void setJLBH(String JLBH) {
+        this.JLBH = JLBH == null ? null : JLBH.trim();
+    }
+
+    public String getRYBH() {
+        return RYBH;
+    }
+
+    public void setRYBH(String RYBH) {
+        this.RYBH = RYBH == null ? null : RYBH.trim();
+    }
+
+    public String getWSWH() {
+        return WSWH;
+    }
+
+    public void setWSWH(String WSWH) {
+        this.WSWH = WSWH == null ? null : WSWH.trim();
+    }
+
+    public String getHYBM() {
+        return HYBM;
+    }
+
+    public void setHYBM(String HYBM) {
+        this.HYBM = HYBM == null ? null : HYBM.trim();
+    }
+
+    public Date getHYRQ() {
+        return HYRQ;
+    }
+
+    public void setHYRQ(Date HYRQ) {
+        this.HYRQ = HYRQ;
+    }
+
+    public Date getHYSJ() {
+        return HYSJ;
+    }
+
+    public void setHYSJ(Date HYSJ) {
+        this.HYSJ = HYSJ;
+    }
+
+    public String getHYYY() {
+        return HYYY;
+    }
+
+    public void setHYYY(String HYYY) {
+        this.HYYY = HYYY == null ? null : HYYY.trim();
+    }
+
+    public String getHYLX() {
+        return HYLX;
+    }
+
+    public void setHYLX(String HYLX) {
+        this.HYLX = HYLX == null ? null : HYLX.trim();
+    }
+
+    public String getHYZT() {
+        return HYZT;
+    }
+
+    public void setHYZT(String HYZT) {
+        this.HYZT = HYZT == null ? null : HYZT.trim();
+    }
+
+    public Date getJSRQ() {
+        return JSRQ;
+    }
+
+    public void setJSRQ(Date JSRQ) {
+        this.JSRQ = JSRQ;
+    }
+
+    public String getYCLY() {
+        return YCLY;
+    }
+
+    public void setYCLY(String YCLY) {
+        this.YCLY = YCLY == null ? null : YCLY.trim();
+    }
+
+    public Date getYCSJ() {
+        return YCSJ;
+    }
+
+    public void setYCSJ(Date YCSJ) {
+        this.YCSJ = YCSJ;
+    }
+
+    public String getJSR() {
+        return JSR;
+    }
+
+    public void setJSR(String JSR) {
+        this.JSR = JSR == null ? null : JSR.trim();
+    }
+
+    public String getCZR() {
+        return CZR;
+    }
+
+    public void setCZR(String CZR) {
+        this.CZR = CZR == null ? null : CZR.trim();
+    }
+
+    public String getCZBM() {
+        return CZBM;
+    }
+
+    public void setCZBM(String CZBM) {
+        this.CZBM = CZBM == null ? null : CZBM.trim();
+    }
+
+    public String getXQ() {
+        return XQ;
+    }
+
+    public void setXQ(String XQ) {
+        this.XQ = XQ == null ? null : XQ.trim();
+    }
+
+    public Date getGYQX() {
+        return GYQX;
+    }
+
+    public void setGYQX(Date GYQX) {
+        this.GYQX = GYQX;
+    }
+
+    public String getTAR() {
+        return TAR;
+    }
+
+    public void setTAR(String TAR) {
+        this.TAR = TAR == null ? null : TAR.trim();
+    }
+
+    public Integer getMSG_ID() {
+        return MSG_ID;
+    }
+
+    public void setMSG_ID(Integer MSG_ID) {
+        this.MSG_ID = MSG_ID;
+    }
+
+    public String getMSG_STATUS_JCY() {
+        return MSG_STATUS_JCY;
+    }
+
+    public void setMSG_STATUS_JCY(String MSG_STATUS_JCY) {
+        this.MSG_STATUS_JCY = MSG_STATUS_JCY == null ? null : MSG_STATUS_JCY.trim();
+    }
+
+    public Integer getMSG_OP() {
+        return MSG_OP;
+    }
+
+    public void setMSG_OP(Integer MSG_OP) {
+        this.MSG_OP = MSG_OP;
+    }
+
+    public Date getMSG_DATE() {
+        return MSG_DATE;
+    }
+
+    public void setMSG_DATE(Date MSG_DATE) {
+        this.MSG_DATE = MSG_DATE;
+    }
+
+    public String getMSG_STATUS_KSS() {
+        return MSG_STATUS_KSS;
+    }
+
+    public void setMSG_STATUS_KSS(String MSG_STATUS_KSS) {
+        this.MSG_STATUS_KSS = MSG_STATUS_KSS == null ? null : MSG_STATUS_KSS.trim();
+    }
+
+    public String getAREA_CODE() {
+        return AREA_CODE;
+    }
+
+    public void setAREA_CODE(String AREA_CODE) {
+        this.AREA_CODE = AREA_CODE == null ? null : AREA_CODE.trim();
+    }
+
+    public String getJSZT() {
+        return JSZT;
+    }
+
+    public void setJSZT(String JSZT) {
+        this.JSZT = JSZT == null ? null : JSZT.trim();
+    }
+
+    public String getYCZT() {
+        return YCZT;
+    }
+
+    public void setYCZT(String YCZT) {
+        this.YCZT = YCZT == null ? null : YCZT.trim();
+    }
+
+    public String getSBZT() {
+        return SBZT;
+    }
+
+    public void setSBZT(String SBZT) {
+        this.SBZT = SBZT == null ? null : SBZT.trim();
+    }
+
+    public String getAJBS() {
+        return AJBS;
+    }
+
+    public void setAJBS(String AJBS) {
+        this.AJBS = AJBS == null ? null : AJBS.trim();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Hyxxb other = (Hyxxb) that;
+        return (this.getJLBH() == null ? other.getJLBH() == null : this.getJLBH().equals(other.getJLBH()))
+            && (this.getRYBH() == null ? other.getRYBH() == null : this.getRYBH().equals(other.getRYBH()))
+            && (this.getWSWH() == null ? other.getWSWH() == null : this.getWSWH().equals(other.getWSWH()))
+            && (this.getHYBM() == null ? other.getHYBM() == null : this.getHYBM().equals(other.getHYBM()))
+            && (this.getHYRQ() == null ? other.getHYRQ() == null : this.getHYRQ().equals(other.getHYRQ()))
+            && (this.getHYSJ() == null ? other.getHYSJ() == null : this.getHYSJ().equals(other.getHYSJ()))
+            && (this.getHYYY() == null ? other.getHYYY() == null : this.getHYYY().equals(other.getHYYY()))
+            && (this.getHYLX() == null ? other.getHYLX() == null : this.getHYLX().equals(other.getHYLX()))
+            && (this.getHYZT() == null ? other.getHYZT() == null : this.getHYZT().equals(other.getHYZT()))
+            && (this.getJSRQ() == null ? other.getJSRQ() == null : this.getJSRQ().equals(other.getJSRQ()))
+            && (this.getYCLY() == null ? other.getYCLY() == null : this.getYCLY().equals(other.getYCLY()))
+            && (this.getYCSJ() == null ? other.getYCSJ() == null : this.getYCSJ().equals(other.getYCSJ()))
+            && (this.getJSR() == null ? other.getJSR() == null : this.getJSR().equals(other.getJSR()))
+            && (this.getCZR() == null ? other.getCZR() == null : this.getCZR().equals(other.getCZR()))
+            && (this.getCZBM() == null ? other.getCZBM() == null : this.getCZBM().equals(other.getCZBM()))
+            && (this.getXQ() == null ? other.getXQ() == null : this.getXQ().equals(other.getXQ()))
+            && (this.getGYQX() == null ? other.getGYQX() == null : this.getGYQX().equals(other.getGYQX()))
+            && (this.getTAR() == null ? other.getTAR() == null : this.getTAR().equals(other.getTAR()))
+            && (this.getMSG_ID() == null ? other.getMSG_ID() == null : this.getMSG_ID().equals(other.getMSG_ID()))
+            && (this.getMSG_STATUS_JCY() == null ? other.getMSG_STATUS_JCY() == null : this.getMSG_STATUS_JCY().equals(other.getMSG_STATUS_JCY()))
+            && (this.getMSG_OP() == null ? other.getMSG_OP() == null : this.getMSG_OP().equals(other.getMSG_OP()))
+            && (this.getMSG_DATE() == null ? other.getMSG_DATE() == null : this.getMSG_DATE().equals(other.getMSG_DATE()))
+            && (this.getMSG_STATUS_KSS() == null ? other.getMSG_STATUS_KSS() == null : this.getMSG_STATUS_KSS().equals(other.getMSG_STATUS_KSS()))
+            && (this.getAREA_CODE() == null ? other.getAREA_CODE() == null : this.getAREA_CODE().equals(other.getAREA_CODE()))
+            && (this.getJSZT() == null ? other.getJSZT() == null : this.getJSZT().equals(other.getJSZT()))
+            && (this.getYCZT() == null ? other.getYCZT() == null : this.getYCZT().equals(other.getYCZT()))
+            && (this.getSBZT() == null ? other.getSBZT() == null : this.getSBZT().equals(other.getSBZT()))
+            && (this.getAJBS() == null ? other.getAJBS() == null : this.getAJBS().equals(other.getAJBS()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getJLBH() == null) ? 0 : getJLBH().hashCode());
+        result = prime * result + ((getRYBH() == null) ? 0 : getRYBH().hashCode());
+        result = prime * result + ((getWSWH() == null) ? 0 : getWSWH().hashCode());
+        result = prime * result + ((getHYBM() == null) ? 0 : getHYBM().hashCode());
+        result = prime * result + ((getHYRQ() == null) ? 0 : getHYRQ().hashCode());
+        result = prime * result + ((getHYSJ() == null) ? 0 : getHYSJ().hashCode());
+        result = prime * result + ((getHYYY() == null) ? 0 : getHYYY().hashCode());
+        result = prime * result + ((getHYLX() == null) ? 0 : getHYLX().hashCode());
+        result = prime * result + ((getHYZT() == null) ? 0 : getHYZT().hashCode());
+        result = prime * result + ((getJSRQ() == null) ? 0 : getJSRQ().hashCode());
+        result = prime * result + ((getYCLY() == null) ? 0 : getYCLY().hashCode());
+        result = prime * result + ((getYCSJ() == null) ? 0 : getYCSJ().hashCode());
+        result = prime * result + ((getJSR() == null) ? 0 : getJSR().hashCode());
+        result = prime * result + ((getCZR() == null) ? 0 : getCZR().hashCode());
+        result = prime * result + ((getCZBM() == null) ? 0 : getCZBM().hashCode());
+        result = prime * result + ((getXQ() == null) ? 0 : getXQ().hashCode());
+        result = prime * result + ((getGYQX() == null) ? 0 : getGYQX().hashCode());
+        result = prime * result + ((getTAR() == null) ? 0 : getTAR().hashCode());
+        result = prime * result + ((getMSG_ID() == null) ? 0 : getMSG_ID().hashCode());
+        result = prime * result + ((getMSG_STATUS_JCY() == null) ? 0 : getMSG_STATUS_JCY().hashCode());
+        result = prime * result + ((getMSG_OP() == null) ? 0 : getMSG_OP().hashCode());
+        result = prime * result + ((getMSG_DATE() == null) ? 0 : getMSG_DATE().hashCode());
+        result = prime * result + ((getMSG_STATUS_KSS() == null) ? 0 : getMSG_STATUS_KSS().hashCode());
+        result = prime * result + ((getAREA_CODE() == null) ? 0 : getAREA_CODE().hashCode());
+        result = prime * result + ((getJSZT() == null) ? 0 : getJSZT().hashCode());
+        result = prime * result + ((getYCZT() == null) ? 0 : getYCZT().hashCode());
+        result = prime * result + ((getSBZT() == null) ? 0 : getSBZT().hashCode());
+        result = prime * result + ((getAJBS() == null) ? 0 : getAJBS().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", JLBH=").append(JLBH);
+        sb.append(", RYBH=").append(RYBH);
+        sb.append(", WSWH=").append(WSWH);
+        sb.append(", HYBM=").append(HYBM);
+        sb.append(", HYRQ=").append(HYRQ);
+        sb.append(", HYSJ=").append(HYSJ);
+        sb.append(", HYYY=").append(HYYY);
+        sb.append(", HYLX=").append(HYLX);
+        sb.append(", HYZT=").append(HYZT);
+        sb.append(", JSRQ=").append(JSRQ);
+        sb.append(", YCLY=").append(YCLY);
+        sb.append(", YCSJ=").append(YCSJ);
+        sb.append(", JSR=").append(JSR);
+        sb.append(", CZR=").append(CZR);
+        sb.append(", CZBM=").append(CZBM);
+        sb.append(", XQ=").append(XQ);
+        sb.append(", GYQX=").append(GYQX);
+        sb.append(", TAR=").append(TAR);
+        sb.append(", MSG_ID=").append(MSG_ID);
+        sb.append(", MSG_STATUS_JCY=").append(MSG_STATUS_JCY);
+        sb.append(", MSG_OP=").append(MSG_OP);
+        sb.append(", MSG_DATE=").append(MSG_DATE);
+        sb.append(", MSG_STATUS_KSS=").append(MSG_STATUS_KSS);
+        sb.append(", AREA_CODE=").append(AREA_CODE);
+        sb.append(", JSZT=").append(JSZT);
+        sb.append(", YCZT=").append(YCZT);
+        sb.append(", SBZT=").append(SBZT);
+        sb.append(", AJBS=").append(AJBS);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

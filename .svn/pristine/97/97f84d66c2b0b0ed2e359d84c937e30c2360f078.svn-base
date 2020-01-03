@@ -1,0 +1,7 @@
+package com.netmarch.figurecloud.auth.core.mapper;
+
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import tk.mybatis.mapper.common.Mapper;
+
+public interface SysLoginUserMapper extends Mapper<SysLoginUser> {
+}

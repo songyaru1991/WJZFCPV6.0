@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>figurecloud-parent</artifactId>
+        <groupId>com.netmarch.figurecloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>zuul</artifactId>
+    <properties>
+     <netmarch.auth-server-exposure>1.0-SNAPSHOT</netmarch.auth-server-exposure>
+     <google-guava>27.0.1-jre</google-guava>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.netmarch.figurecloud</groupId>
+            <artifactId>starter-microservice</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.netmarch.figurecloud</groupId>
+            <artifactId>auth-server-exposure</artifactId>
+            <version>${netmarch.auth-server-exposure}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google-guava}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+        </plugins>
+    </build>
+</project>

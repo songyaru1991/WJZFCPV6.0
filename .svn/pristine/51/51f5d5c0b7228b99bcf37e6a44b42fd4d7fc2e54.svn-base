@@ -1,0 +1,54 @@
+package com.netmarch.lssqyj.system.mapper;
+
+import com.netmarch.lssqyj.system.bean.Ajdzjzml;
+
+import java.util.Date;
+import java.util.List;
+
+public interface AjdzjzmlMapper {
+    List<Ajdzjzml> selectDzjzmlByParent(String ajbs,String parentid,String mlType); // u
+
+//    String selectLastTreeByParent(String ajbs,String parentid);
+//
+//    int getMlByOrderby(String ajbs,int orderby);
+//
+//    int updateMl(String ajbs,int orderby,String filename);
+//
+//    int addMl(String ajbs,String id,String filename,String parentid,Date uploadTime,String mlType);
+//
+//    int selectMlMaxId(String ajbs);
+
+    int deleteZtreeMl(List<String> mlIdList);
+
+    Ajdzjzml selectMlByOrder(String ajbs,int orderby,String mlType);
+
+    List<String> selectAllMlIdListByOrderby(String ajbs,int orderby,String mlType);
+
+//    int deleteFileById(String mlid);
+
+    int addParentMl(String ajbs, String id, String filename, int neworderby, String parentid, Date uploadTime, String mlType); // u
+
+    List<String> selectAllParentids(String ajbs,String mlType);
+
+//    void updateOrderby(String mlid, int orderby);
+
+    Ajdzjzml selectMlByName(String ajbs,String typename,String parentid,String mlType);
+
+    Ajdzjzml selectIdByOrderby(Integer orderby,String ajbs,String mlType);
+
+    int updateNameByMlid(String mlid, String filename); // u
+
+    Ajdzjzml selectMlById(String mlid);
+
+    Ajdzjzml selectMlByWjid(String wjid,String mlType);
+
+    Ajdzjzml selectById(String mlid);
+
+    int insert2(String id, int orderby, String typename, String ajbs,String mlType);
+
+    int resetOrderby(String mlid, int orderby,String mlType);
+
+    List<String> selectAjbsList(String mlType);
+
+    List<Ajdzjzml> findZnmlByAjbs(String ajbs,String mlType);
+}

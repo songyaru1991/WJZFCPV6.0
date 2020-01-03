@@ -1,0 +1,3 @@
+turbine:
+  appConfig: backstage-fx,zuul
+  clusterNameExpression: new String('default')

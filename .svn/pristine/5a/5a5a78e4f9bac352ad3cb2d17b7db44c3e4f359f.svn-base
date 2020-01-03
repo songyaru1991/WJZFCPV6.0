@@ -1,0 +1,80 @@
+package com.netmarch.figurecloud.gateway.filters;
+
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import com.netmarch.figurecloud.gateway.contants.FilterOrderConstants;
+import com.netmarch.figurecloud.gateway.util.FilterUtils;
+import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import util.exception.http.ErrorConstants;
+import util.exception.http.ResponseException;
+import java.io.IOException;
+
+/** 
+* @Description: ResponseErrorFilter 返回错误处理
+* @Author: fengxiang
+* @Date: 2019/2/26 8:52
+*/
+@Component
+@Log4j
+public class ResponseErrorFilter extends ZuulFilter {
+    protected static final String SEND_ERROR_FILTER_RAN = "sendErrorFilter.ran";
+    @Autowired
+    FilterUtils filterUtils;
+    @Override
+    public String filterType() {
+        return FilterOrderConstants.ERROR_FILTER_TYPE;
+    }
+
+    @Override
+    public int filterOrder() {
+        return FilterOrderConstants.RESPONSE_ERROR;
+    }
+
+    /**
+     * 找到自定义异常
+     * @return
+     */
+    private Throwable getResponseException(){
+        Throwable rootThrowable = FilterUtils.getRequestContext().getThrowable();
+        if (!(rootThrowable instanceof  ResponseException)){
+            Throwable throwable = rootThrowable;
+            do {
+                throwable = throwable.getCause();
+                if (throwable instanceof  ResponseException){
+                    rootThrowable = throwable;
+                    break;
+                }
+            }while (throwable.getCause() != null);
+        }
+        return rootThrowable;
+    }
+    @Override
+    public boolean shouldFilter() {
+        return FilterUtils.getRequestContext().getThrowable() != null;
+    }
+    @Override
+    public Object run(){
+        Throwable throwable =  getResponseException();
+        try {
+            ResponseException responseException = null;
+            if (throwable instanceof  ResponseException){
+                responseException = (ResponseException) throwable;
+            }else {
+                responseException = ResponseException.valueOf(ErrorConstants.UNKNOWN_EXCEPTION, throwable);
+            }
+            /**
+             * 清空已处理异常
+             */
+            filterUtils.responseExceptionHandle(responseException);
+            RequestContext ctx = FilterUtils.getRequestContext();
+            //关闭zuul自动异常处理
+            ctx.set(SEND_ERROR_FILTER_RAN,Boolean.valueOf(true));
+        } catch (IOException e) {
+            log.error(e);
+        }
+        return null;
+    }
+}

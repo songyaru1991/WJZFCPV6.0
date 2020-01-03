@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/style05.css">
+
+    <link rel="stylesheet" href="../css/style_10.css">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.admin.css">
+    <script src="../js/layui/layui.js"></script>
+    <script src="../js/main_All.js"></script>
+    <script src="../js/main_05.js"></script>
+    <script src="../js/charts/highcharts6.0.7.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../js/charts/oldie.js"></script>
+    <script src="../js/forIE8.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.backgroundSize.js"></script>
+    <script src="../js/charts/charts.js"></script>
+</head>
+<body>
+<div class="S110_content" style="display: none">
+    <div class="S110_title">
+        <!--<img src="../images/S110_location.png" alt="" class="S110_title_icon">-->
+        <span>资金使用情况统计</span>
+    </div>
+    <div class="S110_details clear">
+        <div class="S110_charts_topLeft fl">
+            <div class="S110_charts_title">
+                <!--<img src="../images/S110_verticalBar.png" alt="" class="S110_charts_bar">-->
+                <span>同部门案件数量对比</span>
+            </div>
+            <div class="S110_charts_select clear">
+                <form class="layui-form">
+                    <div class="S110_charts_selectItem fl">
+                        <select name="case_time" lay-filter="case_time">
+                            <option value="2019年" selected>2019年</option>
+                            <option value="2018年">2018年</option>
+                            <option value="2017年">2017年</option>
+                            <option value="2016年">2016年</option>
+                            <option value="2015年">2015年</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="case_province" lay-filter="case_province">
+                            <option value="湖南省" selected>湖南省</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="case_city" lay-filter="case_city">
+                            <option value="长沙市" selected>长沙市</option>
+                            <option value="株洲市">株洲市</option>
+                            <option value="湘潭市">湘潭市</option>
+                            <option value="衡阳市">衡阳市</option>
+                            <option value="邵阳市">邵阳市</option>
+                            <option value="岳阳市">岳阳市</option>
+                            <option value="常德市">常德市</option>
+                            <option value="张家界">张家界</option>
+                            <option value="益阳市">益阳市</option>
+                            <option value="娄底市">娄底市</option>
+                            <option value="郴州市">郴州市</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="case_unit" lay-filter="case_unit">
+                            <option value="检察院" selected>检察院</option>
+                            <option value="政法委">政法委</option>
+                            <option value="公安">公安</option>
+                            <option value="法院">法院</option>
+                            <option value="司法">司法</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div id="container1" class="S110_container"></div>
+        </div>
+        <div class="S110_charts_topRight fr">
+            <div class="S110_charts_title">
+                <!--<img src="../images/S110_verticalBar.png" alt="" class="S110_charts_bar">-->
+                <span>司法救助数量取胜分析</span>
+            </div>
+            <div class="S110_charts_select clear">
+                <form class="layui-form">
+                    <div class="S110_charts_selectItem fl">
+                        <select name="relief_province" lay-filter="relief_province">
+                            <option value="湖南省" selected>湖南省</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="relief_city" lay-filter="relief_city">
+                            <option value="长沙市" selected>长沙市</option>
+                            <option value="株洲市">株洲市</option>
+                            <option value="湘潭市">湘潭市</option>
+                            <option value="衡阳市">衡阳市</option>
+                            <option value="邵阳市">邵阳市</option>
+                            <option value="岳阳市">岳阳市</option>
+                            <option value="常德市">常德市</option>
+                            <option value="张家界">张家界</option>
+                            <option value="益阳市">益阳市</option>
+                            <option value="娄底市">娄底市</option>
+                            <option value="郴州市">郴州市</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="relief_unit" lay-filter="relief_unit">
+                            <option value="检察院" selected>检察院</option>
+                            <option value="政法委">政法委</option>
+                            <option value="公安">公安</option>
+                            <option value="法院">法院</option>
+                            <option value="司法">司法</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div id="container2" class="S110_container"></div>
+        </div>
+        <div class="S110_charts_bottomLeft fl">
+            <div class="S110_charts_title">
+                <!--<img src="../images/S110_verticalBar.png" alt="" class="S110_charts_bar">-->
+                <span>同类型案件对比</span>
+            </div>
+            <div class="S110_charts_select clear">
+                <form class="layui-form">
+                    <div class="S110_charts_selectItem fl">
+                        <select name="type_time" lay-filter="type_time">
+                            <option value="2019年" selected>2019年</option>
+                            <option value="2018年">2018年</option>
+                            <option value="2017年">2017年</option>
+                            <option value="2016年">2016年</option>
+                            <option value="2015年">2015年</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="type_province" lay-filter="type_province">
+                            <option value="湖南省" selected>湖南省</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="type_city" lay-filter="type_city">
+                            <option value="长沙市" selected>长沙市</option>
+                            <option value="株洲市">株洲市</option>
+                            <option value="湘潭市">湘潭市</option>
+                            <option value="衡阳市">衡阳市</option>
+                            <option value="邵阳市">邵阳市</option>
+                            <option value="岳阳市">岳阳市</option>
+                            <option value="常德市">常德市</option>
+                            <option value="张家界">张家界</option>
+                            <option value="益阳市">益阳市</option>
+                            <option value="娄底市">娄底市</option>
+                            <option value="郴州市">郴州市</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="type_unit" lay-filter="type_unit">
+                            <option value="检察院" selected>检察院</option>
+                            <option value="政法委">政法委</option>
+                            <option value="公安">公安</option>
+                            <option value="法院">法院</option>
+                            <option value="司法">司法</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="type_category" lay-filter="type_category">
+                            <option value="工伤类" selected>工伤类</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div id="container3" class="S110_container"></div>
+        </div>
+        <div class="S110_charts_bottomRight fr">
+            <div class="S110_charts_title">
+                <!--<`img` src="../images/S110_verticalBar.png" alt="" class="S110_charts_bar">-->
+                <span>同类型救助资金额度对比</span>
+            </div>
+            <div class="S110_charts_select clear">
+                <form class="layui-form">
+                    <div class="S110_charts_selectItem fl">
+                        <select name="amount_time" lay-filter="amount_time">
+                            <option value="2019年" selected>2019年</option>
+                            <option value="2018年">2018年</option>
+                            <option value="2017年">2017年</option>
+                            <option value="2016年">2016年</option>
+                            <option value="2015年">2015年</option>
+                        </select>
+                    </div>
+                    <div class="S110_charts_selectItem fl">
+                        <select name="amount_category" lay-filter="amount_category">
+                            <option value="工伤类" selected>工伤类</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div id="container4" class="S110_container"></div>
+        </div>
+    </div>
+</div>
+
+<div class="S105_body clear">
+    <!--左-->
+    <div class="S105_enter fl">
+        <div class="S105_border">
+
+        </div>
+        <div class="S105_procuratorate">
+            <img src="../images/S105_people.png" alt="" class="">
+        </div>
+
+        <div class="S105_fasterEnter clear">
+            <div>
+                <img src="../images/S105_fastEnter.png" alt="" class="S105_enterImg1  ">
+                <div class="S105_enterImg">
+                    <p>快速入口</p>
+                </div>
+            </div>
+            <div class="S105_characteristics fl">
+                <img src="../images/S105_caseIco1.png" alt="">
+                <p>案件特征分析</p>
+            </div>
+            <div class="S105_characteristics fl">
+                <img src="../images/S105_caseIco2.png" alt="">
+                <p>重点区域分析</p>
+            </div>
+            <div class="S105_characteristics fl">
+                <img src="../images/S105_caseIco3.png" alt="">
+                <p>公安协同平台</p>
+            </div>
+            <div class="S105_characteristics fl">
+                <img src="../images/S105_caseIco4.png" alt="">
+                <p>法院协同平台</p>
+            </div>
+            <div class="S105_characteristics fl">
+                <img src="../images/S105_caseIco5.png" alt="">
+                <p>司法局协同平台</p>
+            </div>
+        </div>
+
+        <div class="S105_fasterEnter clear">
+            <div>
+                <img src="../images/S105_fastEnter.png" alt="" class="S105_enterImg1  ">
+                <div class="S105_enterImg">
+                    <p>专题库</p>
+                </div>
+            </div>
+            <div class="S105_low fl  ">
+                <img src="../images/S105_project1.png" alt="">
+                <p>案件特征分析</p>
+            </div>
+            <div class="S105_low fl">
+                <img src="../images/S105_project2.png" alt="">
+                <p>全国案例库</p>
+            </div>
+            <div class="S105_low fl">
+                <img src="../images/S105_project3.png" alt="">
+                <p>业务知识库</p>
+            </div>
+            <div class="S105_low fl  ">
+                <img src="../images/S105_project4.png" alt="">
+                <p>法制宣传库</p>
+            </div>
+            <div class="S105_low fl  ">
+                <img src="../images/S105_project5.png" alt="">
+                <p>重点人员库</p>
+            </div>
+        </div>
+
+    </div>
+    <!--中-->
+    <div class="S105_work">
+        <div class="S105W_title">
+            <img src="../images/S105_week.png" alt="" class="S105_week">
+            <p>本周工作情况</p>
+        </div>
+        <div class="S105_choose clear">
+            <div class="S105_business">
+                <select name="" id="" class="  ">
+                    <option value="aaaa">选择业务类别</option>
+                </select>
+
+            </div>
+            <div class="S105_bar"><p></p></div>
+            <div class="S105_type">
+                <input type="text" class="  " placeholder="关键词">
+                <img src="../images/S105_search.png" alt="" class="S105_searchImg">
+
+            </div>
+
+            <div class="S105_backlog fr">
+                <p class="S105_backlogSelect"> 待办 </p>
+                <p>已办 </p>
+            </div>
+
+        </div>
+        <div class="S105_caseList">
+            <img src="../images/S105_today.png" alt="" class="S105_todayImg">
+            <div class="S105_today">
+                <p>今</p>
+            </div>
+            <ul class="S105T_case  ">
+                <li class="clear">
+                    <img src="../images/S105_dot1.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <img src="../images/S105_dot1.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <img src="../images/S105_dot.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核李思思、华语、沈一清、甘李思思、华语、沈一清、甘</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="S105_caseList">
+            <img src="../images/S105_yesterday.png" alt="" class="S105_todayImg">
+            <div class="S105_today">
+                <p>昨</p>
+            </div>
+            <ul class="S105T_case  ">
+                <li class="clear">
+                    <img src="../images/S105_dot1.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <img src="../images/S105_dot1.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <img src="../images/S105_dot.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核李思思、华语、沈一清、甘李思思、华语、沈一清、甘</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="S105_caseList">
+            <img src="../images/S105_num.png" alt="" class="S105_todayImg">
+            <div class="S105_today">
+                <p>04</p>
+            </div>
+            <ul class="S105T_case  ">
+                <li class="clear">
+                    <img src="../images/S105_dot1.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <img src="../images/S105_dot1.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+                <li class="clear">
+                    <img src="../images/S105_dot.png" alt="">
+                    <div class="S105T_time"><p>11:03</p></div>
+                    <div class="S105T_title">
+                        <p class="ellipsis">李思思、华语、沈一清、甘李思思、华语、沈一清、甘玉林、邹勤宜等团伙盗窃案</p>
+                        <span class="ellipsis">20190306移诉不诉复议复核李思思、华语、沈一清、甘李思思、华语、沈一清、甘</span>
+                    </div>
+                    <div class="S105T_need">
+                        <p>待办</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!--右-->
+    <div class="S105_situation">
+
+    </div>
+
+</div>
+</body>
+
+</html>

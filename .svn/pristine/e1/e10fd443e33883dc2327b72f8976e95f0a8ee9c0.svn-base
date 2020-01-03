@@ -1,0 +1,28 @@
+package com.netmarch.figurecloud.management.system.service;
+
+import com.github.pagehelper.Page;
+import com.netmarch.figurecloud.management.system.bean.SysResource;
+import com.netmarch.figurecloud.management.system.bean.SysRole;
+import util.web.JsonResult;
+
+import java.util.List;
+
+public interface SysRoleService {
+    List<SysRole> getAllUserdRoles();
+
+    Page<SysRole> getRoleList(SysRole role, String keyword);
+
+    SysRole getRoleById(Integer id);
+
+    List<SysResource> getRoleResources(Integer id);
+
+    int addSysRole(SysRole role);
+
+    int editSysRole(SysRole role);
+
+    JsonResult delBatch(String ids);
+
+    int checkRepeatName(SysRole role);
+
+    int checkRepeatCode(SysRole role);
+}

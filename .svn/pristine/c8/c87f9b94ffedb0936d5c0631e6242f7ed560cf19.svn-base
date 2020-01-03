@@ -1,0 +1,75 @@
+package com.netmarch.figurecloud.auth.core.security.authenticate.jwt;
+
+import com.netmarch.figurecloud.auth.core.security.authenticate.JwtAuthenticationToken;
+import com.netmarch.figurecloud.auth.core.security.authenticate.jwt.extractor.TokenExtractor;
+import com.netmarch.figurecloud.auth.core.security.config.WebSecurityConfig;
+import com.netmarch.figurecloud.auth.core.security.exceptions.InvalidJwtToken;
+import com.netmarch.figurecloud.auth.core.security.model.token.RawAccessJwtToken;
+import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import util.web.TokenUtil;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/** 
+* @Description: 对提供的JWT令牌执行验证
+* @Author: fengxiang
+* @Date: 2019/2/15 10:10
+*/
+@Log4j
+public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private final AuthenticationFailureHandler failureHandler;
+    private final TokenExtractor tokenExtractor;
+    
+    @Autowired
+    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler,
+                                                  TokenExtractor tokenExtractor, RequestMatcher matcher) {
+        super(matcher);
+        this.failureHandler = failureHandler;
+        this.tokenExtractor = tokenExtractor;
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+        String tokenPayload = request.getHeader(TokenUtil.ACCESS_TOKEN);
+        //GET请求 如果头部获取不到token信息,从参数列表去取。post请求必须放在头部
+        if(StringUtils.isBlank(tokenPayload)&&"GET".equals(request.getMethod())){
+            //头部标志加上
+            tokenPayload = "Bearer "+request.getParameter(WebSecurityConfig.AUTHENTICATION_PARAM_NAME);
+        }
+        if (!TokenUtil.isJwtTokenWithBearer(tokenPayload)){
+             log.error("令牌错误:"+tokenPayload);
+             throw new InvalidJwtToken("提供的令牌错误");
+        }
+        RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
+        return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authResult);
+        SecurityContextHolder.setContext(context);
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+}

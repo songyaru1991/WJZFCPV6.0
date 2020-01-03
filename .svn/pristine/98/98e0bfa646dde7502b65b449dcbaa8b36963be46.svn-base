@@ -1,0 +1,595 @@
+package com.netmarch.gaj.system.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.netmarch.gaj.common.controller.FrontBaseController;
+import com.netmarch.gaj.common.thymeleaf.AuthElementTagProcessor;
+import com.netmarch.gaj.common.utils.*;
+import com.netmarch.gaj.common.utils.DompareXml.DompareImportCaseXml;
+import com.netmarch.gaj.system.bean.*;
+import com.netmarch.gaj.system.service.*;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import util.web.JsonResult;
+import util.web.ResultCodes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * @author gdy
+ * @Title:
+ * @Package
+ * @Description:
+ * @date 2019/10/21 14:58
+ */
+@Controller
+@Slf4j
+public class CaseController extends FrontBaseController {
+
+    @Autowired
+    private UsersUtil usersUtil;
+
+    @Autowired
+    private AjjbxxService ajjbxxService;
+
+    @Autowired
+    private AjClcsJgzxbService ajClcsJgzxbService;
+
+    @Autowired
+    private DompareImportCaseXml dompareXml;
+
+    @Value("${uums.url}")
+    private String uumsUrl;
+
+    @Autowired
+    private AjAjlbService ajAjlbService;
+
+    @Autowired
+    private DictGaService dictGaService;
+
+    @Autowired
+    private ADwdmBakService aDwdmBakService;
+
+    @RequestMapping ("/")
+    public String casejbxx(Model model) {
+        String userName = "", user_Id = "";
+        try {
+            String jwt = usersUtil.getJwtCookie();
+            user_Id = usersUtil.getLoginUser_Id();
+            String url = uumsUrl + "/userClient/getUserById";
+            String body = "";
+            Map<String, String> user_IdMap = new HashMap<String, String>();
+            user_IdMap.put("user_Id", user_Id);
+
+            LoginUser loginUser = new LoginUser();
+            body = HttpClientUtils.sendPostDataByJson(url, JSONObject.fromObject(user_IdMap).toString(), jwt);
+            if (body != "" && !body.equals("")) {
+                JSONObject userJsonobject = JSONObject.fromObject(body);
+                loginUser = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+            }
+            userName = loginUser.getUsername();
+            model.addAttribute("userName", userName);
+            log(user_Id, "案件信息列表", "案件信息列表", "案件管理(公安局案件管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "案件信息列表", e.toString(), "案件管理(公安局案件管理系统)", true);
+            e.printStackTrace();
+        }
+        return "system/home";
+    }
+
+    @RequestMapping ("/navigationBarCaseList")
+    public String navigationBarCaseList() {
+        return "/system/navigationBarCaseList";
+    }
+
+    @RequestMapping ("/caseQuery")
+    public String caseManage_right(HttpServletRequest request, Model model) {
+        String user_Id = "";
+        try {
+            user_Id = usersUtil.getLoginUser_Id();
+            LoginUser user=usersUtil.getUserById(user_Id);
+            String areaCode=user.getAreaCode();
+//            log.info("我希望我的宝宝能够身体健康茁壮成长：" + areaCode);
+            Integer pageNo = null == request.getParameter("pageNo") ? 1 : Integer.valueOf(request.getParameter("pageNo"));
+            String searchField = null == request.getParameter("searchField") ? "" : request.getParameter("searchField");
+            String searchName = null == request.getParameter("searchName") ? "" : request.getParameter("searchName").trim();
+            String type = null == request.getParameter("type") ? "" : request.getParameter("type").trim();
+    //        log.info("searchField:[" + searchField + "],searchName:[" + searchName + "]");
+    //        Page<Map<String,Object>> caseList = ajjbxxService.getAllCase(pageNo);
+            Page<Ajjbxx> caseList = ajjbxxService.getAllCaseQuery(pageNo, searchField, searchName, AreaCodeUtil.handle(areaCode));
+            if (null != caseList && caseList.size() > 0) {
+                for (int i = 0; i < caseList.size(); i++) {
+                    caseList.get(i).setAjzt(ajjbxxService.getCaseNameByCode(caseList.get(i).getAjzt()));
+                    AjClcsJgzxb ajClcsJgzxb = new AjClcsJgzxb();
+                    List<AjClcsJgzxb> ajClcsJgzxbList = ajClcsJgzxbService.getListByAjbh(caseList.get(i).getAjbh());
+                    if (null != ajClcsJgzxbList && ajClcsJgzxbList.size() > 0) {
+                        ajClcsJgzxb = ajClcsJgzxbList.get(0);
+                    } else {
+                        model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                    }
+                    if ((ajClcsJgzxb.getJdsj() != null) && (ajClcsJgzxb.getJdsj().length() == 8) && (ajClcsJgzxb.getJdqx() != null) && (ajClcsJgzxb.getJdqx().length() > 0)) {
+                        int jdqx = Integer.parseInt(ajClcsJgzxb.getJdqx());
+                        String jdsj = ajClcsJgzxb.getJdsj().trim();
+                        jdsj = jdsj.substring(0, 4) + "-" + jdsj.substring(4, 6) + "" + jdsj.substring(6);
+                        Date currentTime = new Date();
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        String now = formatter.format(currentTime);
+                        int days = DateUtil.getTwoDay(jdsj, now);
+                        //决定期限为以下天数
+                        if (jdqx == 3 || jdqx == 6 || jdqx == 9) {
+                            if (days <= (jdqx / 3)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > (jdqx / 3)) && (days <= (jdqx * 2 / 3))) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 4) { //决定期限为四天
+                            if (days <= 2) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if (days == 3) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 5) { //决定期限为五天
+                            if (days <= 2) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if (days == 3) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 7) { //决定期限为七天
+                            if (days <= 3) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 3) && (days <= 5)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 8) { //决定期限为八天
+                            if (days <= 3) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 3) && (days <= 6)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 10) { //决定期限为10天
+                            if (days <= 4) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 4) && (days <= 7)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 11) { //决定期限为11天
+                            if (days <= 4) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 4) && (days <= 8)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 12) { //决定期限为12天
+                            if (days <= 5) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 5) && (days <= 9)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 13) { //决定期限为13天
+                            if (days <= 5) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 4) && (days <= 10)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 14) { //决定期限为14天
+                            if (days <= 6) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 6) && (days <= 11)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 15) { //决定期限为15天
+                            if (days <= 8) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 8) && (days <= 12)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 16) { //决定期限为16天
+                            if (days <= 8) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 8) && (days <= 13)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 17) { //决定期限为17天
+                            if (days <= 6) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 6) && (days <= 14)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 18) { //决定期限为18天
+                            if (days <= 8) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 8) && (days <= 15)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 19) { //决定期限为19天
+                            if (days <= 6) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 6) && (days <= 16)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 20) { //决定期限为20天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 17)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 21) { //决定期限为21天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 17)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 22) { //决定期限为22天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 18)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 23) { //决定期限为23天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 19)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 24) { //决定期限为24天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 20)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 25) { //决定期限为25天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 21)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 26) { //决定期限为26天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 22)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 27) { //决定期限为27天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 23)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 28) { //决定期限为28天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 24)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 29) { //决定期限为29天
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 25)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 30) { //决定期限为30天
+                            if (days <= 15) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 15) && (days <= 25)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 31) { //决定期限为一个月
+                            if (days <= 10) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 10) && (days <= 26)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else if (jdqx == 60) { //决定期限为两个月
+                            if (days <= 30) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                            } else if ((days > 30) && (days <= 53)) {
+                                model.addAttribute("codeLevel", "/static/images/jjzt2.jpg");
+                            } else {
+                                model.addAttribute("codeLevel", "/static/images/jjzt3.jpg");
+                            }
+                        } else { //决定期限为其他情况
+                            model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                        }
+                    } else { //决定期限或决定时间为空
+                        model.addAttribute("codeLevel", "/static/images/jjzt1.jpg");
+                    }
+                }
+            }
+            model.addAttribute("list", caseList);
+            model.addAttribute("searchField", searchField);
+            model.addAttribute("searchName", searchName);
+//            if(searchName.length()>0){
+//                log(user_Id, "查询案件列表", searchField+"查询案件列表", "案件管理(公安局案件管理系统)", false);
+//            }else{
+                log(user_Id, "查询案件列表", "查询案件列表", "案件管理(公安局案件管理系统)", false);
+//            }
+        } catch (Exception e) {
+            log(user_Id, "查询案件列表", e.toString(), "案件管理(公安局案件管理系统)", true);
+            e.printStackTrace();
+        }
+            return "/case/list";
+        }
+
+    /**
+     * 下载模板
+     * @return 返回xml模板
+     */
+    @GetMapping (value = "/downloadDemo")
+    public Object downloadDemo(HttpServletRequest request){
+        ResponseEntity<byte[]> response = null;
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            File file = ResourceUtils.getFile("classpath:static/downfile/caseinfo.xml");
+
+            response = DownloadFileUtil.download(request,file);
+
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+            log(user_Id,"下载案件模板失败，",e.toString(),"案件管理(公安局案件管理系统)",true);
+        } catch (Exception e) {
+            log(user_Id,"下载案件模板失败，",e.toString(),"案件管理(公安局案件管理系统)",true);
+        }
+        return response;
+    }
+
+    @RequestMapping ("importCase")
+    public String importCase(){
+        String user_Id="";
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+
+            log(user_Id, "点击导入按钮", "打开导入页面", "案件管理(公安局案件管理系统)", false);
+        } catch (Exception e) {
+            log(user_Id, "点击导入按钮", e.toString(), "案件管理(公安局案件管理系统)", true);
+            e.printStackTrace();
+        }
+        return "case/importCase";
+    }
+
+    @PostMapping (value = "/saveImport")
+    @ResponseBody
+    public JsonResult saveImport(HttpServletRequest request){
+        String user_Id="";
+        ArrayList<Ajjbxx> list = new  ArrayList<Ajjbxx>();
+        // 文件数量
+        int fileNum = Integer.parseInt(request.getParameter("fileNum"));
+
+        // 转型为MultipartHttpRequest：
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+
+
+        int insertCount=0;
+        try {
+            user_Id=usersUtil.getLoginUser_Id();
+            String jwt=usersUtil.getJwtCookie();
+            LoginUser user=new LoginUser();
+            if (user_Id != "" && !user_Id.equals("")) {
+                String url = uumsUrl + "/userClient/getUserById";
+                String body = "";
+                Map<String, String> user_IdMap = new HashMap<String, String>();
+                user_IdMap.put("user_Id", user_Id);
+                body = HttpClientUtils.sendPostDataByJson(url, JSON.toJSONString(user_IdMap), jwt);
+                if (body != "" && !body.equals("")) {
+                    JSONObject userJsonobject = JSONObject.fromObject(body);
+                    user = (LoginUser) JSONObject.toBean(userJsonobject, LoginUser.class);
+                }
+            }
+            String area=user.getArea();
+            String areaCode=user.getAreaCode();
+
+            // 获得文件：
+            for(int f=0;f<fileNum;f++){
+                List<MultipartFile> fileList = multipartRequest.getFiles("file"+f);
+                MultipartFile multipartFile = fileList.get(0);
+
+                if (multipartFile.isEmpty()) {
+                    return new JsonResult(ResultCodes.ERROR, StaticObj.UPLOAD_MSG_ERROR);
+                }
+                else {
+
+                    String fileName = multipartFile.getOriginalFilename();
+                    log.info("导入案件的名称为：" + fileName);
+                    String fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+                    //MultipartFile转为File
+                    File file = File.createTempFile("tmp", null);
+                    multipartFile.transferTo(file);
+                    //解析上传的xml文件或zip文件
+
+                    if (fileSuffix.equals("xml")) {
+                        list = dompareXml.getKsryjbxxFromXml(file);
+                    } else if (fileSuffix.equals("zip")) {
+                        list = dompareXml.readZipFile(file);
+                    }
+
+                    Ajjbxx ajjbxx = new Ajjbxx();
+
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i) != null)
+                            ajjbxx = list.get(i);
+                        String ajmc = null == ajjbxx.getAjmc() ? "" : ajjbxx.getAjmc().trim();
+                        String ajbh = null == ajjbxx.getAjbh() ? "" : ajjbxx.getAjbh().trim();
+                        if (ajmc.length() > 0 && ajbh.length() > 0) {
+                            int count = ajjbxxService.checkRepeatByAjbh(ajbh);
+                            ajjbxx.setAreaCode(areaCode);
+                            if (count > 0) {
+                                int result = ajjbxxService.updateImportAj(ajjbxx);
+                                if (result > 0) {
+                                    insertCount++;
+                                }
+                            } else {
+                                int result = ajjbxxService.insertImportAj(ajjbxx);
+                                if (result > 0) {
+                                    insertCount++;
+                                }
+                            }
+
+                        } else {
+                            return new JsonResult(ResultCodes.ERROR, "导入案件信息失败，导入的编号或名称不能为空！");
+                        }
+
+                    }
+                }
+
+            }
+            log(user_Id,"案件信息导入","共导入案件信息"+insertCount+"条","案件管理(公安局案件管理系统)",false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log(user_Id,"案件信息导入",e.toString(),"案件管理(公安局案件管理系统)",true);
+            return new JsonResult(ResultCodes.ERROR, "案件信息导入失败！");
+        }
+        AuthElementTagProcessor.initAuthMap();
+        return new JsonResult(ResultCodes.SUCCESS, "共导入案件信息"+insertCount+"条！", "/caseQuery");
+    }
+
+
+    @RequestMapping ("/addCase")
+    public String addCase(Model model) {
+        List<AjAjlb> ajlbList = ajAjlbService.getAllLb();
+        String ajfabSmId = "1";// 案件副案别
+        List<DictGa> ajfabList = dictGaService.getDictGaBySmId(ajfabSmId);
+        String ajlySmId = "2";// 案件来源
+        List<DictGa> ajlyList = dictGaService.getDictGaBySmId(ajlySmId);
+        String dbjbSmId = "58";// 督办级别
+        List<DictGa> dbjbList = dictGaService.getDictGaBySmId(dbjbSmId);
+        String ajztSmId = "5";// 案件状态
+        List<DictGa> ajztList = dictGaService.getDictGaBySmId(ajztSmId);
+        String mjSmId = "59";// 密级
+        List<DictGa> mjList = dictGaService.getDictGaBySmId(mjSmId);
+        String slfsSmId = "10";// 受理方式
+        List<DictGa> slfsList = dictGaService.getDictGaBySmId(slfsSmId);
+        String xbSmId = "142";// 性别
+        List<DictGa> xbList = dictGaService.getDictGaBySmId(xbSmId);
+        String zjzlSmId = "7";// 证件种类
+        List<DictGa> zjzlList = dictGaService.getDictGaBySmId(zjzlSmId);
+        String bmjbSmId = "48";// 保密级别
+        List<DictGa> bmjbList = dictGaService.getDictGaBySmId(bmjbSmId);
+        String ajxzSmId = "6";// 案件性质
+        List<DictGa> ajxzList = dictGaService.getDictGaBySmId(ajxzSmId);
+        String kfxajlbSmId = "3";// 可防性案件类别
+        List<DictGa> kfxajlbList = dictGaService.getDictGaBySmId(kfxajlbSmId);
+        String swajqhlbSmId = "4";// 涉外案件侵害类别
+        List<DictGa> swajqhlbList = dictGaService.getDictGaBySmId(swajqhlbSmId);
+        String gxfgSmId = "11";// 管辖分工
+        List<DictGa> gxfgList = dictGaService.getDictGaBySmId(gxfgSmId);
+        String whcdId = "57";// 危害程度
+        List<DictGa> whcdList = dictGaService.getDictGaBySmId(whcdId);
+        String fadySmId = "8";// 发案地域
+        List<DictGa> fadyList = dictGaService.getDictGaBySmId(fadySmId);
+        String facsSmId = "9";// 发案处所
+        List<DictGa> facsList = dictGaService.getDictGaBySmId(facsSmId);
+        String fabwSmId = "14";// 发案部位
+        List<DictGa> fabwList = dictGaService.getDictGaBySmId(fabwSmId);
+        String blyySmId = "60";// 补立原因
+        List<DictGa> blyyList = dictGaService.getDictGaBySmId(blyySmId);
+        String cxyySmId = "13";// 撤销原因
+        List<DictGa> cxyyList = dictGaService.getDictGaBySmId(cxyySmId);
+        String pafsSmId = "12";// 破案方式
+        List<DictGa> pafsList = dictGaService.getDictGaBySmId(pafsSmId);
+        String palxSmId = "61";// 破案类型
+        List<DictGa> palxList = dictGaService.getDictGaBySmId(palxSmId);
+        String fzztlxSmId = "62";// 犯罪主体类型
+        List<DictGa> fzztlxList = dictGaService.getDictGaBySmId(fzztlxSmId);
+        // 所属责任区&受理单位&主办单位&登记单位名称&立案单位&撤销单位&移送单位名称&接收单位名称
+        List<ADwdmBak> adwdmbakList = aDwdmBakService.getAll();
+
+        model.addAttribute("ajlbList", ajlbList); // 案件类别
+        model.addAttribute("ajfabList", ajfabList); // 案件副案别
+        model.addAttribute("ajlyList", ajlyList); // 案件来源
+        model.addAttribute("dbjbList", dbjbList); // 督办级别
+        model.addAttribute("ajztList", ajztList); // 案件状态
+        model.addAttribute("mjList", mjList); // 密级
+        model.addAttribute("slfsList", slfsList); // 受理方式
+        model.addAttribute("xbList", xbList); // 性别
+        model.addAttribute("zjzlList", zjzlList); // 证件种类
+        model.addAttribute("bmjbList", bmjbList); // 保密级别
+        model.addAttribute("ajxzList", ajxzList); // 案件性质
+        model.addAttribute("kfxajlbList", kfxajlbList); // 可防性案件类别
+        model.addAttribute("swajqhlbList", swajqhlbList); // 涉外案件侵害类别
+        model.addAttribute("gxfgList", gxfgList); // 管辖分工
+        model.addAttribute("whcdList", whcdList); // 危害程度
+        model.addAttribute("fadyList", fadyList); // 发案地域
+        model.addAttribute("facsList", facsList); // 发案处所
+        model.addAttribute("fabwList", fabwList); // 发案部位
+        model.addAttribute("blyyList", blyyList); // 补立原因
+        model.addAttribute("cxyyList", cxyyList); // 撤销原因
+        model.addAttribute("pafsList", pafsList); // 破案方式
+        model.addAttribute("palxList", palxList); // 破案类型
+        model.addAttribute("fzztlxList", fzztlxList); // 犯罪主体类型
+        model.addAttribute("adwdmbakList", adwdmbakList); // 所属责任区&受理单位&主办单位&登记单位名称&立案单位&撤销单位&移送单位名称&接收单位名称
+
+        return "/case/addCase";
+    }
+
+
+
+}

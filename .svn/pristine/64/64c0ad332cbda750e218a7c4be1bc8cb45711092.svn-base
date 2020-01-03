@@ -1,0 +1,21 @@
+package com.netmarch.lssqyj.system.service.impl;
+
+import com.netmarch.lssqyj.system.bean.Sqmydzjzglb;
+import com.netmarch.lssqyj.system.mapper.SqmydzjzglbMapper;
+import com.netmarch.lssqyj.system.service.SqmydzjzglbService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class SqmydzjzglbServiceImpl implements SqmydzjzglbService {
+
+    @Autowired
+    private SqmydzjzglbMapper sqmydzjzglbMapper;
+
+    @Override
+    public List<Sqmydzjzglb> getListBySqmid(String lssqmid) {
+        return sqmydzjzglbMapper.getListBySqmid(lssqmid);
+    }
+}

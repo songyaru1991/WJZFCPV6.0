@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>法院--文书管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/select2.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/web/system/access/access.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="form" method="get" th:action="@{/user/add}" >
+    <div>
+        <!--新增表单-->
+        <div class="T106_detailsContent clear">
+            <div class="T105_details clear">
+                <p class="">搜索:</p>
+                <input name="wsgnlbSearch" id="wsgnlbSearch" type="text"  oninput="OnInput (event)" onpropertychange="OnPropChanged (event)"  class="A405_input3" style="width: 40%">
+            </div>
+
+            <div  id="table_refresh" th:fragment="table_refresh">
+                <table class="layui-table H105_table H105_table1">
+                    <tr class="A405_thead">
+                        <th hidden="hidden" >ID</th>
+                        <th>名称</th>
+                    </tr>
+                    <tr th:each="bean,beanStat : ${list}"  class="H106_clickEvent"  style="cursor:pointer;" ondblclick="selectWsbtmc()">
+                        <td th:text="${bean.id}" hidden="hidden" >ID</td>
+                        <td th:text="${bean.gnmc}">名称</td>
+                    </tr>
+                </table>
+                <!--分页引用-->
+                <div class="H105_pageCoat clear">
+                    <div class="H105_first clear fl">
+                        本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                    </div>
+                    <div th:replace="common/pages::pages"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="A105_buttonOuter">
+            <div class="A105_button A105_button1" onclick="selectWsbtmc()">确定</div>
+            <div class="A105_button A105_button2" onclick="javascript:window.parent.layerclose();">取消</div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script>
+    var contextPath = getContextPath();
+
+    function localRefresh() {
+        // 装载局部刷新返回的页面
+        var wsgnlbSearch = $(" #wsgnlbSearch").val();
+        var pageNo = $(" #pageNo").val();
+        var param = {"wsbtmc": wsgnlbSearch, "pageNo": pageNo};
+        $("#table_refresh").load("../Wsgl/wsgnlbSearch", param, function () {
+            layui.use('table', function () {
+                layui.table.init('demo', {
+                    limit: 12
+                });
+            });
+        });
+    }
+
+
+    // Firefox, Google Chrome, Opera, Safari, Internet Explorer from version 9
+    function OnInput (event) {
+        wsgnlbSearch(event.target.value);
+    }
+    // Internet Explorer
+    function OnPropChanged (event) {
+        if (event.propertyName.toLowerCase () == "value") {
+            wsgnlbSearch(event.srcElement.value);
+        }
+    }
+
+    function wsgnlbSearch(gnmc) {
+        var param = {"gnmc": gnmc};
+        $("#table_refresh").load("/wsgl-fy/Wsgl/wsgnlbSearch", param, function () {
+            layui.use('table', function () {
+                var table = layui.table;
+                table.init();
+            });
+        });
+    }
+
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+    })
+
+    var id="",gnmc="";
+    $('body').on('click', '.H106_clickEvent', function(){
+        var tr=document.getElementsByClassName("H106_clickEvent");
+        $(tr).each(function(){
+            $(this).css("background-color","");
+        });
+        $(this).css("background-color","#f0f6ff");
+
+        var td = $(this).find("td");
+        id = td.eq(0).text();
+        gnmc = td.eq(1).text();
+    });
+
+    function selectWsbtmc(){
+        if(gnmc!="") {
+            parent.$('#wsgnlbmc').val(gnmc);
+            parent.$('#pjlb').val(id);
+            window.parent.layerclose();
+        }else{
+            layer.alert("请先选择文书标题!");
+        }
+    }
+
+
+</script>

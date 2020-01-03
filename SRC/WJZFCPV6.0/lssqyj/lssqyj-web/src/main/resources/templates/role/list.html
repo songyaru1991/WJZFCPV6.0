@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>卷宗智能归档系统</title>
+   <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+ <!--   <link rel="stylesheet" th:href="${application.basePath}+'/static/web/system/access/access.css'">-->
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+   <div class="H105_iframeright">
+        <div class="H105_wripper H105_wripper_gdy">
+            <div class="H105_subtitle clear">
+                <div class="H105_local fl">
+                    <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                         class="H105_caseImg fl">
+                    <p>系统管理：角色管理</p>
+                </div>
+
+                <div class="H105_searchCoat fr clear">
+                    <div class="H105_search1 fl" onclick="toAdd()" auth:check="roleAdd">新增</div>
+                    <div class="H105_search1 fl" onclick="toEdit()" auth:check="roleEdit">编辑</div>
+                    <div class="H105_search1 fl" onclick="delBatch()" auth:check="roleDel">删除</div>
+                </div>
+            </div>
+
+            <div id="table_refresh" th:fragment="table_refresh">
+                <div  class="H105_sysList H105_sysList1">
+                    <table class="layui-table H105_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                        <thead>
+                        <tr>
+                            <th lay-data="{type:'checkbox', width:50}"></th>
+                            <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                            <th lay-data="{field:'1'}">序号</th>
+                            <th lay-data="{field:'2'}">角色名称</th>
+                            <th lay-data="{field:'3'}">编码</th>
+                            <th lay-data="{field:'4'}">描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="bean,beanStat:${list}">
+                            <td><input type="checkbox" name="box" th:value="${bean.id}"
+                                       class="box" lay-skin="primary"/></td>
+                            <td th:text="${bean.id}" lay-data="{style:'display:none;'}"></td>
+                            <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}">
+                                序号
+                            </td>
+                            <td th:text="${bean.name}"></td>
+                            <td th:text="${bean.code}"></td>
+                            <td th:text="${bean.description}"></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                   <!-- 分页引用-->
+                    <div class="H105_pageCoat clear">
+                        <div class="H105_first clear fl">
+                            本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}"/>-<span
+                                th:text="${list.endRow >list.total ? list.total : list.endRow }"/> 总记录数：<span
+                                th:text="${list.total}"></span>
+                        </div>
+                        <div th:replace="common/spages::pages"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script th:inline="javascript">
+    var contextPath = getContextPath();
+    var layIndex;
+    var table = null;
+    layui.use('table', function () {
+        layui.table.init('demo', {
+            limit: 15
+        });
+        table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+        });
+    })
+
+    //获取选中行FexId属性值公共方法
+    //value 为传入的  {field: 'id',style:'display:none;'} field值
+    //返回结果 是这一列被选中的 用,隔开的字符串
+    function getRowFexId(value) {
+        var checkStatus = table.checkStatus('tables')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        for (var i = 0; i < data.length; i++) {
+            arr.push(data[i][value]);
+        }
+        return arr.join(",");
+    }
+
+    function getRowCount() {
+        var checkStatus = table.checkStatus('tables')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        return data.length;
+    }
+
+    function toAdd() {
+        layIndex = layui.layer.open({
+            title: '<img src="' + [[${application.basePath}]] + '/static/images/I208_edit.png"><span>添加角色信息</span>',
+            type: 2,
+            shadeClose: false,
+            shade: 0.6,
+            skin: 'A106_layer',
+            area: ['48em', '40em'], //宽高
+            content: [contextPath + '/role/toAdd', 'yes'],//不允许出现滚动条
+        })
+    }
+
+    function toEdit() {
+        var count = getRowCount("id");
+        if (count < 1) {
+            layer.alert("请至少选择一条数据！");
+            return;
+        }
+        if (count > 1) {
+            layer.alert("请选择一条数据进行编辑！");
+            return;
+        }
+        var id = getRowFexId("id");
+        layIndex = layui.layer.open({
+            title: '<img src="' + [[${application.basePath}]] + '/static/images/I208_edit.png"><span>修改角色信息</span>',
+            type: 2,
+            shadeClose: false,
+            shade: 0.6,
+            skin: 'A106_layer',
+            area: ['48em', '40em'], //宽高
+            content: [contextPath + '/role/toEdit?id=' + id, 'yes'],//不允许出现滚动条
+        })
+    }
+
+    function delBatch() {
+        var ids = getRowFexId("id");
+        if (ids == '') {
+            layer.alert("请至少选择一条数据！");
+            return;
+        }
+        layer.confirm('确定删除吗？', {btn: ['确定', '取消']}, function (index) {
+            layer.close(index);
+            $.ajax({
+                url: contextPath + "/role/delBatch",
+                type: "post",
+                data: {"ids": ids},
+                dataType: "json",
+                success: function (result) {
+                    if (200 == result.code) {
+                        layer.alert(result.message, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.alert(result.message);
+                        return;
+                    }
+                }
+            })
+        })
+
+    }
+
+    function layerclose() {
+        layer.close(layIndex);
+    }
+
+</script>
+</body>
+</html>

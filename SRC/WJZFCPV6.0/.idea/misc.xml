@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/ajgl-gaj/ajgl-gaj-service" />
+    <file type="web" url="file://$PROJECT_DIR$/ajgl-jcy/ajgl-jcy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/uums/uums-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wsgl-fy/wsgl-fy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wsgl-gaj/wsgl-gaj-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wsgl-jcy/wsgl-jcy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wsgl-sfj/wsgl-sfj-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wshygl-fy/wshygl-fy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wshygl-gaj/wshygl-gaj-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wshygl-gaj/wshygl-gaj-web" />
+    <file type="web" url="file://$PROJECT_DIR$/wshygl-jcy/wshygl-jcy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wssacwgl-fy/wssacwgl-fy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wssacwgl-gaj/wssacwgl-gaj-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wssacwgl-jcy/wssacwgl-jcy-service" />
+    <file type="web" url="file://$PROJECT_DIR$/wssacwgl/wssacwgl-service" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/uums-oos/pom.xml" />
+        <option value="$PROJECT_DIR$/wshygl/pom.xml" />
+        <option value="$PROJECT_DIR$/wssacwgl/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/ftp/pom.xml" />
+        <option value="$PROJECT_DIR$/uums/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/classes" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="http://172.16.0.78:81/RXPT/SRC/视频云系统/figurecloud-new/figurecloud" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

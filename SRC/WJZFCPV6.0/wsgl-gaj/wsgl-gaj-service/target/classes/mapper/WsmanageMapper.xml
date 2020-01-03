@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.wsgl.system.mapper.WsmanageMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.wsgl.system.bean.Wsmanage">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="WSDM" jdbcType="VARCHAR" property="wsdm" />
+    <result column="WSBT" jdbcType="VARCHAR" property="wsbt" />
+    <result column="WSLX" jdbcType="VARCHAR" property="wslx" />
+    <result column="WSGS" jdbcType="VARCHAR" property="wsgs" />
+    <result column="WHMB" jdbcType="VARCHAR" property="whmb" />
+    <result column="WSGNLB" jdbcType="VARCHAR" property="wsgnlb" />
+    <result column="IsSendGA" jdbcType="INTEGER" property="issendga" />
+    <result column="IsSendJCY" jdbcType="INTEGER" property="issendjcy" />
+    <result column="IsSendFY" jdbcType="INTEGER" property="issendfy" />
+    <result column="IsSendKSS" jdbcType="INTEGER" property="issendkss" />
+    <result column="BM" jdbcType="VARCHAR" property="bm" />
+    <result column="Area_Code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="AddTime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="ADDUSER" jdbcType="VARCHAR" property="adduser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, WSDM, WSBT, WSLX, WSGS, WHMB, WSGNLB, IsSendGA, IsSendJCY, IsSendFY, IsSendKSS, 
+    BM, Area_Code, AddTime, ADDUSER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wsmanage
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wsmanage
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.wsgl.system.bean.Wsmanage">
+    insert into wsmanage (ID, WSDM, WSBT, 
+      WSLX, WSGS, WHMB, WSGNLB, 
+      IsSendGA, IsSendJCY, IsSendFY, 
+      IsSendKSS, BM, Area_Code, 
+      AddTime, ADDUSER)
+    values (#{id,jdbcType=VARCHAR}, #{wsdm,jdbcType=VARCHAR}, #{wsbt,jdbcType=VARCHAR}, 
+      #{wslx,jdbcType=VARCHAR}, #{wsgs,jdbcType=VARCHAR}, #{whmb,jdbcType=VARCHAR}, #{wsgnlb,jdbcType=VARCHAR}, 
+      #{issendga,jdbcType=INTEGER}, #{issendjcy,jdbcType=INTEGER}, #{issendfy,jdbcType=INTEGER}, 
+      #{issendkss,jdbcType=INTEGER}, #{bm,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+       sysdate(), #{adduser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.wsgl.system.bean.Wsmanage">
+    insert into wsmanage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="wsdm != null">
+        WSDM,
+      </if>
+      <if test="wsbt != null">
+        WSBT,
+      </if>
+      <if test="wslx != null">
+        WSLX,
+      </if>
+      <if test="wsgs != null">
+        WSGS,
+      </if>
+      <if test="whmb != null">
+        WHMB,
+      </if>
+      <if test="wsgnlb != null">
+        WSGNLB,
+      </if>
+      <if test="issendga != null">
+        IsSendGA,
+      </if>
+      <if test="issendjcy != null">
+        IsSendJCY,
+      </if>
+      <if test="issendfy != null">
+        IsSendFY,
+      </if>
+      <if test="issendkss != null">
+        IsSendKSS,
+      </if>
+      <if test="bm != null">
+        BM,
+      </if>
+      <if test="areaCode != null">
+        Area_Code,
+      </if>
+      <if test="addtime != null">
+        AddTime,
+      </if>
+      <if test="adduser != null">
+        ADDUSER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="wsdm != null">
+        #{wsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="wsbt != null">
+        #{wsbt,jdbcType=VARCHAR},
+      </if>
+      <if test="wslx != null">
+        #{wslx,jdbcType=VARCHAR},
+      </if>
+      <if test="wsgs != null">
+        #{wsgs,jdbcType=VARCHAR},
+      </if>
+      <if test="whmb != null">
+        #{whmb,jdbcType=VARCHAR},
+      </if>
+      <if test="wsgnlb != null">
+        #{wsgnlb,jdbcType=VARCHAR},
+      </if>
+      <if test="issendga != null">
+        #{issendga,jdbcType=INTEGER},
+      </if>
+      <if test="issendjcy != null">
+        #{issendjcy,jdbcType=INTEGER},
+      </if>
+      <if test="issendfy != null">
+        #{issendfy,jdbcType=INTEGER},
+      </if>
+      <if test="issendkss != null">
+        #{issendkss,jdbcType=INTEGER},
+      </if>
+      <if test="bm != null">
+        #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduser != null">
+        #{adduser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.wsgl.system.bean.Wsmanage">
+    update wsmanage
+    <set>
+      <if test="wsdm != null">
+        WSDM = #{wsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="wsbt != null">
+        WSBT = #{wsbt,jdbcType=VARCHAR},
+      </if>
+      <if test="wslx != null">
+        WSLX = #{wslx,jdbcType=VARCHAR},
+      </if>
+      <if test="wsgs != null">
+        WSGS = #{wsgs,jdbcType=VARCHAR},
+      </if>
+      <if test="whmb != null">
+        WHMB = #{whmb,jdbcType=VARCHAR},
+      </if>
+      <if test="wsgnlb != null">
+        WSGNLB = #{wsgnlb,jdbcType=VARCHAR},
+      </if>
+      <if test="issendga != null">
+        IsSendGA = #{issendga,jdbcType=INTEGER},
+      </if>
+      <if test="issendjcy != null">
+        IsSendJCY = #{issendjcy,jdbcType=INTEGER},
+      </if>
+      <if test="issendfy != null">
+        IsSendFY = #{issendfy,jdbcType=INTEGER},
+      </if>
+      <if test="issendkss != null">
+        IsSendKSS = #{issendkss,jdbcType=INTEGER},
+      </if>
+      <if test="bm != null">
+        BM = #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        Area_Code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        AddTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduser != null">
+        ADDUSER = #{adduser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.wsgl.system.bean.Wsmanage">
+    update wsmanage
+    set WSDM = #{wsdm,jdbcType=VARCHAR},
+      WSBT = #{wsbt,jdbcType=VARCHAR},
+      WSLX = #{wslx,jdbcType=VARCHAR},
+      WSGS = #{wsgs,jdbcType=VARCHAR},
+      WHMB = #{whmb,jdbcType=VARCHAR},
+      WSGNLB = #{wsgnlb,jdbcType=VARCHAR},
+      IsSendGA = #{issendga,jdbcType=INTEGER},
+      IsSendJCY = #{issendjcy,jdbcType=INTEGER},
+      IsSendFY = #{issendfy,jdbcType=INTEGER},
+      IsSendKSS = #{issendkss,jdbcType=INTEGER},
+      BM = #{bm,jdbcType=VARCHAR},
+      Area_Code = #{areaCode,jdbcType=VARCHAR},
+      AddTime = sysdate(),
+      ADDUSER = #{adduser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getWsglListPage" parameterType="com.netmarch.wsgl.system.bean.Query" resultType="com.netmarch.wsgl.system.bean.Wsmanage">
+    select id,wsdm,wsbt,wslx,wsgs,whmb,wsgnlb,issendga,issendjcy,issendfy,issendkss,
+    bm,area_Code areaCode,addtime,adduser from wsmanage  where  bm='公安' and area_Code=#{areaCode,jdbcType=VARCHAR}
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchWsdm"'>
+        and wsdm like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test='searchCondition == "searchWsbt"'>
+        and wsbt like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    order by addtime desc
+  </select>
+
+  <select id="getWsbtmcList"  parameterType="java.lang.String" resultType="com.netmarch.wsgl.system.bean.Wsmanage">
+    select  id,concat('(',wsdm, ')',wsbt) wsbt from wsmanage where  bm='公安' and area_Code=#{areaCode,jdbcType=VARCHAR}
+
+    <if test="wsbtmc != null and wsbtmc != ''">
+      and (wsdm like  CONCAT('%',#{wsbtmc,jdbcType=VARCHAR},'%')
+      or wsbt like  CONCAT('%',#{wsbtmc,jdbcType=VARCHAR},'%')
+      )
+    </if>
+
+    order by addtime desc
+  </select>
+
+  <select id="getWsById"  parameterType="String" resultType="com.netmarch.wsgl.system.bean.Wsmanage">
+   select a.id,a.wsdm,a.wsbt,a.wslx,a.wsgs,a.whmb,a.wsgnlb,b.GNMC wsgnlbmc,a.issendga,a.issendjcy,a.issendfy,
+        a.issendkss,a.bm,a.area_Code areaCode,a.addtime,a.adduser from wsmanage a LEFT JOIN wsgnlb b ON a.WSGNLB=b.ID
+     where a.id= #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectWsCountById" parameterType="java.lang.String"  resultType="Integer">
+    select count(*) from wsmanage where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="checkRepeatWsdm" parameterType="com.netmarch.wsgl.system.bean.Wsmanage" resultType="Integer">
+    select count(*) from wsmanage where wsdm = #{wsdm,jdbcType=VARCHAR}
+    <if test="id != null and id != ''">
+      and id &lt;&gt; #{id,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getWsgnbUsedCountInWsManage" parameterType="java.lang.String"  resultType="Integer">
+    select count(*) from wsmanage where wsgnlb = #{wsgnlb,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

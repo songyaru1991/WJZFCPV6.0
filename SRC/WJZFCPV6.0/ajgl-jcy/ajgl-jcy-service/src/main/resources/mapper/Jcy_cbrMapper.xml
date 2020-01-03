@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Jcy_cbrMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Jcy_cbr">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="GROUPID" jdbcType="INTEGER" property="groupid" />
+    <result column="ZHIWEI" jdbcType="VARCHAR" property="zhiwei" />
+    <result column="ISBA" jdbcType="VARCHAR" property="isba" />
+    <result column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="EDITTIME" jdbcType="TIMESTAMP" property="edittime" />
+    <result column="EDITUSER" jdbcType="VARCHAR" property="edituser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, USERID, GROUPID, ZHIWEI, ISBA, AREA_CODE, EDITTIME, EDITUSER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jcy_cbr
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jcy_cbr
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+    insert into jcy_cbr (ID, USERID, GROUPID, 
+      ZHIWEI, ISBA, AREA_CODE, 
+      EDITTIME, EDITUSER)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{groupid,jdbcType=INTEGER}, 
+      #{zhiwei,jdbcType=VARCHAR}, #{isba,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{edittime,jdbcType=TIMESTAMP}, #{edituser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+    insert into jcy_cbr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="groupid != null">
+        GROUPID,
+      </if>
+      <if test="zhiwei != null">
+        ZHIWEI,
+      </if>
+      <if test="isba != null">
+        ISBA,
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+      <if test="edittime != null">
+        EDITTIME,
+      </if>
+      <if test="edituser != null">
+        EDITUSER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null">
+        #{groupid,jdbcType=INTEGER},
+      </if>
+      <if test="zhiwei != null">
+        #{zhiwei,jdbcType=VARCHAR},
+      </if>
+      <if test="isba != null">
+        #{isba,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="edituser != null">
+        #{edituser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+    update jcy_cbr
+    <set>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null">
+        GROUPID = #{groupid,jdbcType=INTEGER},
+      </if>
+      <if test="zhiwei != null">
+        ZHIWEI = #{zhiwei,jdbcType=VARCHAR},
+      </if>
+      <if test="isba != null">
+        ISBA = #{isba,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="edittime != null">
+        EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="edituser != null">
+        EDITUSER = #{edituser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+    update jcy_cbr
+    set USERID = #{userid,jdbcType=VARCHAR},
+      GROUPID = #{groupid,jdbcType=INTEGER},
+      ZHIWEI = #{zhiwei,jdbcType=VARCHAR},
+      ISBA = #{isba,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      EDITTIME = #{edittime,jdbcType=TIMESTAMP},
+      EDITUSER = #{edituser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getJcycbrList"  parameterType="com.netmarch.ajgl.system.bean.Query" resultType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+    select  a.id, a.userid, a.groupid, a.zhiwei, a.isba, d.jcy_area_name areaCode, a.edittime, a.edituser,
+    b.username,c.groupname
+    from jcy_cbr a
+    left join  users b on a.userid=b.user_id
+    left join jcy_group c on a.groupid=c.id
+    left join  area d on a.area_code=d.area_code
+    where 1=1
+    <if test="areaCode != '' and areaCode != null" >
+      and  a.area_code=#{areaCode,jdbcType=VARCHAR}
+    </if>
+    <if test="searchCondition != '' and searchCondition != null and searchContent != '' and searchContent != null">
+      <if test='searchCondition == "searchCbrname"'>
+        and b.username like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+      </if>
+    </if>
+    order by a.edittime desc
+  </select>
+
+  <select id="getJcycbrById" parameterType="java.lang.Integer" resultType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+  select  a.id, a.userid, a.groupid, a.zhiwei, a.isba, d.jcy_area_name areaCode, a.edittime, a.edituser,
+  b.username,c.groupname
+  from jcy_cbr a
+  left join  users b on a.userid=b.user_id
+  left join jcy_group c on a.groupid=c.id
+  left join  area d on a.area_code=d.area_code
+  where a.id = #{id,jdbcType=INTEGER}
+ </select>
+
+  <select id="checkJcycbrUserid" parameterType="com.netmarch.ajgl.system.bean.Jcy_cbr" resultType="java.lang.Integer">
+    select
+    count(*)
+    from jcy_cbr  where userid=#{userid,jdbcType=VARCHAR}
+    <if test="id !=null and id != ''">
+      and id &lt;> #{id,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="checkJcygroupUsed" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    count(*)
+    from jcy_cbr  where groupid=#{groupid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getJcycbrListByGroupId" parameterType="java.lang.Integer" resultType="com.netmarch.ajgl.system.bean.Jcy_cbr">
+     select  a.id, a.userid, a.groupid, a.zhiwei, a.isba, a.edittime, a.edituser,
+    b.username
+    from jcy_cbr a
+    left join  users b on a.userid=b.user_id
+    where a.isba=1
+     and a.groupid=#{a.groupid,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

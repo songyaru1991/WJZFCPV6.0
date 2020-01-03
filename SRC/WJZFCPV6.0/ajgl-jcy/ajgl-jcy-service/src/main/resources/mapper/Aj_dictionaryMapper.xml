@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Aj_dictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Aj_dictionary">
+    <id column="JLBH" jdbcType="VARCHAR" property="jlbh" />
+    <result column="LBDM" jdbcType="VARCHAR" property="lbdm" />
+    <result column="FLDM" jdbcType="VARCHAR" property="fldm" />
+    <result column="FLDMMC" jdbcType="VARCHAR" property="fldmmc" />
+    <result column="DYAJDM" jdbcType="VARCHAR" property="dyajdm" />
+    <result column="Description" jdbcType="VARCHAR" property="description" />
+    <result column="Remark" jdbcType="VARCHAR" property="remark" />
+    <result column="DMLB" jdbcType="VARCHAR" property="dmlb" />
+    <result column="FFLDM" jdbcType="VARCHAR" property="ffldm" />
+    <result column="LBDM_GA" jdbcType="VARCHAR" property="lbdmGa" />
+    <result column="FLDM_GA" jdbcType="VARCHAR" property="fldmGa" />
+    <result column="FLDMMC_GA" jdbcType="VARCHAR" property="fldmmcGa" />
+    <result column="DMLB_GA" jdbcType="VARCHAR" property="dmlbGa" />
+    <result column="FFLDM_GA" jdbcType="VARCHAR" property="ffldmGa" />
+    <result column="LBDM_FY" jdbcType="VARCHAR" property="lbdmFy" />
+    <result column="FLDM_FY" jdbcType="VARCHAR" property="fldmFy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    JLBH, LBDM, FLDM, FLDMMC, DYAJDM, Description, Remark, DMLB, FFLDM, LBDM_GA, FLDM_GA, 
+    FLDMMC_GA, DMLB_GA, FFLDM_GA, LBDM_FY, FLDM_FY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from aj_dictionary
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from aj_dictionary
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Aj_dictionary">
+    insert into aj_dictionary (JLBH, LBDM, FLDM, 
+      FLDMMC, DYAJDM, Description, 
+      Remark, DMLB, FFLDM, 
+      LBDM_GA, FLDM_GA, FLDMMC_GA, 
+      DMLB_GA, FFLDM_GA, LBDM_FY, 
+      FLDM_FY)
+    values (#{jlbh,jdbcType=VARCHAR}, #{lbdm,jdbcType=VARCHAR}, #{fldm,jdbcType=VARCHAR}, 
+      #{fldmmc,jdbcType=VARCHAR}, #{dyajdm,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{dmlb,jdbcType=VARCHAR}, #{ffldm,jdbcType=VARCHAR}, 
+      #{lbdmGa,jdbcType=VARCHAR}, #{fldmGa,jdbcType=VARCHAR}, #{fldmmcGa,jdbcType=VARCHAR}, 
+      #{dmlbGa,jdbcType=VARCHAR}, #{ffldmGa,jdbcType=VARCHAR}, #{lbdmFy,jdbcType=VARCHAR}, 
+      #{fldmFy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Aj_dictionary">
+    insert into aj_dictionary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        JLBH,
+      </if>
+      <if test="lbdm != null">
+        LBDM,
+      </if>
+      <if test="fldm != null">
+        FLDM,
+      </if>
+      <if test="fldmmc != null">
+        FLDMMC,
+      </if>
+      <if test="dyajdm != null">
+        DYAJDM,
+      </if>
+      <if test="description != null">
+        Description,
+      </if>
+      <if test="remark != null">
+        Remark,
+      </if>
+      <if test="dmlb != null">
+        DMLB,
+      </if>
+      <if test="ffldm != null">
+        FFLDM,
+      </if>
+      <if test="lbdmGa != null">
+        LBDM_GA,
+      </if>
+      <if test="fldmGa != null">
+        FLDM_GA,
+      </if>
+      <if test="fldmmcGa != null">
+        FLDMMC_GA,
+      </if>
+      <if test="dmlbGa != null">
+        DMLB_GA,
+      </if>
+      <if test="ffldmGa != null">
+        FFLDM_GA,
+      </if>
+      <if test="lbdmFy != null">
+        LBDM_FY,
+      </if>
+      <if test="fldmFy != null">
+        FLDM_FY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jlbh != null">
+        #{jlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="lbdm != null">
+        #{lbdm,jdbcType=VARCHAR},
+      </if>
+      <if test="fldm != null">
+        #{fldm,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmmc != null">
+        #{fldmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="dyajdm != null">
+        #{dyajdm,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="dmlb != null">
+        #{dmlb,jdbcType=VARCHAR},
+      </if>
+      <if test="ffldm != null">
+        #{ffldm,jdbcType=VARCHAR},
+      </if>
+      <if test="lbdmGa != null">
+        #{lbdmGa,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmGa != null">
+        #{fldmGa,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmmcGa != null">
+        #{fldmmcGa,jdbcType=VARCHAR},
+      </if>
+      <if test="dmlbGa != null">
+        #{dmlbGa,jdbcType=VARCHAR},
+      </if>
+      <if test="ffldmGa != null">
+        #{ffldmGa,jdbcType=VARCHAR},
+      </if>
+      <if test="lbdmFy != null">
+        #{lbdmFy,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmFy != null">
+        #{fldmFy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Aj_dictionary">
+    update aj_dictionary
+    <set>
+      <if test="lbdm != null">
+        LBDM = #{lbdm,jdbcType=VARCHAR},
+      </if>
+      <if test="fldm != null">
+        FLDM = #{fldm,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmmc != null">
+        FLDMMC = #{fldmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="dyajdm != null">
+        DYAJDM = #{dyajdm,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        Description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="dmlb != null">
+        DMLB = #{dmlb,jdbcType=VARCHAR},
+      </if>
+      <if test="ffldm != null">
+        FFLDM = #{ffldm,jdbcType=VARCHAR},
+      </if>
+      <if test="lbdmGa != null">
+        LBDM_GA = #{lbdmGa,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmGa != null">
+        FLDM_GA = #{fldmGa,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmmcGa != null">
+        FLDMMC_GA = #{fldmmcGa,jdbcType=VARCHAR},
+      </if>
+      <if test="dmlbGa != null">
+        DMLB_GA = #{dmlbGa,jdbcType=VARCHAR},
+      </if>
+      <if test="ffldmGa != null">
+        FFLDM_GA = #{ffldmGa,jdbcType=VARCHAR},
+      </if>
+      <if test="lbdmFy != null">
+        LBDM_FY = #{lbdmFy,jdbcType=VARCHAR},
+      </if>
+      <if test="fldmFy != null">
+        FLDM_FY = #{fldmFy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Aj_dictionary">
+    update aj_dictionary
+    set LBDM = #{lbdm,jdbcType=VARCHAR},
+      FLDM = #{fldm,jdbcType=VARCHAR},
+      FLDMMC = #{fldmmc,jdbcType=VARCHAR},
+      DYAJDM = #{dyajdm,jdbcType=VARCHAR},
+      Description = #{description,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR},
+      DMLB = #{dmlb,jdbcType=VARCHAR},
+      FFLDM = #{ffldm,jdbcType=VARCHAR},
+      LBDM_GA = #{lbdmGa,jdbcType=VARCHAR},
+      FLDM_GA = #{fldmGa,jdbcType=VARCHAR},
+      FLDMMC_GA = #{fldmmcGa,jdbcType=VARCHAR},
+      DMLB_GA = #{dmlbGa,jdbcType=VARCHAR},
+      FFLDM_GA = #{ffldmGa,jdbcType=VARCHAR},
+      LBDM_FY = #{lbdmFy,jdbcType=VARCHAR},
+      FLDM_FY = #{fldmFy,jdbcType=VARCHAR}
+    where JLBH = #{jlbh,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getInfoFromAjDic"  parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from aj_dictionary
+    where DMLB = #{dmlb,jdbcType=VARCHAR} and LBDM=#{lbdm,jdbcType=VARCHAR}
+    <if test="searchContent != '' and searchContent != null">
+      and  FLDMMC like  CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+
+</mapper>

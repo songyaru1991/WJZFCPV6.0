@@ -1,0 +1,46 @@
+package util.exception;
+
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
+/**
+* @Description: ErrorCode 自定义鉴权错误编码
+* @Author: fengxiang
+* @Date: 2019/2/15 9:47
+*/ 
+public enum ErrorCode {
+    /**
+     *  2 全局错误
+     *  10 认证错误
+     *  11 jwt token 过期
+     *  12 账号过期
+     *  5000 服务器内部异常
+     */
+    GLOBAL(2),
+    AUTHENTICATION(10),
+    JWT_TOKEN_EXPIRED(11),
+    ACCOUNT_EXPIRED(12),
+    /**
+     * 服务器异常
+     */
+    SERVER_ERROR(5000);
+
+    private int errorCode;
+
+    private ErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+    public static ErrorCode valueOf(int errorCode){
+        ErrorCode[] errorCodes =  values();
+        for (ErrorCode errorCodeTmp:errorCodes){
+            if (errorCodeTmp.errorCode == errorCode){
+                return  errorCodeTmp;
+            }
+        }
+        return null;
+    }
+    @JsonValue
+    public int value() {
+        return this.errorCode;
+    }
+}

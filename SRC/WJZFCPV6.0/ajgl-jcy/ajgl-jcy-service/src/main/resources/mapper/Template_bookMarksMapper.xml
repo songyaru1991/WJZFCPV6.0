@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.Template_bookMarksMapper">
+  <resultMap id="BaseResultMap" type="com.netmarch.ajgl.system.bean.Template_bookMarks">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="WSDM" jdbcType="VARCHAR" property="wsdm" />
+    <result column="BOOKMARKNAME" jdbcType="VARCHAR" property="bookmarkname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, WSDM, BOOKMARKNAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template_bookmarks
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from template_bookmarks
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.netmarch.ajgl.system.bean.Template_bookMarks">
+    insert into template_bookmarks (ID, WSDM, BOOKMARKNAME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{wsdm,jdbcType=VARCHAR}, #{bookmarkname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.netmarch.ajgl.system.bean.Template_bookMarks">
+    insert into template_bookmarks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="wsdm != null">
+        WSDM,
+      </if>
+      <if test="bookmarkname != null">
+        BOOKMARKNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="wsdm != null">
+        #{wsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="bookmarkname != null">
+        #{bookmarkname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netmarch.ajgl.system.bean.Template_bookMarks">
+    update template_bookmarks
+    <set>
+      <if test="wsdm != null">
+        WSDM = #{wsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="bookmarkname != null">
+        BOOKMARKNAME = #{bookmarkname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netmarch.ajgl.system.bean.Template_bookMarks">
+    update template_bookmarks
+    set WSDM = #{wsdm,jdbcType=VARCHAR},
+      BOOKMARKNAME = #{bookmarkname,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteTemplateBookMarksByWsdm" parameterType="java.lang.String">
+    delete from template_bookmarks
+    where wsdm = #{wsdm,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="getTemplateBookmarksByWsdm" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from template_bookmarks
+    where wsdm = #{wsdm,jdbcType=VARCHAR}
+  </select>
+</mapper>

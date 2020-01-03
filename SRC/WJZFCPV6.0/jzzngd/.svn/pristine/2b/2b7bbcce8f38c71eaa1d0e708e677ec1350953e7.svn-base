@@ -1,0 +1,57 @@
+package com.netmarch.jzzngd.system.mapper;
+
+import com.netmarch.jzzngd.system.bean.Ajdzjzwj;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+public interface AjdzjzwjMapper {
+    int addWj(String id, String ajdzjzmlid, String path,String orgname, Date uploadTime);
+
+    List<Ajdzjzwj> selectWjByFlag(int flag);
+
+    int deleteFileByMlid(String mlid);
+
+    int getWjCountByMlid(String mlid);
+
+    List<Map<String, Object>> getCountByFlag(String ajbs);
+
+    List<Ajdzjzwj> selectWjByParentid(String ajbs,String parentid);
+
+    void updateOldsort(String wjid, int oldsort);
+
+    List<Ajdzjzwj> selectWjByMlid(String mlid);
+
+    List<Ajdzjzwj> selectWjByPage(String ajbs,int orderby, int pageFrom, int pageTo);
+
+    int updateNewsort(String id, String mlid, int newsort);
+
+    int selectMaxNewsort(String ajbs,String typename);
+
+    List<Ajdzjzwj> selectWjByMlids(List<String> mlIdList);
+
+    String selectWjid(String ajbs,int oldsort, int pid);
+
+    int deleteFileById(String wjid);
+
+    List<Ajdzjzwj> selectWjByOrderby(int orderby,String ajbs);
+
+    List<Ajdzjzwj> selectUndealtWj(String ajbs);
+
+    List<Ajdzjzwj> selectWjByAjbs(String ajbs);
+
+    Object selectMaxNewsortByMlid(String ajbs,String mlid);
+
+    int updateMlidAndNewsort(String mlid, int maxnewsort, String wjid);
+
+    Ajdzjzwj selectWjById(String wjid);
+
+    List<Ajdzjzwj> selectWjByAjbsAndOldsort(int oldsort, String ajbs);
+
+    int updateWjmlidById(String mlid, String wjid);
+
+    int updateFilenameById(String wjid, String path);
+
+    List<Ajdzjzwj> selectWjByIds(List<String> ids);
+}

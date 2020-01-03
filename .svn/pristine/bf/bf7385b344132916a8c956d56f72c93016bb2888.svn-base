@@ -1,0 +1,13 @@
+package com.netmarch.gaj.system.mapper;
+
+import com.netmarch.gaj.system.bean.Ls;
+
+import java.util.List;
+
+public interface LsMapper {
+    List<Ls> getLsList();
+
+    Ls getLsByXm(String xm);
+
+    Ls getInfoById(String id);
+}

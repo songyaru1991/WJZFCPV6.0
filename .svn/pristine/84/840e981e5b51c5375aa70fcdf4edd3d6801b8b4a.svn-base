@@ -1,0 +1,13 @@
+package com.netmarch.jzznyj.system.service;
+
+import com.netmarch.jzznyj.system.bean.Ajword;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface AjwordService {
+    int exportWord(String ajbs, String wordcontent);
+
+    Ajword selectByAjbs(String ajbs);
+
+    Ajword getOrg();
+}

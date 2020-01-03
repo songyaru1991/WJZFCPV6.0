@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:auth="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>律师阅卷</title>
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+ '/static/css/style05.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/forIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+
+    <style type="text/css">
+        .btnToggle {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="A105R_pictureCoat">
+    <div class="A205_btn clear">
+        <div class="A205_listBtn fr">
+            <p class="btnToggle A205_btnEmphasis">打印</p>
+            <p class="btnToggle">下载</p>
+        </div>
+    </div>
+
+    <!-- 图片 -->
+    <div id="imgContent">
+    </div>
+</div>
+<script>
+    $(function(){
+
+    })
+    function previousImg() {
+        // var order = $(".A205_content div:last-child").attr('order');
+    }
+
+    function nextImg() {
+        // alert(1);
+    }
+</script>
+</body>
+</html>

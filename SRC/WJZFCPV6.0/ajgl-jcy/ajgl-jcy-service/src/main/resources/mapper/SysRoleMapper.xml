@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.ajgl.system.mapper.SysRoleMapper">
+    <select id="getAllUserdRoles"  parameterType="List"
+            resultType="com.netmarch.ajgl.system.bean.SysRole">
+        select id,code,name,create_user createUser,create_time createTime,update_user updateUser,update_time updateTime,is_delete isDelete,
+                description from sys_role where is_delete = 0
+        <if test="list != null and list.size() > 0 ">
+            and  id in
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+
+    </select>
+
+    <select id="getRoleList" parameterType="Map"
+            resultType="com.netmarch.ajgl.system.bean.SysRole">
+        select id,code,name,create_user createUser,create_time createTime,update_user updateUser,update_time updateTime,is_delete isDelete,
+                description from sys_role where 1=1
+        <if test="keyword != '' and keyword != null">
+            and name like '%${keyword}%'
+        </if>
+    </select>
+
+    <select id="getRoleById" parameterType="Integer"
+            resultType="com.netmarch.ajgl.system.bean.SysRole">
+        select id,code,name,create_user createUser,create_time createTime,update_user updateUser,update_time updateTime,is_delete isDelete,
+                description  from sys_role where id = #{id}
+    </select>
+    
+    <select id="getRoleResources" parameterType="Integer"
+            resultType="com.netmarch.ajgl.system.bean.SysResource">
+        select id,code,name,url,type,css_Selector cssSelector,status,sort_Index sortIndex,parent_Id parentId,name pName,imgUrl1,imgUrl2 from sys_resource where id in (
+          select sys_resource_id from sys_resource_role where sys_role_id = #{id}
+        )
+    </select>
+
+    <update id="editSysRole" parameterType="com.netmarch.ajgl.system.bean.SysRole">
+        update sys_role set code=#{code}, name=#{name}, update_user=#{updateUser}, update_time=sysdate(),
+        description=#{description} where id=#{id}
+    </update>
+
+    <insert id="addSysRole" parameterType="com.netmarch.ajgl.system.bean.SysRole"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role (code, name, create_user, create_time, description) VALUES
+        (#{code},#{name},#{createUser},sysdate(),#{description})
+    </insert>
+
+    <delete id="clearByRoleId" parameterType="Integer">
+        delete from sys_resource_role where sys_role_id = #{id}
+    </delete>
+    
+    <insert id="changechangeRoleResources" parameterType="List">
+        insert into sys_resource_role (sys_resource_id, sys_role_id) VALUES
+        <foreach collection="list" item="bean" index="index" separator=",">
+            (#{bean.sysResourceId}, #{bean.sysRoleId})
+        </foreach>
+    </insert>
+
+    <select id="getUsedRoleCount" parameterType="List" resultType="Integer">
+        select count(1) from sys_users_role where sys_role_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <delete id="delBatch" parameterType="List">
+        delete from sys_role where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkRepeatName" parameterType="com.netmarch.ajgl.system.bean.SysRole"
+            resultType="int">
+        select count(1) from sys_role where name = #{name}
+        <if test="id !=null and id !=0">
+            and id &lt;&gt; #{id}
+        </if>
+    </select>
+
+    <select id="checkRepeatCode" parameterType="com.netmarch.ajgl.system.bean.SysRole"
+            resultType="int">
+        select count(1) from sys_role where code = #{code}
+        <if test="id !=null and id !=0">
+            and id &lt;&gt; #{id}
+        </if>
+    </select>
+
+    <select id="getRoleIdByCode" parameterType="java.lang.String"
+            resultType="int">
+        select id from sys_role where code = #{code}
+    </select>
+
+</mapper>

@@ -1,0 +1,9 @@
+package com.netmarch.figurecloud.auth.core.service;
+
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+
+import java.util.Optional;
+
+public interface SysLoginUserService {
+    Optional<SysLoginUser> queryHasRoles(String nameOrNum);
+}

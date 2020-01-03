@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style_10.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+    <div class="E105_wripper">
+        <div class="E105_case1 layui-form">
+            <div class="E105_subtitle clear">
+                <div class="E105_biaoti fl">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p>相关设置编辑</p>
+                </div>
+            </div>
+
+            <div class="E105_tableCoat3">
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>相关设置信息</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor3">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear T110_itemList" th:if="${bean.name=='pb' || bean.name=='qs'}">
+                                <div class="E105_bianhao fl clear" th:switch="${bean.name}">
+                                    <p th:case="pb">批捕红绿灯期限(天)：</p>
+                                    <p th:case="qs">起诉红绿灯期限(天)：</p>
+                                </div>
+
+                                <div class="T110_input2 fl">
+                                    <input type="text" class="layui-input" lay-verify="required|operationCount" lay-verType="tips"
+                                           placeholder="必填项" name="state" th:value="${bean.state}" maxlength="11">
+                                </div>
+                            </td>
+
+                            <td class="clear T110_itemList" th:if="${bean.name=='fa' || bean.name=='cn' || bean.name=='sa'}">
+                                <div class="E105_bianhao fl clear" th:switch="${bean.name}">
+                                    <p th:case="fa">案件分案是否允许查看案件详细信息：</p>
+                                    <p th:case="sa">案件收案是否允许查看影印资料：</p>
+                                    <p th:case="cn">是否提示嫌疑人未成年：</p>
+                                </div>
+
+                                <div class="T110_input fl">
+                                    <div class="T110_radio">
+                                        <input type="radio" name="state" value="0" title="否" th:checked="${bean.state==0}">
+                                        <input type="radio" name="state" value="1" title="是" th:checked="${bean.state==1 }">
+                                    </div>
+                                </div>
+
+                            </td>
+
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>所属县区：</p>
+                                </div>
+
+                                <div class="T110_input fl">
+                                    <select lay-verify="required" lay-verType="tips" name="areaCode">
+                                        <option value="">--请选择承办人所属单位--</option>
+                                        <option th:each="area : ${arealist}" th:text="${area.jcyAreaName}" th:value="${area.areaCode}" th:selected="${bean.areaname==area.jcyAreaName}">所属单位</option>
+                                    </select>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                    <input type="text" th:name="id" th:value="${bean.id}" style="display: none">
+                </div>
+            </div>
+
+            <div class="S105_btnCoat1 ">
+                <div class="T110_saveBtnCoat clear">
+                    <button class="layui-btn fl" lay-submit lay-filter="formDemo" style="margin-right: 5em;">保存
+                    </button>
+                    <button class="layui-btn fl site-demo-active2" data-type="tabDelete" >取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script th:inline="javascript">
+
+
+    var contextPath = getContextPath();
+
+    layui.use(['form','layer'], function(){
+        var $ = layui.jquery, layer = layui.layer, form = layui.form; //独立版的layer无需执行这一句
+
+        // 正整数验证
+        form.verify({
+            operationCount: [
+                /^[+]{0,1}(\d+)$/,
+                '必须为0或正整数！'
+            ]
+        });
+        form.on('submit(formDemo)', function (saveform) {   //saveform是form表单中所选中所有数据 saveform.field 为表单中的值
+            $.ajax({
+                url: contextPath + "/jcyXgsz/edit",
+                type: "post",
+                data: saveform.field,
+                dataType: "json",
+                success: function (result) {
+                    if(result.code == 200){
+                        layer.alert(result.message,function () {
+                            layer.close(layer.index);
+                            //刷新列表页面的table
+
+                            //调用列表页面的刷新
+                            window.parent.$("#id_H105_conIframe").contents().find("#frm")[0].contentWindow.localRefresh();
+
+                            //关闭当前页面
+                            window.parent.parent.$('.layui_H105_title .layui-this').attr('lay-id');
+                            $(this).data('url',window.parent.parent.$('.layui_H105_title .layui-this').attr('lay-id'));
+                            $(this).data('type',"tabDelete");
+                            window.parent.parent.active1($(this));
+
+                        });
+                    }else{
+                        layer.alert(result.message);
+                        return;
+                    }
+                }
+
+            })
+        });
+
+    });
+
+    function lyerclose() {
+        layer.close(index);
+    }
+
+</script>
+
+</html>

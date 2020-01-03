@@ -1,0 +1,83 @@
+package com.netmarch.fdfs.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.netmarch.fdfs.system.bean.LoginUser;
+import com.netmarch.fdfs.system.mapper.LoginUserMapper;
+import com.netmarch.fdfs.system.service.LoginUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @program: figurecloud
+ * @description: loginUser Service 实现类
+ * @author: dinggan
+ * @create: 2019-02-14 15:38
+ **/
+@Service
+//@CacheConfig(cacheNames = "Users")//cacheNames：指定缓存的名称，缓存的 key 生成策略默认使用的是参数名+参数值
+public class LoginUserServiceImpl implements LoginUserService {
+
+    @Autowired
+    private LoginUserMapper loginUserMapper;
+
+    @Override
+   // @Cacheable(value="Users")
+    public Page<LoginUser> getUserList(LoginUser user, String keyword) {
+      //  PageHelper.startPage(user.getPageNo() == null ? 1 : user.getPageNo(), PagesStatic.PAGES_SIZE);
+        return loginUserMapper.getUserList(keyword);
+    }
+
+    /**
+     * cacheNames 设置缓存的值
+     *  key：指定缓存的key。 key可以使用spEl表达式
+     * @param user_Id
+     * @return
+     */
+   // @Cacheable(cacheNames="Users",key ="#user_Id")
+    @Override
+    public LoginUser getUserById(String user_Id) {
+        return loginUserMapper.getUserById(user_Id);
+    }
+
+    @Override
+    @CachePut(cacheNames="Users",key = "#loginUser.user_Id")
+    public int editLoginUser(LoginUser loginUser) {
+        return loginUserMapper.editLoginUser(loginUser);
+    }
+
+    @Override
+   // @CachePut(cacheNames="Users",key = "#loginUser.user_Id")
+    public int addLoginUser(LoginUser loginUser) {
+
+        return loginUserMapper.addLoginUser(loginUser);
+    }
+
+    @Override
+    //如果allEntries指定为 true，则方法调用后将立即清空所有缓存,为FALSE 只删除key对应的值
+ //   @CacheEvict(key ="#id",allEntries=false)
+    public int delBatch(String ids) {
+        String[] arr = ids.split(",");
+        List<String> list = new ArrayList<>();
+        for (String str : arr) {
+            list.add(str);
+        }
+        return loginUserMapper.delBatch(list);
+    }
+
+    @Override
+  //  @Cacheable(cacheNames = "Users", key = "#loginUser.loginname")
+    public int checkRepeatLoginName(LoginUser loginUser) {
+        return loginUserMapper.checkRepeatLoginName(loginUser);
+    }
+
+    @Override
+   // @Cacheable(cacheNames = "Users", key = "#loginUser.loginname")
+    public LoginUser checkLoginByLoginName(LoginUser loginUser) {
+        return loginUserMapper.checkLoginByLoginName(loginUser);
+    }
+
+}

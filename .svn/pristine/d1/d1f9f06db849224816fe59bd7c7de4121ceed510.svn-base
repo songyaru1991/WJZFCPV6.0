@@ -1,0 +1,31 @@
+package com.netmarch.jzznyj.system.service.impl;
+
+import com.netmarch.jzznyj.system.bean.Ls;
+import com.netmarch.jzznyj.system.mapper.LsMapper;
+import com.netmarch.jzznyj.system.service.LsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class LsServiceImpl implements LsService {
+
+    @Autowired
+    private LsMapper lsMapper;
+
+    @Override
+    public List<Ls> getLsList() {
+        return lsMapper.getLsList();
+    }
+
+    @Override
+    public Ls getLsByXm(String xm) {
+        return lsMapper.getLsByXm(xm);
+    }
+
+    @Override
+    public Ls getInfoById(String id) {
+        return lsMapper.getInfoById(id);
+    }
+}

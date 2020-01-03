@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+      <entry name="!?*.jc" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ajgl-gaj-exposure" />
+        <module name="ajgl-gaj-service" />
+        <module name="ajgl-gaj-web" />
+        <module name="ajgl-jcy-exposure" />
+        <module name="ajgl-jcy-service" />
+        <module name="ajgl-jcy-web" />
+        <module name="auth-server-core" />
+        <module name="auth-server-exposure" />
+        <module name="auth-server-web" />
+        <module name="backstage-management-exposure" />
+        <module name="backstage-management-service" />
+        <module name="backstage-management-service (1)" />
+        <module name="backstage-management-web" />
+        <module name="fdfs-exposure" />
+        <module name="fdfs-service" />
+        <module name="fdfs-web" />
+        <module name="turbine" />
+        <module name="util" />
+        <module name="uums-exposure" />
+        <module name="uums-service" />
+        <module name="uums-web" />
+        <module name="wsgl-fy-exposure" />
+        <module name="wsgl-fy-service" />
+        <module name="wsgl-fy-service (1)" />
+        <module name="wsgl-fy-web" />
+        <module name="wsgl-gaj-exposure" />
+        <module name="wsgl-gaj-service" />
+        <module name="wsgl-gaj-web" />
+        <module name="wsgl-jcy-exposure" />
+        <module name="wsgl-jcy-service" />
+        <module name="wsgl-jcy-service (1)" />
+        <module name="wsgl-jcy-web" />
+        <module name="wsgl-jcy-web (1)" />
+        <module name="wsgl-sfj-exposure" />
+        <module name="wsgl-sfj-service" />
+        <module name="wsgl-sfj-web" />
+        <module name="wshy-exposure" />
+        <module name="wshy-service" />
+        <module name="wshy-web" />
+        <module name="wshygl-exposure" />
+        <module name="wshygl-fy-exposure" />
+        <module name="wshygl-fy-service" />
+        <module name="wshygl-fy-web" />
+        <module name="wshygl-g-exposure" />
+        <module name="wshygl-gaj-exposure" />
+        <module name="wshygl-gaj-service" />
+        <module name="wshygl-gaj-web" />
+        <module name="wshygl-jcy-exposure" />
+        <module name="wshygl-jcy-service" />
+        <module name="wshygl-jcy-service (1)" />
+        <module name="wshygl-jcy-web" />
+        <module name="wshygl-service" />
+        <module name="wshygl-web" />
+        <module name="wssacwgl-exposure" />
+        <module name="wssacwgl-fy-exposure" />
+        <module name="wssacwgl-fy-service" />
+        <module name="wssacwgl-fy-web" />
+        <module name="wssacwgl-gaj-exposure" />
+        <module name="wssacwgl-gaj-service" />
+        <module name="wssacwgl-gaj-web" />
+        <module name="wssacwgl-jcy-exposure" />
+        <module name="wssacwgl-jcy-exposure (1)" />
+        <module name="wssacwgl-jcy-service" />
+        <module name="wssacwgl-jcy-service (1)" />
+        <module name="wssacwgl-jcy-web" />
+        <module name="wssacwgl-jcy-web (1)" />
+        <module name="wssacwgl-service" />
+        <module name="wssacwgl-service (1)" />
+        <module name="wssacwgl-web (1)" />
+        <module name="wssacwgl-web (2)" />
+        <module name="zuul" />
+      </profile>
+      <profile name="Annotation profile for figurecloud-parent" enabled="true">
+        <sourceOutputDir name="../../wssacwgl-jcy/wssacwgl-web/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../wssacwgl-jcy/wssacwgl-web/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wssacwgl-web" />
+      </profile>
+      <profile name="Annotation profile for wssacwgl-exposure (1)" enabled="true">
+        <sourceOutputDir name="../wssacwgl-exposure/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../wssacwgl-exposure/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wssacwgl-exposure (1)" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="ajgl-gaj" target="1.8" />
+      <module name="ajgl-gaj-exposure" target="1.8" />
+      <module name="ajgl-gaj-service" target="1.8" />
+      <module name="ajgl-gaj-web" target="1.8" />
+      <module name="ajgl-jcy" target="1.8" />
+      <module name="ajgl-jcy-exposure" target="1.8" />
+      <module name="ajgl-jcy-service" target="1.8" />
+      <module name="ajgl-jcy-web" target="1.8" />
+      <module name="auth-server-core" target="1.8" />
+      <module name="auth-server-exposure" target="1.8" />
+      <module name="auth-server-parent" target="1.8" />
+      <module name="auth-server-web" target="1.8" />
+      <module name="backstage-management" target="1.8" />
+      <module name="backstage-management-exposure" target="1.8" />
+      <module name="backstage-management-service" target="1.8" />
+      <module name="backstage-management-web" target="1.8" />
+      <module name="fdfs" target="1.8" />
+      <module name="fdfs-exposure" target="1.8" />
+      <module name="fdfs-service" target="1.8" />
+      <module name="fdfs-web" target="1.8" />
+      <module name="figurecloud-parent" target="1.8" />
+      <module name="starter-exposure" target="1.8" />
+      <module name="starter-microservice" target="1.8" />
+      <module name="turbine" target="1.8" />
+      <module name="util" target="1.8" />
+      <module name="uums" target="1.8" />
+      <module name="uums-exposure" target="1.8" />
+      <module name="uums-service" target="1.8" />
+      <module name="uums-web" target="1.8" />
+      <module name="wsgl-fy" target="1.8" />
+      <module name="wsgl-fy-exposure" target="1.8" />
+      <module name="wsgl-fy-exposure (1)" target="1.8" />
+      <module name="wsgl-fy-service" target="1.8" />
+      <module name="wsgl-fy-service (1)" target="1.8" />
+      <module name="wsgl-fy-web" target="1.8" />
+      <module name="wsgl-fy-web (1)" target="1.8" />
+      <module name="wsgl-gaj" target="1.8" />
+      <module name="wsgl-gaj-exposure" target="1.8" />
+      <module name="wsgl-gaj-service" target="1.8" />
+      <module name="wsgl-gaj-web" target="1.8" />
+      <module name="wsgl-jcy" target="1.8" />
+      <module name="wsgl-jcy-exposure" target="1.8" />
+      <module name="wsgl-jcy-service" target="1.8" />
+      <module name="wsgl-jcy-service (1)" target="1.5" />
+      <module name="wsgl-jcy-web" target="1.8" />
+      <module name="wsgl-jcy-web (1)" target="1.8" />
+      <module name="wsgl-sfj" target="1.8" />
+      <module name="wsgl-sfj-exposure" target="1.8" />
+      <module name="wsgl-sfj-service" target="1.8" />
+      <module name="wsgl-sfj-web" target="1.8" />
+      <module name="wshyg-jcyl-exposure" target="1.8" />
+      <module name="wshygl" target="1.8" />
+      <module name="wshygl-exposure" target="1.8" />
+      <module name="wshygl-fy" target="1.8" />
+      <module name="wshygl-fy-exposure" target="1.8" />
+      <module name="wshygl-fy-service" target="1.8" />
+      <module name="wshygl-fy-web" target="1.8" />
+      <module name="wshygl-g-exposure" target="1.8" />
+      <module name="wshygl-gaj" target="1.8" />
+      <module name="wshygl-gaj-exposure" target="1.8" />
+      <module name="wshygl-gaj-service" target="1.8" />
+      <module name="wshygl-gaj-web" target="1.8" />
+      <module name="wshygl-jcy" target="1.8" />
+      <module name="wshygl-jcy-exposure" target="1.8" />
+      <module name="wshygl-jcy-service" target="1.8" />
+      <module name="wshygl-jcy-service (1)" target="1.8" />
+      <module name="wshygl-jcy-web" target="1.8" />
+      <module name="wshygl-service" target="1.8" />
+      <module name="wshygl-web" target="1.8" />
+      <module name="wssacwgl" target="1.8" />
+      <module name="wssacwgl (1)" target="1.8" />
+      <module name="wssacwgl (2)" target="1.8" />
+      <module name="wssacwgl (3)" target="1.8" />
+      <module name="wssacwgl-exposure" target="1.8" />
+      <module name="wssacwgl-exposure (1)" target="1.8" />
+      <module name="wssacwgl-exposure (2)" target="1.8" />
+      <module name="wssacwgl-fy" target="1.8" />
+      <module name="wssacwgl-fy-exposure" target="1.8" />
+      <module name="wssacwgl-fy-service" target="1.8" />
+      <module name="wssacwgl-fy-web" target="1.8" />
+      <module name="wssacwgl-gaj" target="1.8" />
+      <module name="wssacwgl-gaj-exposure" target="1.8" />
+      <module name="wssacwgl-gaj-service" target="1.8" />
+      <module name="wssacwgl-gaj-web" target="1.8" />
+      <module name="wssacwgl-jcy" target="1.8" />
+      <module name="wssacwgl-jcy-exposure" target="1.8" />
+      <module name="wssacwgl-jcy-exposure (1)" target="1.8" />
+      <module name="wssacwgl-jcy-service" target="1.8" />
+      <module name="wssacwgl-jcy-service (1)" target="1.8" />
+      <module name="wssacwgl-jcy-web" target="1.8" />
+      <module name="wssacwgl-jcy-web (1)" target="1.8" />
+      <module name="wssacwgl-service" target="1.8" />
+      <module name="wssacwgl-service (1)" target="1.8" />
+      <module name="wssacwgl-service (2)" target="1.8" />
+      <module name="wssacwgl-web" target="1.8" />
+      <module name="wssacwgl-web (1)" target="1.8" />
+      <module name="wssacwgl-web (2)" target="1.8" />
+      <module name="zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

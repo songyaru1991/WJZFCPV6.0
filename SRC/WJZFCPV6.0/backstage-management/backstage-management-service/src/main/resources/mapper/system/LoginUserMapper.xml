@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netmarch.figurecloud.management.system.mapper.LoginUserMapper">
+
+    <select id="getUserList" parameterType="String"
+            resultType="com.netmarch.figurecloud.management.system.bean.LoginUser">
+        select a.* , b.name as organizationStr
+        from sys_login_user a
+        left join sys_organization b on a.organization_id = b.id
+        where 1=1
+        <if test="keyword != '' and keyword != null">
+          and(  a.name like '%${keyword}%' or a.police_num like '%${keyword}%' )
+        </if>
+    </select>
+
+    <select id="getUserById" parameterType="Integer"
+            resultType="com.netmarch.figurecloud.management.system.bean.LoginUser">
+        select a.*
+        from sys_login_user a
+        where a.id = #{id}
+    </select>
+    
+    <insert id="addLoginUser" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.netmarch.figurecloud.management.system.bean.LoginUser">
+        insert into sys_login_user (login_name, password, name, police_num, organization_id,
+        data_permission, status, create_time, creater)
+        values
+        (#{loginName},#{password},#{name},#{policeNum},#{organizationId},#{dataPermission},
+         1,sysdate(),#{creater})
+</insert>
+
+    <update id="editLoginUser"
+            parameterType="com.netmarch.figurecloud.management.system.bean.LoginUser">
+        update sys_login_user set login_name = #{loginName}, name = #{name},
+        police_num=#{policeNum}, status = #{status},
+        organization_id=#{organizationId}, update_time = sysdate(), updater = #{updater}
+        where id = #{id}
+    </update>
+
+    <update id="editUserRoleByUser"
+            parameterType="com.netmarch.figurecloud.management.system.bean.LoginUser">
+        update sys_login_user_role set sys_role_id = #{roleId} where sys_login_user_id = #{id}
+    </update>
+
+    <insert id="insertUserRole" parameterType="List">
+        insert into sys_login_user_role (sys_login_user_id, sys_role_id) VALUES
+        <foreach collection="list" item="bean" index="index" separator=",">
+            (#{bean.sysLoginUserId},#{bean.sysRoleId})
+        </foreach>
+    </insert>
+
+    <delete id="delBatch" parameterType="List">
+        delete from sys_login_user where id in 
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delUserRoles" parameterType="List">
+        delete from sys_login_user_role where sys_login_user_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkRepeatLoginName"
+            parameterType="com.netmarch.figurecloud.management.system.bean.LoginUser"
+            resultType="int">
+        select count(1) from sys_login_user where login_name = #{loginName}
+        <if test="id !=null and id != 0">
+            and id &lt;&gt; #{id}
+        </if>
+    </select>
+
+    <select id="checkRepeatPoliceNum"
+            parameterType="com.netmarch.figurecloud.management.system.bean.LoginUser"
+            resultType="int">
+        select count(1) from sys_login_user where police_num = #{policeNum}
+        <if test="id !=null and id != 0">
+            and id &lt;&gt; #{id}
+        </if>
+    </select>
+
+    <select id="getUserRoleIdsByUserId" parameterType="Integer" resultType="Integer">
+        select sys_role_id from sys_login_user_role where sys_login_user_id = #{id}
+    </select>
+
+    <select id="queryByCondition" resultType="com.netmarch.figurecloud.management.system.bean.LoginUser">
+
+        select
+          id,
+          login_name,
+          password,
+          name,
+          police_num,
+          organization_id,
+          data_permission,
+          status,
+          create_time,
+          creater,
+          update_time,
+          updater
+          from sys_login_user join
+          <where>
+              <if test="name != null and name != ''">
+                  name like concat('%',#{name},'%')
+              </if>
+              <if test="policeNum != null and policeNum != ''">
+                  police_num like concat('%',#{policeNum},'%')
+              </if>
+              <if test="organizationId != null and organizationId != ''">
+                  organization_id = #{organizationId}
+              </if>
+              <if test="dataPermission != null and dataPermission != ''">
+                  data_permission = #{dataPermission}
+              </if>
+          </where>
+    </select>
+</mapper>

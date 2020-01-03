@@ -1,0 +1,15 @@
+package com.netmarch.jzznyj.system.service;
+
+import com.netmarch.jzznyj.system.bean.Area;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface AreaService {
+
+    Area getAreaByAreaCode(String areaCode);
+
+    List<Area> getArea();
+
+}

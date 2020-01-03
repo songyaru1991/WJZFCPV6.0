@@ -1,0 +1,79 @@
+package com.netmarch.figurecloud.auth.core.security.endpoint;
+
+import com.netmarch.figurecloud.auth.core.security.authenticate.jwt.extractor.TokenExtractor;
+import com.netmarch.figurecloud.auth.core.security.authenticate.jwt.verifier.TokenVerifier;
+import com.netmarch.figurecloud.auth.core.security.config.JwtSettings;
+import com.netmarch.figurecloud.auth.core.security.exceptions.InvalidJwtToken;
+import com.netmarch.figurecloud.auth.core.security.model.token.JwtToken;
+import com.netmarch.figurecloud.auth.core.security.model.token.JwtTokenFactory;
+import com.netmarch.figurecloud.auth.core.security.model.token.RawAccessJwtToken;
+import com.netmarch.figurecloud.auth.core.security.model.token.RefreshToken;
+import com.netmarch.figurecloud.auth.core.service.SysLoginUserService;
+import com.netmarch.figurecloud.auth.exposure.model.LoginMode;
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import com.netmarch.figurecloud.auth.exposure.model.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import util.web.TokenUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/** 
+* @Description: RefreshTokenEndpoint 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 14:14
+*/ 
+@RestController
+public class RefreshTokenEndpoint {
+    @Autowired
+    private JwtTokenFactory tokenFactory;
+    @Autowired
+    private JwtSettings jwtSettings;
+    @Autowired
+    private SysLoginUserService sysLoginUserService;
+    @Autowired
+    private TokenVerifier tokenVerifier;
+    @Autowired
+    @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
+    /** 
+    * @Description: RefreshTokenEndpoint 通过refresh token 获取新token
+    * @Author: fengxiang
+    * @Date: 2019/2/15 17:30
+    */ 
+    @RequestMapping(value="/auth/token", method= RequestMethod.GET, produces={ MediaType.APPLICATION_JSON_VALUE })
+    public JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        UserContext userContext = null;
+            String tokenPayload = tokenExtractor.extract(request.getHeader(TokenUtil.REFRESH_TOKEN));
+            RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
+            RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken("错误的刷新令牌"));
+            String jti = refreshToken.getJti();
+            if (!tokenVerifier.verify(jti)) {
+                throw new InvalidJwtToken("令牌唯一标识不正确");
+            }
+            String subject = refreshToken.getSubject();
+            // 从refresh token里 拿到登录方式
+            LoginMode mode = LoginMode.valueOf(refreshToken.getClaims().getBody().get("mode").toString());
+            SysLoginUser sysLoginUser = sysLoginUserService.queryHasRoles(subject)
+                    .orElseThrow(() -> new UsernameNotFoundException("不存在用户名: " + subject));
+            ;
+            if (sysLoginUser.getSysRoles() == null) {
+                throw new InsufficientAuthenticationException("用户不属于任何角色组");
+            }
+            List<GrantedAuthority> authorities = sysLoginUser.getSysRoles() .stream()
+                    .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+                    .collect(Collectors.toList());
+            userContext = UserContext.create(sysLoginUser.getLoginName(),mode,sysLoginUser.getOrganizationId(),authorities);
+        return tokenFactory.createAccessJwtToken(userContext);
+    }
+}

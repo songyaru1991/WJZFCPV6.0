@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>公安局--涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/ztree/zTreeStyle/zTreeStyle.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/web/system/access/access.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/ztree/js/jquery.ztree.all.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+<div class="H105_iframeright">
+    <div class="H105_wripper">
+        <div class="H105_subtitle clear">
+            <div class="H105_local fl">
+                <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                     class="H105_caseImg fl">
+                <p>系统管理：资源管理</p>
+            </div>
+
+            <div class="H105_searchCoat fr clear">
+                <div class="H105_search1 fl" onclick="toAdd()" auth:check="resourceAdd">新增</div>
+                <div class="H105_search1 fl" onclick="toEdit()" auth:check="resourceEdit">编辑</div>
+                <div class="H105_search1 fl" onclick="delBatch()" auth:check="resourceDel">删除</div>
+            </div>
+        </div>
+
+        <!--内容s-->
+        <div class="I106_contentOuter clear">
+            <div class="I106_contentLeft">
+                <!--listDicTree_列表字典树 Start-->
+                <div class="I108_listDicTree fl">
+                    <div class="I108_dicTreeEdit">
+                    </div>
+                    <div class="I108_dicTreeList">
+                        <ul id="treeData" class="ztree"></ul>
+                    </div>
+                </div>
+                <!--listDicTree_列表字典树 End-->
+            </div>
+            <form th:action="${application.basePath}+'/resource/list'" id="form" class="layui-form">
+            <div class="I106_contentRight">
+                    <div class="I106_tabelOuter">
+                        <input type="hidden" id="parentId" name="parentId" th:value="${parentId}"/>
+                        <div class="H105_sysList H105_sysList1">
+                            <table class="layui-table I106_table" lay-data="{id:'tables'}" lay-skin="line" lay-filter="demo">
+                            <thead>
+                            <tr>
+                                <th lay-data="{type:'checkbox', width:50}"></th>
+                                <th lay-data="{field: 'id',style:'display:none;',minWidth:'0%',width:'0%',type:'space'}"></th>
+                                <th lay-data="{field:'username1'}">序号</th>
+                                <th lay-data="{field:'username2'}">资源名称</th>
+                                <th lay-data="{field:'username3'}">资源编码</th>
+                                <th lay-data="{field:'username4'}">资源链接</th>
+                                <th lay-data="{field:'username5'}">资源类型</th>
+                                <th lay-data="{field:'username6'}">资源状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="bean,beanStat:${list}">
+                                <td><input type="checkbox" name="checkbox" th:value="${bean.id}"/></td>
+                                <td th:text="${bean.id}" lay-data="{style:'display:none;'}"></td>
+                                <td th:text="${beanStat.count+(list.pageNum-1)*list.pageSize}">序号</td>
+                                <td th:text="${bean.name}"></td>
+                                <td th:text="${bean.code}"></td>
+                                <td th:text="${bean.url}"></td>
+                                <td th:text="${bean.type}"></td>
+                                <td th:text="${bean.status == 1 ? '启用' : '停用'}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            <!--分页引用-->
+                            <div class="H105_pageCoat clear">
+                                <div class="H105_first clear fl">
+                                    本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}"/>-<span
+                                        th:text="${list.endRow >list.total ? list.total : list.endRow }"/> 总记录数：<span
+                                        th:text="${list.total}"></span>
+                                   <!-- <img th:src="${application.basePath}+'/static/images/H105_refresh.png'" alt=""
+                                         class="H105_refreshImg fl'">
+                                    <img th:src="${application.basePath}+'/static/images/H105_refresh2.png'" alt=""
+                                         class="H105_refreshImg fl'">
+                                    <img th:src="${application.basePath}+'/static/images/H105_refresh3.png'" alt=""
+                                         class="H105_refreshImg fl'" onclick="exportDepartments()">-->
+                                </div>
+                                <div th:replace="common/pages::pages"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+    var basePath = [[${application.basePath}]];
+    var layIndex;
+    var table = null;
+    layui.use('table', function () {
+        layui.table.init('demo', {
+            limit: 12
+        });        table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+        });
+    })
+
+    //获取选中行FexId属性值公共方法
+    //value 为传入的  {field: 'id',style:'display:none;'} field值
+    //返回结果 是这一列被选中的 用,隔开的字符串
+    function getRowFexId(value) {
+        var checkStatus = table.checkStatus('tables')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        for (var i = 0; i < data.length; i++) {
+            arr.push(data[i][value]);
+        }
+        return arr.join(",");
+    }
+
+    function getRowCount() {
+        var checkStatus = table.checkStatus('tables')
+            , data = checkStatus.data, arr = new Array();
+        ;
+        return data.length;
+    }
+
+    var type = 0;
+
+    function toAdd() {
+        if (type == 3) {
+            layer.alert("请选择上级节点添加！");
+            return;
+        }
+        var pId = $("#parentId").val();
+        layIndex = layui.layer.open({
+            title: '<img src="' + basePath + '/static/images/I208_edit.png"><span>添加资源信息</span>',
+            type: 2,
+            shadeClose: false,
+            shade: 0.6,
+            skin: 'A106_layer',
+            area: ['1000px', '580px'], //宽高
+            content: [basePath + '/resource/toAdd?pId=' + pId, 'no']
+        })
+    }
+
+    function toEdit() {
+        var count = getRowCount("id");
+        if (count < 1) {
+            layer.alert("请至少选择一条数据！");
+            return;
+        }
+        if (count > 1) {
+            layer.alert("请选择一条数据进行编辑！");
+            return;
+        }
+        var id = getRowFexId("id");
+        layIndex = layui.layer.open({
+            title: '<img src="' + basePath + '/static/images/I208_edit.png"><span>修改资源信息</span>',
+            type: 2,
+            shadeClose: false,
+            shade: 0.6,
+            skin: 'A106_layer',
+            area: ['860px', '480px'], //宽高
+            content: [basePath + '/resource/toEdit?id=' + id, 'yes'],//不允许出现滚动条
+        })
+    }
+
+    function layerclose() {
+        loadTree();
+        $("#form").submit();
+        layer.close(layIndex);
+    }
+
+    $(function () {
+        loadTree();
+    })
+
+    function loadTree() {
+        // var index = layer.load(1,{shade: false});
+        var id = $("#parentId").val() == 0 ? 1 : $("#parentId").val();
+        $.ajax({
+            url: basePath + "/resource/ztree",
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+                $.fn.zTree.init($("#treeData"), setting, result);
+                var treeObj = $.fn.zTree.getZTreeObj("treeData");
+                treeObj.expandAll(false);
+                selNode(id);
+                // layer.close(index);
+            }
+        })
+    }
+
+    var setting = {
+        view: {
+            showIcon: false
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            beforeClick: zTreeBeforeClick
+        }
+    }
+
+    function zTreeBeforeClick(treeId, treeNode, clickFlag) {
+        $("#parentId").val(treeNode.id);
+        type = treeNode.type;
+        $("#form").submit();
+    }
+
+    function selNode(id) {
+        $("#parentId").val(id);
+        var treeObj = $.fn.zTree.getZTreeObj("treeData");
+        var node = treeObj.getNodeByParam("id", id);
+        treeObj.cancelSelectedNode();
+        treeObj.selectNode(node, true);
+        treeObj.expandNode(node, true, false);
+        type = node.type;
+    }
+
+    function delBatch() {
+        var ids = getRowFexId("id");
+        if (ids == '') {
+            layer.alert("请至少选择一条数据！");
+            return;
+        }
+        layer.confirm('确定删除吗？', {btn: ['确定', '取消']}, function (index) {
+            layer.close(index);
+            $.ajax({
+                url: basePath + "/resource/delBatch",
+                type: "post",
+                data: {"ids": ids, "pId": $("#parentId").val()},
+                dataType: "json",
+                success: function (result) {
+                    if (200 == result.code) {
+                        layer.alert(result.message, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.alert(result.message);
+                        return;
+                    }
+                }
+            })
+        })
+
+    }
+
+    function layerclose() {
+        layer.close(layIndex);
+    }
+
+</script>
+</body>
+</html>

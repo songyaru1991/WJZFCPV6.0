@@ -1,0 +1,26 @@
+package com.netmarch.figurecloud.auth.core;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.consul.config.ConsulConfigProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.spring.annotation.MapperScan;
+
+/** 
+* @Description: Auth2Application 功能内容描述
+* @Author: fengxiang
+* @Date: 2019/2/15 12:25
+*/ 
+@SpringBootApplication
+@EnableFeignClients(basePackages = {"com.netmarch.figurecloud.*.exposure.feign"})
+@EntityScan("com.netmarch.figurecloud.*.exposure.model")
+@MapperScan("com.netmarch.figurecloud.auth.core.mapper")
+public class Auth2Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Auth2Application.class, args);
+	}
+}

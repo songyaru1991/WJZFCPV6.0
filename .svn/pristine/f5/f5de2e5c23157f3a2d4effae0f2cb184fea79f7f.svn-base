@@ -1,0 +1,17 @@
+package com.netmarch.figurecloud.management.system.mapper;
+
+import com.netmarch.figurecloud.management.system.bean.SysOrganization;
+import org.apache.ibatis.annotations.Param;
+import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+
+public interface SysOrganizationMapper extends Mapper<SysOrganization> {
+
+    List<SysOrganization> getAllUsedOrg();
+
+    SysOrganization getOrganizationById(@Param("id") Integer id);
+
+    List<SysOrganization> getOrganizationName();
+
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>法院--涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.table2excel.min.js'"></script>
+</head>
+<body>
+ <div class="H105_iframeright"  auth:check="sacwglManage">
+     <div class="H105_wripper">
+         <div class="H105_subtitle clear">
+             <div class="H105_local fl">
+                 <img th:src="${application.basePath}+'/static/images/H105_local.png'" alt=""
+                      class="H105_caseImg fl">
+                 <p>案件管理：在办案件</p>
+             </div>
+
+             <div class="H105_searchCoat fr clear">
+                 <select id="searchCondition" name="searchCondition" class="H105_select fl">
+                     <option value="searchAjmc" th:selected="${ajjbqkQuery.searchCondition=='searchAjmc'}">案件名称</option>
+                     <option value="searchAjbh" th:selected="${ajjbqkQuery.searchCondition=='searchAjbh'}">案件编号</option>
+                 </select>
+                 <input type="text" id="searchContent" name="searchContent" class="H105_search fl"  th:value="${ajjbqkQuery.searchContent}">
+                 <!--th:value="${ajjbqkQuery.searchContent}"-->
+                 <div class="H105_searchBtn fl " onclick="localRefresh()">搜索</div>
+                 <div class="H105_search1 fl" auth:check="ajjbqklistAdd">新增</div>
+             </div>
+         </div>
+         <div  id="table_refresh" th:fragment="table_refresh">
+         <div class="H105_sysList">
+             <table class="H105_table ">
+                 <tr class="H105_thead">
+                     <td>案件编号</td>
+                     <td>案件名称</td>
+                     <td>立案时间</td>
+                     <td>主办单位</td>
+                     <td>案件状态</td>
+                 </tr>
+                 <tr th:each="bean,beanStat : ${list}" class="H105_clickEvent" th:lay-href="'/wssacwgl-fy/Ajjbqk/sacwDetails?ajbs='+${bean.ajbs}" th:data-content="涉案财物详细"
+                     style="cursor:pointer;"  onMouseOver="this.style.background='#E9F3F8'" onMouseOut="this.style.background=''">
+                     <td th:text="${bean.ajbh}">案件编号</td>
+                     <td th:text="${bean.ajmc}">案件名称</td>
+                     <td th:text="${bean.lasj}">立案时间</td>
+                     <td th:text="${bean.zbdwmc}">主办单位</td>
+                     <td th:text="${bean.ajzt}">案件状态</td>
+                 </tr>
+             </table>
+             <!--分页引用-->
+             <div class="H105_pageCoat clear">
+                 <div class="H105_first clear fl">
+                     本页显示:<span th:text="${(list.pageNum-1)*list.pageSize + 1}" />-<span th:text="${list.endRow >list.total ? list.total : list.endRow }" /> 总记录数：<span th:text="${list.total}"></span>
+                  <!--  <img th:src="${application.basePath}+'/static/images/H105_refresh.png'" alt="" class="H105_refreshImg fl'">
+                    <img th:src="${application.basePath}+'/static/images/H105_refresh2.png'" alt="" class="H105_refreshImg fl'">
+                    <img th:src="${application.basePath}+'/static/images/H105_refresh3.png'" alt="" class="H105_refreshImg fl'" onclick="exportAjjbqk()">-->
+                 </div>
+                 <div th:replace="common/pages::pages"></div>
+             </div>
+         </div>
+</div>
+     </div>
+     <script th:inline="javascript">
+         var contextPath = getContextPath();
+         var layIndex;
+         var table = null, layer = null;
+         layui.use('table', function () {
+             layui.table.init('demo', {
+                 limit: 12
+             });
+             layer = layui.layer;
+             table = layui.table;
+         })
+
+         function localRefresh() {
+             // 装载局部刷新返回的页面
+             var searchCondition = $('#searchCondition option:selected').val();
+             var searchContent = $(" #searchContent").val();
+             var pageNo = $(" #pageNo").val();
+             var param = {"searchContent": searchContent, "searchCondition": searchCondition, "pageNo": pageNo};
+             $('#table_refresh').load("tableList", param);
+         }
+         /* java 后台导出表格方式*/
+         function exportAjjbqk() {
+             var searchCondition = $('#searchCondition option:selected').val();
+             var searchContent = $(" #searchContent").val();
+             window.parent.location.href="/wssacwgl-fy/Ajjbqk/exportAjjbqk?searchContent="+searchContent +"&searchCondition="+searchCondition;
+
+         }
+
+     </script>
+ </div>
+</body>
+</html>

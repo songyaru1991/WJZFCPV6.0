@@ -1,0 +1,15 @@
+package com.netmarch.jzznyj.system.bean;
+
+import lombok.Data;
+
+import javax.persistence.Table;
+
+@Data
+@Table(name="ajword")
+public class Ajword {
+    private String id;
+    //案件标识
+    private String ajbs;
+    //阅卷保存word
+    private String wordcontent;
+}

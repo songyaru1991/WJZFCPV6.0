@@ -1,0 +1,14 @@
+package com.netmarch.wshy.system.model;
+
+/** 
+* @Description: 刷新token权限
+* @Author: fengxiang
+* @Date: 2019/2/15 13:45
+*/ 
+public enum Scopes {
+    REFRESH_TOKEN;
+    
+    public String authority() {
+        return "ROLE_" + this.name();
+    }
+}

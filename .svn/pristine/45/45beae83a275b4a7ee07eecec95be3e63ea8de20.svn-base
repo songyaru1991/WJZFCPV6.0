@@ -1,0 +1,40 @@
+package com.netmarch.wshy.system.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.netmarch.wshy.system.bean.Hyxxb;
+import com.netmarch.wshy.system.bean.PagesStatic;
+import com.netmarch.wshy.system.bean.Query;
+import com.netmarch.wshy.system.mapper.HyxxbMapper;
+import com.netmarch.wshy.system.service.LshyjlService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * @program: gaj
+ * @description: GajLshyjlService 实现类
+ * @author: songyaru
+ * @create: 2019-08-08
+ **/
+@Service
+public class LshyjlServiceImpl implements LshyjlService {
+
+    @Autowired
+    private HyxxbMapper hyxxbMapper;
+
+    @Override
+    public Page<Hyxxb> getLshyjlHyxxListPage(Hyxxb hyxxb, Query hyQuery) {
+        PageHelper.startPage(hyxxb.getPageNo() == null ? 1 : hyQuery.getPageNo(), PagesStatic.PAGES_SIZE,true);
+        return hyxxbMapper.getLshyjlHyxxListPage(hyxxb.getAREA_CODE(),hyQuery.getSearchCondition(),hyQuery.getSearchContent());
+    }
+
+    @Override
+    public int delLshyjilHyxxb(String jlbh) {
+        return hyxxbMapper.delLshyjilHyxxb(jlbh);
+    }
+    @Override
+    public int updateCxLshyjilHyxxb(String rybh) {
+        return hyxxbMapper.updateCxLshyjilHyxxb(rybh);
+    }
+
+}

@@ -1,0 +1,21 @@
+package com.netmarch.figurecloud.gateway.contants;
+
+/** 
+* @Description: FilterOrderConstants 管理拦截顺序的
+* @Author: fengxiang
+* @Date: 2019/2/21 8:37
+*/ 
+public class FilterOrderConstants {
+    public static final int ACCESS_TOKEN_PRE = 0;
+    public static final int LOGIN_SUCCESS_POST = 0;
+    public static final int COOKIE_POST = 1;
+    public static final int ERROR_PAGE_POST = 2;
+    public static final int CHARACTER_ENCODING_POST = 3;
+    public static final int RESPONSE_ERROR = 0;
+    public static final String PRE_FILTER_TYPE = "pre";
+    public static final String POST_FILTER_TYPE = "post";
+    public static final String ROUTE_FILTER_TYPE = "route";
+    public static final String STATIC_FILTER_TYPE = "static";
+    public static final String ERROR_FILTER_TYPE = "error";
+    public static final String RESPONSE_SEND = "responseSend";
+}

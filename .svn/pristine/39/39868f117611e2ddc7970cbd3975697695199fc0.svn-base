@@ -1,0 +1,76 @@
+package com.netmarch.figurecloud.gateway.filters;
+
+import com.alibaba.fastjson.JSON;
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.exception.ZuulException;
+import com.netmarch.figurecloud.auth.exposure.feign.AuthClient;
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import com.netmarch.figurecloud.auth.exposure.model.UserContext;
+import com.netmarch.figurecloud.gateway.contants.FilterOrderConstants;
+import com.netmarch.figurecloud.gateway.util.FilterUtils;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import util.exception.ErrorCode;
+import util.exception.http.ResponseException;
+import util.web.TokenUtil;
+import util.web.UserContextUtil;
+import java.io.UnsupportedEncodingException;
+
+@Component
+@Log4j2
+public class AccessTokenPreFilter extends ZuulFilter {
+
+    @Autowired
+    FilterUtils filterUtils;
+    @Autowired
+    AuthClient authClient;
+    @Override
+    public String filterType() {
+        return FilterOrderConstants.PRE_FILTER_TYPE;
+    }
+
+    @Override
+    public int filterOrder() {
+        return FilterOrderConstants.ACCESS_TOKEN_PRE;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return !filterUtils.isSkipRequest();
+    }
+    private ResponseException genResponseException(String message){
+        return ResponseException.valueOf(message, ErrorCode.AUTHENTICATION.value(), HttpStatus.UNAUTHORIZED.value());
+    }
+    @Override
+    public Object run() throws ZuulException {
+        try {
+            String accessToken = FilterUtils.getBearerAccessToken();
+            SysLoginUser sysLoginUser = null;
+            if (TokenUtil.isJwtTokenWithBearer(accessToken)){
+                sysLoginUser = authClient.userContext(accessToken);
+            }else {
+                throw genResponseException("令牌凭证为空或无效");
+            }
+            if (sysLoginUser!=null && !StringUtils.isEmpty(sysLoginUser.getLoginName())){
+                try {
+                    FilterUtils.addZuulRequestHeader(UserContextUtil.USER_IN_HEAD,JSON.toJSONString(sysLoginUser));
+                } catch (UnsupportedEncodingException e) {
+                    log.error(e);
+                }
+            }else {
+                throw genResponseException("令牌解析用户信息错误");
+            }
+        } catch (Exception ex) {
+             if (ExceptionUtils.indexOfThrowable(ex,ResponseException.class) != -1){
+                  throw  ex;
+             }else {
+                 throw ResponseException.valueOf("令牌解析用户信息发生未知错误",ex);
+             }
+        }
+        return null;
+    }
+}

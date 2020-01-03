@@ -1,0 +1,4 @@
+package com.netmarch.gaj.system.mapper;
+
+public interface GjxyrqkMapper {
+}

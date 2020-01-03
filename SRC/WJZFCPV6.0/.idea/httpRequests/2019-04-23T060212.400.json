@@ -1,0 +1,7 @@
+{
+  "timestamp": 1556013732689,
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Required request body is missing: public util.web.JsonResult com.netmarch.sso.loginsystem.controller.LoginController.login(com.netmarch.sso.loginsystem.bean.LoginUser,javax.servlet.http.HttpServletResponse)",
+  "path": "/uums/login"
+}

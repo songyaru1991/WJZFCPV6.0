@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--政法部门协同办案（刑事）系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style_10.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'"
+            th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+</head>
+<body>
+    <div class="E105_wripper">
+        <div class="E105_case1 layui-form">
+            <div class="E105_subtitle clear">
+                <div class="E105_biaoti fl">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p>相关设置查看</p>
+                </div>
+            </div>
+
+            <div class="E105_tableCoat">
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>相关设置信息</p>
+                    </div>
+                    <div class="E105_arrowup cursor"></div>
+                </div>
+                <div class="E105_tableFloor3">
+                    <table class="E105_table">
+                        <tr>
+                            <td class="clear T110_itemList" th:if="${bean.name=='pb' || bean.name=='qs'}">
+                                <div class="E105_bianhao fl clear" th:switch="${bean.name}">
+                                    <p th:case="pb">批捕红绿灯期限(天)：</p>
+                                    <p th:case="qs">起诉红绿灯期限(天)：</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.state}"></span>
+                            </td>
+                            <td class="clear T110_itemList" th:if="${bean.name=='fa' || bean.name=='cn' || bean.name=='sa'}">
+                                <div class="E105_bianhao fl clear" th:switch="${bean.name}">
+                                    <p th:case="fa">案件分案是否允许查看案件详细信息：</p>
+                                    <p th:case="sa">案件收案是否允许查看影印资料：</p>
+                                    <p th:case="cn">是否提示嫌疑人未成年：</p>
+                                </div>
+                                <div th:switch="${bean.state}">
+                                    <span class="E105_span" th:case=0>否</span>
+                                    <span class="E105_span" th:case=1>是</span>
+                                </div>
+                            </td>
+                            <td class="clear T110_itemList">
+                                <div class="E105_bianhao fl clear">
+                                    <p>所属县区：</p>
+                                </div>
+                                <span class="E105_span" th:text="${bean.areaname}">所属县区</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="S105_btnCoat1 ">
+                <div class="T110_saveBtnCoat clear">
+                    <button class="layui-btn fl site-demo-active2" data-type="tabDelete" >取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

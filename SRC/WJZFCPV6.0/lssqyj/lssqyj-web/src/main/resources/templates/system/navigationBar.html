@@ -1,0 +1,52 @@
+<div th:fragment="navigationBar" xmlns:th="http://schemas.xmlsoap.org/wsdl/" xmlns:auth="http://www.thymeleaf.org">
+
+    <ul class="I106_navList clear">
+
+        <li>
+            <div class="I106_navItem  I106_navItemCurrent " auth:check="lssqyj">
+                <span class="I106_navIcon I106_navIcon1"></span>
+                <span>卷宗智能归档</span>
+                <span class="I106_arrow I106_arrowCurrent"></span>
+            </div>
+
+            <ul class="I106_subNavList" style="display: block;">
+                <li lay-href="/lssqyj/znjz/caseList?listType=bm&type=aj" data-content="案件列表" auth:check="caseList">
+                    <span class="I106_subNavItem">案件列表</span>
+                </li>
+                <li lay-href="/lssqyj/znjz/caseList?listType=sq&type=aj" data-content="律师授权" auth:check="authorize">
+                    <span class="I106_subNavItem">律师授权</span>
+                </li>
+<!--                <li lay-href="/lssqyj/znjz/caseList?listType=yj&type=aj" data-content="人工智能阅卷" auth:check="rgznyj">-->
+<!--                    <span class="I106_subNavItem">人工智能阅卷</span>-->
+<!--                </li>-->
+            </ul>
+        </li>
+
+        <li>
+            <div class="I106_navItem  I106_navItemCurrent" auth:check="sysManage">
+                <span class="I106_navIcon I106_navIcon4"></span>
+                <span>系统管理</span>
+                <span class="I106_arrow I106_arrowCurrent"></span>
+            </div>
+            <ul class="I106_subNavList">
+                <li lay-href="/lssqyj/departments/departmentsList" data-content="科室管理" auth:check="departmentsManage">
+                    <span class="I106_subNavItem">科室管理</span>
+                </li>
+                <li lay-href="/lssqyj/user/list" data-content="用户管理" auth:check="userManage">
+                    <span class="I106_subNavItem">用户管理</span>
+                </li>
+                <li lay-href="/lssqyj/resource/list" data-content="资源管理" auth:check="resourceManage">
+                    <span class="I106_subNavItem">资源管理</span>
+                </li>
+                <li lay-href="/lssqyj/role/list" data-content="角色管理" auth:check="roleManage">
+                    <span class="I106_subNavItem">角色管理</span>
+                </li>
+<!--                <li lay-href="/lssqyj/dict/list" data-content="字典管理" auth:check="dictManage">-->
+<!--                    <span class="I106_subNavItem">字典管理</span>-->
+<!--                </li>-->
+            </ul>
+        </li>
+
+    </ul>
+
+</div>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <title>检察院--涉案财物管理系统</title>
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/all.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/css/style05.css'">
+    <link rel="stylesheet" th:href="${application.basePath}+'/static/js/layui/css/layui.css'">
+    <script th:src="${application.basePath}+'/static/js/jquery.min.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.form.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/layui/layui.js'"></script>
+    <script id="utilScript" th:src="${application.basePath}+'/static/js/util.js'" th:bashURL="${application.basePath}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="${application.basePath}+'/static/js/foeIE8.js'"></script>
+    <![endif]-->
+    <script th:src="${application.basePath}+'/static/js/main_All.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/main_05.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/select2.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/verification.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/jquery.backgroundSize.js'"></script>
+    <script th:src="${application.basePath}+'/static/js/project/editZwxx.js'"></script>
+</head>
+<body>
+<!--iframe1-->
+    <form id="form" method="post" enctype="multipart/form-data">
+    <div class="E105_wripper jq_iframeleft">
+        <div class="E105_case">
+
+            <div class="P105_subtitle clear">
+                <div class="E105_biaoti fl">
+                    <img th:src="${application.basePath}+'/static/images/H105_edit.png'" alt="" class="E105_editIco">
+                    <p>涉案财物增加/编辑</p>
+                </div>
+            </div>
+
+            <div class="E105_tableCoat ">
+
+                <div class="E105_baseInfo">
+                    <div class="E105_info  ">
+                        <p>涉案财物基本信息</p>
+                    </div>
+                </div>
+
+                <div class="P105_tableFloor">
+                    <table class="E105_table">
+                        <tr>
+                            <input type="hidden" name="ajbs" th:value="${zwxxb.ajbs}">
+                            <input type="hidden" name="jlbh" th:value="${zwxxb.jlbh}">
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件编号:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <input type="text" name="ajbh" id="ajbh" class="E105_input  fl" th:value="${zwxxb.ajbh}" readOnly="true" >
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物名称:</p><span class="E105_star">*</span>
+                                </div>
+                                <input type="text" name="zwmc" id="zwmc" class="E105_input  fl"  th:value="${zwxxb.zwmc}" maxlength="100">
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物类别:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <select name="zwlb" id="zwlb" class="E105_input  fl" th:field="${zwxxb.zwlb}">
+                                    <option th:each="zwlbList : ${zwlbList}" th:text="${zwlbList.mc}" th:value="${zwlbList.mc}"  th:selected="${zwlbList.mc==zwxxb.zwlb}"></option>
+                                <!--    <option value="aaaa">电子通讯</option>-->
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>案件名称:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <input type="text" name="ajmc" id="ajmc" class="E105_input  fl" th:value="${zwxxb.ajmc}"  readOnly="true" >
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物性质:</p>
+                                </div>
+
+                                <input type="text" name="zwxz" id="zwxz" class="E105_input  fl  " th:value="${zwxxb.zwxz}" maxlength="25">
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物状态:</p>
+                                </div>
+
+                                <input type="text" name="zwzt" id="zwzt" class="E105_input  fl  " th:value="${zwxxb.zwzt}" maxlength="25">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物颜色:</p>
+                                </div>
+                                <input type="text" name="zwys" id="zwys" class="E105_input  fl  " th:value="${zwxxb.zwys}" maxlength="25">
+
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>目的流转单位:</p>
+                                </div>
+                                <select name="dqlzdw" id="dqlzdw" class="E105_input  fl">
+                                    <option value="">请选择</option>
+                                    <option th:text="${area.gajAreaName}" th:value="${area.gajAreaName}">公安局</option>
+                                    <option th:text="${area.jcyAreaName}" th:value="${area.jcyAreaName}">检察院</option>
+                                    <option th:text="${area.fyAreaName}" th:value="${area.fyAreaName}">法院</option>
+                                </select>
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>涉案财物特征:</p>
+                                </div>
+                                <input type="text" name="zwtz" id="zwtz" class="E105_input  fl  "  th:value="${zwxxb.zwtz}" maxlength="50">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>涉案财物数量:</p>
+                                </div>
+                                <input type="text" name="zwsl" id="zwsl" class="E105_input  fl  "  th:value="${zwxxb.zwsl}" maxlength="10">
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear ">
+                                    <p>涉案财物金额(元):</p>
+                                </div>
+                                <input type="text" name="zwje" id="zwje" class="E105_input  fl  "  th:value="${zwxxb.zwje}" maxlength="10">
+                            </td>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p> 涉案财物单位:</p>
+                                </div>
+                                <input type="text" name="zwdw" id="zwdw" class="E105_input  fl  "  th:value="${zwxxb.zwdw}" maxlength="50">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="clear">
+                                <div class="E105_bianhao fl clear">
+                                    <p>涉案财物编号:</p>
+                                </div>
+                                <input type="text" name="zwbh" id="zwbh" class="E105_input  fl  " th:value="${zwxxb.zwbh}" maxlength="25">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>涉案财物备注:</p>
+                                </div>
+
+                                <input type="text" name="zwbz" id="zwbz" class="E105_input1  fl"  th:value="${zwxxb.zwbz}" maxlength="200">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div class="E105_bianhao1 fl clear">
+                                    <p>涉案财物图片:</p><span class="E105_star">*</span>
+                                </div>
+
+                                <div class="P105_qrCodeBg1 fl">
+                                    <!--选择照片-->
+                                    <div  class="P105_choose1"  >
+                                        <div class="P105_fileUpLoad" >
+                                            <input type="file" class="file" multiple="multiple" id="fileUpload">
+                                            <img th:src="${application.basePath}+'/static/images/P105_choosePic.png'" alt="" class="P105_fileUpLoadImg">
+                                        </div>
+                                    </div>
+                                    <!--继续上传 -->
+                                    <div class="P105_Images">
+                                        <div class="P105_succeed clear">
+                                          <!-- 从DB中显示图片 <img th:each="bean,beanStat : ${zwpictureList}" th:src="${application.basePath}+'/static/upload/images/'+${bean.picname}" alt='' class="updateImg">-->
+                                           <div class="E205_juanzong"  th:each="bean,beanStat : ${zwpictureList}" >
+                                               <img th:src="${application.fdfsPath}+ ${bean.picname}" alt='' class="updateImg E205_juanzongImg"  th:data-picname="${application.fdfsPath}+${bean.picname}" th:onclick="fangdaImgFromPicServer(this.getAttribute('data-picname'))">
+                                               <img th:src="${application.basePath}+'/static/images/E205_delete.png'" alt="" class="E205_delete"
+                                                    th:data-picname="${bean.picname}"  th:onclick="deleteUplodImg(this,this.getAttribute('data-picname'))">
+
+                                           </div>
+                                        </div>
+
+                                        <div class="P105_start clear  " style="display: none">
+                                          <!--  <div class="P105_upload">
+                                                <img th:src="${application.basePath}+'/static/images/P105_start.png'" alt="">
+                                                <p>开始上传</p>
+                                            </div>-->
+                                            <div class="P105_upload1">
+                                                <p>继续添加</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <input type="hidden" name="searchCondition" id="searchCondition" th:value="${searchCondition}"/>
+                <input type="hidden" name="searchContent" id="searchContent" th:value="${searchContent}"/>
+                <input type="hidden" name="pageNo" id="pageNo" th:value="${pageNo}"/>
+
+                <div class="P105_btnCoat1 ">
+                    <div class="E105_saveBtnCoat clear">
+                        <button class="E105_saveBtn fl cursor" type = "button" th:data-ajbs="${zwxxb.ajbs}"  th:onclick="saveZwxx(this.getAttribute('data-ajbs'))"><p>保存</p></button>
+                        <div class="E105_saveBtn fl cursor jq_E105_cannel3" th:lay-href="'/wssacwgl-jcy/Ajjbqk/sacwDetails?ajbs='+${zwxxb.ajbs}" th:data-content="涉案财物详细"><p>返回</p></div>
+
+                    </div>
+                </div>
+
+                <div class="P105_propertyFlow">
+
+                    <div class="P105_involvedTitle">
+                        <p>涉案财物流转记录</p>
+                        <div class="P105_arrowup cursor">
+
+                        </div>
+                    </div>
+                    <div class="P105_chenban"  th:if=" ${zwlzsize == 0}" >
+                        <div class="P105_ele">
+                            <div class="P105C_imgCoat">
+                                <img  th:src="${application.basePath}+'/static/images/P105_police.png'" alt="">
+                              <!--  <img  th:src="${application.basePath}+'/static/images/P105_police2.png'" alt="">
+                                <img  th:src="${application.basePath}+'/static/images/P105_police3.png'" alt="">-->
+
+                            </div>
+
+                            <div class="P105C_title1">
+                                <p>承办单位： <span></span></p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人: </p>
+                                        <span></span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间: </p>
+                                        <span></span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值: </p>
+                                        <span></span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注: </p>
+                                        <span class="ellipsis"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="P105_ele">
+                            <div class="P105C_imgCoat">
+                                <img  th:src="${application.basePath}+'/static/images/P105_police2.png'" alt="">
+                            </div>
+
+                            <div class="P105C_title2">
+                                <p>承办单位： <span></span></p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人: </p>
+                                        <span></span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间: </p>
+                                        <span></span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值: </p>
+                                        <span></span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注: </p>
+                                        <span class="ellipsis"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="P105_ele">
+                            <div class="P105C_imgCoat">
+                                <img  th:src="${application.basePath}+'/static/images/P105_police3.png'" alt="">
+                            </div>
+
+                            <div class="P105C_title3">
+                                <p>承办单位： <span></span></p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人: </p>
+                                        <span></span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间: </p>
+                                        <span></span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值: </p>
+                                        <span></span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注: </p>
+                                        <span class="ellipsis"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="P105_chenban">
+                        <div class="P105_ele" th:if=" ${zwlzsize != 0}"  th:each="bean,beanStat : ${zwlzlist}">
+                            <!--左侧-->
+
+                            <div class="P105C_imgCoat">
+                                <img th:if="${#strings.contains(bean.dqlzdw,'公安局')}" th:src="${application.basePath}+'/static/images/P105_police.png'" alt="">
+                                <img th:if="${#strings.contains(bean.dqlzdw,'检察院')}" th:src="${application.basePath}+'/static/images/P105_police2.png'" alt="">
+                                <img th:if="${#strings.contains(bean.dqlzdw,'法院')}" th:src="${application.basePath}+'/static/images/P105_police3.png'" alt="">
+
+                            </div>
+
+                            <div  th:if="${#strings.contains(bean.dqlzdw,'公安局')}" class="P105C_title1">
+                                <p>承办单位： <span th:text="${bean.operateDw}"> XXX</span></p>
+                            </div>
+
+                            <div  th:if="${#strings.contains(bean.dqlzdw,'检察院')}" class="P105C_title2">
+                                <p>承办单位： <span th:text="${bean.operateDw}"> XXX</span></p>
+                            </div>
+
+                            <div  th:if="${#strings.contains(bean.dqlzdw,'法院')}" class="P105C_title3">
+                                <p>承办单位： <span th:text="${bean.operateDw}"> XXX</span></p>
+                            </div>
+
+                            <div class="P105C_note">
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item">
+                                        <p>承办人: </p>
+                                        <span th:text="${bean.operateUsername}"> XXX</span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>接收时间: </p>
+                                        <span  th:text="${#dates.format(bean.lzsj, 'yyyy/MM/dd')}">2018/11/21</span>
+                                    </div>
+                                    <div class="P105C_item">
+                                        <p>估值: </p>
+                                        <span th:text="${bean.zwje}">120000000.88万元</span>
+                                    </div>
+
+                                </div>
+                                <div class="P105C_ren clear">
+                                    <div class="P105C_item1 ">
+                                        <p>备 &nbsp; 注: </p>
+                                        <span class="ellipsis" th:text="${bean.zwbz}">专家鉴定专专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定专家鉴定 </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </form>
+</body>
+<script>
+    var dataformInit = $("#form").serializeArray();
+    var jsonTextInit = JSON.stringify({ dataform: dataformInit });
+    $('.jq_E105_cannel3').on('click', function (event) {
+        var searchCondition = $('#searchCondition').val();
+        var searchContent = $(" #searchContent").val();
+        var pageNo = $(" #pageNo").val();
+
+        var layContent = $(this).attr('data-content');
+        var layHref = $(this).attr('lay-href');
+        layHref = layHref + '&searchCondition='+searchCondition+'&searchContent='+searchContent+'&pageNo='+pageNo;
+
+        var dataform = $("#form").serializeArray();
+        var jsonTextSubmit = JSON.stringify({ dataform: dataform });
+
+        jq_E105_cannel3ClickEvent(layContent,layHref,jsonTextInit,jsonTextSubmit);
+    });
+
+</script>
+</html>
+

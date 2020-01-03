@@ -1,0 +1,47 @@
+package com.netmarch.figurecloud.auth.exposure.feign;
+
+import com.netmarch.figurecloud.auth.exposure.model.LoginMode;
+import com.netmarch.figurecloud.auth.exposure.model.LoginRequest;
+import com.netmarch.figurecloud.auth.exposure.model.SysLoginUser;
+import com.netmarch.figurecloud.auth.exposure.model.UserContext;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+/**
+* @Description: AuthClient 认证相关
+* @Author: fengxiang
+* @Date: 2019/2/18 11:14
+*/
+@FeignClient("auth-server")
+public interface AuthClient {
+    /**
+     * 根据id获取组织信息
+     * @return
+     */
+    @RequestMapping(
+            method= RequestMethod.GET,
+            value="/user-context",
+            consumes= MediaType.APPLICATION_JSON_VALUE)
+    SysLoginUser userContext(@RequestHeader(value = "X-Authorization") String token);
+    /**
+     * 通过refreshToken,刷新token
+     * @return
+     */
+    @RequestMapping(
+            method= RequestMethod.GET,
+            value="/auth/token",
+            consumes= MediaType.APPLICATION_JSON_VALUE)
+    Map<String,Object> refreshToken(@RequestHeader(value = "X-Refresh-Token") String refreshToken);
+    /**
+     * 通过refreshToken,刷新token
+     * @return
+     */
+    @RequestMapping(
+            method= RequestMethod.POST,
+            value="/auth/login",
+            consumes= MediaType.APPLICATION_JSON_VALUE)
+    Map<String,Object> login(LoginRequest loginRequest);
+}
